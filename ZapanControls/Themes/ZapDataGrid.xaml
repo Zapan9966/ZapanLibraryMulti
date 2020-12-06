@@ -1,0 +1,475 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:l="clr-namespace:ZapanControls.Controls"
+                    xmlns:c="clr-namespace:ZapanControls.Converters"
+                    xmlns:lib="clr-namespace:ZapanControls.Libraries"
+                    xmlns:i="clr-namespace:Microsoft.Xaml.Behaviors;assembly=Microsoft.Xaml.Behaviors"
+                    xmlns:b="clr-namespace:ZapanControls.Behaviours">
+
+    <!-- STYLE - Gripper -->
+    <Style x:Key="ZapDataGridColumnHeaderGripper" TargetType="{x:Type Thumb}">
+        <Setter Property="Canvas.Right" Value="-9"/>
+        <Setter Property="Cursor" Value="SizeWE" />
+        <Setter Property="Width" Value="12"/>
+        <Setter Property="Height" Value="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"/>
+        <Setter Property="Background" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border Background="Transparent" Padding="0">
+                        <Rectangle Fill="{TemplateBinding Background}" HorizontalAlignment="Center" Width="1"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- STYLE - Column Header -->
+    <Style x:Key="ZapDataGridColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+        <Setter Property="Background" Value="{Binding ColumnHeaderBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"/>
+        <Setter Property="BorderBrush" Value="{Binding ColumnHeaderBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"/>
+        <Setter Property="Foreground" Value="{Binding ColumnHeaderForeground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"/>
+        <Setter Property="Command" Value="{Binding ColumnHeaderClickCommand, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" />
+        <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self}}" />
+        <Setter Property="BorderThickness" Value="0,0,1,1" />
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Margin" Value="0,0,0,0"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">                    
+                    <Grid SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" >
+                        <Border x:Name="headerBorder"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Background="{TemplateBinding Background}"
+                                Margin="{TemplateBinding Padding}">
+                            <ContentPresenter Margin="5,0,5,2"                                            
+                                              RecognizesAccessKey="True"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              UseLayoutRounding="True"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <Canvas>
+                            <Thumb x:Name="PART_RightHeaderGripper" Cursor="SizeWE" Style="{StaticResource ZapDataGridColumnHeaderGripper}" />
+                        </Canvas>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="headerBorder" Value="{Binding ColumnHeaderBackgroundMouseOver, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="headerBorder" Value="{Binding ColumnHeaderBackgroundIsPressed, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- STYLE - Row Header -->
+    <Style x:Key="ZapDataGridRowHeaderStyle" TargetType="{x:Type DataGridRowHeader}">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridRowHeader}">
+                    <l:ZapToggleButtonFlat x:Name="RowHeaderToggleButton"  
+                                           Width="{Binding ButtonColumnsActualWidth, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                           Command="{Binding ToggleButtonCommand, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                           CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                           Background="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" 
+                                           BorderBrush="{Binding BorderBrush, TargetNullValue=Indigo, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" 
+                                           BorderThickness="0,1,1,1"
+                                           IsCheckedBackground="{Binding RowSelectionActiveBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                           IsCheckedBorderBrush="{Binding BorderBrush, TargetNullValue=Indigo, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                           IsCheckedBorderThickness="0,1,1,1"
+                                           IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"
+                                           Margin="0,-1,0,0"/>                        
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- STYLE - Row -->
+    <Style x:Key="ZapDataGridRowStyle" TargetType="{x:Type DataGridRow}">
+        <Setter Property="Background" Value="{Binding RowBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"/>
+        <Setter Property="BorderBrush" Value="{Binding RowBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"/>
+        <Setter Property="BorderThickness" Value="{Binding RowBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"/>
+        <Setter Property="Foreground" Value="{Binding RowForeground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Validation.ErrorTemplate" Value="{x:Null}"/>
+        <Setter Property="ValidationErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Image Source="../Images/exclamation.png" Margin="2,0,0,0" VerticalAlignment="Center" SnapsToDevicePixels="True" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridRow}">                    
+                    <Border x:Name="DGR_Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            UseLayoutRounding="True">                        
+                        <SelectiveScrollingGrid>
+                            <SelectiveScrollingGrid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </SelectiveScrollingGrid.ColumnDefinitions>
+                            <SelectiveScrollingGrid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </SelectiveScrollingGrid.RowDefinitions>
+                            <DataGridCellsPresenter Grid.Column="1"
+                                                    UseLayoutRounding="True"
+                                                    ItemsPanel="{TemplateBinding ItemsPanel}" 
+                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDoubleClick">
+                                        <i:InvokeCommandAction Command="{Binding RowDoubleClickCommand, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" 
+                                                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </DataGridCellsPresenter>
+                            <DataGridDetailsPresenter Grid.Row="1"
+							                          Grid.Column="1"
+                                                      UseLayoutRounding="True"
+                                                      Visibility="{TemplateBinding DetailsVisibility}"
+							                          SelectiveScrollingGrid.SelectiveScrollingOrientation="{Binding AreRowDetailsFrozen,
+							                                                                                         ConverterParameter={x:Static SelectiveScrollingOrientation.Vertical},
+							                                                                                         Converter={x:Static DataGrid.RowDetailsScrollingConverter},
+							                                                                                         RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                            <Grid Grid.RowSpan="2">
+                                <DataGridRowHeader Grid.RowSpan="2"
+                                                   UseLayoutRounding="True"
+                                                   SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical"
+							                       Visibility="{Binding HeadersVisibility,
+							                                            ConverterParameter={x:Static DataGridHeadersVisibility.Row},
+							                                            Converter={x:Static DataGrid.HeadersVisibilityConverter},
+							                                            RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                <Path x:Name="DefaultPath" 
+                                      Width="10" Height="10"
+                                      SnapsToDevicePixels="False" 
+						              VerticalAlignment="Center"
+                                      HorizontalAlignment="Center"
+						              Data="M0,0 10,5 0,10 Z"
+                                      IsHitTestVisible="False"
+                                      Focusable="False"
+						              Fill="{Binding RowMouseOverForeground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+						              Stretch="Fill" 
+                                      Visibility="Collapsed"/>                                
+                                <Path Name="CheckMark"      
+                                      Width="10" Height="10"
+                                      SnapsToDevicePixels="False" 
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Center"
+                                      Data="F1 M 0.468732,4.66838L 3.03345,7.95443L 7.28127,0.420569"
+                                      IsHitTestVisible="False"
+                                      Focusable="False"
+                                      Stroke="{Binding RowSelectionForeground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                      StrokeThickness="2"
+                                      Stretch="Fill" 
+                                      Visibility="Collapsed" />
+                            </Grid>
+                        </SelectiveScrollingGrid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="DGR_Border" Property="Background" Value="{Binding RowMouseOverBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" />
+                            <Setter TargetName="DefaultPath" Property="Visibility" Value="Visible" />
+                            <Setter Property="Foreground"  Value="{Binding RowMouseOverForeground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="DGR_Border" Property="Background" Value="{Binding RowSelectionBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" />
+                            <Setter TargetName="DefaultPath" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="CheckMark" Property="Visibility" Value="Visible" />
+                            <Setter Property="Foreground"  Value="{Binding RowSelectionForeground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="DGR_Border" Property="TextElement.Foreground" Value="{StaticResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Foreground" Value="{Binding RowSelectionForeground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!-- STYLE - Cell -->
+    <Style x:Key="ZapDataGridCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Margin" Value="0,0,0,0"/>
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                    <Border x:Name="border"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            BorderThickness="1"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            UseLayoutRounding="True"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" UseLayoutRounding="True" Margin="2,0,2,1"  />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{Binding FocusedCellBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{Binding FocusedCellBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" />
+                            <Setter TargetName="border" Property="BorderThickness" Value="{Binding FocusedCellBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="{Binding RowSelectionForeground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="Foreground" Value="{Binding FocusedCellForeground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style TargetType="{x:Type l:ZapDataGrid}">
+        <Setter Property="ColumnHeaderStyle" Value="{StaticResource ZapDataGridColumnHeaderStyle}" />
+        <Setter Property="RowStyle" Value="{StaticResource ZapDataGridRowStyle}" />
+        <Setter Property="CellStyle" Value="{StaticResource ZapDataGridCellStyle}" />
+        <Setter Property="RowHeaderStyle" Value="{StaticResource ZapDataGridRowHeaderStyle}" />
+        <Setter Property="Background" Value="#505050"/>
+        <Setter Property="CanUserAddRows" Value="False"/>
+        <Setter Property="CanUserDeleteRows" Value="False" />
+        <Setter Property="RowBackground" Value="Transparent" />
+        <Setter Property="VerticalGridLinesBrush" Value="Indigo" />
+        <Setter Property="HorizontalGridLinesBrush" Value="Indigo" />
+        <Setter Property="AutoGenerateColumns" Value="False" />
+        <Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type l:ZapDataGrid}">
+                    <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
+                        <ScrollViewer x:Name="DG_ScrollViewer" 
+                                      Focusable="False" 
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                      UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
+                            <ScrollViewer.Template>
+                                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                                    <Grid>                                            
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" 
+                                                                Grid.Row="1" 
+                                                                Grid.ColumnSpan="2" 
+                                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                                UseLayoutRounding="{TemplateBinding UseLayoutRounding}"
+                                                                CanContentScroll="{TemplateBinding CanContentScroll}"/>
+
+                                        <Grid x:Name="ButtonsColumn"
+                                              UseLayoutRounding="{TemplateBinding UseLayoutRounding}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.Effect>
+                                                <DropShadowEffect ShadowDepth="1" Direction="270" />
+                                            </Grid.Effect>
+                                            <l:ZapButtonFlat x:Name="SelectAllButton"
+                                                             Background="{Binding ColumnHeaderBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                             BorderBrush="{Binding ColumnHeaderBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                             MouseOverBackground="{Binding ColumnHeaderBackgroundMouseOver, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                             IsPressedBackground="{Binding ColumnHeaderBackgroundIsPressed, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                             BorderThickness="0,0,1,1"
+                                                             ToolTip="Sélectionner toutes les lignes"                                                             
+                                                             Command="{x:Static DataGrid.SelectAllCommand}"
+                                                             Focusable="False" 
+                                                             Width="{Binding ActualWidth, ElementName=RemoveFiltersButton}"
+                                                             MinWidth="14"
+                                                             Visibility="{Binding HeadersVisibility,
+                                                                                  ConverterParameter={x:Static DataGridHeadersVisibility.All},
+										                                          Converter={x:Static DataGrid.HeadersVisibilityConverter},
+										                                          RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"/>
+                                            <l:ZapButtonFlat x:Name="RemoveFiltersButton"
+                                                             Background="{Binding ColumnHeaderBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                             BorderBrush="{Binding ColumnHeaderBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                             Foreground="{Binding ColumnHeaderForeground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                             MouseOverBackground="{Binding ColumnHeaderBackgroundMouseOver, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                             IsPressedBackground="{Binding ColumnHeaderBackgroundIsPressed, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                             FontFamily="Webdings" 
+                                                             FontSize="13.333" 
+                                                             Content="r"
+                                                             Grid.Column="1"
+                                                             BorderThickness="0,0,1,1"
+                                                             Padding="2,0"
+                                                             ToolTip="Supprimer tous les filtres"   
+                                                             Command="{Binding RemoveFiltersCommand, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                             Visibility="Collapsed" 
+                                                             Focusable="False" />
+                                        </Grid>
+
+                                        <Grid Grid.Column="1" 
+                                              Grid.ColumnSpan="2"
+                                              UseLayoutRounding="{TemplateBinding UseLayoutRounding}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                            <Grid.Effect>
+                                                <DropShadowEffect ShadowDepth="1" Direction="270" />
+                                            </Grid.Effect>
+                                            <DataGridColumnHeadersPresenter x:Name="PART_ColumnHeadersPresenter" 
+                                                                            UseLayoutRounding="True"
+                                                                            SnapsToDevicePixels="True"
+										                                    Visibility="{Binding HeadersVisibility,
+										                                                         ConverterParameter={x:Static DataGridHeadersVisibility.Column},
+										                                                         Converter={x:Static DataGrid.HeadersVisibilityConverter},
+										                                                         RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"/>
+                                        </Grid>
+
+                                        <l:ZapScrollBar x:Name="PART_VerticalScrollBar" 
+                                                        Grid.Row="1"
+                                                        Grid.Column="2"
+                                                        Orientation="Vertical"
+                                                        Maximum="{TemplateBinding ScrollableHeight}"
+                                                        ViewportSize="{TemplateBinding ViewportHeight}" 
+                                                        Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                                        Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                        Background="{Binding ScrollBarBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                        ThumbInnerBackground="{Binding ScrollBarThumbInnerBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                        ThumbBackground="{Binding ScrollBarThumbBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                        ThumbBorderBrush="{Binding ScrollBarThumbBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                        ThumbBorderThickness="{Binding ScrollBarThumbBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                        ButtonBackground="{Binding ScrollBarButtonBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                        ButtonBorderBrush="{Binding ScrollBarButtonBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                        ButtonBorderThickness="{Binding ScrollBarButtonBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                        DisabledThumbInnerBackground="{Binding ScrollBarDisabledThumbInnerBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                        DisabledButtonBackground="{Binding ScrollBarDisabledButtonBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                        DisabledButtonBorderBrush="{Binding ScrollBarDisabledButtonBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                        DisabledButtonBorderThickness="{Binding ScrollBarDisabledButtonBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" />
+                                        
+                                        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{Binding NonFrozenColumnsViewportHorizontalOffset, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <l:ZapScrollBar x:Name="PART_HorizontalScrollBar"
+                                                            Grid.Column="0"
+                                                            Grid.ColumnSpan="2"
+                                                            Orientation="Horizontal" 
+                                                            Maximum="{TemplateBinding ScrollableWidth}"  
+                                                            ViewportSize="{TemplateBinding ViewportWidth}" 
+                                                            Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                                            Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                            Background="{Binding ScrollBarBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                            ThumbInnerBackground="{Binding ScrollBarThumbInnerBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                            ThumbBackground="{Binding ScrollBarThumbBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                            ThumbBorderBrush="{Binding ScrollBarThumbBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                            ThumbBorderThickness="{Binding ScrollBarThumbBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                            ButtonBackground="{Binding ScrollBarButtonBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                            ButtonBorderBrush="{Binding ScrollBarButtonBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                            ButtonBorderThickness="{Binding ScrollBarButtonBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                            DisabledThumbInnerBackground="{Binding ScrollBarDisabledThumbInnerBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                            DisabledButtonBackground="{Binding ScrollBarDisabledButtonBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                            DisabledButtonBorderBrush="{Binding ScrollBarDisabledButtonBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                            DisabledButtonBorderThickness="{Binding ScrollBarDisabledButtonBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" />
+                                        </Grid>
+
+                                        <Grid x:Name="loadingGrid" 
+                                              Grid.Column="0" 
+                                              Grid.ColumnSpan="3"
+                                              Grid.Row="1" 
+                                              Grid.RowSpan="2"
+                                              Visibility="Collapsed">
+                                            <Grid.Background>
+                                                <SolidColorBrush Color="Black" Opacity="0.5"/>
+                                            </Grid.Background>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Border Grid.Row="1" Grid.Column="1" BorderBrush="Indigo" BorderThickness="2" Background="DarkViolet" CornerRadius="6" Padding="20">
+                                                <StackPanel>
+                                                    <TextBlock Text="Chargement des données en cours, patienter..." VerticalAlignment="Center" Foreground="White"/>
+                                                    <ProgressBar x:Name="loadingProgress" Margin="0,5,0,0" Height="10"/>
+                                                    <l:ZapLoadingIndicator x:Name="loadingIndicator" IndicatorStyle="ThreeDots" Margin="0,5,0,0"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </Grid>
+                                        
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding HeadersVisibility, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" Value="None">
+                                            <Setter TargetName="RemoveFiltersButton" Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding HeadersVisibility, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" Value="Row">
+                                            <Setter TargetName="RemoveFiltersButton" Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding CanSelectAll, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" Value="False">
+                                            <Setter TargetName="SelectAllButton" Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </ScrollViewer.Template>
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsGrouping" Value="True">
+                <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--<DataTemplate>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0">
+            <ContentPresenter x:Name="headerContent" Tag="1" Content="{TemplateBinding Content}" />
+        </StackPanel>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Column.SortDirection, RelativeSource={RelativeSource AncestorType={x:Type DataGridColumnHeader}}}" Value="Ascending">
+                
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>-->
+
+</ResourceDictionary>

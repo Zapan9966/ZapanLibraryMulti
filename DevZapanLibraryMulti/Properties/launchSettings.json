@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DevZapanLibraryMulti_NETCOREAPP3_1": {
+      "commandName": "Project",
+      "commandLineArgs": "OCEATECH 26"
+    }
+  }
+}

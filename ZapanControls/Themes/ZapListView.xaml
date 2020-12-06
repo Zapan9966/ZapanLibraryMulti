@@ -1,0 +1,354 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:l="clr-namespace:ZapanControls.Controls"
+                    xmlns:b="clr-namespace:ZapanControls.Behaviours"
+                    xmlns:i="clr-namespace:Microsoft.Xaml.Behaviors;assembly=Microsoft.Xaml.Behaviors">
+
+    <!-- STYLE - ListView ScrollViewer -->
+    <Style x:Key="ZapGridViewScrollViewerStyle" TargetType="{x:Type ScrollViewer}">
+        <Setter Property="IsDeferredScrollingEnabled" Value="False" />
+        <Setter Property="Background" Value="{x:Null}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <l:ZapButtonFlat x:Name="btnRemoveFilters" 
+                                         Grid.Column="0" 
+                                         Grid.Row="0"
+                                         FontFamily="Webdings" 
+                                         FontSize="13.333" Content="r" 
+                                         ToolTip="Supprimer tous les filtres"
+                                         BorderThickness="0,0,1,1" 
+                                         Padding="5,0" 
+                                         Opacity="1"
+                                         Visibility="Collapsed" 
+                                         Height="{Binding ActualHeight, ElementName=headerRowPresenter}"
+                                         Background="{Binding HeaderBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                         BorderBrush="{Binding HeaderBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                         Foreground="{Binding HeaderForeground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                         MouseOverBackground="{Binding HeaderBackgroundMouseOver, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                         IsPressedBackground="{Binding HeaderBackgroundIsPressed, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                         Command="{Binding RemoveFiltersCommand, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                         Focusable="False" />
+
+                        <DockPanel Grid.Column="1" 
+                                   Grid.Row="0" 
+                                   Grid.RowSpan="2" 
+                                   Margin="0" 
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                   UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
+                            <ScrollViewer DockPanel.Dock="Top"
+                                          HorizontalScrollBarVisibility="Hidden"
+                                          VerticalScrollBarVisibility="Hidden"
+                                          Focusable="False"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          UseLayoutRounding="{TemplateBinding UseLayoutRounding}"
+                                          IsDeferredScrollingEnabled="{TemplateBinding IsDeferredScrollingEnabled}">
+                                <GridViewHeaderRowPresenter x:Name="headerRowPresenter"
+                                                            Margin="0,0,0,0"
+                                                            DockPanel.Dock="Left"      
+                                                            Visibility="{Binding HeaderVisibility, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                                            Columns="{Binding TemplatedParent.View.Columns, RelativeSource={RelativeSource TemplatedParent}}"
+                                                            ColumnHeaderContainerStyle="{Binding TemplatedParent.View.ColumnHeaderContainerStyle, RelativeSource={RelativeSource TemplatedParent}}"
+                                                            ColumnHeaderTemplate="{Binding TemplatedParent.View.ColumnHeaderTemplate, RelativeSource={RelativeSource TemplatedParent}}"
+                                                            ColumnHeaderTemplateSelector="{Binding  TemplatedParent.View.ColumnHeaderTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}"
+                                                            AllowsColumnReorder="{Binding TemplatedParent.View.AllowsColumnReorder, RelativeSource={RelativeSource TemplatedParent}}"
+                                                            ColumnHeaderContextMenu="{Binding TemplatedParent.View.ColumnHeaderContextMenu, RelativeSource={RelativeSource TemplatedParent}}"
+                                                            ColumnHeaderToolTip="{Binding TemplatedParent.View.ColumnHeaderToolTip, RelativeSource={RelativeSource TemplatedParent}}"
+                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                            UseLayoutRounding="{TemplateBinding UseLayoutRounding}" />
+                            </ScrollViewer>
+
+                            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
+                                                    DockPanel.Dock="Top"
+                                                    CanContentScroll="{TemplateBinding CanContentScroll}"
+                                                    CanHorizontallyScroll="False" CanVerticallyScroll="False"
+                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                    Content="{TemplateBinding Content}"
+                                                    KeyboardNavigation.DirectionalNavigation="Local"
+                                                    ScrollViewer.IsDeferredScrollingEnabled="{TemplateBinding IsDeferredScrollingEnabled}"
+                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                    UseLayoutRounding="{TemplateBinding UseLayoutRounding}"/>
+                        </DockPanel>
+
+                        <!-- Inner Shadow -->
+                        <Canvas Grid.Row="1" Grid.RowSpan="2" IsHitTestVisible="False">
+                            <Border Background="Transparent" ClipToBounds="True"
+                                    Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" 
+                                    Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}">
+                                <Border Background="Transparent" BorderBrush="Black" BorderThickness="0,10,0,0" Margin="0,-11,0,0">
+                                    <Border.Effect>
+                                        <DropShadowEffect Direction="0" ShadowDepth="0" BlurRadius="10"/>
+                                    </Border.Effect>
+                                </Border>
+                            </Border>
+                        </Canvas>
+
+                        <Grid Name="loadingGrid" Visibility="Collapsed" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+                            <Grid.Background>
+                                <SolidColorBrush Color="Black" Opacity="0.5"/>
+                            </Grid.Background>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Row="1" Grid.Column="1" 
+                                    BorderBrush="{Binding LoadingIndicatorBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}" 
+                                    BorderThickness="{Binding LoadingIndicatorBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}" 
+                                    Background="{Binding LoadingIndicatorBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}" 
+                                    CornerRadius="{Binding LoadingIndicatorCornerRadius, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}" 
+                                    Padding="20">
+                                <StackPanel SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
+                                    <TextBlock Text="{Binding LoadingIndicatorText, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}" 
+                                               Foreground="{Binding LoadingIndicatorForeground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                               VerticalAlignment="Center"/>
+                                    <ProgressBar Name="loadingProgress" Margin="0,5,0,0" Height="10"/>
+                                    <l:ZapLoadingIndicator x:Name="loadingIndicator" IndicatorStyle="ThreeDots" Margin="0,5,0,0"
+                                                           AccentColor="{Binding LoadingIndicatorAccentColor, 
+                                                                                 RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                        <l:ZapScrollBar x:Name="PART_VerticalScrollBar" 
+                                        Grid.Row="0"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="2"
+                                        Orientation="Vertical"
+                                        AutomationProperties.AutomationId="VerticalScrollBar"
+                                        Maximum="{TemplateBinding ScrollableHeight}"
+                                        ViewportSize="{TemplateBinding ViewportHeight}" 
+                                        Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                        Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                        Background="{Binding ScrollBarBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        ThumbInnerBackground="{Binding ScrollBarThumbInnerBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        ThumbBackground="{Binding ScrollBarThumbBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        ThumbBorderBrush="{Binding ScrollBarThumbBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        ThumbBorderThickness="{Binding ScrollBarThumbBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        ButtonBackground="{Binding ScrollBarButtonBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        ButtonBorderBrush="{Binding ScrollBarButtonBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        ButtonBorderThickness="{Binding ScrollBarButtonBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        DisabledThumbInnerBackground="{Binding ScrollBarDisabledThumbInnerBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        DisabledButtonBackground="{Binding ScrollBarDisabledButtonBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        DisabledButtonBorderBrush="{Binding ScrollBarDisabledButtonBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        DisabledButtonBorderThickness="{Binding ScrollBarDisabledButtonBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}" />
+
+                        <l:ZapScrollBar x:Name="PART_HorizontalScrollBar"
+                                        Grid.Row="2" 
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="2"
+                                        Orientation="Horizontal" 
+                                        AutomationProperties.AutomationId="HorizontalScrollBar" 
+                                        Maximum="{TemplateBinding ScrollableWidth}"  
+                                        ViewportSize="{TemplateBinding ViewportWidth}" 
+                                        Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                        Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                        Background="{Binding ScrollBarBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        ThumbInnerBackground="{Binding ScrollBarThumbInnerBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        ThumbBackground="{Binding ScrollBarThumbBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        ThumbBorderBrush="{Binding ScrollBarThumbBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        ThumbBorderThickness="{Binding ScrollBarThumbBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        ButtonBackground="{Binding ScrollBarButtonBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        ButtonBorderBrush="{Binding ScrollBarButtonBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        ButtonBorderThickness="{Binding ScrollBarButtonBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        DisabledThumbInnerBackground="{Binding ScrollBarDisabledThumbInnerBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        DisabledButtonBackground="{Binding ScrollBarDisabledButtonBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        DisabledButtonBorderBrush="{Binding ScrollBarDisabledButtonBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                        DisabledButtonBorderThickness="{Binding ScrollBarDisabledButtonBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- STYLE - ListView ItemContainer -->
+    <Style x:Key="ZapListViewItemContainerStyle" TargetType="{x:Type ListViewItem}">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Background" Value="{Binding ItemBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"/>
+        <Setter Property="BorderBrush" Value="{Binding ItemBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"/>
+        <Setter Property="BorderThickness" Value="{Binding ItemBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}" />
+        <Setter Property="Foreground" Value="{Binding ItemForeground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True">
+                        <GridViewRowPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
+                            <GridViewRowPresenter.InputBindings>
+                                <MouseBinding MouseAction="LeftDoubleClick"  
+                                              Command="{Binding ItemMouseDoubleClickCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type l:ZapListView}}}"
+                                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" />
+                            </GridViewRowPresenter.InputBindings>
+                        </GridViewRowPresenter>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- MouseOver -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Bd" Property="Background" Value="{Binding ItemMouseOverBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}" />
+                            <Setter Property="Foreground"  Value="{Binding ItemMouseOverForeground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}" />
+                        </MultiTrigger>
+                        <!-- Ligne sélectionnée et sélection non active -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Selector.IsSelectionActive" Value="False" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Bd" Property="Background" Value="{Binding ItemSelectionInactiveBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}" />
+                        </MultiTrigger>
+                        <!-- Ligne sélectionnée et sélection active -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Selector.IsSelectionActive" Value="True" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Bd" Property="Background" Value="{Binding ItemSelectionActiveBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}" />
+                        </MultiTrigger>
+                        <!-- Ligne désactivée -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Bd" Property="TextElement.Foreground" Value="{StaticResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Foreground" Value="{Binding ItemSelectionForeground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!-- STYLE - ListView Gripper -->
+    <Style x:Key="ZapGridViewColumnHeaderGripper" TargetType="{x:Type Thumb}">
+        <Setter Property="Canvas.Right" Value="-9"/>
+        <Setter Property="Width" Value="10"/>
+        <Setter Property="Height" Value="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"/>
+        <Setter Property="Background" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border Background="Transparent" Padding="0">
+                        <Rectangle Fill="{TemplateBinding Background}" HorizontalAlignment="Center" Width="1"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- STYLE - GridViewColumnHeader -->
+    <Style x:Key="ZapGridViewColumnHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+        <Setter Property="Background" Value="{Binding HeaderBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"/>
+        <Setter Property="BorderBrush" Value="{Binding HeaderBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"/>
+        <Setter Property="Foreground" Value="{Binding HeaderForeground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"/>
+        <Setter Property="Command" Value="{Binding ColumnHeaderClickCommand, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}" />
+        <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self}}" />
+        <Setter Property="BorderThickness" Value="0,0,1,1" />
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="5,0"/>
+        <Setter Property="Margin" Value="0,0,0,0"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <!--<Setter Property="b:BoundGridViewColumn.BoundGridViewColumnHeader" Value="{Binding RelativeSource={RelativeSource Self}, Path=Column, Mode=OneWay}"/>-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                    <Grid SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" UseLayoutRounding="{TemplateBinding UseLayoutRounding}" >
+                        <Border x:Name="headerBorder"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Background="{TemplateBinding Background}"
+                                Padding="{TemplateBinding Padding}"
+                                UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
+                            <ContentPresenter Margin="1,0,1,1"                                              
+                                              RecognizesAccessKey="True"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              UseLayoutRounding="{TemplateBinding UseLayoutRounding}"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <Canvas>
+                            <Thumb x:Name="PART_HeaderGripper" Style="{StaticResource ZapGridViewColumnHeaderGripper}" />
+                        </Canvas>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="headerBorder" Value="{Binding HeaderBackgroundMouseOver, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="headerBorder" Value="{Binding HeaderBackgroundIsPressed, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- STYLE - ListView -->
+    <Style x:Key="ZapListViewStyle" TargetType="{x:Type l:ZapListView}">
+        <Setter Property="Background" Value="#505050"/>
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="ItemContainerStyle" Value="{StaticResource ZapListViewItemContainerStyle}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type l:ZapListView}">
+                    <Border Name="listViewBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
+                        <ScrollViewer Style="{StaticResource ZapGridViewScrollViewerStyle}" 
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                      UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,22 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:ZapanControls">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapButtons.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapCalendar.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapContextMenu.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapDataGrid.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapListView.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapLoadingIndicator.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapMenuItem.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapScrollBar.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapScrollViewer.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapTabControl.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapTabItem.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapTabItemAdd.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapWindow.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+</ResourceDictionary>
