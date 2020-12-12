@@ -1186,8 +1186,8 @@ namespace ZapanControls.DataTemplateSelectors
                     ParserContext context = new ParserContext { XamlTypeMapper = new XamlTypeMapper(Array.Empty<string>()) };
                     context.XmlnsDictionary.Add("", "http://schemas.microsoft.com/winfx/2006/xaml/presentation");
                     context.XmlnsDictionary.Add("x", "http://schemas.microsoft.com/winfx/2006/xaml");
-                    context.XmlnsDictionary.Add("i", "clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity");
-                    context.XmlnsDictionary.Add("z", "http://schemas.zapan.com/wpf/2018");
+                    context.XmlnsDictionary.Add("i", "clr-namespace:Microsoft.Xaml.Behaviors;assembly=Microsoft.Xaml.Behaviors");
+                    context.XmlnsDictionary.Add("z", "http://schemas.zapan.com/wpf/controls/2020");
 
                     col.HeaderTemplate = XamlReader.Parse(template, context) as DataTemplate;
                 }
