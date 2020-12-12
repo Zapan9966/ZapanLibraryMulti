@@ -28,6 +28,7 @@ namespace ZapanControls.Controls
         };
         private readonly DeferredAction _deferredAction;
 
+        private bool _disposed;
         private bool _isFiltering;
         private BackgroundWorker _worker;
         private ZapButtonFlat _btnRemoveFilters;
@@ -51,7 +52,7 @@ namespace ZapanControls.Controls
             set { Set(ref _isFiltering, value); }
         }
 
-        public IEnumerable<dynamic> Alltems { get; private set; }
+        public AsyncObservableCollection<dynamic> Alltems { get; private set; }
 
         #region Default Static Properties
 
@@ -856,7 +857,7 @@ namespace ZapanControls.Controls
 
             Loaded += InternalZapListView_Loaded;
 
-            Alltems = new List<dynamic>();
+            Alltems = new AsyncObservableCollection<dynamic>();
             FiltersDictionary = new Dictionary<string, KeyValuePair<object, IValueConverter>>();
             _deferredAction = DeferredAction.Create(() => FilterListView());
         }
@@ -1499,6 +1500,15 @@ namespace ZapanControls.Controls
             base.OnApplyTemplate();
         }
 
+        public void Add(object item)
+        {
+            lock (Alltems)
+            {
+                Alltems.Add(item);
+                FilterListView(showLoadingIndicator: false);
+            }
+        }
+
         protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
         {
             base.OnItemsChanged(e);
@@ -1620,8 +1630,22 @@ namespace ZapanControls.Controls
 
         public void Dispose()
         {
-            _worker.Dispose();
-            _deferredAction.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+
+            if (disposing)
+            {
+                _worker?.Dispose();
+                _deferredAction?.Dispose();
+            }
+
+            _disposed = true;
         }
 
     }
