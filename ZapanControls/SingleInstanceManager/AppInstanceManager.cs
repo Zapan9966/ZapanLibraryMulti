@@ -85,20 +85,24 @@ namespace ZapanControls.SingleInstanceManager
         {
             while (_appIsRunning)
             {
-                using (_pipeServer = new NamedPipeServerStream(_pipeName, PipeDirection.In, 99, PipeTransmissionMode.Message))
+                using (_pipeServer = new NamedPipeServerStream(_pipeName, PipeDirection.In, 1, PipeTransmissionMode.Message))
                 {
                     _pipeServer.WaitForConnection();
 
                     StringBuilder builder = new StringBuilder();
                     byte[] buffer = new byte[_bufferSize];
-                    int bytesRead;
+                    //int bytesRead;
 
                     do
                     {
-                        while ((bytesRead = _pipeServer.Read(buffer, 0, buffer.Length)) > 0)
-                        {
-                            builder.Append(Encoding.UTF8.GetString(buffer, 0, bytesRead));
-                        }
+                        _pipeServer.Read(buffer, 0, buffer.Length);
+                        builder.Append(Encoding.UTF8.GetString(buffer));
+                        buffer = new byte[buffer.Length];
+
+                        //while ((bytesRead = _pipeServer.Read(buffer, 0, buffer.Length)) > 0)
+                        //{
+                        //    builder.Append(Encoding.UTF8.GetString(buffer, 0, bytesRead));
+                        //}
                     }
                     while (!_pipeServer.IsMessageComplete);
 
