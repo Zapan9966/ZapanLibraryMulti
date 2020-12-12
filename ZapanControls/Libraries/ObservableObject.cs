@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -12,6 +13,7 @@ namespace ZapanControls.Libraries
     /// <summary>
     /// <see cref="Freezable"/> object that provides an implementation of the <see cref="INotifyPropertyChanged"/> and <see cref="IDataErrorInfo"/> interface. 
     /// </summary>
+    [Serializable]
     public class ObservableObject : INotifyPropertyChanged, IDataErrorInfo
     {
         /// <summary>Occurs when a property value changes. </summary>
@@ -103,15 +105,17 @@ namespace ZapanControls.Libraries
 
         #region IDataErrorInfo Implementation
 
+        [NotMapped]
         public virtual string Error { get; } = string.Empty;
 
+        [NotMapped]
         public virtual string this[string columnName] => null;
 
         public string DataValidationMessages()
         {
             string msg = string.Empty;
 
-            foreach (PropertyInfo property in this.GetType().GetProperties())
+            foreach (PropertyInfo property in GetType().GetProperties())
             {
                 msg += this[property.Name] != null ? $" - {this[property.Name]}\r\n" : string.Empty;
             }
