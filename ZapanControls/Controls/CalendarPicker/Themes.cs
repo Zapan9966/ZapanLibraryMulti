@@ -18,6 +18,11 @@
         /// Office 2007 silver theme
         /// </summary>
         OfficeSilver,
+        /// <summary>
+        /// Oceatech classic theme
+        /// </summary>
+        Oceatech,
+
         // OS Themes
         /// <summary>
         /// Aero normal color theme
