@@ -19,6 +19,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using ZapanControls.Helpers;
 using ZapanControls.Libraries;
+using Ctrl = System.Windows.Controls;
 
 namespace ZapanControls.Controls
 {
@@ -551,7 +552,7 @@ namespace ZapanControls.Controls
         /// </summary>
         public ICommand RemoveDateCommand { get; }
 
-        private static void RemoveDateClick(DatePicker datePicker)
+        private static void RemoveDateClick(Ctrl.DatePicker datePicker)
         {
             if (datePicker != null)
                 datePicker.SelectedDate = null;
@@ -570,7 +571,7 @@ namespace ZapanControls.Controls
                 {
                     if (ctrl.Name == "search")
                     {
-                        if (ctrl is DatePicker dp)
+                        if (ctrl is Ctrl.DatePicker dp)
                         {
                             if (dp.SelectedDate.HasValue)
                                 dp.SelectedDate = null;
@@ -725,7 +726,7 @@ namespace ZapanControls.Controls
                 param => ToggleButtonClick(param),
                 param => true);
 
-            RemoveDateCommand = new RelayCommand<DatePicker>(
+            RemoveDateCommand = new RelayCommand<Ctrl.DatePicker>(
                 param => RemoveDateClick(param),
                 param => true);
 
@@ -863,7 +864,7 @@ namespace ZapanControls.Controls
                             _filtersDictionary.Remove(columnName);
                     }
                     // Vérification du DatePicker
-                    if (dpo is DatePicker dp)
+                    if (dpo is Ctrl.DatePicker dp)
                     {
                         if (dp.SelectedDate.HasValue)
                         {

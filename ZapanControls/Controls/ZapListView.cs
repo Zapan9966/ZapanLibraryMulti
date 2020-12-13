@@ -17,12 +17,13 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using ZapanControls.Helpers;
 using ZapanControls.Libraries;
+using Ctrl = System.Windows.Controls;
 
 namespace ZapanControls.Controls
 {
     public sealed class ZapListView : ListView, INotifyPropertyChanged, IDisposable
     {
-        private static readonly ResourceDictionary _dict = new ResourceDictionary()
+        private static readonly ResourceDictionary _dict = new ResourceDictionary
         {
             Source = new Uri("pack://application:,,,/ZapanControls;component/Themes/ZapListView.xaml")
         };
@@ -620,7 +621,7 @@ namespace ZapanControls.Controls
         /// </summary>
         public ICommand RemoveDateCommand { get; }
 
-        private static void RemoveDateClick(DatePicker datePicker)
+        private static void RemoveDateClick(Ctrl.DatePicker datePicker)
         {
             if (datePicker != null)
                 datePicker.SelectedDate = null;
@@ -639,7 +640,7 @@ namespace ZapanControls.Controls
                 {
                     if (ctrl.Name == "search")
                     {
-                        if (ctrl is DatePicker dp)
+                        if (ctrl is Ctrl.DatePicker dp)
                         {
                             if (dp.SelectedDate.HasValue)
                                 dp.SelectedDate = null;
@@ -712,7 +713,6 @@ namespace ZapanControls.Controls
                             Items.Refresh();
                             AutoResizeColumns();
                         }
-
                         _sortedColumn = column;
                         _sortDirection = direction;
                         column.SortDirection = direction;
@@ -835,7 +835,7 @@ namespace ZapanControls.Controls
         /// </summary>
         public ZapListView()
         {
-            RemoveDateCommand = new RelayCommand<DatePicker>(
+            RemoveDateCommand = new RelayCommand<Ctrl.DatePicker>(
                 param => RemoveDateClick(param),
                 param => true);
 
@@ -917,6 +917,19 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
+        /// Méthode qui gère l'affichage la désactivation/activation des champs de recherche
+        /// </summary>
+        /// <param name="isEnabled"></param>
+        private void DisableEnableSearchFields(bool isEnabled)
+        {
+            if (VisualTreeHelpers.FindChild(this, "headerRowPresenter") is GridViewHeaderRowPresenter headerRowPresenter)
+            {
+                foreach (Control ctrl in VisualTreeHelpers.FindVisualChildren<Control>(headerRowPresenter))
+                    ctrl.IsEnabled = isEnabled;
+            }
+        }
+
+        /// <summary>
         /// Méthode qui gère le redimmensionnement automatique des colonnes.
         /// </summary>
         private void AutoResizeColumns()
@@ -975,7 +988,7 @@ namespace ZapanControls.Controls
                             DependencyObject dpo = VisualTreeHelpers.FindChild(header, "search");
 
                             // Vérification du DatePicker
-                            if (dpo is DatePicker dp)
+                            if (dpo is Ctrl.DatePicker dp)
                             {
                                 if (dp.SelectedDate.HasValue)
                                 {
@@ -1525,17 +1538,6 @@ namespace ZapanControls.Controls
         }
 
         #endregion
-
-        private void DisableEnableSearchFields(bool isEnabled)
-        {
-            if (VisualTreeHelpers.FindChild(this, "headerRowPresenter") is GridViewHeaderRowPresenter headerRowPresenter)
-            {
-                foreach (Control ctrl in VisualTreeHelpers.FindVisualChildren<Control>(headerRowPresenter))
-                {
-                    ctrl.IsEnabled = isEnabled;
-                }
-            }
-        }
 
         #region INotifyPropertyChanged Implementation
 
