@@ -5,9 +5,10 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapButtons.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapCalendar.xaml" />
+        <!--<ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapCalendar.xaml" />-->
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapContextMenu.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapDataGrid.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapDatePicker.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapListView.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapLoadingIndicator.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapMenuItem.xaml" />
@@ -17,6 +18,7 @@
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapTabItem.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapTabItemAdd.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapWindow.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/CalendarPicker/vhCalendar.Generic.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     
 </ResourceDictionary>
