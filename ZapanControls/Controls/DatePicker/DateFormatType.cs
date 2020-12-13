@@ -42,8 +42,13 @@
         /// </summary>
         ddMMMyyyy,
         /// <summary>
-        /// Monday 01 January 2010
+        /// Monday 01 January 2020
         /// </summary>
-        ddddddMMMMyyyy
+        ddddddMMMMyyyy,
+        /// <summary>
+        /// 01/01/2020
+        /// </summary>
+        ddMMyyyy
+
     }
 }

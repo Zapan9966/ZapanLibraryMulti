@@ -12,6 +12,10 @@
         /// <summary>
         /// Brush style
         /// </summary>
-        Brush
+        Brush,
+        /// <summary>
+        /// Flat style
+        /// </summary>
+        Flat
     }
 }

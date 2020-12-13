@@ -314,6 +314,7 @@ namespace ZapanControls.Controls.DatePicker
             FrameworkPropertyMetadata buttonBackgroundBrushMetaData = new FrameworkPropertyMetadata
             {
                 DefaultValue = null,
+                PropertyChangedCallback = new PropertyChangedCallback(OnButtonBackgroundBrushChanged),
                 AffectsRender = true
             };
             ButtonBackgroundBrushProperty = DependencyProperty.Register("ButtonBackgroundBrush", typeof(Brush), typeof(ZapDatePicker), buttonBackgroundBrushMetaData);
@@ -322,6 +323,7 @@ namespace ZapanControls.Controls.DatePicker
             FrameworkPropertyMetadata buttonBorderBrushPropertyMetaData = new FrameworkPropertyMetadata
             {
                 DefaultValue = null,
+                PropertyChangedCallback = new PropertyChangedCallback(OnButtonBorderBrushChanged),
                 AffectsRender = true
             };
             ButtonBorderBrushProperty = DependencyProperty.Register("ButtonBorderBrush", typeof(Brush), typeof(ZapDatePicker), buttonBorderBrushPropertyMetaData);
@@ -377,12 +379,7 @@ namespace ZapanControls.Controls.DatePicker
                 Image buttonImage = (Image)FindElement("Part_ButtonImage");
                 if (button != null || buttonImage != null)
                 {
-                    if (ButtonStyle == ButtonType.Brush)
-                    {
-                        buttonImage.Source = null;
-                        button.Style = (Style)TryFindResource("ButtonBrushStyle");
-                    }
-                    else
+                    if (ButtonStyle == ButtonType.Image)
                     {
                         button.Style = (Style)TryFindResource("ButtonImageStyle");
                         BitmapImage img = new BitmapImage();
@@ -390,6 +387,18 @@ namespace ZapanControls.Controls.DatePicker
                         img.UriSource = new Uri("pack://application:,,,/ZapanControls;component/Controls/DatePicker/Images/Control_MonthCalendar.bmp", UriKind.Absolute);
                         img.EndInit();
                         buttonImage.Source = img;
+                    }
+                    else
+                    {
+                        buttonImage.Source = null;
+                        if (ButtonStyle == ButtonType.Brush)
+                        {
+                            button.Style = (Style)TryFindResource("ButtonBrushStyle");
+                        }
+                        else
+                        {
+                            button.Style = (Style)TryFindResource("ButtonFlatStyle");
+                        }
                     }
                 }
             }
@@ -407,6 +416,7 @@ namespace ZapanControls.Controls.DatePicker
 
         private static void OnButtonBackgroundBrushChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
+            
             ZapDatePicker dp = o as ZapDatePicker;
             Button button = (Button)dp.FindElement("Part_CalendarButton");
             Brush brush = (Brush)e.NewValue;
@@ -642,12 +652,15 @@ namespace ZapanControls.Controls.DatePicker
                 case DateFormatType.ddddddMMMMyyyy:
                     dp.FormatString = "{0:dddd dd MMMM yyyy}";
                     break;
+                case DateFormatType.ddMMyyyy:
+                    dp.FormatString = "{0:dd/MM/yyyy}";
+                    break;
             }
             dp.Text = string.Format(dp.FormatString, dp.DisplayDate);
         }
         #endregion
 
-        #region DispayDate
+        #region DisplayDate
         /// <summary>
         /// Gets/Sets currently displayed date
         /// </summary>
@@ -779,9 +792,7 @@ namespace ZapanControls.Controls.DatePicker
             {
                 TextBox tb = (TextBox)dp.FindElement("Part_DateTextBox");
                 if (tb != null)
-                {
                     tb.IsReadOnly = (bool)e.NewValue;
-                }
             }
         }
         #endregion
