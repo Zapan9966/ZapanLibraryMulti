@@ -165,6 +165,7 @@ namespace ZapanControls.Controls.CalendarPicker
         public static ThemePath OfficeBlack = new ThemePath(Themes.OfficeBlack.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Office.Black.xaml");
         public static ThemePath OfficeBlue = new ThemePath(Themes.OfficeBlue.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Office.Blue.xaml");
         public static ThemePath OfficeSilver = new ThemePath(Themes.OfficeSilver.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Office.Silver.xaml");
+        public static ThemePath Oceatech = new ThemePath(Themes.Oceatech.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Oceatech.xaml");
         #endregion
 
         #region MonthList Enum
@@ -188,17 +189,17 @@ namespace ZapanControls.Controls.CalendarPicker
         private enum MonthList
         {
             Janvier = 1,
-            Fevrier,
+            Février,
             Mars,
             Avril,
             Mai,
             Juin,
             Juillet,
-            Aout,
-            Septempbre,
+            Août,
+            Septembre,
             Octobre,
             Novembre,
-            Decembre
+            Décembre
         }
         #endregion
 
@@ -1633,7 +1634,7 @@ namespace ZapanControls.Controls.CalendarPicker
         private void LoadDefaultTheme()
         {
             //string registrationName = GetRegistrationName(Themes.OfficeBlack.ToString(), typeof(Calendar));
-            string registrationName = GetRegistrationName(Themes.Classic.ToString(), typeof(Calendar));
+            string registrationName = GetRegistrationName(Themes.Oceatech.ToString(), typeof(Calendar));
             Resources.MergedDictionaries.Add(_rdThemeDictionaries[registrationName]);
         }
 
@@ -1653,6 +1654,7 @@ namespace ZapanControls.Controls.CalendarPicker
             RegisterTheme(OfficeBlack, typeof(Calendar));
             RegisterTheme(OfficeBlue, typeof(Calendar));
             RegisterTheme(OfficeSilver, typeof(Calendar));
+            RegisterTheme(Oceatech, typeof(Calendar));
         }
 
         /// <summary>
