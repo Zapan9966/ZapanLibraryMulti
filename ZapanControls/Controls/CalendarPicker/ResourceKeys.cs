@@ -455,7 +455,9 @@ namespace ZapanControls.Controls.CalendarPicker
         private static ComponentResourceKey GetRegisteredKey(ComponentResourceKey resKey, string resourceId)
         {
             if (resKey == null)
+            {
                 return new ComponentResourceKey(typeof(ResourceKeys), resourceId);
+            }
             else
                 return resKey;
         }

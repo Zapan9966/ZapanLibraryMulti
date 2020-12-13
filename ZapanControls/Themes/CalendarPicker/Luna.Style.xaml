@@ -24,7 +24,7 @@
                                     BorderThickness="0"
                                     Background="{DynamicResource {x:Static local:ResourceKeys.ButtonTransparentBrushKey}}"
                                     BorderBrush="{DynamicResource {x:Static local:ResourceKeys.ButtonTransparentBrushKey}}">
-                                <ContentPresenter Margin="2"
+                                <ContentPresenter Margin="2,1,2,2"
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"
                                                   RecognizesAccessKey="True" />
@@ -63,17 +63,17 @@
                                   BorderBrush="{DynamicResource {x:Static local:ResourceKeys.ButtonTransparentBrushKey}}">
                                 <Grid>
                                     <ContentPresenter Margin="2"
-                                                  HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"
-                                                  RecognizesAccessKey="True"/>
+                                                      HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"
+                                                      RecognizesAccessKey="True"/>
                                     <Path x:Name="LeftArrowPath" 
-                                      Margin="2,-2,0,0" 
-                                      Height="10" Width="6" 
-                                      VerticalAlignment="Center" HorizontalAlignment="Left" 
-                                      StrokeThickness="0.5" Stroke="{DynamicResource {x:Static local:ResourceKeys.ArrowBorderBrushKey}}" 
-                                      Stretch="Fill" 
-                                      Data="M288.75,232.25 L288.75,240.625 L283,236.625 z"
-                                      Fill="{DynamicResource {x:Static local:ResourceKeys.ArrowNormalFillBrushKey}}">
+                                          Margin="2,-2,0,0" 
+                                          Height="10" Width="6" 
+                                          VerticalAlignment="Center" HorizontalAlignment="Left" 
+                                          StrokeThickness="0.5" Stroke="{DynamicResource {x:Static local:ResourceKeys.ArrowBorderBrushKey}}" 
+                                          Stretch="Fill" 
+                                          Data="M288.75,232.25 L288.75,240.625 L283,236.625 z"
+                                          Fill="{DynamicResource {x:Static local:ResourceKeys.ArrowNormalFillBrushKey}}">
                                     </Path>
                                 </Grid>
                             </Border>
@@ -107,23 +107,23 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="RepeatButton">
                             <Border x:Name="Border"  
-                                  CornerRadius="2" 
-                                  BorderThickness="0"
-                                  Background="{DynamicResource {x:Static local:ResourceKeys.ButtonTransparentBrushKey}}"
-                                  BorderBrush="{DynamicResource {x:Static local:ResourceKeys.ButtonTransparentBrushKey}}">
+                                    CornerRadius="2" 
+                                    BorderThickness="0"
+                                    Background="{DynamicResource {x:Static local:ResourceKeys.ButtonTransparentBrushKey}}"
+                                    BorderBrush="{DynamicResource {x:Static local:ResourceKeys.ButtonTransparentBrushKey}}">
                                 <Grid>
                                     <ContentPresenter Margin="2"
-                                                  HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"
-                                                  RecognizesAccessKey="True"/>
+                                                      HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"
+                                                      RecognizesAccessKey="True"/>
                                     <Path x:Name="RightArrowPath" 
-                                      Margin="0,-2,0,0" 
-                                      Height="10" Width="6" 
-                                      VerticalAlignment="Center" HorizontalAlignment="Right" 
-                                      Stretch="Fill" 
-                                      StrokeThickness="0.5" Stroke="{DynamicResource {x:Static local:ResourceKeys.ArrowBorderBrushKey}}" 
-                                      Data="M282.875,231.875 L282.875,240.375 L288.625,236 z"
-                                      Fill="{DynamicResource {x:Static local:ResourceKeys.ArrowNormalFillBrushKey}}">
+                                          Margin="0,-2,0,0" 
+                                          Height="10" Width="6" 
+                                          VerticalAlignment="Center" HorizontalAlignment="Right" 
+                                          Stretch="Fill" 
+                                          StrokeThickness="0.5" Stroke="{DynamicResource {x:Static local:ResourceKeys.ArrowBorderBrushKey}}" 
+                                          Data="M282.875,231.875 L282.875,240.375 L288.625,236 z"
+                                          Fill="{DynamicResource {x:Static local:ResourceKeys.ArrowNormalFillBrushKey}}">
                                     </Path>
                                 </Grid>
                             </Border>
@@ -173,14 +173,20 @@
                                     Background="{TemplateBinding Background}">
                                 <Grid>
                                     <ContentPresenter Margin="0,0,1,1" 
-                                                          HorizontalAlignment="Center" VerticalAlignment="Center" 
-                                                          RecognizesAccessKey="True"/>
+                                                      HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                                      RecognizesAccessKey="True">
+                                        <ContentPresenter.Resources>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="TextTrimming" Value="CharacterEllipsis"></Setter>
+                                            </Style>
+                                        </ContentPresenter.Resources>
+                                    </ContentPresenter>
                                     <Path Name="BlackOutPath" 
-                                              Margin="0,0,1,1" 
-                                              Width="10" Height="10" 
-                                              HorizontalAlignment="Center" VerticalAlignment="Center" 
-                                              Stretch="Fill" Fill="Transparent" 
-                                              Data="F1 M 352.248,97.8266L 349.82,101.038L 352.208,104.173L 350.861,104.173L 349.445,102.117C 349.356,101.988 349.25,101.827 349.127,101.633L 349.1,101.633C 349.076,101.67 348.965,101.831 348.768,102.117L 347.324,104.173L 345.992,104.173L 348.456,101.061L 346.098,97.8266L 347.444,97.8266L 348.838,99.9964C 348.942,100.158 349.042,100.323 349.14,100.492L 349.17,100.492L 350.972,97.8266L 352.248,97.8266 Z "/>
+                                          Margin="0,0,1,1" 
+                                          Width="10" Height="10" 
+                                          HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                          Stretch="Fill" Fill="Transparent" 
+                                          Data="F1 M 352.248,97.8266L 349.82,101.038L 352.208,104.173L 350.861,104.173L 349.445,102.117C 349.356,101.988 349.25,101.827 349.127,101.633L 349.1,101.633C 349.076,101.67 348.965,101.831 348.768,102.117L 347.324,104.173L 345.992,104.173L 348.456,101.061L 346.098,97.8266L 347.444,97.8266L 348.838,99.9964C 348.942,100.158 349.042,100.323 349.14,100.492L 349.17,100.492L 350.972,97.8266L 352.248,97.8266 Z "/>
                                 </Grid>
                             </Border>
                             <ControlTemplate.Triggers>
@@ -253,7 +259,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:Calendar}">
                     <Border Background="{DynamicResource {x:Static local:ResourceKeys.ControlBackgroundBrushKey}}" 
-                            BorderBrush="{DynamicResource {x:Static local:ResourceKeys.ControlBorderBrushKey}}" BorderThickness="0.5" 
+                            BorderBrush="{DynamicResource {x:Static local:ResourceKeys.ControlBorderBrushKey}}" BorderThickness="1" 
                             SnapsToDevicePixels="True">
                         <Grid Name="ControlBorder" >
                             <Grid.RowDefinitions>
@@ -267,51 +273,52 @@
                                     Grid.Column="0" 
                                     Margin="0" Height="22" 
                                     VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                                    BorderThickness="0,0,0,1" 
                                     Background="{DynamicResource {x:Static local:ResourceKeys.HeaderNormalBackgroundBrushKey}}"
-                                    BorderThickness="1" BorderBrush="{DynamicResource {x:Static local:ResourceKeys.HeaderNormalBorderBrushKey}}"                                    
+                                    BorderBrush="{DynamicResource {x:Static local:ResourceKeys.HeaderNormalBorderBrushKey}}"                                    
                                     SnapsToDevicePixels="True">
                             </Border>
 
                             <!--date header-->
                             <local:DateButton x:Name="Part_TitleButton" 
-                                    Style="{StaticResource HeaderButtonStyle}" 
-                                    Grid.Row="0"                                              
-                                    Height="18" 
-                                    Margin="1" Padding="2"
-                                    VerticalAlignment="Center" HorizontalAlignment="Center"
-                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-                                    FontWeight="Bold" FontFamily="Arial" FontSize="12" 
-                                    FlowDirection="LeftToRight" 
-                                    Focusable="True"
-                                    SnapsToDevicePixels="True">
+                                              Style="{StaticResource HeaderButtonStyle}" 
+                                              Grid.Row="0"                                              
+                                              Height="18" 
+                                              Margin="1" Padding="2"
+                                              VerticalAlignment="Center" HorizontalAlignment="Center"
+                                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+                                              FontWeight="Bold" FontFamily="Arial" FontSize="12" 
+                                              FlowDirection="LeftToRight" 
+                                              Focusable="True"
+                                              SnapsToDevicePixels="True">
                             </local:DateButton>
 
                             <!--left arrow button-->
                             <RepeatButton Name="Part_PreviousButton" 
-                                    Style="{StaticResource LeftArrowButtonStyle}" 
-                                    Grid.Row="0"                                               
-                                    Height="18" Width="18" 
-                                    Margin="12,0,0,0" Padding="0"
-                                    VerticalAlignment="Center" HorizontalAlignment="Left" 
-                                    VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                    Background="Transparent" 
-                                    BorderBrush="Transparent" 
-                                    BorderThickness="0"
-                                    SnapsToDevicePixels="True">
+                                          Style="{StaticResource LeftArrowButtonStyle}" 
+                                          Grid.Row="0"                                               
+                                          Height="18" Width="18" 
+                                          Margin="12,0,0,0" Padding="0"
+                                          VerticalAlignment="Center" HorizontalAlignment="Left" 
+                                          VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                          Background="Transparent" 
+                                          BorderBrush="Transparent" 
+                                          BorderThickness="0"
+                                          SnapsToDevicePixels="True">
                             </RepeatButton>
 
                             <!--right arrow button-->
                             <RepeatButton Name="Part_NextButton" 
-                                    Style="{StaticResource RightArrowButtonStyle}" 
-                                    Grid.Row="0"
-                                    Height="18" Width="18"                                               
-                                    Margin="0,0,12,0" Padding="0"
-                                    VerticalAlignment="Center" HorizontalAlignment="Right" 
-                                    VerticalContentAlignment="Center" HorizontalContentAlignment="Center"                 
-                                    Background="Transparent"
-                                    BorderBrush="Transparent" 
-                                    BorderThickness="0"
-                                    SnapsToDevicePixels="True">
+                                          Style="{StaticResource RightArrowButtonStyle}" 
+                                          Grid.Row="0"
+                                          Height="18" Width="18"                                               
+                                          Margin="0,0,12,0" Padding="0"
+                                          VerticalAlignment="Center" HorizontalAlignment="Right" 
+                                          VerticalContentAlignment="Center" HorizontalContentAlignment="Center"                 
+                                          Background="Transparent"
+                                          BorderBrush="Transparent" 
+                                          BorderThickness="0"
+                                          SnapsToDevicePixels="True">
                             </RepeatButton>
 
                             <!--button grids-->
@@ -323,8 +330,8 @@
                                 <!--month elements container-->
                                 <Grid Name="Part_MonthContainer">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
@@ -372,16 +379,16 @@
                                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                                           ClipToBounds="True" SnapsToDevicePixels="True">
                                         <UniformGrid Name="Part_MonthGrid"
-                                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                                 Rows="6" Columns="7" 
-                                                 Margin="0"
-                                                 FlowDirection="LeftToRight"
-                                                 SnapsToDevicePixels="True"/>
+                                                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                                     Rows="6" Columns="7" 
+                                                     Margin="0"
+                                                     FlowDirection="LeftToRight"
+                                                     SnapsToDevicePixels="True"/>
                                         <Grid Name="Part_ScrollGrid" Visibility="Collapsed"
-                                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                                 Margin="0"
-                                                 FlowDirection="LeftToRight"
-                                                 SnapsToDevicePixels="True"/>
+                                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                              Margin="0"
+                                              FlowDirection="LeftToRight"
+                                              SnapsToDevicePixels="True"/>
                                     </Grid>
                                 </Grid>
 
@@ -405,8 +412,9 @@
                             <Grid Name="Part_FooterContainer" Grid.Row="2">
                                 <Border x:Name="Part_CurrentDateBorder" MinHeight="18" Height="auto"
                                         Margin="0"
+                                        BorderThickness="0,1,0,0" 
                                         Background="{DynamicResource {x:Static local:ResourceKeys.FooterBackgroundBrushKey}}" 
-                                        BorderThickness="0.5" BorderBrush="{DynamicResource {x:Static local:ResourceKeys.FooterBorderBrushKey}}"
+                                        BorderBrush="{DynamicResource {x:Static local:ResourceKeys.FooterBorderBrushKey}}"
                                         SnapsToDevicePixels="True">
                                 </Border>
                                 <!--current date panel-->
@@ -417,7 +425,7 @@
                                     <TextBlock Name="Part_CurrentDateText" 
                                                Margin="2" Padding="2" Foreground="{DynamicResource {x:Static local:ResourceKeys.FooterForegroundBrushKey}}"
                                                HorizontalAlignment="Center" VerticalAlignment="Center"
-                                               SnapsToDevicePixels="True">Today:</TextBlock>
+                                               SnapsToDevicePixels="True">Aujourd'hui:</TextBlock>
                                 </StackPanel>
                             </Grid>
                         </Grid>

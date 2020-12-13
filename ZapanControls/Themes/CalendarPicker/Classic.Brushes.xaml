@@ -74,13 +74,15 @@
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ResourceKeys}, ResourceId=ButtonDisabledBackgroundBrush}">Transparent</Brush>
 
     
-    <!--week column background-->
+    <!--week column-->
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ResourceKeys}, ResourceId=WeekColumnBackgroundBrush}">#FAFAFA</Brush>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ResourceKeys}, ResourceId=WeekColumnForegroundBrush}" Color="Black"/>
 
 
     <!--day name bar-->
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ResourceKeys}, ResourceId=DayNamesBorderBrush}">Transparent</Brush>
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ResourceKeys}, ResourceId=DayNamesBackgroundBrush}">Transparent</Brush>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ResourceKeys}, ResourceId=DayNamesForegroundBrush}" Color="Black"/>
 
 
     <!--header button-->
@@ -95,8 +97,8 @@
     <!--footer-->
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ResourceKeys}, ResourceId=FooterBorderBrush}">#AFAFAF</Brush>
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ResourceKeys}, ResourceId=FooterBackgroundBrush}">Transparent</Brush>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ResourceKeys}, ResourceId=FooterForegroundBrush}" Color="Black" />
 
- 
     <!--navigation button arrow-->
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ResourceKeys}, ResourceId=ArrowBorderBrush}">#AA000000</Brush>
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ResourceKeys}, ResourceId=ArrowNormalFillBrush}">Black</Brush>

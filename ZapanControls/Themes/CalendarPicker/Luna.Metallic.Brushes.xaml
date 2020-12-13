@@ -73,12 +73,13 @@
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ResourceKeys}, ResourceId=ButtonDisabledBorderBrush}">Transparent</Brush>
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ResourceKeys}, ResourceId=ButtonDisabledBackgroundBrush}">Transparent</Brush>
 
-    <!--week column background-->
+    <!--week column-->
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ResourceKeys}, ResourceId=WeekColumnBackgroundBrush}">#F4F4F4</Brush>
-
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ResourceKeys}, ResourceId=WeekColumnForegroundBrush}" Color="Black"/>
 
     <!--day name bar-->
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ResourceKeys}, ResourceId=DayNamesBorderBrush}">#AEAEC6</Brush>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ResourceKeys}, ResourceId=DayNamesForegroundBrush}" Color="Black"/>
     <LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ResourceKeys}, ResourceId=DayNamesBackgroundBrush}" StartPoint="0,0" EndPoint="0,1">
         <GradientBrush.GradientStops>
             <GradientStopCollection>
@@ -109,6 +110,7 @@
 
     <!--footer-->
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ResourceKeys}, ResourceId=FooterBorderBrush}">#AEAEC6</Brush>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ResourceKeys}, ResourceId=FooterForegroundBrush}" Color="Black" />
     <LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type local:ResourceKeys}, ResourceId=FooterBackgroundBrush}" StartPoint="0,0" EndPoint="0,1">
         <GradientBrush.GradientStops>
             <GradientStopCollection>
