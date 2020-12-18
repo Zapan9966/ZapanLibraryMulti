@@ -202,7 +202,7 @@ namespace ZapanControls.Helpers
         }
 
         /// <summary>
-        /// Met à jour un binding.
+        /// Met à jour un binding contenu dans la fenêtre parente du contrôle.
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="prop"></param>
@@ -210,12 +210,31 @@ namespace ZapanControls.Helpers
         public static void UpdateBinding(DependencyObject obj, DependencyProperty prop, object value)
         {
             Binding binding = BindingOperations.GetBinding(obj, prop);
+            UpdateBinding(obj, binding, value);
+        }
+
+        /// <summary>
+        /// Met à jour un binding contenu dans la fenêtre parente du contrôle.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="binding"></param>
+        /// <param name="value"></param>
+        public static void UpdateBinding(DependencyObject obj, Binding binding, object value)
+        {
             string bindingPath = binding.Path.Path;
             string[] elements = bindingPath.Split('.');
 
             Window parentWindow = Window.GetWindow(obj);
-            object parent = !string.IsNullOrEmpty(binding.ElementName) ? 
-                FindChild(parentWindow, binding.ElementName) : parentWindow;
+
+            object parent = parentWindow;
+            if (binding.Source != null)
+            {
+                parent = binding.Source;
+            }
+            else if (!string.IsNullOrEmpty(binding.ElementName))
+            {
+                parent = FindChild(parentWindow, binding.ElementName);
+            }
 
             SetBindedItem(parent, elements, value);
         }
