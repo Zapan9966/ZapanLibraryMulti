@@ -2,9 +2,9 @@
 using System.Windows;
 #endregion
 
-namespace ZapanControls.Controls.CalendarPicker
+namespace ZapanControls.Controls.ResourceKeys
 {
-    public static class ResourceKeys
+    public static class CalendarResourceKeys
     {
         #region Fields
         // Header
@@ -456,7 +456,7 @@ namespace ZapanControls.Controls.CalendarPicker
         {
             if (resKey == null)
             {
-                return new ComponentResourceKey(typeof(ResourceKeys), resourceId);
+                return new ComponentResourceKey(typeof(CalendarResourceKeys), resourceId);
             }
             else
                 return resKey;

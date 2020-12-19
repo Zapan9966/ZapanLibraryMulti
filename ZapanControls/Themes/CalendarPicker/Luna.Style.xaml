@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:ZapanControls.Controls.CalendarPicker">
+                    xmlns:local="clr-namespace:ZapanControls.Controls.CalendarPicker"
+                    xmlns:r="clr-namespace:ZapanControls.Controls.ResourceKeys">
 
     <!-- ============== -->
     <!-- = Luna Style = -->
@@ -22,8 +23,8 @@
                         <ControlTemplate TargetType="local:DateButton">
                             <Border x:Name="ButtonBorder"  
                                     BorderThickness="0"
-                                    Background="{DynamicResource {x:Static local:ResourceKeys.ButtonTransparentBrushKey}}"
-                                    BorderBrush="{DynamicResource {x:Static local:ResourceKeys.ButtonTransparentBrushKey}}">
+                                    Background="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}"
+                                    BorderBrush="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}">
                                 <ContentPresenter Margin="2,1,2,2"
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"
@@ -31,16 +32,16 @@
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsKeyboardFocused" Value="true">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static local:ResourceKeys.HeaderFocusedBorderBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.HeaderFocusedBorderBrushKey}}" />
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="true">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static local:ResourceKeys.HeaderFocusedForegroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.HeaderFocusedForegroundBrushKey}}" />
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="true">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static local:ResourceKeys.HeaderPressedForegroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.HeaderPressedForegroundBrushKey}}" />
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="false">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static local:ResourceKeys.HeaderNormalForegroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.HeaderNormalForegroundBrushKey}}" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -59,8 +60,8 @@
                             <Border x:Name="Border"  
                                   CornerRadius="2" 
                                   BorderThickness="0"
-                                  Background="{DynamicResource {x:Static local:ResourceKeys.ButtonTransparentBrushKey}}"
-                                  BorderBrush="{DynamicResource {x:Static local:ResourceKeys.ButtonTransparentBrushKey}}">
+                                  Background="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}"
+                                  BorderBrush="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}">
                                 <Grid>
                                     <ContentPresenter Margin="2"
                                                       HorizontalAlignment="Center"
@@ -70,27 +71,27 @@
                                           Margin="2,-2,0,0" 
                                           Height="10" Width="6" 
                                           VerticalAlignment="Center" HorizontalAlignment="Left" 
-                                          StrokeThickness="0.5" Stroke="{DynamicResource {x:Static local:ResourceKeys.ArrowBorderBrushKey}}" 
+                                          StrokeThickness="0.5" Stroke="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowBorderBrushKey}}" 
                                           Stretch="Fill" 
                                           Data="M288.75,232.25 L288.75,240.625 L283,236.625 z"
-                                          Fill="{DynamicResource {x:Static local:ResourceKeys.ArrowNormalFillBrushKey}}">
+                                          Fill="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowNormalFillBrushKey}}">
                                     </Path>
                                 </Grid>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsKeyboardFocused" Value="true">
-                                    <Setter TargetName="LeftArrowPath" Property="Fill" Value="{DynamicResource {x:Static local:ResourceKeys.ArrowFocusedFillBrushKey}}" />
+                                    <Setter TargetName="LeftArrowPath" Property="Fill" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowFocusedFillBrushKey}}" />
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="true">
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonTransparentBrushKey}}" />
-                                    <Setter TargetName="LeftArrowPath" Property="Fill" Value="{DynamicResource {x:Static local:ResourceKeys.ArrowFocusedFillBrushKey}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}" />
+                                    <Setter TargetName="LeftArrowPath" Property="Fill" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowFocusedFillBrushKey}}" />
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="false">
-                                    <Setter TargetName="LeftArrowPath" Property="Fill" Value="{DynamicResource {x:Static local:ResourceKeys.ArrowNormalFillBrushKey}}" />
+                                    <Setter TargetName="LeftArrowPath" Property="Fill" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowNormalFillBrushKey}}" />
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="true">
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonTransparentBrushKey}}" />
-                                    <Setter TargetName="LeftArrowPath" Property="Fill" Value="{DynamicResource {x:Static local:ResourceKeys.ArrowPressedFillBrushKey}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}" />
+                                    <Setter TargetName="LeftArrowPath" Property="Fill" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowPressedFillBrushKey}}" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -109,8 +110,8 @@
                             <Border x:Name="Border"  
                                     CornerRadius="2" 
                                     BorderThickness="0"
-                                    Background="{DynamicResource {x:Static local:ResourceKeys.ButtonTransparentBrushKey}}"
-                                    BorderBrush="{DynamicResource {x:Static local:ResourceKeys.ButtonTransparentBrushKey}}">
+                                    Background="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}"
+                                    BorderBrush="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}">
                                 <Grid>
                                     <ContentPresenter Margin="2"
                                                       HorizontalAlignment="Center"
@@ -121,26 +122,26 @@
                                           Height="10" Width="6" 
                                           VerticalAlignment="Center" HorizontalAlignment="Right" 
                                           Stretch="Fill" 
-                                          StrokeThickness="0.5" Stroke="{DynamicResource {x:Static local:ResourceKeys.ArrowBorderBrushKey}}" 
+                                          StrokeThickness="0.5" Stroke="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowBorderBrushKey}}" 
                                           Data="M282.875,231.875 L282.875,240.375 L288.625,236 z"
-                                          Fill="{DynamicResource {x:Static local:ResourceKeys.ArrowNormalFillBrushKey}}">
+                                          Fill="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowNormalFillBrushKey}}">
                                     </Path>
                                 </Grid>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsKeyboardFocused" Value="true">
-                                    <Setter TargetName="RightArrowPath" Property="Fill" Value="{DynamicResource {x:Static local:ResourceKeys.ArrowFocusedFillBrushKey}}" />
+                                    <Setter TargetName="RightArrowPath" Property="Fill" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowFocusedFillBrushKey}}" />
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="true">
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonTransparentBrushKey}}" />
-                                    <Setter TargetName="RightArrowPath" Property="Fill" Value="{DynamicResource {x:Static local:ResourceKeys.ArrowFocusedFillBrushKey}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}" />
+                                    <Setter TargetName="RightArrowPath" Property="Fill" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowFocusedFillBrushKey}}" />
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="false">
-                                    <Setter TargetName="RightArrowPath" Property="Fill" Value="{DynamicResource {x:Static local:ResourceKeys.ArrowNormalFillBrushKey}}" />
+                                    <Setter TargetName="RightArrowPath" Property="Fill" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowNormalFillBrushKey}}" />
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="true">
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonTransparentBrushKey}}" />
-                                    <Setter TargetName="RightArrowPath" Property="Fill" Value="{DynamicResource {x:Static local:ResourceKeys.ArrowPressedFillBrushKey}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}" />
+                                    <Setter TargetName="RightArrowPath" Property="Fill" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowPressedFillBrushKey}}" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -150,12 +151,12 @@
 
             <!--day name labels-->
             <Style x:Key="DayNameStyle" TargetType="Label">
-                <Setter Property="Foreground" Value="{DynamicResource {x:Static local:ResourceKeys.DayNamesForegroundBrushKey}}"/>
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.DayNamesForegroundBrushKey}}"/>
             </Style>
 
             <!--week number labels-->
             <Style x:Key="WeekNumberStyle" TargetType="Label">
-                <Setter Property="Foreground" Value="{DynamicResource {x:Static local:ResourceKeys.WeekColumnForegroundBrushKey}}"/>
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.WeekColumnForegroundBrushKey}}"/>
             </Style>
 
             <!--inner grid buttons-->
@@ -169,7 +170,7 @@
                             <Border x:Name="Border" 
                                     SnapsToDevicePixels="True"
                                     CornerRadius="4" Margin="2"
-                                    BorderBrush="{DynamicResource {x:Static local:ResourceKeys.ButtonTransparentBrushKey}}" 
+                                    BorderBrush="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}" 
                                     Background="{TemplateBinding Background}">
                                 <Grid>
                                     <ContentPresenter Margin="0,0,1,1" 
@@ -192,56 +193,56 @@
                             <ControlTemplate.Triggers>
                                 <!--normal state-->
                                 <Trigger Property="IsMouseOver" Value="false">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonNormalForegroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonNormalForegroundBrushKey}}" />
                                     <Setter TargetName="Border" Property="BorderThickness" Value="0.0" />
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonNormalBorderBrushKey}}" />
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonNormalBackgroundBrushKey}}" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonNormalBorderBrushKey}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonNormalBackgroundBrushKey}}" />
                                 </Trigger>
                                 <!--focused state-->
                                 <Trigger Property="IsKeyboardFocused" Value="true">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonFocusedForegroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonFocusedForegroundBrushKey}}" />
                                     <Setter TargetName="Border" Property="BorderThickness" Value="0.5" />
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonFocusedBorderBrushKey}}" />
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonFocusedBackgroundBrushKey}}" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonFocusedBorderBrushKey}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonFocusedBackgroundBrushKey}}" />
                                 </Trigger>
                                 <!--defaulted state-->
                                 <Trigger Property="IsTodaysDate" Value="true">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonDefaultedForegroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonDefaultedForegroundBrushKey}}" />
                                     <Setter TargetName="Border" Property="BorderThickness" Value="0.5" />
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonDefaultedBorderBrushKey}}" />
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonDefaultedBackgroundBrushKey}}" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonDefaultedBorderBrushKey}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonDefaultedBackgroundBrushKey}}" />
                                 </Trigger>
                                 <!--mouseover state-->
                                 <Trigger Property="IsMouseOver" Value="true">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonFocusedForegroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonFocusedForegroundBrushKey}}" />
                                     <Setter TargetName="Border" Property="BorderThickness" Value="0.5" />
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonFocusedBorderBrushKey}}" />
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonFocusedBackgroundBrushKey}}" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonFocusedBorderBrushKey}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonFocusedBackgroundBrushKey}}" />
                                 </Trigger>
                                 <!--selected state-->
                                 <Trigger Property="IsSelected" Value="true">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonSelectedForegroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonSelectedForegroundBrushKey}}" />
                                     <Setter TargetName="Border" Property="BorderThickness" Value="0.5" />
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonSelectedBorderBrushKey}}" />
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonSelectedBackgroundBrushKey}}" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonSelectedBorderBrushKey}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonSelectedBackgroundBrushKey}}" />
                                 </Trigger>
                                 <!--pressed state-->
                                 <Trigger Property="IsPressed" Value="true">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonPressedForegroundBrushKey}}" />
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonPressedBorderBrushKey}}" />
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonPressedBackgroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonPressedForegroundBrushKey}}" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonPressedBorderBrushKey}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonPressedBackgroundBrushKey}}" />
                                 </Trigger>
                                 <!--disabled state-->
                                 <Trigger Property="IsEnabled" Value="false">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonDisabledForegroundBrushKey}}" />
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonDisabledBorderBrushKey}}" />
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonDisabledBackgroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonDisabledForegroundBrushKey}}" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonDisabledBorderBrushKey}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonDisabledBackgroundBrushKey}}" />
                                 </Trigger>
                                 <!--current month state-->
                                 <Trigger Property="IsCurrentMonth" Value="false">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonDisabledForegroundBrushKey}}" />
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonNormalBorderBrushKey}}" />
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static local:ResourceKeys.ButtonNormalBackgroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonDisabledForegroundBrushKey}}" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonNormalBorderBrushKey}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonNormalBackgroundBrushKey}}" />
                                 </Trigger>
                                 <!--BlackOut state-->
                                 <Trigger Property="IsBlackOut" Value="true">
@@ -258,8 +259,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:Calendar}">
-                    <Border Background="{DynamicResource {x:Static local:ResourceKeys.ControlBackgroundBrushKey}}" 
-                            BorderBrush="{DynamicResource {x:Static local:ResourceKeys.ControlBorderBrushKey}}" BorderThickness="1" 
+                    <Border Background="{DynamicResource {x:Static r:CalendarResourceKeys.ControlBackgroundBrushKey}}" 
+                            BorderBrush="{DynamicResource {x:Static r:CalendarResourceKeys.ControlBorderBrushKey}}" BorderThickness="1" 
                             SnapsToDevicePixels="True">
                         <Grid Name="ControlBorder" >
                             <Grid.RowDefinitions>
@@ -274,8 +275,8 @@
                                     Margin="0" Height="22" 
                                     VerticalAlignment="Top" HorizontalAlignment="Stretch"
                                     BorderThickness="0,0,0,1" 
-                                    Background="{DynamicResource {x:Static local:ResourceKeys.HeaderNormalBackgroundBrushKey}}"
-                                    BorderBrush="{DynamicResource {x:Static local:ResourceKeys.HeaderNormalBorderBrushKey}}"                                    
+                                    Background="{DynamicResource {x:Static r:CalendarResourceKeys.HeaderNormalBackgroundBrushKey}}"
+                                    BorderBrush="{DynamicResource {x:Static r:CalendarResourceKeys.HeaderNormalBorderBrushKey}}"                                    
                                     SnapsToDevicePixels="True">
                             </Border>
 
@@ -343,7 +344,7 @@
                                             Grid.Column="0" 
                                             Grid.Row="0" Grid.RowSpan="2" 
                                             Margin="0"
-                                            Background="{DynamicResource {x:Static local:ResourceKeys.WeekColumnBackgroundBrushKey}}"
+                                            Background="{DynamicResource {x:Static r:CalendarResourceKeys.WeekColumnBackgroundBrushKey}}"
                                             SnapsToDevicePixels="True">
                                     </Border>
                                     <!--day names border-->
@@ -352,8 +353,8 @@
                                             Margin="0"                                            
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top"
                                             Height="18"
-                                            Background="{DynamicResource {x:Static local:ResourceKeys.DayNamesBackgroundBrushKey}}"
-                                            BorderThickness="0.5" BorderBrush="{DynamicResource {x:Static local:ResourceKeys.DayNamesBorderBrushKey}}"
+                                            Background="{DynamicResource {x:Static r:CalendarResourceKeys.DayNamesBackgroundBrushKey}}"
+                                            BorderThickness="0.5" BorderBrush="{DynamicResource {x:Static r:CalendarResourceKeys.DayNamesBorderBrushKey}}"
                                             SnapsToDevicePixels="True">
                                     </Border>
                                     <!--day names grid-->
@@ -413,8 +414,8 @@
                                 <Border x:Name="Part_CurrentDateBorder" MinHeight="18" Height="auto"
                                         Margin="0"
                                         BorderThickness="0,1,0,0" 
-                                        Background="{DynamicResource {x:Static local:ResourceKeys.FooterBackgroundBrushKey}}" 
-                                        BorderBrush="{DynamicResource {x:Static local:ResourceKeys.FooterBorderBrushKey}}"
+                                        Background="{DynamicResource {x:Static r:CalendarResourceKeys.FooterBackgroundBrushKey}}" 
+                                        BorderBrush="{DynamicResource {x:Static r:CalendarResourceKeys.FooterBorderBrushKey}}"
                                         SnapsToDevicePixels="True">
                                 </Border>
                                 <!--current date panel-->
@@ -423,7 +424,7 @@
                                             HorizontalAlignment="Center" VerticalAlignment="Stretch"
                                             SnapsToDevicePixels="True">
                                     <TextBlock Name="Part_CurrentDateText" 
-                                               Margin="2" Padding="2" Foreground="{DynamicResource {x:Static local:ResourceKeys.FooterForegroundBrushKey}}"
+                                               Margin="2" Padding="2" Foreground="{DynamicResource {x:Static r:CalendarResourceKeys.FooterForegroundBrushKey}}"
                                                HorizontalAlignment="Center" VerticalAlignment="Center"
                                                SnapsToDevicePixels="True">Aujourd'hui:</TextBlock>
                                 </StackPanel>
