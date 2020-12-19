@@ -78,18 +78,14 @@ namespace ZapanControls.Controls.DatePicker
         /// <param name="e"></param>
         private void CalendarButton_Click(object sender, RoutedEventArgs e)
         {
-            //Popup popCalendarPopup = (Popup)FindElement("Part_CalendarPopup");
             if (Popup != null)
             {
                 if (CalendarPlacement != PlacementType.Left)
                 {
-                    double btnWidth = 0.0;
                     Button button = (Button)FindElement("Part_CalendarButton");
-                    if (button != null)
-                        btnWidth = button.ActualWidth;
+                    double btnWidth = button?.ActualWidth ?? 0.0;
 
                     Popup.Placement = PlacementMode.RelativePoint;
-                    //popCalendarPopup.HorizontalOffset = -(ActualWidth + 4);
                     Popup.HorizontalOffset = btnWidth - CalendarWidth;
                     Popup.VerticalOffset = ActualHeight;
                 }
@@ -179,155 +175,6 @@ namespace ZapanControls.Controls.DatePicker
         static ZapDatePicker()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ZapDatePicker), new FrameworkPropertyMetadata(typeof(ZapDatePicker)));
-
-            // CalendarPlacement
-            PropertyMetadata calendarPlacementMetadata = new PropertyMetadata
-            {
-                DefaultValue = PlacementType.Right
-            };
-            CalendarPlacementProperty = DependencyProperty.Register("CalendarPlacement", typeof(PlacementType), typeof(ZapDatePicker), calendarPlacementMetadata);
-
-            // IsCheckable
-            FrameworkPropertyMetadata isCheckablePropertyMetadata = new FrameworkPropertyMetadata
-            {
-                DefaultValue = false,
-                PropertyChangedCallback = new PropertyChangedCallback(OnIsCheckableChanged), 
-                AffectsRender = true
-            };
-            IsCheckableProperty = DependencyProperty.Register("IsCheckable", typeof(bool), typeof(ZapDatePicker), isCheckablePropertyMetadata);
-
-            // IsCheckedProperty
-            FrameworkPropertyMetadata isCheckedPropertyMetadata = new FrameworkPropertyMetadata
-            {
-                DefaultValue = false,
-                PropertyChangedCallback = new PropertyChangedCallback(OnIsCheckedChanged), 
-            };
-            IsCheckedProperty = DependencyProperty.Register("IsChecked", typeof(bool), typeof(ZapDatePicker), isCheckedPropertyMetadata);
-
-            // DateFormat
-            FrameworkPropertyMetadata dateFormatMetadata = new FrameworkPropertyMetadata
-            {
-                DefaultValue = DateFormatType.MMMddyyyy,
-                PropertyChangedCallback = new PropertyChangedCallback(OnDateFormatChanged), 
-                AffectsRender = true
-            };
-            DateFormatProperty = DependencyProperty.Register("DateFormat", typeof(DateFormatType), typeof(ZapDatePicker), dateFormatMetadata);
-
-            // ButtonStyle
-            FrameworkPropertyMetadata buttonStyleMetadata = new FrameworkPropertyMetadata
-            {
-                DefaultValue = ButtonType.Flat,
-                PropertyChangedCallback = new PropertyChangedCallback(OnButtonStyleChanged),
-                AffectsRender = true
-            };
-            ButtonStyleProperty = DependencyProperty.Register("ButtonStyle", typeof(ButtonType), typeof(ZapDatePicker), buttonStyleMetadata);
-
-            // DisplayDate
-            PropertyMetadata displayDateMetadata = new PropertyMetadata
-            {
-                CoerceValueCallback = CoerceDateToBeInRange,
-                DefaultValue = DateTime.Today,
-                PropertyChangedCallback = new PropertyChangedCallback(OnDisplayDateChanged)
-            };
-            DisplayDateProperty = DependencyProperty.Register("DisplayDate", typeof(DateTime), typeof(ZapDatePicker), displayDateMetadata);
-
-            // Text
-            PropertyMetadata textMetadata = new PropertyMetadata
-            {
-                DefaultValue = DateTime.Today.ToString(),
-                PropertyChangedCallback = new PropertyChangedCallback(OnTextChanged)
-            };
-            TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(ZapDatePicker), textMetadata);
-
-            // DisplayDateStart
-            PropertyMetadata displayDateStartMetaData = new PropertyMetadata
-            {
-                CoerceValueCallback = CoerceDateToBeInRange,
-                DefaultValue = new DateTime(1, 1, 1),
-            };
-            DisplayDateStartProperty = DependencyProperty.Register("DisplayDateStart", typeof(DateTime), typeof(ZapDatePicker), displayDateStartMetaData);
-
-            // DisplayDateEnd
-            PropertyMetadata displayDateEndMetaData = new PropertyMetadata
-            {
-                DefaultValue = new DateTime(2199, 1, 1),
-                CoerceValueCallback = new CoerceValueCallback(CoerceDisplayDateEnd)
-            };
-            DisplayDateEndProperty = DependencyProperty.Register("DisplayDateEnd", typeof(DateTime), typeof(ZapDatePicker), displayDateEndMetaData);
-
-            // CalendarTheme
-            FrameworkPropertyMetadata calendarThemeMetaData = new FrameworkPropertyMetadata
-            {
-                DefaultValue = "AeroNormal",
-                CoerceValueCallback = new CoerceValueCallback(CoerceCalendarTheme),
-                PropertyChangedCallback = new PropertyChangedCallback(OnThemeChanged),
-                AffectsRender = true
-            };
-            CalendarThemeProperty = DependencyProperty.Register("CalendarTheme", typeof(string), typeof(ZapDatePicker), calendarThemeMetaData);
-
-            // CalendarHeight
-            FrameworkPropertyMetadata calendarHeightMetaData = new FrameworkPropertyMetadata
-            {
-                DefaultValue = (double)175,
-                CoerceValueCallback = new CoerceValueCallback(CoerceCalendarSize),
-                AffectsRender = true
-            };
-            CalendarHeightProperty = DependencyProperty.Register("CalendarHeight", typeof(double), typeof(ZapDatePicker), calendarHeightMetaData);
-
-            // CalendarWidth
-            FrameworkPropertyMetadata calendarWidthMetaData = new FrameworkPropertyMetadata
-            {
-                DefaultValue = (double)175,
-                CoerceValueCallback = new CoerceValueCallback(CoerceCalendarSize),
-                AffectsRender = true
-            };
-            CalendarWidthProperty = DependencyProperty.Register("CalendarWidth", typeof(double), typeof(ZapDatePicker), calendarWidthMetaData);
-
-            // FooterVisibility
-            FrameworkPropertyMetadata footerVisibilityMetaData = new FrameworkPropertyMetadata
-            {
-                DefaultValue = Visibility.Collapsed,
-                AffectsRender = true
-            };
-            FooterVisibilityProperty = DependencyProperty.Register("FooterVisibility", typeof(Visibility), typeof(ZapDatePicker), footerVisibilityMetaData);
-
-            // IsReadOnly
-            PropertyMetadata isReadOnlyMetaData = new PropertyMetadata
-            {
-                DefaultValue = true,
-                PropertyChangedCallback = new PropertyChangedCallback(OnReadOnlyChanged)
-            };
-            IsReadOnlyProperty = DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(ZapDatePicker), isReadOnlyMetaData);
-
-            // WeekColumnVisibility
-            FrameworkPropertyMetadata weekColumnVisibilityMetaData = new FrameworkPropertyMetadata
-            {
-                DefaultValue = Visibility.Collapsed,
-                AffectsRender = true
-            };
-            WeekColumnVisibilityProperty = DependencyProperty.Register("WeekColumnVisibility", typeof(Visibility), typeof(ZapDatePicker), weekColumnVisibilityMetaData);
-
-            // ButtonBackgroundBrushProperty
-            FrameworkPropertyMetadata buttonBackgroundBrushMetaData = new FrameworkPropertyMetadata
-            {
-                DefaultValue = null,
-                PropertyChangedCallback = new PropertyChangedCallback(OnButtonBackgroundBrushChanged),
-                AffectsRender = true
-            };
-            ButtonBackgroundBrushProperty = DependencyProperty.Register("ButtonBackgroundBrush", typeof(Brush), typeof(ZapDatePicker), buttonBackgroundBrushMetaData);
-
-            // ButtonBorderBrushProperty
-            FrameworkPropertyMetadata buttonBorderBrushPropertyMetaData = new FrameworkPropertyMetadata
-            {
-                DefaultValue = null,
-                PropertyChangedCallback = new PropertyChangedCallback(OnButtonBorderBrushChanged),
-                AffectsRender = true
-            };
-            ButtonBorderBrushProperty = DependencyProperty.Register("ButtonBorderBrush", typeof(Brush), typeof(ZapDatePicker), buttonBorderBrushPropertyMetaData);
-
-
-            // SelectedDateChanged event registration
-            SelectedDateChangedEvent = EventManager.RegisterRoutedEvent("SelectedDateChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ZapDatePicker));
         }
 
         #region INotifyPropertyChanged Members
@@ -354,7 +201,14 @@ namespace ZapanControls.Controls.DatePicker
         /// <summary>
         /// Gets/Sets the button appearence
         /// </summary>
-        public static readonly DependencyProperty ButtonStyleProperty;
+        public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register(
+            "ButtonStyle", typeof(ButtonType), typeof(ZapDatePicker), 
+            new FrameworkPropertyMetadata
+            {
+                DefaultValue = ButtonType.Flat,
+                PropertyChangedCallback = new PropertyChangedCallback(OnButtonStyleChanged),
+                AffectsRender = true
+            });
 
         public ButtonType ButtonStyle
         {
@@ -403,7 +257,14 @@ namespace ZapanControls.Controls.DatePicker
         #endregion
 
         #region ButtonBackgroundBrush
-        public static readonly DependencyProperty ButtonBackgroundBrushProperty;
+        public static readonly DependencyProperty ButtonBackgroundBrushProperty = DependencyProperty.Register(
+            "ButtonBackgroundBrush", typeof(Brush), typeof(ZapDatePicker),
+            new FrameworkPropertyMetadata
+            {
+                DefaultValue = null,
+                PropertyChangedCallback = new PropertyChangedCallback(OnButtonBackgroundBrushChanged),
+                AffectsRender = true
+            });
 
         public Brush ButtonBackgroundBrush
         {
@@ -424,7 +285,14 @@ namespace ZapanControls.Controls.DatePicker
         #endregion
 
         #region ButtonBorderBrush
-        public static readonly DependencyProperty ButtonBorderBrushProperty;
+        public static readonly DependencyProperty ButtonBorderBrushProperty = DependencyProperty.Register(
+            "ButtonBorderBrush", typeof(Brush), typeof(ZapDatePicker),
+            new FrameworkPropertyMetadata
+            {
+                DefaultValue = null,
+                PropertyChangedCallback = new PropertyChangedCallback(OnButtonBorderBrushChanged),
+                AffectsRender = true
+            });
 
         public Brush ButtonBorderBrush
         {
@@ -461,7 +329,14 @@ namespace ZapanControls.Controls.DatePicker
         /// <summary>
         /// Gets/Sets calendar height
         /// </summary>
-        public static readonly DependencyProperty CalendarHeightProperty;
+        public static readonly DependencyProperty CalendarHeightProperty = DependencyProperty.Register(
+            "CalendarHeight", typeof(double), typeof(ZapDatePicker),
+            new FrameworkPropertyMetadata
+            {
+                DefaultValue = (double)175,
+                CoerceValueCallback = new CoerceValueCallback(CoerceCalendarSize),
+                AffectsRender = true
+            });
 
         public double CalendarHeight
         {
@@ -471,7 +346,7 @@ namespace ZapanControls.Controls.DatePicker
 
         private static object CoerceCalendarSize(DependencyObject d, object o)
         {
-            ZapDatePicker pdp = d as ZapDatePicker;
+            //ZapDatePicker pdp = d as ZapDatePicker;
             double value = (double)o;
 
             if (value < 160)
@@ -488,7 +363,8 @@ namespace ZapanControls.Controls.DatePicker
         /// <summary>
         /// Gets/Sets calendar relative position
         /// </summary>
-        public static readonly DependencyProperty CalendarPlacementProperty;
+        public static readonly DependencyProperty CalendarPlacementProperty = DependencyProperty.Register(
+            "CalendarPlacement", typeof(PlacementType), typeof(ZapDatePicker), new PropertyMetadata(PlacementType.Right));
 
         public PlacementType CalendarPlacement
         {
@@ -499,7 +375,14 @@ namespace ZapanControls.Controls.DatePicker
 
         #region CalendarWidth
         /// <summary>Gets/Sets calendar width</summary>
-        public static readonly DependencyProperty CalendarWidthProperty;
+        public static readonly DependencyProperty CalendarWidthProperty = DependencyProperty.Register(
+            "CalendarWidth", typeof(double), typeof(ZapDatePicker),
+            new FrameworkPropertyMetadata
+            {
+                DefaultValue = (double)175,
+                CoerceValueCallback = new CoerceValueCallback(CoerceCalendarSize),
+                AffectsRender = true
+            });
 
         public double CalendarWidth
         {
@@ -512,7 +395,15 @@ namespace ZapanControls.Controls.DatePicker
         /// <summary>
         /// Change the Calendar element theme
         /// </summary>
-        public static readonly DependencyProperty CalendarThemeProperty;
+        public static readonly DependencyProperty CalendarThemeProperty = DependencyProperty.Register(
+            "CalendarTheme", typeof(string), typeof(ZapDatePicker),
+            new FrameworkPropertyMetadata
+            {
+                DefaultValue = "Oceatech",
+                CoerceValueCallback = new CoerceValueCallback(CoerceCalendarTheme),
+                PropertyChangedCallback = new PropertyChangedCallback(OnThemeChanged),
+                AffectsRender = true
+            });
 
         public string CalendarTheme
         {
@@ -524,7 +415,7 @@ namespace ZapanControls.Controls.DatePicker
         {
             string value = (string)o;
             if (string.IsNullOrEmpty(value))
-                return "AeroNormal";
+                return "Oceatech";
             return o;
         }
 
@@ -534,8 +425,7 @@ namespace ZapanControls.Controls.DatePicker
 
             if (dp.Template != null)
             {
-                Grid grid = (Grid)dp.FindElement("Part_CalendarGrid");
-                if (grid != null)
+                if (dp.FindElement("Part_CalendarGrid") is Grid grid)
                 {
                     if (grid.Children[0] is CalendarPicker.Calendar cld)
                     {
@@ -577,8 +467,12 @@ namespace ZapanControls.Controls.DatePicker
         /// <summary>
         /// Gets/Sets currently selected date
         /// </summary>
-        public static readonly DependencyProperty SelectedDateProperty = DependencyProperty.Register("SelectedDate", typeof(DateTime), typeof(ZapDatePicker), 
-            new PropertyMetadata(DateTime.Today, new PropertyChangedCallback(OnSelectedDateChanged), CoerceDateToBeInRange));
+        public static readonly DependencyProperty SelectedDateProperty = DependencyProperty.Register(
+            "SelectedDate", typeof(DateTime), typeof(ZapDatePicker), 
+            new PropertyMetadata(
+                DateTime.Today, 
+                new PropertyChangedCallback(OnSelectedDateChanged), 
+                CoerceDateToBeInRange));
 
         public DateTime SelectedDate
         {
@@ -605,7 +499,13 @@ namespace ZapanControls.Controls.DatePicker
         /// <summary>
         /// Gets/Sets date display format
         /// </summary>
-        public static readonly DependencyProperty DateFormatProperty;
+        public static readonly DependencyProperty DateFormatProperty = DependencyProperty.Register(
+            "DateFormat", typeof(DateFormatType), typeof(ZapDatePicker), new FrameworkPropertyMetadata
+            {
+                DefaultValue = DateFormatType.ddMMyyyy,
+                PropertyChangedCallback = new PropertyChangedCallback(OnDateFormatChanged),
+                AffectsRender = true
+            });
 
         public DateFormatType DateFormat
         {
@@ -662,7 +562,12 @@ namespace ZapanControls.Controls.DatePicker
         /// <summary>
         /// Gets/Sets currently displayed date
         /// </summary>
-        public static readonly DependencyProperty DisplayDateProperty;
+        public static readonly DependencyProperty DisplayDateProperty = DependencyProperty.Register(
+            "DisplayDate", typeof(DateTime), typeof(ZapDatePicker), 
+            new PropertyMetadata(
+                DateTime.Today,
+                new PropertyChangedCallback(OnDisplayDateChanged),
+                new CoerceValueCallback(CoerceDateToBeInRange)));
 
         public DateTime DisplayDate
         {
@@ -672,7 +577,7 @@ namespace ZapanControls.Controls.DatePicker
 
         private static void OnDisplayDateChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            ZapDatePicker dp = o as ZapDatePicker;
+            //ZapDatePicker dp = o as ZapDatePicker;
         }
         #endregion
 
@@ -680,20 +585,42 @@ namespace ZapanControls.Controls.DatePicker
         /// <summary>
         /// Gets/Sets the minimum date that can be displayed
         /// </summary>
-        public static readonly DependencyProperty DisplayDateStartProperty;
+        public static readonly DependencyProperty DisplayDateStartProperty = DependencyProperty.Register(
+            "DisplayDateStart", typeof(DateTime), typeof(ZapDatePicker), 
+            new PropertyMetadata(
+                new DateTime(1, 1, 1), 
+                null, 
+                new CoerceValueCallback(CoerceDisplayDateStart)));
 
         public DateTime DisplayDateStart
         {
             get { return (DateTime)GetValue(DisplayDateStartProperty); }
             set { SetValue(DisplayDateStartProperty, value); }
         }
+
+        private static object CoerceDisplayDateStart(DependencyObject d, object o)
+        {
+            ZapDatePicker dp = d as ZapDatePicker;
+            DateTime value = (DateTime)o;
+
+            if (value > dp.DisplayDateEnd)
+                return dp.DisplayDateEnd;
+
+            return o;
+        }
+
         #endregion
 
         #region DisplayDateEnd
         /// <summary>
         /// Gets/Sets the maximum date that is displayed, and can be selected
         /// </summary>
-        public static readonly DependencyProperty DisplayDateEndProperty;
+        public static readonly DependencyProperty DisplayDateEndProperty = DependencyProperty.Register(
+            "DisplayDateEnd", typeof(DateTime), typeof(ZapDatePicker), 
+            new PropertyMetadata(
+                new DateTime(2199, 1, 1), 
+                null, 
+                new CoerceValueCallback(CoerceDisplayDateEnd)));
 
         public DateTime DisplayDateEnd
         {
@@ -716,7 +643,13 @@ namespace ZapanControls.Controls.DatePicker
         #region FooterVisibility
         /// <summary>
         /// Gets/Sets the footer visibility</summary>
-        public static readonly DependencyProperty FooterVisibilityProperty;
+        public static readonly DependencyProperty FooterVisibilityProperty = DependencyProperty.Register(
+            "FooterVisibility", typeof(Visibility), typeof(ZapDatePicker),
+            new FrameworkPropertyMetadata
+            {
+                DefaultValue = Visibility.Collapsed,
+                AffectsRender = true
+            });
 
         public Visibility FooterVisibility
         {
@@ -729,7 +662,14 @@ namespace ZapanControls.Controls.DatePicker
         /// <summary>
         /// Gets/Sets control contains checkbox control
         /// </summary>
-        public static readonly DependencyProperty IsCheckableProperty;
+        public static readonly DependencyProperty IsCheckableProperty = DependencyProperty.Register(
+            "IsCheckable", typeof(bool), typeof(ZapDatePicker),
+            new FrameworkPropertyMetadata
+            {
+                DefaultValue = false,
+                PropertyChangedCallback = new PropertyChangedCallback(OnIsCheckableChanged),
+                AffectsRender = true
+            });
 
         public bool IsCheckable
         {
@@ -741,9 +681,8 @@ namespace ZapanControls.Controls.DatePicker
         {
             ZapDatePicker dp = o as ZapDatePicker;
             bool value = (bool)e.NewValue;
-            CheckBox cb = (CheckBox)dp.FindElement("Part_DateCheckBox");
 
-            if (cb != null)
+            if (dp.FindElement("Part_DateCheckBox") is CheckBox cb)
                 cb.Visibility = value == false ? Visibility.Collapsed : Visibility.Visible;
         }
         #endregion
@@ -752,7 +691,8 @@ namespace ZapanControls.Controls.DatePicker
         /// <summary>OnIsCheckedChanged
         /// Gets/Sets checkbox control check state
         /// </summary>
-        public static readonly DependencyProperty IsCheckedProperty;
+        public static readonly DependencyProperty IsCheckedProperty = DependencyProperty.Register(
+            "IsChecked", typeof(bool), typeof(ZapDatePicker), new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnIsCheckedChanged)));
 
         public bool IsChecked
         {
@@ -775,7 +715,13 @@ namespace ZapanControls.Controls.DatePicker
         /// <summary>
         /// Gets/Sets calendar text edit
         /// </summary>
-        public static readonly DependencyProperty IsReadOnlyProperty;
+        public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register(
+            "IsReadOnly", typeof(bool), typeof(ZapDatePicker),
+            new PropertyMetadata
+            {
+                DefaultValue = true,
+                PropertyChangedCallback = new PropertyChangedCallback(OnReadOnlyChanged)
+            });
 
         public bool IsReadOnly
         {
@@ -788,8 +734,7 @@ namespace ZapanControls.Controls.DatePicker
             ZapDatePicker dp = o as ZapDatePicker;
             if (dp.Template != null)
             {
-                TextBox tb = (TextBox)dp.FindElement("Part_DateTextBox");
-                if (tb != null)
+                if (dp.FindElement("Part_DateTextBox") is TextBox tb)
                     tb.IsReadOnly = (bool)e.NewValue;
             }
         }
@@ -799,7 +744,11 @@ namespace ZapanControls.Controls.DatePicker
         /// <summary>
         /// Gets/Sets text displayed in textbox
         /// </summary>
-        public static readonly DependencyProperty TextProperty;
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
+            "Text", typeof(string), typeof(ZapDatePicker), 
+            new PropertyMetadata(
+                DateTime.Today.ToString("dd/MM/yyyy"), 
+                new PropertyChangedCallback(OnTextChanged)));
 
         public string Text
         {
@@ -809,7 +758,7 @@ namespace ZapanControls.Controls.DatePicker
 
         private static void OnTextChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            ZapDatePicker dp = o as ZapDatePicker;
+            //ZapDatePicker dp = o as ZapDatePicker;
         }
         #endregion
 
@@ -817,7 +766,13 @@ namespace ZapanControls.Controls.DatePicker
         /// <summary>
         /// Gets/Sets the week column visibility
         /// </summary>
-        public static readonly DependencyProperty WeekColumnVisibilityProperty;
+        public static readonly DependencyProperty WeekColumnVisibilityProperty = DependencyProperty.Register(
+            "WeekColumnVisibility", typeof(Visibility), typeof(ZapDatePicker),
+            new FrameworkPropertyMetadata
+            {
+                DefaultValue = Visibility.Collapsed,
+                AffectsRender = true
+            });
 
         public Visibility WeekColumnVisibility
         {
@@ -829,7 +784,8 @@ namespace ZapanControls.Controls.DatePicker
         #endregion
 
         #region SelectedDateChangedEvent
-        public static readonly RoutedEvent SelectedDateChangedEvent;
+        public static readonly RoutedEvent SelectedDateChangedEvent = EventManager.RegisterRoutedEvent(
+            "SelectedDateChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ZapDatePicker));
 
         public event RoutedEventHandler SelectedDateChanged
         {
