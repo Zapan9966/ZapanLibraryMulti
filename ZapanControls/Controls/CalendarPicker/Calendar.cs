@@ -104,6 +104,8 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using System.Windows.Documents;
 using System.Linq;
+using ZapanControls.Helpers;
+using ZapanControls.Libraries;
 #endregion
 
 namespace ZapanControls.Controls.CalendarPicker
@@ -382,19 +384,27 @@ namespace ZapanControls.Controls.CalendarPicker
             if (SelectionMode == SelectionType.Single)
             {
                 ClearSelectedDates(false);
-                SelectedDate = date;
+
+                if (BindingOperations.GetBinding(this, SelectedDateProperty) is Binding binding)
+                {
+                    VisualTreeHelpers.UpdateBinding(this, binding, date);
+                }
+                else
+                {
+                    SelectedDate = date;
+                }
                 button.IsSelected = true;
             }
             else if (SelectionMode == SelectionType.Multiple)
             {
-                ObservableCollection<DateTime> oldDates = SelectedDates;
+                ObservableCollection<DateTime> oldDates = SelectedDates.Clone();
                 if (SelectedDates.Contains(date))
                 {
                     if (IsRangeSelection && date != SelectedDates.First() && date != SelectedDates.Last())
                     {
                         List<DateTime> futurDates = SelectedDates.Where(d => d > date).ToList();
 
-                        for (int i = 0; i < futurDates.Count(); i++)
+                        for (int i = 0; i < futurDates.Count; i++)
                         {
                             date = futurDates[i];
 
@@ -419,20 +429,23 @@ namespace ZapanControls.Controls.CalendarPicker
                 }
 
                 if (IsRangeSelection)
+                {
                     SelectRange();
-
-                SelectedDates = new ObservableCollection<DateTime>(SelectedDates.OrderBy(d => d));
+                }
+                else if (BindingOperations.GetBinding(this, SelectedDatesProperty) is Binding binding)
+                {
+                    VisualTreeHelpers.UpdateBinding(this, binding, new ObservableCollection<DateTime>(SelectedDates.OrderBy(d => d)));
+                }
+                else 
+                {
+                    SelectedDates = new ObservableCollection<DateTime>(SelectedDates.OrderBy(d => d));
+                }
                 OnSelectedDatesChanged(this, new DependencyPropertyChangedEventArgs(SelectedDatesProperty, oldDates, SelectedDates));
             }
             else if (SelectionMode == SelectionType.Week)
             {
                 MonthModeDateToRowColumn(date, out int row, out int column);
-                // probably not the right way to do this but..
-                ObservableCollection<DateTime> oldDates = new ObservableCollection<DateTime>();
-                foreach (DateTime dt in SelectedDates)
-                {
-                    oldDates.Add(dt);
-                }
+                ObservableCollection<DateTime> oldDates = SelectedDates.Clone();
 
                 for (int i = 0; i < 7; i++)
                 {
@@ -450,35 +463,40 @@ namespace ZapanControls.Controls.CalendarPicker
                 }
 
                 if (IsRangeSelection)
+                {
                     SelectRange();
-
-                SelectedDates = new ObservableCollection<DateTime>(SelectedDates.OrderBy(d => d));
+                }
+                else if (BindingOperations.GetBinding(this, SelectedDatesProperty) is Binding binding)
+                {
+                    VisualTreeHelpers.UpdateBinding(this, binding, new ObservableCollection<DateTime>(SelectedDates.OrderBy(d => d)));
+                }
+                else
+                {
+                    SelectedDates = new ObservableCollection<DateTime>(SelectedDates.OrderBy(d => d));
+                }
                 OnSelectedDatesChanged(this, new DependencyPropertyChangedEventArgs(SelectedDatesProperty, oldDates, SelectedDates));
             }
         }
 
         private void SelectRange()
         {
-            if (SelectedDates.Count > 0)
+            if (SelectedDates.Any())
             {
                 // Tri chronologique des dates 
-                List<DateTime> orderdDates = SelectedDates.OrderBy(d => d).ToList();
+                IEnumerable<DateTime> orderdDates = SelectedDates.OrderBy(d => d);
 
                 // Nombre de jours entre la date de début et de fin
-                int days = Convert.ToInt32((orderdDates[orderdDates.Count - 1] - orderdDates[0]).TotalDays + 1);
+                int days = Convert.ToInt32((orderdDates.Last() - orderdDates.First()).TotalDays);
 
                 if (days != SelectedDates.Count)
                 {
                     ClearSelectedDates(false);
 
-                    // Récupération de la grille contenant les boutons des jours
-                    UniformGrid grdMonth = (UniformGrid)FindElement("Part_MonthGrid");
-
                     ObservableCollection<DateTime> selectedDates = new ObservableCollection<DateTime>();
 
-                    for (int i = 0; i < days; i++)
+                    for (int i = 0; i <= days; i++)
                     {
-                        DateTime date = orderdDates[0].AddDays(i);
+                        DateTime date = orderdDates.First().AddDays(i);
                         selectedDates.Add(date);
 
                         if (date.Year == DisplayDate.Year && date.Month == DisplayDate.Month)
@@ -491,7 +509,14 @@ namespace ZapanControls.Controls.CalendarPicker
                         }
                     }
 
-                    SelectedDates = selectedDates;
+                    if (BindingOperations.GetBinding(this, SelectedDatesProperty) is Binding binding)
+                    {
+                        VisualTreeHelpers.UpdateBinding(this, binding, selectedDates);
+                    }
+                    else
+                    {
+                        SelectedDates = selectedDates;
+                    }
                 }
             }
         }
@@ -844,7 +869,6 @@ namespace ZapanControls.Controls.CalendarPicker
 
             // adds events and bindings
             SetBindings();
-
             // initialize buttons for display views
             InitializeMonth();
             InitializeYear();
@@ -867,6 +891,7 @@ namespace ZapanControls.Controls.CalendarPicker
                 };
                 grdFooterContainer.SetBinding(VisibilityProperty, bindIsFooterVisible);
             }
+
             UniformGrid grdWeek = (UniformGrid)FindElement("Part_WeekGrid");
             if (grdWeek != null)
             {
@@ -892,6 +917,7 @@ namespace ZapanControls.Controls.CalendarPicker
                 };
                 brdHeaderBorder.SetBinding(HeightProperty, bindHeaderHeight);
             }
+
             // store parent window
             if (!IsDesignTime)
                 FindParentWindow();
@@ -2496,6 +2522,20 @@ namespace ZapanControls.Controls.CalendarPicker
         {
             _dispatcherTimer.Stop();
             ResetDragData();
+        }
+
+        /// <summary>
+        /// Refresh selected Date
+        /// </summary>
+        internal void RefreshSelected()
+        {
+            bool isAnmated = IsAnimated.Clone();
+            IsAnimated = false;
+
+            ClearSelectedDates(false);
+            UpdateCalendar();
+
+            IsAnimated = isAnmated;
         }
 
         /// <summary>

@@ -48,6 +48,7 @@ using System.Reflection;
 using System.Collections;
 using System.ComponentModel;
 using ZapanControls.Controls.CalendarPicker;
+using ZapanControls.Helpers;
 #endregion
 
 namespace ZapanControls.Controls.DatePicker
@@ -146,19 +147,24 @@ namespace ZapanControls.Controls.DatePicker
                     calendar.Theme = CalendarTheme;
                     calendar.Height = CalendarHeight;
                     calendar.Width = CalendarWidth;
+                    calendar.DisplayDateStart = DisplayDateStart;
+                    calendar.DisplayDateEnd = DisplayDateEnd;
+                    calendar.SelectedDate = SelectedDate;
                 }
             }
 
             Popup popCalendarPopup = (Popup)FindElement("Part_CalendarPopup");
             if (popCalendarPopup != null)
+            {
                 Popup = popCalendarPopup;
+                Popup.Opened += (s, e) => Calendar.RefreshSelected();
+            }
 
             // set element bindings
             SetBindings();
 
             // startup date
-            DateTime startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-            Text = string.Format(FormatString, startDate);
+            Text = string.Format(FormatString, SelectedDate);
         }
         #endregion
 
@@ -210,20 +216,11 @@ namespace ZapanControls.Controls.DatePicker
             // ButtonStyle
             FrameworkPropertyMetadata buttonStyleMetadata = new FrameworkPropertyMetadata
             {
-                DefaultValue = ButtonType.Image,
+                DefaultValue = ButtonType.Flat,
                 PropertyChangedCallback = new PropertyChangedCallback(OnButtonStyleChanged),
                 AffectsRender = true
             };
             ButtonStyleProperty = DependencyProperty.Register("ButtonStyle", typeof(ButtonType), typeof(ZapDatePicker), buttonStyleMetadata);
-
-            // SelectedDate
-            PropertyMetadata selectedDateMetadata = new PropertyMetadata
-            {
-                CoerceValueCallback = CoerceDateToBeInRange,
-                DefaultValue = DateTime.Today,
-                PropertyChangedCallback = new PropertyChangedCallback(OnSelectedDateChanged)
-            };
-            SelectedDateProperty = DependencyProperty.Register("SelectedDate", typeof(DateTime), typeof(ZapDatePicker), selectedDateMetadata);
 
             // DisplayDate
             PropertyMetadata displayDateMetadata = new PropertyMetadata
@@ -580,7 +577,8 @@ namespace ZapanControls.Controls.DatePicker
         /// <summary>
         /// Gets/Sets currently selected date
         /// </summary>
-        public static readonly DependencyProperty SelectedDateProperty;
+        public static readonly DependencyProperty SelectedDateProperty = DependencyProperty.Register("SelectedDate", typeof(DateTime), typeof(ZapDatePicker), 
+            new PropertyMetadata(DateTime.Today, new PropertyChangedCallback(OnSelectedDateChanged), CoerceDateToBeInRange));
 
         public DateTime SelectedDate
         {
@@ -905,69 +903,93 @@ namespace ZapanControls.Controls.DatePicker
                 this.SetBinding(IsCheckedProperty, isCheckedBinding);*/
             }
 
-            Binding calendarWeekColumnBinding = new Binding
+            if (!(BindingOperations.GetBinding(this, FooterVisibilityProperty) is Binding calendarFooterBinding))
             {
-                Source = Calendar,
-                Path = new PropertyPath("FooterVisibility"),
-                Mode = BindingMode.TwoWay,
-            };
-            SetBinding(FooterVisibilityProperty, calendarWeekColumnBinding);
+                calendarFooterBinding = new Binding
+                {
+                    Source = this,
+                    Path = new PropertyPath("FooterVisibility"),
+                    Mode = BindingMode.TwoWay,
+                };
+            }
+            Calendar.SetBinding(CalendarPicker.Calendar.FooterVisibilityProperty, calendarFooterBinding);
 
-            Binding calendarFooterBinding = new Binding
+            if (!(BindingOperations.GetBinding(this, WeekColumnVisibilityProperty) is Binding calendarWeekColumnBinding))
             {
-                Source = Calendar,
-                Path = new PropertyPath("WeekColumnVisibility"),
-                Mode = BindingMode.TwoWay,
-            };
-            SetBinding(WeekColumnVisibilityProperty, calendarFooterBinding);
+                calendarWeekColumnBinding = new Binding
+                {
+                    Source = this,
+                    Path = new PropertyPath("WeekColumnVisibility"),
+                    Mode = BindingMode.TwoWay,
+                };
+            }
+            Calendar.SetBinding(CalendarPicker.Calendar.WeekColumnVisibilityProperty, calendarWeekColumnBinding);
 
-            Binding calendarHeightBinding = new Binding
+            if (!(BindingOperations.GetBinding(this, CalendarHeightProperty) is Binding calendarHeightBinding))
             {
-                Source = this.Calendar,
-                Path = new PropertyPath("Height"),
-                Mode = BindingMode.TwoWay,
-            };
-            SetBinding(CalendarHeightProperty, calendarHeightBinding);
+                calendarHeightBinding = new Binding
+                {
+                    Source = this,
+                    Path = new PropertyPath("CalendarHeight"),
+                    Mode = BindingMode.TwoWay,
+                };
+            }
+            Calendar.SetBinding(HeightProperty, calendarHeightBinding);
 
-            Binding calendarWidthBinding = new Binding
+            if (!(BindingOperations.GetBinding(this, CalendarWidthProperty) is Binding calendarWidthBinding))
             {
-                Source = Calendar,
-                Path = new PropertyPath("Width"),
-                Mode = BindingMode.TwoWay,
-            };
-            SetBinding(CalendarWidthProperty, calendarWidthBinding);
+                calendarWidthBinding = new Binding
+                {
+                    Source = this,
+                    Path = new PropertyPath("CalendarWidth"),
+                    Mode = BindingMode.TwoWay,
+                };
+            }
+            Calendar.SetBinding(WidthProperty, calendarWidthBinding);
 
-            Binding selectedDateBinding = new Binding
+            if (!(BindingOperations.GetBinding(this, SelectedDateProperty) is Binding selectedDateBinding))
             {
-                Source = Calendar,
-                Path = new PropertyPath("SelectedDate"),
-                Mode = BindingMode.TwoWay,
-            };
-            SetBinding(SelectedDateProperty, selectedDateBinding);
+                selectedDateBinding = new Binding
+                {
+                    Source = this,
+                    Path = new PropertyPath("SelectedDate"),
+                    Mode = BindingMode.TwoWay,
+                };
+            }
+            Calendar.SetBinding(CalendarPicker.Calendar.SelectedDateProperty, selectedDateBinding);
 
-            Binding displayDateBinding = new Binding
+            if (!(BindingOperations.GetBinding(this, DisplayDateProperty) is Binding displayDateBinding))
             {
-                Source = Calendar,
-                Path = new PropertyPath("DisplayDate"),
-                Mode = BindingMode.TwoWay,
-            };
-            SetBinding(DisplayDateProperty, displayDateBinding);
+                displayDateBinding = new Binding
+                {
+                    Source = this,
+                    Path = new PropertyPath("DisplayDate"),
+                    Mode = BindingMode.TwoWay,
+                };
+            }
+            Calendar.SetBinding(CalendarPicker.Calendar.DisplayDateProperty, displayDateBinding);
 
-            Binding displayDateStartBinding = new Binding
+            if (!(BindingOperations.GetBinding(this, DisplayDateStartProperty) is Binding displayDateStartBinding))
             {
-                Source = Calendar,
-                Path = new PropertyPath("DisplayDateStart"),
-                Mode = BindingMode.TwoWay,
-            };
-            SetBinding(DisplayDateStartProperty, displayDateStartBinding);
+                displayDateStartBinding = new Binding
+                {
+                    Source = this,
+                    Path = new PropertyPath("DisplayDateStart"),
+                    Mode = BindingMode.TwoWay,
+                };
+            }
+            Calendar.SetBinding(CalendarPicker.Calendar.DisplayDateStartProperty, displayDateStartBinding);
 
-            Binding displayDateEndBinding = new Binding
+            if (!(BindingOperations.GetBinding(this, DisplayDateEndProperty) is Binding displayDateEndBinding))
             {
-                Source = Calendar,
-                Path = new PropertyPath("DisplayDateEnd"),
-                Mode = BindingMode.TwoWay,
-            };
-            SetBinding(DisplayDateEndProperty, displayDateEndBinding);
+                displayDateEndBinding = new Binding
+                {
+                    Source = this,
+                    Path = new PropertyPath("DisplayDateEnd"),
+                    Mode = BindingMode.TwoWay,
+                };
+            }
+            Calendar.SetBinding(CalendarPicker.Calendar.DisplayDateEndProperty, displayDateEndBinding);
         }
 
         /// <summary>

@@ -210,9 +210,9 @@
                     BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" 
                     CornerRadius="1">
                     <ScrollViewer x:Name="PART_ContentHost" 
-                              CanContentScroll="False" 
-                              VerticalAlignment="Center" VerticalContentAlignment="Top" 
-                              Padding="0"/>
+                                  CanContentScroll="False" 
+                                  VerticalAlignment="Center" VerticalContentAlignment="Top" 
+                                  Padding="0"/>
                 </Border>
                 
                 <!--optional border arount textbox-->
