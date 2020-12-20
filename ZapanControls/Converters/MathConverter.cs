@@ -16,10 +16,11 @@ namespace ZapanControls.Converters
     [ValueConversion(typeof(double), typeof(double))]
     public sealed class MathConverter : BaseConverter, IValueConverter
     {
-        private static readonly char[] _allOperators = new[] { '+', '-', '*', '/', '%', '(', ')' };
+        private static readonly char[] _allOperators = new[] { '+', '-', '*', '/', '%', '(', ')', '>', '<' };
 
         private static readonly List<string> _grouping = new List<string> { "(", ")" };
         private static readonly List<string> _operators = new List<string> { "+", "-", "*", "/", "%" };
+        private static readonly List<string> _limits = new List<string> { ">", "<" };
 
         #region IValueConverter Members
 
@@ -124,6 +125,34 @@ namespace ZapanControls.Converters
                     else
                         throw new FormatException("Next token is not the expected number"); // Handle Error - Next token is not the expected number
                 }
+
+                if (_limits.Contains(token))
+                {
+                    // If next token after operator is a parenthesis, call method recursively
+                    string nextToken = GetNextToken(mathEquation);
+                    if (nextToken == "(")
+                        EvaluateMathString(ref mathEquation, ref numbers, index + 1);
+
+                    if (numbers.Count > (index + 1) &&
+                        (double.Parse(nextToken, NumberStyles.Number, CultureInfo.InvariantCulture) == numbers[index + 1] || nextToken == "("))
+                    {
+                        switch (token)
+                        {
+                            case ">":
+                                if (numbers[index] < numbers[index + 1])
+                                    numbers[index] = numbers[index + 1];
+                                break;
+                            case "<":
+                                if (numbers[index] > numbers[index + 1])
+                                    numbers[index] = numbers[index + 1];
+                                break;
+                        }
+                        numbers.RemoveAt(index + 1);
+                    }
+                    else
+                        throw new FormatException("Next token is not the expected number"); // Handle Error - Next token is not the expected number
+                }
+
                 token = GetNextToken(mathEquation);
             }
         }
