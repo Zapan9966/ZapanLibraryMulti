@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace ZapanControls.Controls.ResourceKeys
 {
-    public static class CalendarResourceKeys
+    public static class CalendarResourceKeys 
     {
         #region Fields
         // Header

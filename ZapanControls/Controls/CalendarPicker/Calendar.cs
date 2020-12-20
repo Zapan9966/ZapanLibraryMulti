@@ -106,6 +106,8 @@ using System.Windows.Documents;
 using System.Linq;
 using ZapanControls.Helpers;
 using ZapanControls.Libraries;
+using ZapanControls.Controls.Themes;
+using ZapanControls.Controls.Primitives;
 #endregion
 
 namespace ZapanControls.Controls.CalendarPicker
@@ -154,20 +156,20 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <summary>
         /// Operating System Themes
         /// </summary>
-        public static ThemePath AeroNormalColorTheme = new ThemePath(Themes.AeroNormal.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Aero.NormalColor.xaml");
-        public static ThemePath ClassicTheme = new ThemePath(Themes.Classic.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Classic.xaml");
-        public static ThemePath LunaHomesteadTheme = new ThemePath(Themes.LunaHomestead.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Luna.Homestead.xaml");
-        public static ThemePath LunaNormalTheme = new ThemePath(Themes.LunaNormal.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Luna.NormalColor.xaml");
-        public static ThemePath LunaMetallicTheme = new ThemePath(Themes.LunaMetallic.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Luna.Metallic.xaml");
-        public static ThemePath RoyaleTheme = new ThemePath(Themes.Royale.ToString(), "/ZapanControls;component/Themes/CalendarPicker/CalendarPicker/Royale.xaml");
-        public static ThemePath ZuneTheme = new ThemePath(Themes.Zune.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Zune.xaml");
+        public static ThemePath AeroNormalColorTheme = new ThemePath(CalendarPickerThemes.AeroNormal.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Aero.NormalColor.xaml");
+        public static ThemePath ClassicTheme = new ThemePath(CalendarPickerThemes.Classic.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Classic.xaml");
+        public static ThemePath LunaHomesteadTheme = new ThemePath(CalendarPickerThemes.LunaHomestead.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Luna.Homestead.xaml");
+        public static ThemePath LunaNormalTheme = new ThemePath(CalendarPickerThemes.LunaNormal.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Luna.NormalColor.xaml");
+        public static ThemePath LunaMetallicTheme = new ThemePath(CalendarPickerThemes.LunaMetallic.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Luna.Metallic.xaml");
+        public static ThemePath RoyaleTheme = new ThemePath(CalendarPickerThemes.Royale.ToString(), "/ZapanControls;component/Themes/CalendarPicker/CalendarPicker/Royale.xaml");
+        public static ThemePath ZuneTheme = new ThemePath(CalendarPickerThemes.Zune.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Zune.xaml");
         /// <summary>
         /// Custom Themes
         /// </summary>
-        public static ThemePath OfficeBlack = new ThemePath(Themes.OfficeBlack.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Office.Black.xaml");
-        public static ThemePath OfficeBlue = new ThemePath(Themes.OfficeBlue.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Office.Blue.xaml");
-        public static ThemePath OfficeSilver = new ThemePath(Themes.OfficeSilver.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Office.Silver.xaml");
-        public static ThemePath Oceatech = new ThemePath(Themes.Oceatech.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Oceatech.xaml");
+        public static ThemePath OfficeBlack = new ThemePath(CalendarPickerThemes.OfficeBlack.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Office.Black.xaml");
+        public static ThemePath OfficeBlue = new ThemePath(CalendarPickerThemes.OfficeBlue.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Office.Blue.xaml");
+        public static ThemePath OfficeSilver = new ThemePath(CalendarPickerThemes.OfficeSilver.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Office.Silver.xaml");
+        public static ThemePath Oceatech = new ThemePath(CalendarPickerThemes.Oceatech.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Oceatech.xaml");
         #endregion
 
         #region MonthList Enum
@@ -811,17 +813,6 @@ namespace ZapanControls.Controls.CalendarPicker
                         cld.OnPropertyChanged(new PropertyChangedEventArgs(CurrentlySelectedDatePropName));
                     }
             ));
-
-            // SetTheme
-            FrameworkPropertyMetadata themeMetaData = new FrameworkPropertyMetadata
-            {
-                DefaultValue = Themes.AeroNormal.ToString(),
-                CoerceValueCallback = new CoerceValueCallback(CoerceThemeChange),
-                PropertyChangedCallback = new PropertyChangedCallback(OnThemeChanged),
-                AffectsRender = true,
-                AffectsMeasure = true
-            };
-            ThemeProperty = DependencyProperty.Register("Theme", typeof(string), typeof(Calendar), themeMetaData);
 
             // SelectionMode
             UIPropertyMetadata selectionModeMetaData = new UIPropertyMetadata
@@ -1565,7 +1556,16 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <summary>
         /// Get/Sets the Calender theme
         /// </summary>
-        public static DependencyProperty ThemeProperty;
+        public static DependencyProperty ThemeProperty = DependencyProperty.Register(
+            "Theme", typeof(string), typeof(Calendar),
+            new FrameworkPropertyMetadata
+            {
+                DefaultValue = CalendarPickerThemes.Oceatech.ToString(),
+                CoerceValueCallback = new CoerceValueCallback(CoerceThemeChange),
+                PropertyChangedCallback = new PropertyChangedCallback(OnThemeChanged),
+                AffectsRender = true,
+                AffectsMeasure = true
+            });
 
         public string Theme
         {
@@ -1659,8 +1659,8 @@ namespace ZapanControls.Controls.CalendarPicker
         /// </summary>
         private void LoadDefaultTheme()
         {
-            //string registrationName = GetRegistrationName(Themes.OfficeBlack.ToString(), typeof(Calendar));
-            string registrationName = GetRegistrationName(Themes.Oceatech.ToString(), typeof(Calendar));
+            //string registrationName = GetRegistrationName(CalendarPickerThemes.OfficeBlack.ToString(), typeof(Calendar));
+            string registrationName = GetRegistrationName(CalendarPickerThemes.Oceatech.ToString(), typeof(Calendar));
             Resources.MergedDictionaries.Add(_rdThemeDictionaries[registrationName]);
         }
 
@@ -1717,7 +1717,7 @@ namespace ZapanControls.Controls.CalendarPicker
         /// </summary>
         private string GetRegistrationName(string themeName, Type ownerType)
         {
-            return string.Format("{0};{1}", ownerType.ToString(), themeName);
+            return $"{ownerType};{themeName}";
         }
         #endregion
 

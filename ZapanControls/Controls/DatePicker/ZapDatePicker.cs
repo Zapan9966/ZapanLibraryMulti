@@ -49,6 +49,9 @@ using System.Collections;
 using System.ComponentModel;
 using ZapanControls.Controls.CalendarPicker;
 using ZapanControls.Helpers;
+using ZapanControls.Controls.Themes;
+using System.Collections.Generic;
+using ZapanControls.Controls.Primitives;
 #endregion
 
 namespace ZapanControls.Controls.DatePicker
@@ -60,10 +63,14 @@ namespace ZapanControls.Controls.DatePicker
     TemplatePart(Name = "Part_CalendarButton", Type = typeof(Button)),
     TemplatePart(Name = "Part_CalendarGrid", Type = typeof(Grid)),
     TemplatePart(Name = "Part_CalendarPopup", Type = typeof(Popup))]
-    public class ZapDatePicker : Control, INotifyPropertyChanged
+    public class ZapDatePicker : ThemableControl
     {
         #region Fields
-        private string FormatString = "{0:MMM dd, yyyy}";
+        private string FormatString = "{0:dd/MM/yyyy}";
+        #endregion
+
+        #region Theme Declarations
+        public static ThemePath Oceatech = new ThemePath(ZapDatePickerThemes.Oceatech, "/ZapanControls;component/Themes/ZapDatePicker/Oceatech.xaml");
         #endregion
 
         #region Local Properties
@@ -170,6 +177,27 @@ namespace ZapanControls.Controls.DatePicker
             // defaults
             MinHeight = 24;
             MinWidth = 90;
+
+            LoadDefaultTheme(ZapDatePickerThemes.Oceatech, typeof(ZapDatePicker));
+
+            // Control
+            SetCurrentValue(BackgroundProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.BackgroundKey));
+            SetCurrentValue(BorderBrushProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.BorderBrushKey));
+
+            // Button background
+            SetCurrentValue(ButtonBackgroundProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.ButtonBackgroundKey));
+            SetCurrentValue(ButtonBackgroundHoverProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.ButtonBackgroundHoverKey));
+            SetCurrentValue(ButtonBackgroundPressedProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.ButtonBackgroundPressedKey));
+
+            // Button borderbrush
+            SetCurrentValue(ButtonBorderProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.ButtonBorderKey));
+            SetCurrentValue(ButtonBorderHoverProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.ButtonBorderHoverKey));
+            SetCurrentValue(ButtonBorderPressedProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.ButtonBorderPressedKey));
+
+            // Icon
+            SetCurrentValue(IconNormalProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.IconNormalKey));
+            SetCurrentValue(IconHoverProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.IconHoverKey));
+            SetCurrentValue(IconPressedProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.IconPressedKey));
         }
 
         static ZapDatePicker()
@@ -177,25 +205,23 @@ namespace ZapanControls.Controls.DatePicker
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ZapDatePicker), new FrameworkPropertyMetadata(typeof(ZapDatePicker)));
         }
 
-        #region INotifyPropertyChanged Members
-        /// <summary>
-        /// Event raised when a property is changed
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Raises the property changed event
-        /// </summary>
-        /// <param name="e">The arguments to pass</param>
-        protected void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            PropertyChanged?.Invoke(this, e);
-        }
-        #endregion
-
         #endregion
 
         #region Properties
+
+        #region Calendar Object
+        /// <summary>
+        /// Gets/Sets Calendar object
+        /// </summary>
+        public CalendarPicker.Calendar Calendar { get; set; }
+        #endregion
+
+        #region Popup Object
+        /// <summary>
+        /// Gets/Sets Calendar object
+        /// </summary>
+        public Popup Popup { get; set; }
+        #endregion
 
         #region ButtonStyle
         /// <summary>
@@ -256,73 +282,112 @@ namespace ZapanControls.Controls.DatePicker
         }
         #endregion
 
-        #region ButtonBackgroundBrush
-        public static readonly DependencyProperty ButtonBackgroundBrushProperty = DependencyProperty.Register(
-            "ButtonBackgroundBrush", typeof(Brush), typeof(ZapDatePicker),
-            new FrameworkPropertyMetadata
-            {
-                DefaultValue = null,
-                PropertyChangedCallback = new PropertyChangedCallback(OnButtonBackgroundBrushChanged),
-                AffectsRender = true
-            });
+        #region ButtonBackground
+        public static readonly DependencyProperty ButtonBackgroundProperty = DependencyProperty.Register(
+            "ButtonBackground", typeof(Brush), typeof(ZapDatePicker),
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
-        public Brush ButtonBackgroundBrush
+        public Brush ButtonBackground
         {
-            get { return (Brush)GetValue(ButtonBackgroundBrushProperty); }
-            set { SetValue(ButtonBackgroundBrushProperty, value); }
-        }
-
-        private static void OnButtonBackgroundBrushChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-        {
-            
-            ZapDatePicker dp = o as ZapDatePicker;
-            Button button = (Button)dp.FindElement("Part_CalendarButton");
-            Brush brush = (Brush)e.NewValue;
-
-            if (button != null && brush != null)
-                button.Background = brush;
+            get => (Brush)GetValue(ButtonBackgroundProperty);
+            set => SetValue(ButtonBackgroundProperty, value);
         }
         #endregion
 
-        #region ButtonBorderBrush
-        public static readonly DependencyProperty ButtonBorderBrushProperty = DependencyProperty.Register(
-            "ButtonBorderBrush", typeof(Brush), typeof(ZapDatePicker),
-            new FrameworkPropertyMetadata
-            {
-                DefaultValue = null,
-                PropertyChangedCallback = new PropertyChangedCallback(OnButtonBorderBrushChanged),
-                AffectsRender = true
-            });
+        #region ButtonBackgroundHover
+        public static readonly DependencyProperty ButtonBackgroundHoverProperty = DependencyProperty.Register(
+            "ButtonBackgroundHover", typeof(Brush), typeof(ZapDatePicker),
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
-        public Brush ButtonBorderBrush
+        public Brush ButtonBackgroundHover
         {
-            get { return (Brush)GetValue(ButtonBorderBrushProperty); }
-            set { SetValue(ButtonBorderBrushProperty, value); }
-        }
-
-        private static void OnButtonBorderBrushChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-        {
-            ZapDatePicker dp = o as ZapDatePicker;
-            Button button = (Button)dp.FindElement("Part_CalendarButton");
-            Brush brush = (Brush)e.NewValue;
-
-            if (button != null && brush != null)
-                button.BorderBrush = brush;
+            get => (Brush)GetValue(ButtonBackgroundHoverProperty);
+            set => SetValue(ButtonBackgroundHoverProperty, value);
         }
         #endregion
 
-        #region Calendar Object
-        /// <summary>
-        /// Gets/Sets Calendar object
-        /// </summary>
-        public CalendarPicker.Calendar Calendar { get; set; }
+        #region ButtonBackgroundPressed
+        public static readonly DependencyProperty ButtonBackgroundPressedProperty = DependencyProperty.Register(
+            "ButtonBackgroundPressed", typeof(Brush), typeof(ZapDatePicker),
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonBackgroundPressed
+        {
+            get => (Brush)GetValue(ButtonBackgroundPressedProperty);
+            set => SetValue(ButtonBackgroundPressedProperty, value);
+        }
         #endregion
 
-        #region Popup Object
-        /// <summary>
-        /// Gets/Sets Calendar object
-        /// </summary>
-        public Popup Popup { get; set; }
+        #region ButtonBorder
+        public static readonly DependencyProperty ButtonBorderProperty = DependencyProperty.Register(
+            "ButtonBorder", typeof(Brush), typeof(ZapDatePicker),
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonBorder
+        {
+            get => (Brush)GetValue(ButtonBorderProperty);
+            set => SetValue(ButtonBorderProperty, value);
+        }
+        #endregion
+
+        #region ButtonBorderHover
+        public static readonly DependencyProperty ButtonBorderHoverProperty = DependencyProperty.Register(
+            "ButtonBorderHover", typeof(Brush), typeof(ZapDatePicker),
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonBorderHover
+        {
+            get => (Brush)GetValue(ButtonBorderHoverProperty);
+            set => SetValue(ButtonBorderHoverProperty, value);
+        }
+        #endregion
+
+        #region ButtonBorderPressed
+        public static readonly DependencyProperty ButtonBorderPressedProperty = DependencyProperty.Register(
+            "ButtonBorderPressed", typeof(Brush), typeof(ZapDatePicker),
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonBorderPressed
+        {
+            get => (Brush)GetValue(ButtonBorderPressedProperty);
+            set => SetValue(ButtonBorderPressedProperty, value);
+        }
+        #endregion
+
+        #region IconNormal
+        public static readonly DependencyProperty IconNormalProperty = DependencyProperty.Register(
+            "IconNormal", typeof(Brush), typeof(ZapDatePicker), 
+            new FrameworkPropertyMetadata (null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush IconNormal
+        {
+            get => (Brush)GetValue(IconNormalProperty);
+            set => SetValue(IconNormalProperty, value);
+        }
+        #endregion
+
+        #region IconHover
+        public static readonly DependencyProperty IconHoverProperty = DependencyProperty.Register(
+            "IconHover", typeof(Brush), typeof(ZapDatePicker),
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush IconHover
+        {
+            get => (Brush)GetValue(IconHoverProperty);
+            set => SetValue(IconHoverProperty, value);
+        }
+        #endregion
+
+        #region IconPressed
+        public static readonly DependencyProperty IconPressedProperty = DependencyProperty.Register(
+            "IconPressed", typeof(Brush), typeof(ZapDatePicker),
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush IconPressed
+        {
+            get => (Brush)GetValue(IconPressedProperty);
+            set => SetValue(IconPressedProperty, value);
+        }
         #endregion
 
         #region CalendarHeight
@@ -401,7 +466,7 @@ namespace ZapanControls.Controls.DatePicker
             {
                 DefaultValue = "Oceatech",
                 CoerceValueCallback = new CoerceValueCallback(CoerceCalendarTheme),
-                PropertyChangedCallback = new PropertyChangedCallback(OnThemeChanged),
+                PropertyChangedCallback = new PropertyChangedCallback(OnCalendarThemeChanged),
                 AffectsRender = true
             });
 
@@ -419,7 +484,7 @@ namespace ZapanControls.Controls.DatePicker
             return o;
         }
 
-        private static void OnThemeChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        private static void OnCalendarThemeChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             ZapDatePicker dp = o as ZapDatePicker;
 
@@ -430,7 +495,7 @@ namespace ZapanControls.Controls.DatePicker
                     if (grid.Children[0] is CalendarPicker.Calendar cld)
                     {
                         // test against legit value
-                        ArrayList themes = GetEnumArray(typeof(Themes));
+                        ArrayList themes = GetEnumArray(typeof(CalendarPickerThemes));
                         foreach (string ot in themes)
                         {
                             if ((string)e.NewValue == ot)
@@ -747,7 +812,7 @@ namespace ZapanControls.Controls.DatePicker
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
             "Text", typeof(string), typeof(ZapDatePicker), 
             new PropertyMetadata(
-                DateTime.Today.ToString("dd/MM/yyyy"), 
+                DateTime.Today.ToString(), 
                 new PropertyChangedCallback(OnTextChanged)));
 
         public string Text

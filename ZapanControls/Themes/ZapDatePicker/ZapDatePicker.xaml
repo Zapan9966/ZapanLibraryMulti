@@ -13,7 +13,7 @@
             <!-- =========== -->
             <!-- = Brushes = -->
             <!-- =========== -->
-            <SolidColorBrush x:Key="NormalBrush" Color="Transparent"/>
+            <!--<SolidColorBrush x:Key="NormalBrush" Color="Transparent"/>-->
             <SolidColorBrush x:Key="NormalBorderBrush" Color="DarkViolet"/>
             <SolidColorBrush x:Key="DefaultedBorderBrush" Color="Indigo" />
             <SolidColorBrush x:Key="HoverBrush" Color="Transparent" />
@@ -146,56 +146,66 @@
 
             <!-- button flat style -->
             <Style x:Key="ButtonFlatStyle" TargetType="Button">
-                <Style.Resources>
-                    <SolidColorBrush x:Key="IconNormalBrush" Color="DarkViolet"/>
-                    <SolidColorBrush x:Key="IconHoverBrush" Color="Fuchsia" />
-                    <SolidColorBrush x:Key="IconPressedBrush" Color="Fuchsia" Opacity="0.5"/>
-                </Style.Resources>
-                <Setter Property="SnapsToDevicePixels" Value="true"/>
-                <Setter Property="UseLayoutRounding" Value="true"/>
-                <Setter Property="OverridesDefaultStyle" Value="true"/>
-                <Setter Property="BorderBrush" 
-                        Value="{Binding ButtonBorderBrush, 
-                                        TargetNullValue={StaticResource NormalBorderBrush},
-                                        FallbackValue={StaticResource NormalBorderBrush},
-                                        RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
-                <Setter Property="Background" Value="{Binding ButtonBackgroundBrush, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="UseLayoutRounding" Value="True"/>
+                <Setter Property="OverridesDefaultStyle" Value="True"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="Border" 
                                     Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" 
                                     Height="Auto"
-                                    Margin="-1"
-                                    BorderThickness="1,0,0,0" 
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    Background="{TemplateBinding Background}">
-                                <Viewbox Width="{Binding ActualHeight, Converter={zc:MathConverter}, ConverterParameter=@VALUE-2, ElementName=Border}" 
-                                         Height="{Binding ActualHeight, Converter={zc:MathConverter}, ConverterParameter=@VALUE-2, ElementName=Border}">
+                                    Margin="-1,-2,-2,-2"
+                                    BorderThickness="1" 
+                                    Background="{Binding ButtonBackground, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}"
+                                    BorderBrush="{Binding ButtonBorder, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}">
+                                <Viewbox Width="{Binding ActualHeight, Converter={zc:MathConverter}, ConverterParameter='@VALUE-3>0', ElementName=Border}" 
+                                         Height="{Binding ActualHeight, Converter={zc:MathConverter}, ConverterParameter='@VALUE-3>0', ElementName=Border}">
                                     <Canvas Width="24" Height="24">
                                         <Path x:Name="Part_ArrowPath"  
-                                              Fill="{StaticResource IconNormalBrush}" 
+                                              Fill="{Binding IconNormal, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}"
                                               Data="M9,10V12H7V10H9M13,10V12H11V10H13M17,10V12H15V10H17M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H6V1H8V3H16V1H18V3H19M19,19V8H5V19H19M9,14V16H7V14H9M13,14V16H11V14H13M17,14V16H15V14H17Z" />
                                     </Canvas>
                                 </Viewbox>
                             </Border>
                             <ControlTemplate.Triggers>
-                                <Trigger Property="IsKeyboardFocused" Value="true">
-                                    <Setter TargetName="Part_ArrowPath" Property="Fill" Value="{StaticResource IconHoverBrush}" />
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <!--border-->
+                                    <Setter TargetName="Border" 
+                                            Property="BorderBrush" 
+                                            Value="{Binding ButtonBorderHover, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
+                                    <!--icon-->
+                                    <Setter TargetName="Part_ArrowPath" 
+                                            Property="Fill" 
+                                            Value="{Binding IconHover, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
                                 </Trigger>
-                                <Trigger Property="IsMouseOver" Value="true">
-                                    <Setter TargetName="Border" Property="Background" 
-                                            Value="{Binding ButtonBackgroundBrush, 
-                                                            Converter={zc:ColorBrithnessConverter}, ConverterParameter=50,
-                                                            RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
-                                    <Setter TargetName="Part_ArrowPath" Property="Fill" Value="{StaticResource IconHoverBrush}" />
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <!--border-->
+                                    <Setter TargetName="Border" 
+                                            Property="BorderBrush" 
+                                            Value="{Binding ButtonBorderHover, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
+                                    <!--background-->
+                                    <Setter TargetName="Border" 
+                                            Property="Background" 
+                                            Value="{Binding ButtonBackgroundHover, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
+                                    <!--icon-->
+                                    <Setter TargetName="Part_ArrowPath" 
+                                            Property="Fill" 
+                                            Value="{Binding IconHover, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
                                 </Trigger>
-                                <Trigger Property="IsPressed" Value="true">
-                                    <Setter TargetName="Border" Property="Background" 
-                                            Value="{Binding ButtonBackgroundBrush, 
-                                                            Converter={zc:ColorBrithnessConverter}, ConverterParameter=-50,
-                                                            RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
-                                    <Setter TargetName="Part_ArrowPath" Property="Fill" Value="{StaticResource IconPressedBrush}" />
+                                <Trigger Property="IsPressed" Value="True">
+                                    <!--border-->
+                                    <Setter TargetName="Border" 
+                                            Property="BorderBrush" 
+                                            Value="{Binding ButtonBorderPressed, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
+                                    <!--background-->
+                                    <Setter TargetName="Border" 
+                                            Property="Background" 
+                                            Value="{Binding ButtonBackgroundPressed, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
+                                    <!--icon-->
+                                    <Setter TargetName="Part_ArrowPath" 
+                                            Property="Fill"
+                                            Value="{Binding IconPressed, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -207,8 +217,9 @@
             <!--contents textbox-->
             <ControlTemplate x:Key="TextBoxTemplate">
                 <Border Name="Border" 
-                    BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" 
-                    CornerRadius="1">
+                        BorderThickness="1" 
+                        BorderBrush="{TemplateBinding BorderBrush}" 
+                        CornerRadius="1">
                     <ScrollViewer x:Name="PART_ContentHost" 
                                   CanContentScroll="False" 
                                   VerticalAlignment="Center" VerticalContentAlignment="Top" 
@@ -228,16 +239,16 @@
         <!-- ==================== -->
         <!-- = Control Template = -->
         <!-- ==================== -->
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:ZapDatePicker}">
                     <Border Background="{TemplateBinding Background}" 
-                            SnapsToDevicePixels="True"
-                            BorderBrush="{Binding BorderBrush, 
-                                                  TargetNullValue={StaticResource NormalBorderBrush},
-                                                  FallbackValue={StaticResource NormalBorderBrush},
-                                                  RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}"
+                            BorderBrush="{TemplateBinding BorderBrush}"                            
                             BorderThickness="1" 
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            UseLayoutRounding="{TemplateBinding UseLayoutRounding}"
                             Width="auto" Height="auto">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -249,6 +260,8 @@
                                       HorizontalAlignment="Left" VerticalAlignment="Center" 
                                       IsChecked="{TemplateBinding IsChecked}"
                                       Visibility="{TemplateBinding IsCheckable, Converter={StaticResource BoolToVis}}"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                      UseLayoutRounding="{TemplateBinding UseLayoutRounding}"
                                       Margin="4,2,2,2"/>
                             <TextBox Name="Part_DateTextBox" 
                                      Template="{StaticResource TextBoxTemplate}"   
@@ -260,13 +273,17 @@
                                      AcceptsReturn="False" 
                                      MaxLines="1" 
                                      FlowDirection="LeftToRight" 
+                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                     UseLayoutRounding="{TemplateBinding UseLayoutRounding}"
                                      IsReadOnly="{TemplateBinding IsReadOnly}">
                             </TextBox>
-                            <Button Name="Part_CalendarButton"
+                            <Button Name="Part_CalendarButton"                                    
                                     Grid.Column="2" 
-                                    Style="{StaticResource ButtonImageStyle}" 
+                                    Style="{StaticResource ButtonFlatStyle}" 
                                     Margin="1"
                                     Height="Auto"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                    UseLayoutRounding="{TemplateBinding UseLayoutRounding}"
                                     HorizontalAlignment="Right" VerticalAlignment="Stretch">
                                 <Image Name="Part_ButtonImage" 
                                        Margin="1" 
@@ -275,7 +292,8 @@
                             <Popup Name="Part_CalendarPopup" 
                                    Margin="0,22,-22,-12"
                                    HorizontalAlignment="Right" 
-                                   PlacementTarget="{Binding ElementName=Part_CalendarButton}" StaysOpen="False">
+                                   PlacementTarget="{Binding ElementName=Part_CalendarButton}" 
+                                   StaysOpen="False">
                                 <Grid Name="Part_CalendarGrid" Background="White">
                                     <my:Calendar Height="160" Width="160" 
                                                  FooterVisibility="Collapsed" WeekColumnVisibility="Collapsed" 

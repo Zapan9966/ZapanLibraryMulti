@@ -1,9 +1,9 @@
-﻿namespace ZapanControls.Controls.CalendarPicker
+﻿namespace ZapanControls.Controls.Themes
 {
     /// <summary>
-    /// Names of inbuilt themes
+    /// Names of CalendarPicker inbuilt themes
     /// </summary>
-    public enum Themes
+    public enum CalendarPickerThemes
     {
         // Custom Themes
         /// <summary>

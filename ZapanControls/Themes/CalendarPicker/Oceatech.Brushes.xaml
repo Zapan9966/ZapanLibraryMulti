@@ -2,9 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:r="clr-namespace:ZapanControls.Controls.ResourceKeys">
 
-    <!-- =================== -->
-    <!-- = Classic Brushes = -->
-    <!-- =================== -->
+    <!-- ==================== -->
+    <!-- = Oceatech Brushes = -->
+    <!-- ==================== -->
 
     <!--control-->
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ControlBackgroundBrush}" Color="#FF666666" />
