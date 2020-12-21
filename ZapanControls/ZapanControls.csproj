@@ -23,7 +23,7 @@
   </ItemGroup>  
 
   <ItemGroup>
-    <None Remove="Controls\DatePicker\Images\Control_MonthCalendar.bmp" />
+    <None Remove="Controls\DatePicker\Images\outlook_calendar_day.png" />
   </ItemGroup>  
 
   <ItemGroup>
@@ -38,9 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Controls\DatePicker\Images\Control_MonthCalendar.bmp">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Controls\DatePicker\Images\outlook_calendar_day.png" />
   </ItemGroup>
 
 </Project>

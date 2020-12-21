@@ -10,20 +10,6 @@
             
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
             
-            <!-- =========== -->
-            <!-- = Brushes = -->
-            <!-- =========== -->
-            <!--<SolidColorBrush x:Key="NormalBrush" Color="Transparent"/>-->
-            <SolidColorBrush x:Key="NormalBorderBrush" Color="DarkViolet"/>
-            <SolidColorBrush x:Key="DefaultedBorderBrush" Color="Indigo" />
-            <SolidColorBrush x:Key="HoverBrush" Color="Transparent" />
-            <SolidColorBrush x:Key="HoverBackgroundBrush" Color="Transparent" />
-            <SolidColorBrush x:Key="HoverForegroundBrush" Color="RoyalBlue" />
-            <SolidColorBrush x:Key="ForegroundBrush" Color="Black" />
-            <SolidColorBrush x:Key="PressedBrush" Color="Transparent" />
-            <SolidColorBrush x:Key="PressedBorderBrush" Color="#D7EFFC" />
-            <SolidColorBrush x:Key="TextBoxHoverBorderBrush" Color="LightBlue" />
-
             <!-- ======================== -->
             <!-- = Styles and Templates = -->
             <!-- ======================== -->
@@ -35,28 +21,42 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
-                            <Border x:Name="Border" CornerRadius="0" BorderThickness="2" Background="{TemplateBinding Background}" BorderBrush="Transparent">
-                                <ContentPresenter Margin="1,1,1,1"  HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                            <Border x:Name="Border" 
+                                    CornerRadius="0" 
+                                    BorderThickness="1" 
+                                    Margin="-1,-2,-2,-2" 
+                                    Background="{TemplateBinding Background}" 
+                                    BorderBrush="Transparent">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True" 
+                                                  Width="{Binding ActualHeight, Converter={zc:MathConverter}, ConverterParameter='@VALUE-3>0', ElementName=Border}"
+                                                  Height="{Binding ActualHeight, Converter={zc:MathConverter}, ConverterParameter='@VALUE-3>0', ElementName=Border}" />
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsKeyboardFocused" Value="true">
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource DefaultedBorderBrush}" />
+                                    <!--border-->
+                                    <Setter TargetName="Border" 
+                                            Property="BorderBrush" 
+                                            Value="{Binding ButtonBorderHover, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
                                 </Trigger>
                                 <Trigger Property="IsDefaulted" Value="true">
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource DefaultedBorderBrush}" />
+                                    <!--border-->
+                                    <Setter TargetName="Border" 
+                                            Property="BorderBrush" 
+                                            Value="{Binding ButtonBorder, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
                                 </Trigger>
-                                <Trigger Property="IsMouseOver" Value="true">
-                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource HoverBackgroundBrush}" />
-                                    <Setter  Property="Foreground" Value="{StaticResource HoverForegroundBrush}" />
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="{Binding IconHover, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
                                 </Trigger>
-                                <Trigger Property="IsMouseOver" Value="false">
-                                    <Setter  Property="Foreground" Value="{StaticResource ForegroundBrush}" />
+                                <Trigger Property="IsMouseOver" Value="False">
+                                    <Setter  Property="Foreground" Value="{Binding IconNormal, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="true">
-                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource PressedBrush}" />
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource PressedBorderBrush}" />
+                                    <!--background-->
+                                    <Setter TargetName="Border" 
+                                            Property="Background" 
+                                            Value="{Binding ButtonBackgroundPressed, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
                                 </Trigger>
-                                <Trigger Property="IsPressed" Value="false">
+                                <Trigger Property="IsPressed" Value="False">
                                     <Setter TargetName="Border" Property="BorderBrush" Value="Transparent" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
@@ -67,41 +67,6 @@
 
             <!-- button brush style -->
             <Style x:Key="ButtonBrushStyle" TargetType="Button">
-                <Style.Resources>
-                    <SolidColorBrush x:Key="IconNormalBrush" Color="DarkViolet"/>
-                    <SolidColorBrush x:Key="IconHoverBrush" Color="Fuchsia" />
-                    <SolidColorBrush x:Key="IconPressedBrush" Color="Fuchsia" Opacity="0.5"/>
-                    <LinearGradientBrush x:Key="BackgroundNormalBrush" StartPoint="0,0" EndPoint="0,1">
-                        <GradientBrush.GradientStops>
-                            <GradientStopCollection>
-                                <GradientStop Color="#FAFAFD" Offset="0.0"/>
-                                <GradientStop Color="#E9ECFA" Offset="0.5"/>
-                                <GradientStop Color="#E2E6F4" Offset="0.6"/>
-                                <GradientStop Color="#C4CBDB" Offset="1.0"/>
-                            </GradientStopCollection>
-                        </GradientBrush.GradientStops>
-                    </LinearGradientBrush>
-                    <LinearGradientBrush x:Key="BackgroundHoverBrush" StartPoint="0,0" EndPoint="0,1">
-                        <GradientBrush.GradientStops>
-                            <GradientStopCollection>
-                                <GradientStop Color="#EAF6FD" Offset="0.0"/>
-                                <GradientStop Color="#D7EFFC" Offset="0.5"/>
-                                <GradientStop Color="#BDE6FD" Offset="0.6"/>
-                                <GradientStop Color="#A6D9F4" Offset="1.0"/>
-                            </GradientStopCollection>
-                        </GradientBrush.GradientStops>
-                    </LinearGradientBrush>
-                    <LinearGradientBrush x:Key="BackgroundPressedBrush" StartPoint="0,0" EndPoint="0,1">
-                        <GradientBrush.GradientStops>
-                            <GradientStopCollection>
-                                <GradientStop Color="#C2E4F6" Offset="0.0"/>
-                                <GradientStop Color="#C0E3F5" Offset="0.4"/>
-                                <GradientStop Color="#A9D9F2" Offset="0.5"/>
-                                <GradientStop Color="#90CBEB" Offset="1.0"/>
-                            </GradientStopCollection>
-                        </GradientBrush.GradientStops>
-                    </LinearGradientBrush>
-                </Style.Resources>
                 <Setter Property="SnapsToDevicePixels" Value="true"/>
                 <Setter Property="UseLayoutRounding" Value="true"/>
                 <Setter Property="OverridesDefaultStyle" Value="true"/>
@@ -113,30 +78,55 @@
                                     Height="Auto" Margin="1"
                                     CornerRadius="3" 
                                     BorderThickness="1" 
-                                    BorderBrush="{StaticResource NormalBorderBrush}"
-                                    Background="{StaticResource BackgroundNormalBrush}">
-                                <Viewbox Width="{Binding ActualHeight, Converter={zc:MathConverter}, ConverterParameter=@VALUE-2, ElementName=Border}" 
-                                         Height="{Binding ActualHeight, Converter={zc:MathConverter}, ConverterParameter=@VALUE-2, ElementName=Border}">
+                                    BorderBrush="{Binding ButtonBorder, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}"
+                                    Background="{Binding ButtonBackground, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}">
+                                <Viewbox Width="{Binding ActualHeight, Converter={zc:MathConverter}, ConverterParameter='@VALUE-2>0', ElementName=Border}" 
+                                         Height="{Binding ActualHeight, Converter={zc:MathConverter}, ConverterParameter='@VALUE-2>0', ElementName=Border}">
                                     <Canvas Width="24" Height="24">
                                         <Path x:Name="Part_ArrowPath"  
-                                              Fill="{StaticResource IconNormalBrush}" 
+                                              Fill="{Binding IconNormal, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" 
                                               Data="M9,10V12H7V10H9M13,10V12H11V10H13M17,10V12H15V10H17M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H6V1H8V3H16V1H18V3H19M19,19V8H5V19H19M9,14V16H7V14H9M13,14V16H11V14H13M17,14V16H15V14H17Z" />
                                     </Canvas>
                                 </Viewbox>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsKeyboardFocused" Value="true">
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource DefaultedBorderBrush}" />
-                                    <Setter TargetName="Part_ArrowPath" Property="Fill" Value="{StaticResource IconHoverBrush}" />
+                                    <!--border-->
+                                    <Setter TargetName="Border" 
+                                            Property="BorderBrush" 
+                                            Value="{Binding ButtonBorderHover, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
+                                    <!--icon-->
+                                    <Setter TargetName="Part_ArrowPath" 
+                                            Property="Fill" 
+                                            Value="{Binding IconHover, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="true">
-                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource BackgroundHoverBrush}" />
-                                    <Setter TargetName="Part_ArrowPath" Property="Fill" Value="{StaticResource IconHoverBrush}" />
+                                    <!--border-->
+                                    <Setter TargetName="Border" 
+                                            Property="BorderBrush" 
+                                            Value="{Binding ButtonBorderHover, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
+                                    <!--background-->
+                                    <Setter TargetName="Border" 
+                                            Property="Background" 
+                                            Value="{Binding ButtonBackgroundHover, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
+                                    <!--icon-->
+                                    <Setter TargetName="Part_ArrowPath" 
+                                            Property="Fill" 
+                                            Value="{Binding IconHover, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="true">
-                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource BackgroundPressedBrush}" />
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource NormalBorderBrush}" />
-                                    <Setter TargetName="Part_ArrowPath" Property="Fill" Value="{StaticResource IconPressedBrush}" />
+                                    <!--border-->
+                                    <Setter TargetName="Border" 
+                                            Property="BorderBrush" 
+                                            Value="{Binding ButtonBorderPressed, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
+                                    <!--background-->
+                                    <Setter TargetName="Border" 
+                                            Property="Background" 
+                                            Value="{Binding ButtonBackgroundPressed, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
+                                    <!--icon-->
+                                    <Setter TargetName="Part_ArrowPath" 
+                                            Property="Fill"
+                                            Value="{Binding IconPressed, RelativeSource={RelativeSource AncestorType={x:Type local:ZapDatePicker}}}" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -213,7 +203,6 @@
                 </Setter>
             </Style>
 
-
             <!--contents textbox-->
             <ControlTemplate x:Key="TextBoxTemplate">
                 <Border Name="Border" 
@@ -225,16 +214,8 @@
                                   VerticalAlignment="Center" VerticalContentAlignment="Top" 
                                   Padding="0"/>
                 </Border>
-                
-                <!--optional border arount textbox-->
-                <!--ControlTemplate.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource TextBoxHoverBorderBrush}"/>
-                    </Trigger>
-                </ControlTemplate.Triggers-->
             </ControlTemplate>
         </Style.Resources>
-
         
         <!-- ==================== -->
         <!-- = Control Template = -->

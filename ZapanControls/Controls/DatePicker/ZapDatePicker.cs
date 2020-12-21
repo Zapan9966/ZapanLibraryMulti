@@ -265,7 +265,7 @@ namespace ZapanControls.Controls.DatePicker
                         button.Style = (Style)TryFindResource("ButtonImageStyle");
                         BitmapImage img = new BitmapImage();
                         img.BeginInit();
-                        img.UriSource = new Uri("pack://application:,,,/ZapanControls;component/Controls/DatePicker/Images/Control_MonthCalendar.bmp", UriKind.Absolute);
+                        img.UriSource = new Uri("pack://application:,,,/ZapanControls;component/Controls/DatePicker/Images/outlook_calendar_day.png", UriKind.Absolute);
                         img.EndInit();
                         buttonImage.Source = img;
                     }
