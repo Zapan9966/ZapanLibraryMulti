@@ -13,7 +13,7 @@ using ZapanControls.Libraries;
 
 namespace ZapanControls.Controls.Primitives
 {
-    public class ThemableControl : Control, INotifyPropertyChanged
+    public abstract class ThemableControl : Control, INotifyPropertyChanged
     {
         #region Property Name Constants
         private const string ThemePropName = "Theme";
@@ -33,8 +33,7 @@ namespace ZapanControls.Controls.Primitives
             "Theme", typeof(string), typeof(ThemableControl),
             new FrameworkPropertyMetadata
             {
-                DefaultValue = typeof(ThemableControl).GetFields(BindingFlags.Public | BindingFlags.Static)
-                    .FirstOrDefault(f => f.FieldType == typeof(ThemePath))?.ToString(),
+                DefaultValue = null,
                 CoerceValueCallback = new CoerceValueCallback(CoerceThemeChange),
                 PropertyChangedCallback = new PropertyChangedCallback(OnThemeChanged),
                 AffectsRender = true,
@@ -75,11 +74,11 @@ namespace ZapanControls.Controls.Primitives
             }
             else
             {
-                // Raise theme successfully changed event
-                tc.RaiseEvent(new RoutedEventArgs(ThemeChangedSuccessEvent, tc));
                 // add the dictionary
                 ResourceDictionary newThemeDictionary = tc._rdThemeDictionaries[newRegisteredThemeName];
                 tc.Resources.MergedDictionaries.Add(newThemeDictionary);
+                // Raise theme successfully changed event
+                tc.RaiseEvent(new RoutedEventArgs(ThemeChangedSuccessEvent, tc));
             }
 
             tc.RaisePropertyChanged(new PropertyChangedEventArgs(ThemePropName));
@@ -100,8 +99,9 @@ namespace ZapanControls.Controls.Primitives
             add { AddHandler(ThemeChangedSuccessEvent, value); }
             remove { RemoveHandler(ThemeChangedSuccessEvent, value); }
         }
-        #endregion
 
+        internal abstract void OnThemeChangedSuccess(object sender, RoutedEventArgs e);
+        #endregion
 
         #endregion
 
@@ -111,7 +111,14 @@ namespace ZapanControls.Controls.Primitives
             _rdThemeDictionaries = new Dictionary<string, ResourceDictionary>();
             // Register internal themes
             RegisterAttachedThemes();
+
+            ThemeChangedSuccess += OnThemeChangedSuccess;
+
+            // Load first theme
+            if (_rdThemeDictionaries.Any())
+                SetCurrentValue(ThemeProperty, GetThemeName(_rdThemeDictionaries.FirstOrDefault().Key));
         }
+
         #endregion
 
         #region Theming
@@ -189,6 +196,12 @@ namespace ZapanControls.Controls.Primitives
         {
             return $"{ownerType};{themeName}";
         }
+
+        private string GetThemeName(string key)
+        {
+            return key?.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries)[1];
+        }
+
         #endregion
 
         #region INotifyPropertyChanged Implementation

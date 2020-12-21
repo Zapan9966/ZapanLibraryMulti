@@ -12,7 +12,7 @@
 
     <!--button background-->
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=ButtonBackground}" Color="DarkViolet" />
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=ButtonBackgroundHover}" Color="Orange" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=ButtonBackgroundHover}" Color="DarkOrange" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=ButtonBackgroundPressed}" Color="Indigo" />
     <!--button borderbrush-->
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=ButtonBorder}" Color="Indigo" />
@@ -23,7 +23,5 @@
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=IconNormal}" Color="White" Opacity=".75" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=IconHover}" Color="White" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=IconPressed}" Color="White" Opacity=".5" />
-
-
-
+    
 </ResourceDictionary>

@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:r="clr-namespace:ZapanControls.Controls.ResourceKeys">
+
+    <!-- ===================== -->
+    <!-- = Contactel Brushes = -->
+    <!-- ===================== -->
+
+    <!--control-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=Background}" Color="White" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=BorderBrush}" Color="#4b4242" />
+
+    <!--button background-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=ButtonBackground}" Color="#4b4242" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=ButtonBackgroundHover}" Color="OrangeRed" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=ButtonBackgroundPressed}" Color="DarkOrange" />
+    <!--button borderbrush-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=ButtonBorder}" Color="#4b4242" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=ButtonBorderHover}" Color="DarkOrange" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=ButtonBorderPressed}" Color="OrangeRed" />
+
+    <!--icon-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=IconNormal}" Color="#d6024e" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=IconHover}" Color="White" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=IconPressed}" Color="White" Opacity=".5" />
+
+</ResourceDictionary>

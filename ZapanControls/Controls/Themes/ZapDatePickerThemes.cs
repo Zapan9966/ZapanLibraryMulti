@@ -6,5 +6,9 @@
         /// Oceatech classic theme
         /// </summary>
         Oceatech,
+        /// <summary>
+        /// Contactel classic theme
+        /// </summary>
+        Contactel,
     }
 }

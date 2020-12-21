@@ -71,6 +71,7 @@ namespace ZapanControls.Controls.DatePicker
 
         #region Theme Declarations
         public static ThemePath Oceatech = new ThemePath(ZapDatePickerThemes.Oceatech, "/ZapanControls;component/Themes/ZapDatePicker/Oceatech.xaml");
+        public static ThemePath Contactel = new ThemePath(ZapDatePickerThemes.Contactel, "/ZapanControls;component/Themes/ZapDatePicker/Contactel.xaml");
         #endregion
 
         #region Local Properties
@@ -171,15 +172,9 @@ namespace ZapanControls.Controls.DatePicker
         }
         #endregion
 
-        #region Constructors
-        public ZapDatePicker()
+        #region ThemableControl implementation
+        internal override void OnThemeChangedSuccess(object sender, RoutedEventArgs e)
         {
-            // defaults
-            MinHeight = 24;
-            MinWidth = 90;
-
-            LoadDefaultTheme(ZapDatePickerThemes.Oceatech, typeof(ZapDatePicker));
-
             // Control
             SetCurrentValue(BackgroundProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.BackgroundKey));
             SetCurrentValue(BorderBrushProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.BorderBrushKey));
@@ -198,6 +193,15 @@ namespace ZapanControls.Controls.DatePicker
             SetCurrentValue(IconNormalProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.IconNormalKey));
             SetCurrentValue(IconHoverProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.IconHoverKey));
             SetCurrentValue(IconPressedProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.IconPressedKey));
+        }
+        #endregion
+
+        #region Constructors
+        public ZapDatePicker()
+        {
+            // defaults
+            MinHeight = 24;
+            MinWidth = 90;
         }
 
         static ZapDatePicker()
@@ -1030,6 +1034,7 @@ namespace ZapanControls.Controls.DatePicker
                 Text = string.Format(FormatString, SelectedDate);
             }
         }
+
         #endregion
     }
 }
