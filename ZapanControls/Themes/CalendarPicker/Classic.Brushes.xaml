@@ -9,18 +9,18 @@
 
     <!--control-->
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ControlBorderBrush}">#9196A2</Brush>
-    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ControlBackgroundBrush}">White</Brush>
-    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonTransparentBrush}">Transparent</Brush>
+    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ControlBackground}">White</Brush>
+    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonTransparent}">Transparent</Brush>
 
 
     <!--date button normal-->
-    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonNormalForegroundBrush}">#66003A</Brush>
+    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonNormalForeground}">#66003A</Brush>
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonNormalBorderBrush}">Transparent</Brush>
-    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonNormalBackgroundBrush}">Transparent</Brush>
+    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonNormalBackground}">Transparent</Brush>
     <!--date button focused-->
-    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonFocusedForegroundBrush}">#000034</Brush>
+    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonFocusedForeground}">#000034</Brush>
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonFocusedBorderBrush}">#97C4FB</Brush>
-    <LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonFocusedBackgroundBrush}" StartPoint="0,0" EndPoint="0,1">
+    <LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonFocusedBackground}" StartPoint="0,0" EndPoint="0,1">
         <GradientBrush.GradientStops>
             <GradientStopCollection>
                 <GradientStop Color="#FDFEFF" Offset="0.0"/>
@@ -31,9 +31,9 @@
         </GradientBrush.GradientStops>
     </LinearGradientBrush>
     <!--date button selected-->
-    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonSelectedForegroundBrush}">#214967</Brush>
+    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonSelectedForeground}">#214967</Brush>
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonSelectedBorderBrush}">#7AB4FA</Brush>
-    <LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonSelectedBackgroundBrush}" StartPoint="0,0" EndPoint="0,1">
+    <LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonSelectedBackground}" StartPoint="0,0" EndPoint="0,1">
         <GradientBrush.GradientStops>
             <GradientStopCollection>
                 <GradientStop Color="#ECF5FF" Offset="0.0"/>
@@ -44,9 +44,9 @@
         </GradientBrush.GradientStops>
     </LinearGradientBrush>
     <!--date button pressed-->
-    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonPressedForegroundBrush}">#282828</Brush>
+    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonPressedForeground}">#282828</Brush>
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonPressedBorderBrush}">#0977FF</Brush>
-    <LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonPressedBackgroundBrush}" StartPoint="0,0" EndPoint="0,1">
+    <LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonPressedBackground}" StartPoint="0,0" EndPoint="0,1">
         <GradientBrush.GradientStops>
             <GradientStopCollection>
                 <GradientStop Color="#D7EFFC" Offset="0.0"/>
@@ -57,9 +57,9 @@
         </GradientBrush.GradientStops>
     </LinearGradientBrush>
     <!--date button defaulted-->
-    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonDefaultedForegroundBrush}">#000034</Brush>
+    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonDefaultedForeground}">#000034</Brush>
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonDefaultedBorderBrush}">#7AB4FA</Brush>
-    <LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonDefaultedBackgroundBrush}" StartPoint="0,0" EndPoint="0,1">
+    <LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonDefaultedBackground}" StartPoint="0,0" EndPoint="0,1">
         <GradientBrush.GradientStops>
             <GradientStopCollection>
                 <GradientStop Color="#FDFEFF" Offset="0.0"/>
@@ -70,40 +70,40 @@
         </GradientBrush.GradientStops>
     </LinearGradientBrush>
     <!--date button disabled-->
-    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonDisabledForegroundBrush}">Silver</Brush>
+    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonDisabledForeground}">Silver</Brush>
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonDisabledBorderBrush}">Transparent</Brush>
-    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonDisabledBackgroundBrush}">Transparent</Brush>
+    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ButtonDisabledBackground}">Transparent</Brush>
 
     
     <!--week column-->
-    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=WeekColumnBackgroundBrush}">#FAFAFA</Brush>
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=WeekColumnForegroundBrush}" Color="Black"/>
+    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=WeekColumnBackground}">#FAFAFA</Brush>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=WeekColumnForeground}" Color="Black"/>
 
 
     <!--day name bar-->
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=DayNamesBorderBrush}">Transparent</Brush>
-    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=DayNamesBackgroundBrush}">Transparent</Brush>
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=DayNamesForegroundBrush}" Color="Black"/>
+    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=DayNamesBackground}">Transparent</Brush>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=DayNamesForeground}" Color="Black"/>
 
 
     <!--header button-->
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=HeaderNormalBorderBrush}">#AFAFAF</Brush>
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=HeaderFocusedBorderBrush}">Transparent</Brush>
-    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=HeaderNormalForegroundBrush}">Black</Brush>
-    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=HeaderFocusedForegroundBrush}">Blue</Brush>
-    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=HeaderPressedForegroundBrush}">DarkBlue</Brush>
-    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=HeaderNormalBackgroundBrush}">White</Brush>
+    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=HeaderNormalForeground}">Black</Brush>
+    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=HeaderFocusedForeground}">Blue</Brush>
+    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=HeaderPressedForeground}">DarkBlue</Brush>
+    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=HeaderNormalBackground}">White</Brush>
 
 
     <!--footer-->
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=FooterBorderBrush}">#AFAFAF</Brush>
-    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=FooterBackgroundBrush}">Transparent</Brush>
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=FooterForegroundBrush}" Color="Black" />
+    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=FooterBackground}">Transparent</Brush>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=FooterForeground}" Color="Black" />
 
     <!--navigation button arrow-->
     <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ArrowBorderBrush}">#AA000000</Brush>
-    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ArrowNormalFillBrush}">Black</Brush>
-    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ArrowFocusedFillBrush}">#D8E8F5</Brush>
-    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ArrowPressedFillBrush}">#CC000000</Brush>
+    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ArrowNormalFill}">Black</Brush>
+    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ArrowFocusedFill}">#D8E8F5</Brush>
+    <Brush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:CalendarResourceKeys}, ResourceId=ArrowPressedFill}">#CC000000</Brush>
 
 </ResourceDictionary>

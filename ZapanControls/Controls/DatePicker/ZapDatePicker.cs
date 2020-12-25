@@ -233,12 +233,10 @@ namespace ZapanControls.Controls.DatePicker
         /// </summary>
         public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register(
             "ButtonStyle", typeof(ButtonType), typeof(ZapDatePicker), 
-            new FrameworkPropertyMetadata
-            {
-                DefaultValue = ButtonType.Flat,
-                PropertyChangedCallback = new PropertyChangedCallback(OnButtonStyleChanged),
-                AffectsRender = true
-            });
+            new FrameworkPropertyMetadata(
+                ButtonType.Flat,
+                FrameworkPropertyMetadataOptions.AffectsRender,
+                new PropertyChangedCallback(OnButtonStyleChanged)));
 
         public ButtonType ButtonStyle
         {
@@ -288,8 +286,7 @@ namespace ZapanControls.Controls.DatePicker
 
         #region ButtonBackground
         public static readonly DependencyProperty ButtonBackgroundProperty = DependencyProperty.Register(
-            "ButtonBackground", typeof(Brush), typeof(ZapDatePicker),
-            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+            "ButtonBackground", typeof(Brush), typeof(ZapDatePicker), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush ButtonBackground
         {
@@ -324,8 +321,7 @@ namespace ZapanControls.Controls.DatePicker
 
         #region ButtonBorder
         public static readonly DependencyProperty ButtonBorderProperty = DependencyProperty.Register(
-            "ButtonBorder", typeof(Brush), typeof(ZapDatePicker),
-            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+            "ButtonBorder", typeof(Brush), typeof(ZapDatePicker), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush ButtonBorder
         {

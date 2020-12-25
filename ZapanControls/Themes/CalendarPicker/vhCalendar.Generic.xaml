@@ -23,8 +23,8 @@
                         <ControlTemplate TargetType="local:DateButton">
                             <Border x:Name="ButtonBorder"  
                                     BorderThickness="0"
-                                    Background="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}"
-                                    BorderBrush="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}">
+                                    Background="{Binding ButtonTransparent, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"
+                                    BorderBrush="{Binding ButtonTransparent, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}">
                                 <ContentPresenter Margin="2,1,2,2"
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"
@@ -32,23 +32,22 @@
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsKeyboardFocused" Value="true">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.HeaderFocusedBorderBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{Binding HeaderFocusedForeground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="true">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.HeaderFocusedForegroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{Binding HeaderFocusedForeground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="true">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.HeaderPressedForegroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{Binding HeaderPressedForeground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="false">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.HeaderNormalForegroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{Binding HeaderNormalForeground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
             </Style>
-
 
             <!--left direction button-->
             <Style x:Key="LeftArrowButtonStyle" TargetType="RepeatButton">
@@ -61,8 +60,8 @@
                             <Border x:Name="Border"  
                                     CornerRadius="2" 
                                     BorderThickness="0"
-                                    Background="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}"
-                                    BorderBrush="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}">
+                                    Background="{Binding ButtonTransparent, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"
+                                    BorderBrush="{Binding ButtonTransparent, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}">
                                 <Grid>
                                     <ContentPresenter Margin="2"
                                                       HorizontalAlignment="Center"
@@ -73,34 +72,35 @@
                                           Height="10" Width="11" 
                                           VerticalAlignment="Center" HorizontalAlignment="Center" 
                                           Stretch="Fill" 
-                                          StrokeLineJoin="Round" StrokeThickness="0.5" Stroke="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowBorderBrushKey}}"
+                                          StrokeLineJoin="Round" 
+                                          StrokeThickness="0.5" 
+                                          Stroke="{Binding ArrowBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"
                                           Data="F1 M 128.448,131.236L 133.966,125.99L 134.133,129.815L 139.167,129.595L 139.291,132.416L 134.256,132.636L 134.402,135.98L 128.448,131.236 Z "
-                                          Fill="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowNormalFillBrushKey}}">
+                                          Fill="{Binding ArrowNormalFill, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}">
                                     </Path>
                                 </Grid>
                             </Border>
 
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsKeyboardFocused" Value="true">
-                                    <Setter TargetName="LeftArrowPath" Property="Fill" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowFocusedFillBrushKey}}" />
+                                    <Setter TargetName="LeftArrowPath" Property="Fill" Value="{Binding ArrowFocusedFill, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="true">
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}" />
-                                    <Setter TargetName="LeftArrowPath" Property="Fill" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowFocusedFillBrushKey}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{Binding ButtonTransparent, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
+                                    <Setter TargetName="LeftArrowPath" Property="Fill" Value="{Binding ArrowFocusedFill, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="false">
-                                    <Setter TargetName="LeftArrowPath" Property="Fill" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowNormalFillBrushKey}}" />
+                                    <Setter TargetName="LeftArrowPath" Property="Fill" Value="{Binding ArrowNormalFill, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="true">
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}" />
-                                    <Setter TargetName="LeftArrowPath" Property="Fill" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowPressedFillBrushKey}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{Binding ButtonTransparent, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
+                                    <Setter TargetName="LeftArrowPath" Property="Fill" Value="{Binding ArrowPressedFill, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
             </Style>
-
             
             <!--right direction button-->
             <Style x:Key="RightArrowButtonStyle" TargetType="RepeatButton">
@@ -113,8 +113,8 @@
                             <Border x:Name="Border"  
                                     CornerRadius="2" 
                                     BorderThickness="0"
-                                    Background="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}"
-                                    BorderBrush="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}">
+                                    Background="{Binding ButtonTransparent, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"
+                                    BorderBrush="{Binding ButtonTransparent, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}">
                                 <Grid>
                                     <ContentPresenter Margin="2"
                                                       HorizontalAlignment="Center"
@@ -125,26 +125,28 @@
                                           Height="10" Width="11" 
                                           VerticalAlignment="Center" HorizontalAlignment="Center" 
                                           Stretch="Fill" 
-                                          StrokeLineJoin="Round" StrokeThickness="0.5" Stroke="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowBorderBrushKey}}"
+                                          StrokeLineJoin="Round" 
+                                          StrokeThickness="0.5" 
+                                          Stroke="{Binding ArrowBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"
                                           Data="F1 M 139.219,130.765L 133.701,136.011L 133.534,132.186L 128.499,132.406L 128.376,129.584L 133.411,129.364L 133.265,126.02L 139.219,130.765 Z "
-                                          Fill="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowNormalFillBrushKey}}">
+                                          Fill="{Binding ArrowNormalFill, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}">
                                     </Path>
                                 </Grid>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsKeyboardFocused" Value="true">
-                                    <Setter TargetName="RightArrowPath" Property="Fill" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowFocusedFillBrushKey}}" />
+                                    <Setter TargetName="RightArrowPath" Property="Fill" Value="{Binding ArrowFocusedFill, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="true">
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}" />
-                                    <Setter TargetName="RightArrowPath" Property="Fill" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowFocusedFillBrushKey}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{Binding ButtonTransparent, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
+                                    <Setter TargetName="RightArrowPath" Property="Fill" Value="{Binding ArrowFocusedFill, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="false">
-                                    <Setter TargetName="RightArrowPath" Property="Fill" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowNormalFillBrushKey}}" />
+                                    <Setter TargetName="RightArrowPath" Property="Fill" Value="{Binding ArrowNormalFill, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="true">
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}" />
-                                    <Setter TargetName="RightArrowPath" Property="Fill" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ArrowPressedFillBrushKey}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{Binding ButtonTransparent, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
+                                    <Setter TargetName="RightArrowPath" Property="Fill" Value="{Binding ArrowPressedFill, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -154,12 +156,12 @@
 
             <!--day name labels-->
             <Style x:Key="DayNameStyle" TargetType="Label">
-                <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.DayNamesForegroundBrushKey}}"/>
+                <Setter Property="Foreground" Value="{Binding DayNamesForeground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"/>
             </Style>
 
             <!--week number labels-->
             <Style x:Key="WeekNumberStyle" TargetType="Label">
-                <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.WeekColumnForegroundBrushKey}}"/>
+                <Setter Property="Foreground" Value="{Binding WeekColumnForeground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"/>
             </Style>
             
             <!--inner grid buttons-->
@@ -173,7 +175,7 @@
                             <Border x:Name="Border" 
                                     SnapsToDevicePixels="True"
                                     CornerRadius="4" Margin="2"
-                                    BorderBrush="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonTransparentBrushKey}}" 
+                                    BorderBrush="{Binding ButtonTransparent, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" 
                                     Background="{TemplateBinding Background}">
                                 <Grid>
                                     <ContentPresenter Margin="0,0,1,1" 
@@ -197,56 +199,56 @@
                             <ControlTemplate.Triggers>
                                 <!--normal state-->
                                 <Trigger Property="IsMouseOver" Value="false">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonNormalForegroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{Binding ButtonNormalForeground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                     <Setter TargetName="Border" Property="BorderThickness" Value="0.0" />
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonNormalBorderBrushKey}}" />
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonNormalBackgroundBrushKey}}" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="{Binding ButtonNormalBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{Binding ButtonNormalBackground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                 </Trigger>                                
                                 <!--focused state-->
                                 <Trigger Property="IsKeyboardFocused" Value="true">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonFocusedForegroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{Binding ButtonFocusedForeground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                     <Setter TargetName="Border" Property="BorderThickness" Value="0.5" />
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonFocusedBorderBrushKey}}" />
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonFocusedBackgroundBrushKey}}" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="{Binding ButtonFocusedBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{Binding ButtonFocusedBackground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                 </Trigger>
                                 <!--defaulted state-->
                                 <Trigger Property="IsTodaysDate" Value="true">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonDefaultedForegroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{Binding ButtonDefaultedForeground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                     <Setter TargetName="Border" Property="BorderThickness" Value="0.5" />
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonDefaultedBorderBrushKey}}" />
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonDefaultedBackgroundBrushKey}}" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="{Binding ButtonDefaultedBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{Binding ButtonDefaultedBackground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                 </Trigger> 
                                 <!--mouseover state-->
                                 <Trigger Property="IsMouseOver" Value="true">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonFocusedForegroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{Binding ButtonFocusedBackground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                     <Setter TargetName="Border" Property="BorderThickness" Value="0.5" />
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonFocusedBorderBrushKey}}" />
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonFocusedBackgroundBrushKey}}" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="{Binding ButtonFocusedBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{Binding ButtonFocusedBackground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                 </Trigger>
                                 <!--selected state-->
                                 <Trigger Property="IsSelected" Value="true">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonSelectedForegroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{Binding ButtonSelectedForeground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                     <Setter TargetName="Border" Property="BorderThickness" Value="0.5" />
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonSelectedBorderBrushKey}}" />
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonSelectedBackgroundBrushKey}}" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="{Binding ButtonSelectedBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{Binding ButtonSelectedBackground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                 </Trigger>
                                 <!--pressed state-->
                                 <Trigger Property="IsPressed" Value="true">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonPressedForegroundBrushKey}}" />
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonPressedBorderBrushKey}}" />
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonPressedBackgroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{Binding ButtonPressedForeground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="{Binding ButtonPressedBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{Binding ButtonPressedBackground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                 </Trigger>
                                 <!--disabled state-->
                                 <Trigger Property="IsEnabled" Value="false">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonDisabledForegroundBrushKey}}" />
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonDisabledBorderBrushKey}}" />
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonDisabledBackgroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{Binding ButtonDisabledForeground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="{Binding ButtonDisabledBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{Binding ButtonDisabledBackground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                 </Trigger>
                                 <!--current month state-->
                                 <Trigger Property="IsCurrentMonth" Value="false">
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonDisabledForegroundBrushKey}}" />
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonNormalBorderBrushKey}}" />
-                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static r:CalendarResourceKeys.ButtonNormalBackgroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{Binding ButtonDisabledForeground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="{Binding ButtonNormalBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{Binding ButtonNormalBackground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" />
                                 </Trigger>
                                 <!--BlackOut state-->
                                 <Trigger Property="IsBlackOut" Value="true">
@@ -262,8 +264,9 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:Calendar}">
-                    <Border Background="{DynamicResource {x:Static r:CalendarResourceKeys.ControlBackgroundBrushKey}}" 
-                            BorderBrush="{DynamicResource {x:Static r:CalendarResourceKeys.ControlBorderBrushKey}}" BorderThickness="1" 
+                    <Border Background="{Binding ControlBackground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" 
+                            BorderBrush="{Binding ControlBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" 
+                            BorderThickness="1" 
                             SnapsToDevicePixels="True">
                         <Grid Name="ControlBorder" >
                             <Grid.RowDefinitions>
@@ -278,8 +281,8 @@
                                     Margin="0" Height="20" 
                                     VerticalAlignment="Top" HorizontalAlignment="Stretch"
                                     BorderThickness="0,0,0,1" 
-                                    Background="{DynamicResource {x:Static r:CalendarResourceKeys.HeaderNormalBackgroundBrushKey}}"
-                                    BorderBrush="{DynamicResource {x:Static r:CalendarResourceKeys.HeaderNormalBorderBrushKey}}"                                    
+                                    Background="{Binding HeaderNormalBackground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"
+                                    BorderBrush="{Binding HeaderNormalBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"                                    
                                     SnapsToDevicePixels="True">
                             </Border>
 
@@ -347,7 +350,7 @@
                                             Grid.Column="0" 
                                             Grid.Row="0" Grid.RowSpan="2" 
                                             Margin="0"
-                                            Background="{DynamicResource {x:Static r:CalendarResourceKeys.WeekColumnBackgroundBrushKey}}"
+                                            Background="{Binding WeekColumnBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"
                                             SnapsToDevicePixels="True">
                                     </Border>
                                     <!--day names border-->
@@ -356,8 +359,9 @@
                                             Margin="0"                                            
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top"
                                             Height="18"
-                                            Background="{DynamicResource {x:Static r:CalendarResourceKeys.DayNamesBackgroundBrushKey}}"
-                                            BorderThickness="0.5" BorderBrush="{DynamicResource {x:Static r:CalendarResourceKeys.DayNamesBorderBrushKey}}"
+                                            Background="{Binding DayNamesBackground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"
+                                            BorderThickness="0.5" 
+                                            BorderBrush="{Binding DayNamesBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"
                                             SnapsToDevicePixels="True">
                                     </Border>
                                     <!--day names grid-->
@@ -417,8 +421,8 @@
                                 <Border x:Name="Part_CurrentDateBorder" MinHeight="18" Height="auto"
                                         Margin="0"
                                         BorderThickness="0,1,0,0" 
-                                        Background="{DynamicResource {x:Static r:CalendarResourceKeys.FooterBackgroundBrushKey}}" 
-                                        BorderBrush="{DynamicResource {x:Static r:CalendarResourceKeys.FooterBorderBrushKey}}"
+                                        Background="{Binding FooterBackground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}" 
+                                        BorderBrush="{Binding FooterBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"
                                         SnapsToDevicePixels="True">
                                 </Border>
                                 <!--current date panel-->
@@ -427,9 +431,9 @@
                                             HorizontalAlignment="Center" VerticalAlignment="Stretch"
                                             SnapsToDevicePixels="True">
                                     <TextBlock Name="Part_CurrentDateText" 
-                                               Margin="2" Padding="2" Foreground="{DynamicResource {x:Static r:CalendarResourceKeys.FooterForegroundBrushKey}}"
+                                               Margin="2" Padding="2" Foreground="{Binding FooterForeground, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"
                                                HorizontalAlignment="Center" VerticalAlignment="Center"
-                                               SnapsToDevicePixels="True">Ajourd'hui: </TextBlock>
+                                               SnapsToDevicePixels="True">Aujourd'hui: </TextBlock>
                                 </StackPanel>
                             </Grid>
                         </Grid>

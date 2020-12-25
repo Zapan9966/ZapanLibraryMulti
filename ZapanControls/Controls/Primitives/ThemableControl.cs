@@ -30,15 +30,12 @@ namespace ZapanControls.Controls.Primitives
         /// Get/Sets the Calender theme
         /// </summary>
         public static DependencyProperty ThemeProperty = DependencyProperty.Register(
-            "Theme", typeof(string), typeof(ThemableControl),
-            new FrameworkPropertyMetadata
-            {
-                DefaultValue = null,
-                CoerceValueCallback = new CoerceValueCallback(CoerceThemeChange),
-                PropertyChangedCallback = new PropertyChangedCallback(OnThemeChanged),
-                AffectsRender = true,
-                AffectsMeasure = true
-            });
+            "Theme", typeof(string), typeof(ThemableControl), 
+            new FrameworkPropertyMetadata(
+                null,
+                FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure,
+                new PropertyChangedCallback(OnThemeChanged),
+                new CoerceValueCallback(CoerceThemeChange)));
 
         public string Theme
         {

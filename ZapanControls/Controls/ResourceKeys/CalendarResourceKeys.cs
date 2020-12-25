@@ -8,69 +8,69 @@ namespace ZapanControls.Controls.ResourceKeys
     {
         #region Fields
         // Header
-        private static readonly ComponentResourceKey _HeaderNormalForegroundBrushKey = null;
-        private static readonly ComponentResourceKey _HeaderFocusedForegroundBrushKey = null;
-        private static readonly ComponentResourceKey _HeaderPressedForegroundBrushKey = null;
+        private static readonly ComponentResourceKey _HeaderNormalForegroundKey = null;
+        private static readonly ComponentResourceKey _HeaderFocusedForegroundKey = null;
+        private static readonly ComponentResourceKey _HeaderPressedForegroundKey = null;
 
         private static readonly ComponentResourceKey _HeaderNormalBorderBrushKey = null;
         private static readonly ComponentResourceKey _HeaderFocusedBorderBrushKey = null;
         private static readonly ComponentResourceKey _HeaderPressedBorderBrushKey = null;
 
-        private static readonly ComponentResourceKey _HeaderNormalBackgroundBrushKey = null;
-        private static readonly ComponentResourceKey _HeaderFocusedBackgroundBrushKey = null;
-        private static readonly ComponentResourceKey _HeaderPressedBackgroundBrushKey = null;
+        private static readonly ComponentResourceKey _HeaderNormalBackgroundKey = null;
+        private static readonly ComponentResourceKey _HeaderFocusedBackgroundKey = null;
+        private static readonly ComponentResourceKey _HeaderPressedBackgroundKey = null;
 
         // Direction buttons
         private static readonly ComponentResourceKey _ArrowBorderBrushKey = null;
-        private static readonly ComponentResourceKey _ArrowNormalFillBrushKey = null;
-        private static readonly ComponentResourceKey _ArrowFocusedFillBrushKey = null;
-        private static readonly ComponentResourceKey _ArrowPressedFillBrushKey = null;
+        private static readonly ComponentResourceKey _ArrowNormalFillKey = null;
+        private static readonly ComponentResourceKey _ArrowFocusedFillKey = null;
+        private static readonly ComponentResourceKey _ArrowPressedFillKey = null;
 
         // Date buttons
         // normal
-        private static readonly ComponentResourceKey _ButtonNormalForegroundBrushKey = null;
+        private static readonly ComponentResourceKey _ButtonNormalForegroundKey = null;
         private static readonly ComponentResourceKey _ButtonNormalBorderBrushKey = null;
-        private static readonly ComponentResourceKey _ButtonNormalBackgroundBrushKey = null;
+        private static readonly ComponentResourceKey _ButtonNormalBackgroundKey = null;
         // focused
-        private static readonly ComponentResourceKey _ButtonFocusedForegroundBrushKey = null;
+        private static readonly ComponentResourceKey _ButtonFocusedForegroundKey = null;
         private static readonly ComponentResourceKey _ButtonFocusedBorderBrushKey = null;
-        private static readonly ComponentResourceKey _ButtonFocusedBackgroundBrushKey = null;
+        private static readonly ComponentResourceKey _ButtonFocusedBackgroundKey = null;
         // selected 
-        private static readonly ComponentResourceKey _ButtonSelectedForegroundBrushKey = null;
+        private static readonly ComponentResourceKey _ButtonSelectedForegroundKey = null;
         private static readonly ComponentResourceKey _ButtonSelectedBorderBrushKey = null;
-        private static readonly ComponentResourceKey _ButtonSelectedBackgroundBrushKey = null;
+        private static readonly ComponentResourceKey _ButtonSelectedBackgroundKey = null;
         // pressed
-        private static readonly ComponentResourceKey _ButtonPressedForegroundBrushKey = null;
+        private static readonly ComponentResourceKey _ButtonPressedForegroundKey = null;
         private static readonly ComponentResourceKey _ButtonPressedBorderBrushKey = null;
-        private static readonly ComponentResourceKey _ButtonPressedBackgroundBrushKey = null;
+        private static readonly ComponentResourceKey _ButtonPressedBackgroundKey = null;
         // defaulted
-        private static readonly ComponentResourceKey _ButtonDefaultedForegroundBrushKey = null;
+        private static readonly ComponentResourceKey _ButtonDefaultedForegroundKey = null;
         private static readonly ComponentResourceKey _ButtonDefaultedBorderBrushKey = null;
-        private static readonly ComponentResourceKey _ButtonDefaultedBackgroundBrushKey = null;
+        private static readonly ComponentResourceKey _ButtonDefaultedBackgroundKey = null;
         // disabled
-        private static readonly ComponentResourceKey _ButtonTransparentBrushKey = null;
-        private static readonly ComponentResourceKey _ButtonDisabledForegroundBrushKey = null;
+        private static readonly ComponentResourceKey _ButtonTransparentKey = null;
+        private static readonly ComponentResourceKey _ButtonDisabledForegroundKey = null;
         private static readonly ComponentResourceKey _ButtonDisabledBorderBrushKey = null;
-        private static readonly ComponentResourceKey _ButtonDisabledBackgroundBrushKey = null;
+        private static readonly ComponentResourceKey _ButtonDisabledBackgroundKey = null;
 
         // Week column
-        private static readonly ComponentResourceKey _WeekColumnForegroundBrushKey = null;
-        private static readonly ComponentResourceKey _WeekColumnBackgroundBrushKey = null;
+        private static readonly ComponentResourceKey _WeekColumnForegroundKey = null;
+        private static readonly ComponentResourceKey _WeekColumnBackgroundKey = null;
         private static readonly ComponentResourceKey _WeekColumnBorderBrushKey = null;
 
         // Footer
-        private static readonly ComponentResourceKey _FooterForegroundBrushKey = null;
+        private static readonly ComponentResourceKey _FooterForegroundKey = null;
         private static readonly ComponentResourceKey _FooterBorderBrushKey = null;
-        private static readonly ComponentResourceKey _FooterBackgroundBrushKey = null;
+        private static readonly ComponentResourceKey _FooterBackgroundKey = null;
 
         // Day column
-        private static readonly ComponentResourceKey _DayNamesForegroundBrushKey = null;
+        private static readonly ComponentResourceKey _DayNamesForegroundKey = null;
         private static readonly ComponentResourceKey _DayNamesBorderBrushKey = null;
-        private static readonly ComponentResourceKey _DayNamesBackgroundBrushKey = null;
+        private static readonly ComponentResourceKey _DayNamesBackgroundKey = null;
 
         // Control
         private static readonly ComponentResourceKey _ControlBorderBrushKey = null;
-        private static readonly ComponentResourceKey _ControlBackgroundBrushKey = null;
+        private static readonly ComponentResourceKey _ControlBackgroundKey = null;
         #endregion
 
         #region Resource Keys
@@ -86,9 +86,9 @@ namespace ZapanControls.Controls.ResourceKeys
         /// <summary>
         /// Control background
         /// </summary>
-        public static ComponentResourceKey ControlBackgroundBrushKey
+        public static ComponentResourceKey ControlBackgroundKey
         {
-            get { return GetRegisteredKey(_ControlBackgroundBrushKey, "ControlBackgroundBrush"); }
+            get { return GetRegisteredKey(_ControlBackgroundKey, "ControlBackground"); }
         }
         #endregion
 
@@ -96,25 +96,25 @@ namespace ZapanControls.Controls.ResourceKeys
         /// <summary>
         /// Header normal foreground
         /// </summary>
-        public static ComponentResourceKey HeaderNormalForegroundBrushKey
+        public static ComponentResourceKey HeaderNormalForegroundKey
         {
-            get { return GetRegisteredKey(_HeaderNormalForegroundBrushKey, "HeaderNormalForegroundBrush"); }
+            get { return GetRegisteredKey(_HeaderNormalForegroundKey, "HeaderNormalForeground"); }
         }
 
         /// <summary>
         /// Header focused foreground
         /// </summary>
-        public static ComponentResourceKey HeaderFocusedForegroundBrushKey
+        public static ComponentResourceKey HeaderFocusedForegroundKey
         {
-            get { return GetRegisteredKey(_HeaderFocusedForegroundBrushKey, "HeaderFocusedForegroundBrush"); }
+            get { return GetRegisteredKey(_HeaderFocusedForegroundKey, "HeaderFocusedForeground"); }
         }
 
         /// <summary>
         /// Header pressed foreground
         /// </summary>
-        public static ComponentResourceKey HeaderPressedForegroundBrushKey
+        public static ComponentResourceKey HeaderPressedForegroundKey
         {
-            get { return GetRegisteredKey(_HeaderPressedForegroundBrushKey, "HeaderPressedForegroundBrush"); }
+            get { return GetRegisteredKey(_HeaderPressedForegroundKey, "HeaderPressedForeground"); }
         }
 
         /// <summary>
@@ -144,25 +144,25 @@ namespace ZapanControls.Controls.ResourceKeys
         /// <summary>
         /// Header normal background brush
         /// </summary>
-        public static ComponentResourceKey HeaderNormalBackgroundBrushKey
+        public static ComponentResourceKey HeaderNormalBackgroundKey
         {
-            get { return GetRegisteredKey(_HeaderNormalBackgroundBrushKey, "HeaderNormalBackgroundBrush"); }
+            get { return GetRegisteredKey(_HeaderNormalBackgroundKey, "HeaderNormalBackground"); }
         }
 
         /// <summary>
-        /// Header focused background brush
+        /// Header focused background 
         /// </summary>
-        public static ComponentResourceKey HeaderFocusedBackgroundBrushKey
+        public static ComponentResourceKey HeaderFocusedBackgroundKey
         {
-            get { return GetRegisteredKey(_HeaderFocusedBackgroundBrushKey, "HeaderFocusedBackgroundBrush"); }
+            get { return GetRegisteredKey(_HeaderFocusedBackgroundKey, "HeaderFocusedBackground"); }
         }
 
         /// <summary>
-        /// Header pressed background brush
+        /// Header pressed background 
         /// </summary>
-        public static ComponentResourceKey HeaderPressedBackgroundBrushKey
+        public static ComponentResourceKey HeaderPressedBackgroundKey
         {
-            get { return GetRegisteredKey(_HeaderPressedBackgroundBrushKey, "HeaderPressedBackgroundBrush"); }
+            get { return GetRegisteredKey(_HeaderPressedBackgroundKey, "HeaderPressedBackground"); }
         }
         #endregion
 
@@ -178,25 +178,25 @@ namespace ZapanControls.Controls.ResourceKeys
         /// <summary>
         /// Direction arrow normal fill
         /// </summary>
-        public static ComponentResourceKey ArrowNormalFillBrushKey
+        public static ComponentResourceKey ArrowNormalFillKey
         {
-            get { return GetRegisteredKey(_ArrowNormalFillBrushKey, "ArrowNormalFillBrush"); }
+            get { return GetRegisteredKey(_ArrowNormalFillKey, "ArrowNormalFill"); }
         }
 
         /// <summary>
         /// Direction arrow focused fill
         /// </summary>
-        public static ComponentResourceKey ArrowFocusedFillBrushKey
+        public static ComponentResourceKey ArrowFocusedFillKey
         {
-            get { return GetRegisteredKey(_ArrowFocusedFillBrushKey, "ArrowFocusedFillBrush"); }
+            get { return GetRegisteredKey(_ArrowFocusedFillKey, "ArrowFocusedFill"); }
         }
 
         /// <summary>
         /// Direction arrow pressed fill
         /// </summary>
-        public static ComponentResourceKey ArrowPressedFillBrushKey
+        public static ComponentResourceKey ArrowPressedFillKey
         {
-            get { return GetRegisteredKey(_ArrowPressedFillBrushKey, "ArrowPressedFillBrush"); }
+            get { return GetRegisteredKey(_ArrowPressedFillKey, "ArrowPressedFill"); }
         }
         #endregion
 
@@ -204,9 +204,9 @@ namespace ZapanControls.Controls.ResourceKeys
         /// <summary>
         /// Day names foreground
         /// </summary>
-        public static ComponentResourceKey DayNamesForegroundBrushKey
+        public static ComponentResourceKey DayNamesForegroundKey
         {
-            get { return GetRegisteredKey(_DayNamesForegroundBrushKey, "DayNamesForegroundBrush"); }
+            get { return GetRegisteredKey(_DayNamesForegroundKey, "DayNamesForeground"); }
         }
 
         /// <summary>
@@ -220,9 +220,9 @@ namespace ZapanControls.Controls.ResourceKeys
         /// <summary>
         /// Day names background
         /// </summary>
-        public static ComponentResourceKey DayNamesBackgroundBrushKey
+        public static ComponentResourceKey DayNamesBackgroundKey
         {
-            get { return GetRegisteredKey(_DayNamesBackgroundBrushKey, "DayNamesBackgroundBrush"); }
+            get { return GetRegisteredKey(_DayNamesBackgroundKey, "DayNamesBackground"); }
         }
         #endregion
 
@@ -230,9 +230,9 @@ namespace ZapanControls.Controls.ResourceKeys
         /// <summary>
         /// Week column foreground
         /// </summary>
-        public static ComponentResourceKey WeekColumnForegroundBrushKey
+        public static ComponentResourceKey WeekColumnForegroundKey
         {
-            get { return GetRegisteredKey(_WeekColumnForegroundBrushKey, "WeekColumnForegroundBrush"); }
+            get { return GetRegisteredKey(_WeekColumnForegroundKey, "WeekColumnForeground"); }
         }
 
         /// <summary>
@@ -246,9 +246,9 @@ namespace ZapanControls.Controls.ResourceKeys
         /// <summary>
         /// Week column background
         /// </summary>
-        public static ComponentResourceKey WeekColumnBackgroundBrushKey
+        public static ComponentResourceKey WeekColumnBackgroundKey
         {
-            get { return GetRegisteredKey(_WeekColumnBackgroundBrushKey, "WeekColumnBackgroundBrush"); }
+            get { return GetRegisteredKey(_WeekColumnBackgroundKey, "WeekColumnBackground"); }
         }
         #endregion
 
@@ -257,9 +257,9 @@ namespace ZapanControls.Controls.ResourceKeys
         /// <summary>
         /// Button normal foreground
         /// </summary>
-        public static ComponentResourceKey ButtonNormalForegroundBrushKey
+        public static ComponentResourceKey ButtonNormalForegroundKey
         {
-            get { return GetRegisteredKey(_ButtonNormalForegroundBrushKey, "ButtonNormalForegroundBrush"); }
+            get { return GetRegisteredKey(_ButtonNormalForegroundKey, "ButtonNormalForeground"); }
         }
 
         /// <summary>
@@ -273,9 +273,9 @@ namespace ZapanControls.Controls.ResourceKeys
         /// <summary>
         /// Button normal background
         /// </summary>
-        public static ComponentResourceKey ButtonNormalBackgroundBrushKey
+        public static ComponentResourceKey ButtonNormalBackgroundKey
         {
-            get { return GetRegisteredKey(_ButtonNormalBackgroundBrushKey, "ButtonNormalBackgroundBrush"); }
+            get { return GetRegisteredKey(_ButtonNormalBackgroundKey, "ButtonNormalBackground"); }
         }
         #endregion
 
@@ -283,9 +283,9 @@ namespace ZapanControls.Controls.ResourceKeys
         /// <summary>
         /// Button focused foreground
         /// </summary>
-        public static ComponentResourceKey ButtonFocusedForegroundBrushKey
+        public static ComponentResourceKey ButtonFocusedForegroundKey
         {
-            get { return GetRegisteredKey(_ButtonFocusedForegroundBrushKey, "ButtonFocusedForegroundBrush"); }
+            get { return GetRegisteredKey(_ButtonFocusedForegroundKey, "ButtonFocusedForeground"); }
         }
 
         /// <summary>
@@ -299,9 +299,9 @@ namespace ZapanControls.Controls.ResourceKeys
         /// <summary>
         /// Button focused background
         /// </summary>
-        public static ComponentResourceKey ButtonFocusedBackgroundBrushKey
+        public static ComponentResourceKey ButtonFocusedBackgroundKey
         {
-            get { return GetRegisteredKey(_ButtonFocusedBackgroundBrushKey, "ButtonFocusedBackgroundBrush"); }
+            get { return GetRegisteredKey(_ButtonFocusedBackgroundKey, "ButtonFocusedBackground"); }
         }
         #endregion
 
@@ -309,9 +309,9 @@ namespace ZapanControls.Controls.ResourceKeys
         /// <summary>
         /// Button selected foreground
         /// </summary>
-        public static ComponentResourceKey ButtonSelectedForegroundBrushKey
+        public static ComponentResourceKey ButtonSelectedForegroundKey
         {
-            get { return GetRegisteredKey(_ButtonSelectedForegroundBrushKey, "ButtonSelectedForegroundBrush"); }
+            get { return GetRegisteredKey(_ButtonSelectedForegroundKey, "ButtonSelectedForeground"); }
         }
 
         /// <summary>
@@ -325,9 +325,9 @@ namespace ZapanControls.Controls.ResourceKeys
         /// <summary>
         /// Button selected background
         /// </summary>
-        public static ComponentResourceKey ButtonSelectedBackgroundBrushKey
+        public static ComponentResourceKey ButtonSelectedBackgroundKey
         {
-            get { return GetRegisteredKey(_ButtonSelectedBackgroundBrushKey, "ButtonSelectedBackgroundBrush"); }
+            get { return GetRegisteredKey(_ButtonSelectedBackgroundKey, "ButtonSelectedBackground"); }
         }
         #endregion
 
@@ -335,9 +335,9 @@ namespace ZapanControls.Controls.ResourceKeys
         /// <summary>
         /// Button defaulted foreground
         /// </summary>
-        public static ComponentResourceKey ButtonDefaultedForegroundBrushKey
+        public static ComponentResourceKey ButtonDefaultedForegroundKey
         {
-            get { return GetRegisteredKey(_ButtonDefaultedForegroundBrushKey, "ButtonDefaultedForegroundBrush"); }
+            get { return GetRegisteredKey(_ButtonDefaultedForegroundKey, "ButtonDefaultedForeground"); }
         }
 
         /// <summary>
@@ -351,9 +351,9 @@ namespace ZapanControls.Controls.ResourceKeys
         /// <summary>
         /// Button selected background
         /// </summary>
-        public static ComponentResourceKey ButtonDefaultedBackgroundBrushKey
+        public static ComponentResourceKey ButtonDefaultedBackgroundKey
         {
-            get { return GetRegisteredKey(_ButtonDefaultedBackgroundBrushKey, "ButtonDefaultedBackgroundBrush"); }
+            get { return GetRegisteredKey(_ButtonDefaultedBackgroundKey, "ButtonDefaultedBackground"); }
         }
         #endregion
 
@@ -361,9 +361,9 @@ namespace ZapanControls.Controls.ResourceKeys
         /// <summary>
         /// Button pressed foreground
         /// </summary>
-        public static ComponentResourceKey ButtonPressedForegroundBrushKey
+        public static ComponentResourceKey ButtonPressedForegroundKey
         {
-            get { return GetRegisteredKey(_ButtonPressedForegroundBrushKey, "ButtonPressedForegroundBrush"); }
+            get { return GetRegisteredKey(_ButtonPressedForegroundKey, "ButtonPressedForeground"); }
         }
 
         /// <summary>
@@ -377,27 +377,27 @@ namespace ZapanControls.Controls.ResourceKeys
         /// <summary>
         /// Button pressed background
         /// </summary>
-        public static ComponentResourceKey ButtonPressedBackgroundBrushKey
+        public static ComponentResourceKey ButtonPressedBackgroundKey
         {
-            get { return GetRegisteredKey(_ButtonPressedBackgroundBrushKey, "ButtonPressedBackgroundBrush"); }
+            get { return GetRegisteredKey(_ButtonPressedBackgroundKey, "ButtonPressedBackground"); }
         }
         #endregion
 
         #region Disabled
         /// <summary>
-        /// Transparent brush
+        /// Transparent 
         /// </summary>
-        public static ComponentResourceKey ButtonTransparentBrushKey
+        public static ComponentResourceKey ButtonTransparentKey
         {
-            get { return GetRegisteredKey(_ButtonTransparentBrushKey, "ButtonTransparentBrush"); }
+            get { return GetRegisteredKey(_ButtonTransparentKey, "ButtonTransparent"); }
         }
 
         /// <summary>
         /// Button disabled foreground
         /// </summary>
-        public static ComponentResourceKey ButtonDisabledForegroundBrushKey
+        public static ComponentResourceKey ButtonDisabledForegroundKey
         {
-            get { return GetRegisteredKey(_ButtonDisabledForegroundBrushKey, "ButtonDisabledForegroundBrush"); }
+            get { return GetRegisteredKey(_ButtonDisabledForegroundKey, "ButtonDisabledForeground"); }
         }
 
         /// <summary>
@@ -411,9 +411,9 @@ namespace ZapanControls.Controls.ResourceKeys
         /// <summary>
         /// Button disabled background
         /// </summary>
-        public static ComponentResourceKey ButtonDisabledBackgroundBrushKey
+        public static ComponentResourceKey ButtonDisabledBackgroundKey
         {
-            get { return GetRegisteredKey(_ButtonDisabledBackgroundBrushKey, "ButtonDisabledBackgroundBrush"); }
+            get { return GetRegisteredKey(_ButtonDisabledBackgroundKey, "ButtonDisabledBackground"); }
         }
         #endregion
         #endregion
@@ -422,9 +422,9 @@ namespace ZapanControls.Controls.ResourceKeys
         /// <summary>
         /// Footer foreground
         /// </summary>
-        public static ComponentResourceKey FooterForegroundBrushKey
+        public static ComponentResourceKey FooterForegroundKey
         {
-            get { return GetRegisteredKey(_FooterForegroundBrushKey, "FooterForegroundBrush"); }
+            get { return GetRegisteredKey(_FooterForegroundKey, "FooterForeground"); }
         }
 
         /// <summary>
@@ -438,9 +438,9 @@ namespace ZapanControls.Controls.ResourceKeys
         /// <summary>
         /// Footer background
         /// </summary>
-        public static ComponentResourceKey FooterBackgroundBrushKey
+        public static ComponentResourceKey FooterBackgroundKey
         {
-            get { return GetRegisteredKey(_FooterBackgroundBrushKey, "FooterBackgroundBrush"); }
+            get { return GetRegisteredKey(_FooterBackgroundKey, "FooterBackground"); }
         }
         #endregion
         #endregion

@@ -108,6 +108,7 @@ using ZapanControls.Helpers;
 using ZapanControls.Libraries;
 using ZapanControls.Controls.Themes;
 using ZapanControls.Controls.Primitives;
+using ZapanControls.Controls.ResourceKeys;
 #endregion
 
 namespace ZapanControls.Controls.CalendarPicker
@@ -128,7 +129,7 @@ namespace ZapanControls.Controls.CalendarPicker
     TemplatePart(Name = "Part_CurrentDateText", Type = typeof(TextBlock)),
     TemplatePart(Name = "Part_AnimationContainer", Type = typeof(Grid)),
     TemplatePart(Name = "Part_FooterContainer", Type = typeof(Grid))]
-    public class Calendar : Control, INotifyPropertyChanged
+    public class Calendar : ThemableControl //Control, INotifyPropertyChanged
     {
         #region Property Name Constants
         /// <summary>
@@ -139,10 +140,9 @@ namespace ZapanControls.Controls.CalendarPicker
         private const string DisplayDateStartPropName = "DisplayDateStart";
         private const string FooterVisibilityPropName = "FooterVisibility";
         private const string TodayHighlightedPropName = "IsTodayHighlighted";
-        private const string SelectionModePropName = "SelectionMode";
+        //private const string SelectionModePropName = "SelectionMode";
         private const string IsRangeSelectionPropName = "IsRangeSelection";
         private const string ShowDaysOfAllMonthsPropName = "ShowDaysOfAllMonths";
-        private const string ThemePropName = "Theme";
         private const string WeekColumnVisibilityPropName = "WeekColumnVisibility";
         private const string HeaderHeightPropName = "HeaderHeight";
         private const string HeaderFontSizePropName = "HeaderFontSize";
@@ -154,6 +154,13 @@ namespace ZapanControls.Controls.CalendarPicker
 
         #region Theme Declarations
         /// <summary>
+        /// Custom Themes
+        /// </summary>
+        public static ThemePath Oceatech = new ThemePath(CalendarPickerThemes.Oceatech.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Oceatech.xaml");
+        public static ThemePath OfficeBlack = new ThemePath(CalendarPickerThemes.OfficeBlack.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Office.Black.xaml");
+        public static ThemePath OfficeBlue = new ThemePath(CalendarPickerThemes.OfficeBlue.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Office.Blue.xaml");
+        public static ThemePath OfficeSilver = new ThemePath(CalendarPickerThemes.OfficeSilver.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Office.Silver.xaml");
+        /// <summary>
         /// Operating System Themes
         /// </summary>
         public static ThemePath AeroNormalColorTheme = new ThemePath(CalendarPickerThemes.AeroNormal.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Aero.NormalColor.xaml");
@@ -163,13 +170,6 @@ namespace ZapanControls.Controls.CalendarPicker
         public static ThemePath LunaMetallicTheme = new ThemePath(CalendarPickerThemes.LunaMetallic.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Luna.Metallic.xaml");
         public static ThemePath RoyaleTheme = new ThemePath(CalendarPickerThemes.Royale.ToString(), "/ZapanControls;component/Themes/CalendarPicker/CalendarPicker/Royale.xaml");
         public static ThemePath ZuneTheme = new ThemePath(CalendarPickerThemes.Zune.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Zune.xaml");
-        /// <summary>
-        /// Custom Themes
-        /// </summary>
-        public static ThemePath OfficeBlack = new ThemePath(CalendarPickerThemes.OfficeBlack.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Office.Black.xaml");
-        public static ThemePath OfficeBlue = new ThemePath(CalendarPickerThemes.OfficeBlue.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Office.Blue.xaml");
-        public static ThemePath OfficeSilver = new ThemePath(CalendarPickerThemes.OfficeSilver.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Office.Silver.xaml");
-        public static ThemePath Oceatech = new ThemePath(CalendarPickerThemes.Oceatech.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Oceatech.xaml");
         #endregion
 
         #region MonthList Enum
@@ -215,14 +215,13 @@ namespace ZapanControls.Controls.CalendarPicker
         private readonly DateButton[,] _btnMonthMode = new DateButton[6, 7];
         private readonly DateButton[,] _btnYearMode = new DateButton[4, 3];
         private readonly DateButton[] _btnDecadeMode = new DateButton[10];
-        private BlackoutDatesCollection _blackoutDates;
-        private Dictionary<string, ResourceDictionary> _rdThemeDictionaries;
+        private readonly BlackoutDatesCollection _blackoutDates;
         #endregion
 
         #region Private Properties
         private bool HasInitialized { get; set; }
         private bool IsDragging { get; set; }
-        private bool IsDragImage { get; set; }
+        //private bool IsDragImage { get; set; }
         private bool IsAnimating { get; set; }
         private bool IsMoveForward { get; set; }
         private Window ParentWindow { get; set; }
@@ -234,7 +233,7 @@ namespace ZapanControls.Controls.CalendarPicker
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _dispatcherTimer_Tick(object sender, EventArgs e)
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             if (Mouse.LeftButton != MouseButtonState.Pressed)
                 StopDragTimer();
@@ -637,13 +636,83 @@ namespace ZapanControls.Controls.CalendarPicker
         }
         #endregion
 
+        #region ThemableControl implementation
+        internal override void OnThemeChangedSuccess(object sender, RoutedEventArgs e)
+        {
+            if (e.Source is Calendar c)
+            {
+                // reset display
+                c.DisplayMode = DisplayType.Month;
+                c.SetMonthMode();
+            }
+
+            // Control
+            SetCurrentValue(ControlBorderBrushProperty, TryFindResource(CalendarResourceKeys.ControlBorderBrushKey));
+            SetCurrentValue(ControlBackgroundProperty, TryFindResource(CalendarResourceKeys.ControlBackgroundKey));
+
+            // Header
+            SetCurrentValue(HeaderNormalForegroundProperty, TryFindResource(CalendarResourceKeys.HeaderNormalForegroundKey));
+            SetCurrentValue(HeaderFocusedForegroundProperty, TryFindResource(CalendarResourceKeys.HeaderFocusedForegroundKey));
+            SetCurrentValue(HeaderPressedForegroundProperty, TryFindResource(CalendarResourceKeys.HeaderPressedForegroundKey));
+            SetCurrentValue(HeaderNormalBorderBrushProperty, TryFindResource(CalendarResourceKeys.HeaderNormalBorderBrushKey));
+            SetCurrentValue(HeaderFocusedBorderBrushProperty, TryFindResource(CalendarResourceKeys.HeaderFocusedBorderBrushKey));
+            SetCurrentValue(HeaderPressedBorderBrushProperty, TryFindResource(CalendarResourceKeys.HeaderPressedBorderBrushKey));
+            SetCurrentValue(HeaderNormalBackgroundProperty, TryFindResource(CalendarResourceKeys.HeaderNormalBackgroundKey));
+            SetCurrentValue(HeaderFocusedBackgroundProperty, TryFindResource(CalendarResourceKeys.HeaderFocusedBackgroundKey));
+            SetCurrentValue(HeaderPressedBackgroundProperty, TryFindResource(CalendarResourceKeys.HeaderPressedBackgroundKey));
+
+            // Navigation Buttons
+            SetCurrentValue(ArrowBorderBrushProperty, TryFindResource(CalendarResourceKeys.ArrowBorderBrushKey));
+            SetCurrentValue(ArrowNormalFillProperty, TryFindResource(CalendarResourceKeys.ArrowNormalFillKey));
+            SetCurrentValue(ArrowFocusedFillProperty, TryFindResource(CalendarResourceKeys.ArrowFocusedFillKey));
+            SetCurrentValue(ArrowPressedFillProperty, TryFindResource(CalendarResourceKeys.ArrowPressedFillKey));
+
+            // Day Column
+            SetCurrentValue(DayNamesForegroundProperty, TryFindResource(CalendarResourceKeys.DayNamesForegroundKey));
+            SetCurrentValue(DayNamesBorderBrushProperty, TryFindResource(CalendarResourceKeys.DayNamesBorderBrushKey));
+            SetCurrentValue(DayNamesBackgroundProperty, TryFindResource(CalendarResourceKeys.DayNamesBackgroundKey));
+
+            // Week Column
+            SetCurrentValue(WeekColumnForegroundProperty, TryFindResource(CalendarResourceKeys.WeekColumnForegroundKey));
+            SetCurrentValue(WeekColumnBorderBrushProperty, TryFindResource(CalendarResourceKeys.WeekColumnBorderBrushKey));
+            SetCurrentValue(WeekColumnBackgroundProperty, TryFindResource(CalendarResourceKeys.WeekColumnBackgroundKey));
+
+            // Button Normal
+            SetCurrentValue(ButtonNormalForegroundProperty, TryFindResource(CalendarResourceKeys.ButtonNormalForegroundKey));
+            SetCurrentValue(ButtonNormalBorderBrushProperty, TryFindResource(CalendarResourceKeys.ButtonNormalBorderBrushKey));
+            SetCurrentValue(ButtonNormalBackgroundProperty, TryFindResource(CalendarResourceKeys.ButtonNormalBackgroundKey));
+            // Button Focused
+            SetCurrentValue(ButtonFocusedForegroundProperty, TryFindResource(CalendarResourceKeys.ButtonFocusedForegroundKey));
+            SetCurrentValue(ButtonFocusedBorderBrushProperty, TryFindResource(CalendarResourceKeys.ButtonFocusedBorderBrushKey));
+            SetCurrentValue(ButtonFocusedBackgroundProperty, TryFindResource(CalendarResourceKeys.ButtonFocusedBackgroundKey));
+            // Button Selected
+            SetCurrentValue(ButtonSelectedForegroundProperty, TryFindResource(CalendarResourceKeys.ButtonSelectedForegroundKey));
+            SetCurrentValue(ButtonSelectedBorderBrushProperty, TryFindResource(CalendarResourceKeys.ButtonSelectedBorderBrushKey));
+            SetCurrentValue(ButtonSelectedBackgroundProperty, TryFindResource(CalendarResourceKeys.ButtonSelectedBackgroundKey));
+            // Button Defaulted
+            SetCurrentValue(ButtonDefaultedForegroundProperty, TryFindResource(CalendarResourceKeys.ButtonDefaultedForegroundKey));
+            SetCurrentValue(ButtonDefaultedBorderBrushProperty, TryFindResource(CalendarResourceKeys.ButtonDefaultedBorderBrushKey));
+            SetCurrentValue(ButtonDefaultedBackgroundProperty, TryFindResource(CalendarResourceKeys.ButtonDefaultedBackgroundKey));
+            // Button Pressed
+            SetCurrentValue(ButtonPressedForegroundProperty, TryFindResource(CalendarResourceKeys.ButtonPressedForegroundKey));
+            SetCurrentValue(ButtonPressedBorderBrushProperty, TryFindResource(CalendarResourceKeys.ButtonPressedBorderBrushKey));
+            SetCurrentValue(ButtonPressedBackgroundProperty, TryFindResource(CalendarResourceKeys.ButtonPressedBackgroundKey));
+            // Button Disabled
+            SetCurrentValue(ButtonTransparentProperty, TryFindResource(CalendarResourceKeys.ButtonTransparentKey));
+            SetCurrentValue(ButtonDisabledForegroundProperty, TryFindResource(CalendarResourceKeys.ButtonDisabledForegroundKey));
+            SetCurrentValue(ButtonDisabledBorderBrushProperty, TryFindResource(CalendarResourceKeys.ButtonDisabledBorderBrushKey));
+            SetCurrentValue(ButtonDisabledBackgroundProperty, TryFindResource(CalendarResourceKeys.ButtonDisabledBackgroundKey));
+
+            // Footer
+            SetCurrentValue(FooterForegroundProperty, TryFindResource(CalendarResourceKeys.FooterForegroundKey));
+            SetCurrentValue(FooterBorderBrushProperty, TryFindResource(CalendarResourceKeys.FooterBorderBrushKey));
+            SetCurrentValue(FooterBackgroundProperty, TryFindResource(CalendarResourceKeys.FooterBackgroundKey));
+        }
+        #endregion
+
         #region Constructors
         public Calendar()
         {
-            // register inbuilt themes
-            RegisterAttachedThemes();
-            // load aero default
-            LoadDefaultTheme();
             SelectedDates = new ObservableCollection<DateTime>();
             _blackoutDates = new BlackoutDatesCollection(this);
         }
@@ -652,195 +721,6 @@ namespace ZapanControls.Controls.CalendarPicker
         {
             // override style
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Calendar), new FrameworkPropertyMetadata(typeof(Calendar)));
-
-
-            /*** Property Declarations ***/
-            // AllowDrag
-            UIPropertyMetadata allowDragMetaData = new UIPropertyMetadata
-            {
-                DefaultValue = false,
-                PropertyChangedCallback = new PropertyChangedCallback(OnAllowDragChanged),
-            };
-            AllowDragProperty = DependencyProperty.Register("AllowDrag", typeof(bool), typeof(Calendar), allowDragMetaData);
-
-            // AdornDrag
-            UIPropertyMetadata adornDragMetaData = new UIPropertyMetadata
-            {
-                DefaultValue = false,
-                CoerceValueCallback = new CoerceValueCallback(CoerceAdornDrag),
-                PropertyChangedCallback = new PropertyChangedCallback(OnAdornChanged),
-            };
-            AdornDragProperty = DependencyProperty.Register("AdornDrag", typeof(bool), typeof(Calendar), adornDragMetaData);
-
-            // HeaderFontSize
-            FrameworkPropertyMetadata headerFontSizeMetaData = new FrameworkPropertyMetadata
-            {
-                DefaultValue = (double)12,
-                CoerceValueCallback = new CoerceValueCallback(CoerceHeaderFontSize),
-                PropertyChangedCallback = new PropertyChangedCallback(OnHeaderFontSizeChanged),
-                AffectsRender = true, 
-                AffectsMeasure = true
-            };
-            HeaderFontSizeProperty = DependencyProperty.Register("HeaderFontSize", typeof(double), typeof(Calendar), headerFontSizeMetaData);
-
-            // HeaderFontWeight
-            FrameworkPropertyMetadata headerFontWeightMetaData = new FrameworkPropertyMetadata
-            {
-                DefaultValue = FontWeights.Bold,
-                PropertyChangedCallback = new PropertyChangedCallback(OnHeaderFontWeightChanged),
-                AffectsRender = true
-            };
-            HeaderFontWeightProperty = DependencyProperty.Register("HeaderFontWeight", typeof(FontWeight), typeof(Calendar), headerFontWeightMetaData);
-
-            // IsAnimated 
-            FrameworkPropertyMetadata isAnimatedMetaData = new FrameworkPropertyMetadata
-            {
-                DefaultValue = true,
-                PropertyChangedCallback = new PropertyChangedCallback(OnIsAnimatedChanged),
-            };
-            IsAnimatedProperty = DependencyProperty.Register("IsAnimated", typeof(bool), typeof(Calendar), isAnimatedMetaData);
-
-            // IsTodayHighlighted
-            FrameworkPropertyMetadata isTodayHighlightedMetaData = new FrameworkPropertyMetadata
-            {
-                DefaultValue = true,
-                PropertyChangedCallback = new PropertyChangedCallback(OnTodayHighlightedChanged),
-                AffectsRender = true
-            };
-            IsTodayHighlightedProperty = DependencyProperty.Register("IsTodayHighlighted", typeof(bool), typeof(Calendar), isTodayHighlightedMetaData);
-
-            // HeaderHeight
-            FrameworkPropertyMetadata headerHeightMetaData = new FrameworkPropertyMetadata
-            {
-                DefaultValue = (double)20,
-                PropertyChangedCallback = new PropertyChangedCallback(OnHeaderHeightChanged),
-                CoerceValueCallback = new CoerceValueCallback(CoerceHeaderHeight),
-                AffectsRender = true,
-                AffectsMeasure = true
-            };
-            HeaderHeightProperty = DependencyProperty.Register("HeaderHeight", typeof(double), typeof(Calendar), headerHeightMetaData);
-
-            // ShowDaysOfAllMonths
-            FrameworkPropertyMetadata showDaysOfAllMonthsMetaData = new FrameworkPropertyMetadata
-            {
-                DefaultValue = true,
-                PropertyChangedCallback = new PropertyChangedCallback(OnShowDaysOfAllMonthsChanged),
-                AffectsRender = true
-            };
-            ShowDaysOfAllMonthsProperty = DependencyProperty.Register("ShowDaysOfAllMonths", typeof(bool), typeof(Calendar), showDaysOfAllMonthsMetaData);
-
-            // FooterVisibility
-            FrameworkPropertyMetadata footerVisibilityMetaData = new FrameworkPropertyMetadata
-            {
-                DefaultValue = Visibility.Visible,
-                PropertyChangedCallback = new PropertyChangedCallback(OnFooterVisibilityChanged),
-                AffectsRender = true,
-                AffectsMeasure = true
-            };
-            FooterVisibilityProperty = DependencyProperty.Register("FooterVisibility", typeof(Visibility), typeof(Calendar), footerVisibilityMetaData);
-
-            // WeekColumnVisibility
-            FrameworkPropertyMetadata weekColumnVisibilityMetaData = new FrameworkPropertyMetadata
-            {
-                DefaultValue = Visibility.Visible,
-                PropertyChangedCallback = new PropertyChangedCallback(OnWeekColumnVisibilityChanged),
-                AffectsRender = true,
-                AffectsMeasure = true
-            };
-            WeekColumnVisibilityProperty = DependencyProperty.Register("WeekColumnVisibility", typeof(Visibility), typeof(Calendar), weekColumnVisibilityMetaData);
-
-            // DisplayMode
-            FrameworkPropertyMetadata displayModeMetaData = new FrameworkPropertyMetadata
-            {
-                PropertyChangedCallback = new PropertyChangedCallback(OnDisplayModeChanged)
-            };
-            DisplayModeProperty = DependencyProperty.Register("DisplayMode", typeof(DisplayType), typeof(Calendar), displayModeMetaData);
-            
-            // DisplayDate
-            UIPropertyMetadata displayDateMetaData = new UIPropertyMetadata
-            {
-                DefaultValue = DateTime.Today,
-                PropertyChangedCallback = new PropertyChangedCallback(OnModeChanged),
-                CoerceValueCallback = new CoerceValueCallback(CoerceDateToBeInRange)
-            };
-            DisplayDateProperty = DependencyProperty.Register("DisplayDate", typeof(DateTime), typeof(Calendar), displayDateMetaData);
-
-            // DisplayDateStart
-            UIPropertyMetadata displayDateStartMetaData = new UIPropertyMetadata
-            {
-                DefaultValue = new DateTime(1, 1, 1),
-                PropertyChangedCallback = new PropertyChangedCallback(OnDisplayDateStartChanged),
-                CoerceValueCallback = new CoerceValueCallback(CoerceDisplayDateStart),
-            };
-            DisplayDateStartProperty = DependencyProperty.Register("DisplayDateStart", typeof(DateTime), typeof(Calendar), displayDateStartMetaData);
-
-            // DisplayDateEnd
-            UIPropertyMetadata displayDateEndMetaData = new UIPropertyMetadata
-            {
-                DefaultValue = new DateTime(2199, 1, 1),
-                CoerceValueCallback = new CoerceValueCallback(CoerceDisplayDateEnd),
-                PropertyChangedCallback = new PropertyChangedCallback(OnDisplayDateEndChanged)
-            };
-            DisplayDateEndProperty = DependencyProperty.Register("DisplayDateEnd", typeof(DateTime), typeof(Calendar), displayDateEndMetaData);
-
-            // SelectedDate
-            UIPropertyMetadata selectedDateMetaData = new UIPropertyMetadata
-            {
-                DefaultValue = DateTime.Now,
-                PropertyChangedCallback = new PropertyChangedCallback(OnSelectedDateChanged)
-            };
-            SelectedDateProperty = DependencyProperty.Register("SelectedDate", typeof(DateTime), typeof(Calendar), selectedDateMetaData);
-
-            // SelectedDates
-            UIPropertyMetadata selectedDatesMetaData = new UIPropertyMetadata
-            {
-                DefaultValue = null,
-                PropertyChangedCallback = new PropertyChangedCallback(OnSelectedDatesChanged),
-                CoerceValueCallback = new CoerceValueCallback(CoerceDatesChanged),
-            };
-
-            // SelectedDates
-            SelectedDatesProperty = DependencyProperty.Register("CurrentlySelectedDates", typeof(ObservableCollection<DateTime>),
-                typeof(Calendar), new UIPropertyMetadata(null, 
-                    delegate(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-                    { 
-                        Calendar cld = (Calendar)sender;
-                        if (e.NewValue is INotifyCollectionChanged collection)
-                        {
-                            collection.CollectionChanged +=
-                                delegate { cld.OnPropertyChanged(new PropertyChangedEventArgs(CurrentlySelectedDatePropName)); };
-                        }
-                        cld.OnPropertyChanged(new PropertyChangedEventArgs(CurrentlySelectedDatePropName));
-                    }
-            ));
-
-            // SelectionMode
-            UIPropertyMetadata selectionModeMetaData = new UIPropertyMetadata
-                (SelectionType.Single, 
-                    delegate(DependencyObject sender, DependencyPropertyChangedEventArgs e) 
-                    { 
-                    }, 
-                CoerceSelectionMode);
-            SelectionModeProperty = DependencyProperty.Register("SelectionMode", typeof(SelectionType), typeof(Calendar), selectionModeMetaData);
-
-            // IsRangeSelection
-            IsRangeSelectionProperty = DependencyProperty.Register("IsRangeSelection", typeof(bool), typeof(Calendar), new UIPropertyMetadata(false));
-        }
-        #endregion
-
-        #region INotifyPropertyChanged Members
-        /// <summary>
-        /// Event raised when a property is changed
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Raises the property changed event
-        /// </summary>
-        /// <param name="e">The arguments to pass</param>
-        protected void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            PropertyChanged?.Invoke(this, e);
         }
         #endregion
 
@@ -955,14 +835,13 @@ namespace ZapanControls.Controls.CalendarPicker
 
                 lblMeasure.Content = lblMeasure.Tag.ToString();
                 lblMeasure.Measure(availableSize);
-                double width = lblMeasure.DesiredSize.Width;
 
                 if (lblMeasure.DesiredSize.Width < szCompare.Width)
                     return -1;
 
                 lblMeasure.Content = lblMeasure.Tag.ToString().Substring(0, 3);
                 lblMeasure.Measure(availableSize);
-                width = lblMeasure.DesiredSize.Width;
+                double width = lblMeasure.DesiredSize.Width;
 
                 return width < szCompare.Width ? 3 : 2;
             }
@@ -975,7 +854,8 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <summary>
         /// Gets/Sets dragging capability
         /// </summary>
-        public static readonly DependencyProperty AllowDragProperty;
+        public static readonly DependencyProperty AllowDragProperty = DependencyProperty.Register(
+            "AllowDrag", typeof(bool), typeof(Calendar), new UIPropertyMetadata(false, new PropertyChangedCallback(OnAllowDragChanged)));
 
         public bool AllowDrag
         {
@@ -986,7 +866,7 @@ namespace ZapanControls.Controls.CalendarPicker
         private static void OnAllowDragChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Calendar vc = d as Calendar;
-            vc.OnPropertyChanged(new PropertyChangedEventArgs(AllowDragPropName));
+            vc.RaisePropertyChanged(new PropertyChangedEventArgs(AllowDragPropName));
         }
         #endregion
 
@@ -994,7 +874,12 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <summary>
         /// Gets/Sets drag usese adorned window
         /// </summary>
-        public static readonly DependencyProperty AdornDragProperty;
+        public static readonly DependencyProperty AdornDragProperty = DependencyProperty.Register(
+            "AdornDrag", typeof(bool), typeof(Calendar), 
+            new UIPropertyMetadata(
+                false, 
+                new PropertyChangedCallback(OnAdornChanged),
+                new CoerceValueCallback(CoerceAdornDrag)));
 
         public bool AdornDrag
         {
@@ -1017,7 +902,7 @@ namespace ZapanControls.Controls.CalendarPicker
         private static void OnAdornChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Calendar vc = d as Calendar;
-            vc.OnPropertyChanged(new PropertyChangedEventArgs(AdornDragPropName));
+            vc.RaisePropertyChanged(new PropertyChangedEventArgs(AdornDragPropName));
         }
         #endregion
 
@@ -1035,7 +920,12 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <summary>
         /// Gets/Sets the date that is being displayed in the calendar
         /// </summary>
-        public static readonly DependencyProperty DisplayDateProperty;
+        public static readonly DependencyProperty DisplayDateProperty = DependencyProperty.Register(
+            "DisplayDate", typeof(DateTime), typeof(Calendar), 
+            new UIPropertyMetadata(
+                DateTime.Today,
+                new PropertyChangedCallback(OnModeChanged),
+                new CoerceValueCallback(CoerceDateToBeInRange)));
 
         public DateTime DisplayDate
         {
@@ -1062,7 +952,8 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <summary>
         /// Gets/Sets the calender display mode
         /// </summary>
-        public static readonly DependencyProperty DisplayModeProperty;
+        public static readonly DependencyProperty DisplayModeProperty = DependencyProperty.Register(
+            "DisplayMode", typeof(DisplayType), typeof(Calendar), new FrameworkPropertyMetadata(DisplayType.Month, new PropertyChangedCallback(OnDisplayModeChanged)));
 
         public DisplayType DisplayMode
         {
@@ -1085,7 +976,7 @@ namespace ZapanControls.Controls.CalendarPicker
             vc.RaiseEvent(args);
 
             //raise the PropertyChanged event
-            vc.OnPropertyChanged(new PropertyChangedEventArgs(DisplayModePropName));
+            vc.RaisePropertyChanged(new PropertyChangedEventArgs(DisplayModePropName));
         }
 
         private static void OnModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -1114,7 +1005,12 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <summary>
         /// Gets/Sets the minimum date that is displayed and selected
         /// </summary>
-        public static readonly DependencyProperty DisplayDateStartProperty;
+        public static readonly DependencyProperty DisplayDateStartProperty = DependencyProperty.Register(
+            "DisplayDateStart", typeof(DateTime), typeof(Calendar), 
+            new UIPropertyMetadata(
+                new DateTime(1, 1, 1),
+                new PropertyChangedCallback(OnDisplayDateStartChanged),
+                new CoerceValueCallback(CoerceDisplayDateStart)));
 
         public DateTime DisplayDateStart
         {
@@ -1130,14 +1026,14 @@ namespace ZapanControls.Controls.CalendarPicker
             vc.CoerceValue(SelectedDateProperty);
             vc.CoerceValue(DisplayDateProperty);
 
-            vc.OnPropertyChanged(new PropertyChangedEventArgs(DisplayDateStartPropName));
+            vc.RaisePropertyChanged(new PropertyChangedEventArgs(DisplayDateStartPropName));
             OnModeChanged(d, new DependencyPropertyChangedEventArgs());
         }
 
         private static object CoerceDisplayDateStart(DependencyObject d, object o)
         {
-            Calendar vc = d as Calendar;
-            DateTime value = (DateTime)o;
+            //Calendar vc = d as Calendar;
+            //DateTime value = (DateTime)o;
             return o;
         }
         #endregion
@@ -1146,7 +1042,12 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <summary>
         /// Gets/Sets the maximum date that is displayed and selected
         /// </summary>
-        public static readonly DependencyProperty DisplayDateEndProperty;
+        public static readonly DependencyProperty DisplayDateEndProperty = DependencyProperty.Register(
+            "DisplayDateEnd", typeof(DateTime), typeof(Calendar),
+            new UIPropertyMetadata(
+                new DateTime(2199, 1, 1),
+                new PropertyChangedCallback(OnDisplayDateEndChanged),
+                new CoerceValueCallback(CoerceDisplayDateEnd)));
 
         public DateTime DisplayDateEnd
         {
@@ -1180,7 +1081,11 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <summary>
         /// Gets/Sets the footer visibility
         /// </summary>
-        public static readonly DependencyProperty FooterVisibilityProperty;
+        public static readonly DependencyProperty FooterVisibilityProperty = DependencyProperty.Register(
+            "FooterVisibility", typeof(Visibility), typeof(Calendar), new FrameworkPropertyMetadata(
+                Visibility.Visible,
+                FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure,
+                new PropertyChangedCallback(OnFooterVisibilityChanged)));
 
         public Visibility FooterVisibility
         {
@@ -1206,7 +1111,7 @@ namespace ZapanControls.Controls.CalendarPicker
                     vc.UpdateCalendar();
                 }
 
-                vc.OnPropertyChanged(new PropertyChangedEventArgs(FooterVisibilityPropName));
+                vc.RaisePropertyChanged(new PropertyChangedEventArgs(FooterVisibilityPropName));
             }
         }
         #endregion
@@ -1215,7 +1120,12 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <summary>
         /// Gets/Sets the title button font size
         /// </summary>
-        public static readonly DependencyProperty HeaderFontSizeProperty;
+        public static readonly DependencyProperty HeaderFontSizeProperty = DependencyProperty.Register(
+            "HeaderFontSize", typeof(double), typeof(Calendar), new FrameworkPropertyMetadata(
+                (double)12,
+                FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure,
+                new PropertyChangedCallback(OnHeaderFontSizeChanged),
+                new CoerceValueCallback(CoerceHeaderFontSize)));
 
         public double HeaderFontSize
         {
@@ -1225,7 +1135,7 @@ namespace ZapanControls.Controls.CalendarPicker
 
         private static object CoerceHeaderFontSize(DependencyObject d, object o)
         {
-            Calendar vc = d as Calendar;
+            //Calendar vc = d as Calendar;
             double value = (double)o;
 
             if (value > 16)
@@ -1245,7 +1155,7 @@ namespace ZapanControls.Controls.CalendarPicker
             if (btnTitle != null)
             {
                 btnTitle.FontSize = (double)e.NewValue;
-                vc.OnPropertyChanged(new PropertyChangedEventArgs(HeaderFontSizePropName));
+                vc.RaisePropertyChanged(new PropertyChangedEventArgs(HeaderFontSizePropName));
             }
         }
         #endregion
@@ -1254,7 +1164,11 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <summary>
         /// Gets/Sets the title button font weight
         /// </summary>
-        public static readonly DependencyProperty HeaderFontWeightProperty;
+        public static readonly DependencyProperty HeaderFontWeightProperty = DependencyProperty.Register(
+            "HeaderFontWeight", typeof(FontWeight), typeof(Calendar), new FrameworkPropertyMetadata(
+                FontWeights.Bold, 
+                FrameworkPropertyMetadataOptions.AffectsRender,
+                new PropertyChangedCallback(OnHeaderFontWeightChanged)));
 
         public FontWeight HeaderFontWeight
         {
@@ -1270,7 +1184,7 @@ namespace ZapanControls.Controls.CalendarPicker
             if (btnTitle != null)
             {
                 btnTitle.FontWeight = (FontWeight)e.NewValue;
-                vc.OnPropertyChanged(new PropertyChangedEventArgs(HeaderFontWeightPropName));
+                vc.RaisePropertyChanged(new PropertyChangedEventArgs(HeaderFontWeightPropName));
             }
         }
         #endregion
@@ -1279,7 +1193,12 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <summary>
         /// Gets/Sets the header height
         /// </summary>
-        public static readonly DependencyProperty HeaderHeightProperty;
+        public static readonly DependencyProperty HeaderHeightProperty = DependencyProperty.Register(
+            "HeaderHeight", typeof(double), typeof(Calendar), new FrameworkPropertyMetadata(
+                (double)20,
+                FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure,
+                new PropertyChangedCallback(OnHeaderHeightChanged),
+                new CoerceValueCallback(CoerceHeaderHeight)));
 
         public double HeaderHeight
         {
@@ -1289,7 +1208,7 @@ namespace ZapanControls.Controls.CalendarPicker
 
         private static object CoerceHeaderHeight(DependencyObject d, object o)
         {
-            Calendar vc = d as Calendar;
+            //Calendar vc = d as Calendar;
             double value = (double)o;
 
             if (value > 30)
@@ -1309,7 +1228,7 @@ namespace ZapanControls.Controls.CalendarPicker
             if (brdHeaderBorder != null)
             {
                 brdHeaderBorder.Height = (double)e.NewValue;
-                vc.OnPropertyChanged(new PropertyChangedEventArgs(HeaderHeightPropName));
+                vc.RaisePropertyChanged(new PropertyChangedEventArgs(HeaderHeightPropName));
             }
         }
         #endregion
@@ -1318,7 +1237,8 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <summary>
         /// Gets/Sets animations are used
         /// </summary>
-        public static readonly DependencyProperty IsAnimatedProperty;
+        public static readonly DependencyProperty IsAnimatedProperty = DependencyProperty.Register(
+            "IsAnimated", typeof(bool), typeof(Calendar), new FrameworkPropertyMetadata(true, new PropertyChangedCallback(OnIsAnimatedChanged)));
 
         public bool IsAnimated
         {
@@ -1329,7 +1249,7 @@ namespace ZapanControls.Controls.CalendarPicker
         private static void OnIsAnimatedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Calendar vc = d as Calendar;
-            vc.OnPropertyChanged(new PropertyChangedEventArgs(IsAnimatedPropName));
+            vc.RaisePropertyChanged(new PropertyChangedEventArgs(IsAnimatedPropName));
         }
         #endregion
 
@@ -1347,7 +1267,11 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <summary>
         /// Gets/Sets current day is highlighted
         /// </summary>
-        public static readonly DependencyProperty IsTodayHighlightedProperty;
+        public static readonly DependencyProperty IsTodayHighlightedProperty = DependencyProperty.Register(
+            "IsTodayHighlighted", typeof(bool), typeof(Calendar), new FrameworkPropertyMetadata(
+                true,
+                FrameworkPropertyMetadataOptions.AffectsRender,
+                new PropertyChangedCallback(OnTodayHighlightedChanged)));
 
         public bool IsTodayHighlighted
         {
@@ -1362,7 +1286,7 @@ namespace ZapanControls.Controls.CalendarPicker
             if (vc.DisplayMode == DisplayType.Month)
             {
                 vc.SetMonthMode();
-                vc.OnPropertyChanged(new PropertyChangedEventArgs(TodayHighlightedPropName));
+                vc.RaisePropertyChanged(new PropertyChangedEventArgs(TodayHighlightedPropName));
             }
         }
         #endregion
@@ -1371,7 +1295,8 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <summary>
         /// Gets/Sets the currently viewed date
         /// </summary>
-        public static readonly DependencyProperty SelectedDateProperty;
+        public static readonly DependencyProperty SelectedDateProperty = DependencyProperty.Register(
+            "SelectedDate", typeof(DateTime), typeof(Calendar), new UIPropertyMetadata(DateTime.Now, new PropertyChangedCallback(OnSelectedDateChanged)));
 
         public DateTime SelectedDate
         {
@@ -1383,7 +1308,7 @@ namespace ZapanControls.Controls.CalendarPicker
         {
             Calendar vc = (Calendar)obj;
             vc.OnDateChanged(vc.SelectedDate, (DateTime)e.OldValue);
-            vc.OnPropertyChanged(new PropertyChangedEventArgs(CurrentlySelectedDatePropName));
+            vc.RaisePropertyChanged(new PropertyChangedEventArgs(CurrentlySelectedDatePropName));
         }
 
         private void OnDateChanged(DateTime newDate, DateTime oldDate)
@@ -1417,7 +1342,20 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <summary>
         /// Gets/Sets a collection of selected dates
         /// </summary>
-        public static readonly DependencyProperty SelectedDatesProperty;
+        public static readonly DependencyProperty SelectedDatesProperty = DependencyProperty.Register(
+            "CurrentlySelectedDates", typeof(ObservableCollection<DateTime>),
+                typeof(Calendar), new UIPropertyMetadata(null,
+                    delegate (DependencyObject sender, DependencyPropertyChangedEventArgs e)
+                    {
+                        Calendar cld = (Calendar)sender;
+                        if (e.NewValue is INotifyCollectionChanged collection)
+                        {
+                            collection.CollectionChanged += delegate { cld.RaisePropertyChanged(new PropertyChangedEventArgs(CurrentlySelectedDatePropName)); };
+                        }
+                        cld.RaisePropertyChanged(new PropertyChangedEventArgs(CurrentlySelectedDatePropName));
+                    },
+                    new CoerceValueCallback(CoerceDatesChanged)
+            ));
 
         public ObservableCollection<DateTime> SelectedDates
         {
@@ -1429,12 +1367,12 @@ namespace ZapanControls.Controls.CalendarPicker
         {
             Calendar vc = (Calendar)obj;
             vc.OnDatesChanged((ObservableCollection<DateTime>)e.NewValue, (ObservableCollection<DateTime>)e.OldValue);
-            vc.OnPropertyChanged(new PropertyChangedEventArgs(CurrentlySelectedDatePropName));
+            vc.RaisePropertyChanged(new PropertyChangedEventArgs(CurrentlySelectedDatePropName));
         }
 
         private static object CoerceDatesChanged(DependencyObject d, object o)
         {
-            Calendar vc = d as Calendar;
+            //Calendar vc = d as Calendar;
             return o;
         }
 
@@ -1490,7 +1428,11 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <summary>
         /// Gets/Sets the selection mode
         /// </summary>
-        public static readonly DependencyProperty SelectionModeProperty;
+        public static readonly DependencyProperty SelectionModeProperty = DependencyProperty.Register(
+            "SelectionMode", typeof(SelectionType), typeof(Calendar), new UIPropertyMetadata(
+                SelectionType.Single,
+                delegate (DependencyObject sender, DependencyPropertyChangedEventArgs e) { },
+                CoerceSelectionMode));
 
         public SelectionType SelectionMode
         {
@@ -1509,7 +1451,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         #region IsRangeSelection
 
-        public static readonly DependencyProperty IsRangeSelectionProperty;
+        public static readonly DependencyProperty IsRangeSelectionProperty = DependencyProperty.Register(
+            "IsRangeSelection", typeof(bool), typeof(Calendar), new UIPropertyMetadata(false, new PropertyChangedCallback(OnIsRangeSelectionChanged)));
 
         public bool IsRangeSelection
         {
@@ -1520,7 +1463,7 @@ namespace ZapanControls.Controls.CalendarPicker
         private static void OnIsRangeSelectionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Calendar vc = d as Calendar;
-            vc.OnPropertyChanged(new PropertyChangedEventArgs(IsRangeSelectionPropName));
+            vc.RaisePropertyChanged(new PropertyChangedEventArgs(IsRangeSelectionPropName));
         }
 
         #endregion
@@ -1529,7 +1472,11 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <summary>
         /// Gets/Sets days of all months written to grid
         /// </summary>
-        public static readonly DependencyProperty ShowDaysOfAllMonthsProperty;
+        public static readonly DependencyProperty ShowDaysOfAllMonthsProperty = DependencyProperty.Register(
+            "ShowDaysOfAllMonths", typeof(bool), typeof(Calendar), new FrameworkPropertyMetadata(
+                true,
+                FrameworkPropertyMetadataOptions.AffectsRender,
+                new PropertyChangedCallback(OnShowDaysOfAllMonthsChanged)));
 
         public bool ShowDaysOfAllMonths
         {
@@ -1547,74 +1494,8 @@ namespace ZapanControls.Controls.CalendarPicker
                 if (grdMonthContainer.Visibility == Visibility.Visible)
                     vc.SetMonthMode();
 
-                vc.OnPropertyChanged(new PropertyChangedEventArgs(ShowDaysOfAllMonthsPropName));
+                vc.RaisePropertyChanged(new PropertyChangedEventArgs(ShowDaysOfAllMonthsPropName));
             }
-        }
-        #endregion
-
-        #region Theme
-        /// <summary>
-        /// Get/Sets the Calender theme
-        /// </summary>
-        public static DependencyProperty ThemeProperty = DependencyProperty.Register(
-            "Theme", typeof(string), typeof(Calendar),
-            new FrameworkPropertyMetadata
-            {
-                DefaultValue = CalendarPickerThemes.Oceatech.ToString(),
-                CoerceValueCallback = new CoerceValueCallback(CoerceThemeChange),
-                PropertyChangedCallback = new PropertyChangedCallback(OnThemeChanged),
-                AffectsRender = true,
-                AffectsMeasure = true
-            });
-
-        public string Theme
-        {
-            get { return (string)GetValue(ThemeProperty); }
-            set { SetValue(ThemeProperty, value); }
-        }
-
-        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            // test args
-            if (!(d is Calendar vc) || e == null)
-                throw new ArgumentNullException("Invalid Theme property");
-
-            // current theme
-            string curThemeName = e.OldValue as string;
-            string curRegisteredThemeName = vc.GetRegistrationName(curThemeName, vc.GetType());
-
-            if (vc._rdThemeDictionaries.ContainsKey(curRegisteredThemeName))
-            {
-                // remove current theme
-                ResourceDictionary curThemeDictionary = vc._rdThemeDictionaries[curRegisteredThemeName];
-                vc.Resources.MergedDictionaries.Remove(curThemeDictionary);
-            }
-
-            // new theme name
-            string newThemeName = e.NewValue as string;
-            string newRegisteredThemeName = vc.GetRegistrationName(newThemeName, vc.GetType());
-
-            // add the resource
-            if (!vc._rdThemeDictionaries.ContainsKey(newRegisteredThemeName))
-            {
-                  throw new ArgumentNullException("Invalid Theme property");
-            }
-            else
-            {
-                // reset display
-                vc.DisplayMode = DisplayType.Month;
-                vc.SetMonthMode();
-                // add the dictionary
-                ResourceDictionary newThemeDictionary = vc._rdThemeDictionaries[newRegisteredThemeName];
-                vc.Resources.MergedDictionaries.Add(newThemeDictionary);
-            }
-            
-            vc.OnPropertyChanged(new PropertyChangedEventArgs(ThemePropName));
-        }
-
-        private static object CoerceThemeChange(DependencyObject d, object o)
-        {
-            return o;
         }
         #endregion
 
@@ -1622,7 +1503,12 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <summary>
         /// Gets/Sets the week column visibility
         /// </summary>
-        public static readonly DependencyProperty WeekColumnVisibilityProperty;
+        public static readonly DependencyProperty WeekColumnVisibilityProperty = DependencyProperty.Register(
+            "WeekColumnVisibility", typeof(Visibility), typeof(Calendar), 
+            new FrameworkPropertyMetadata(
+                Visibility.Visible, 
+                FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure,
+                new PropertyChangedCallback(OnWeekColumnVisibilityChanged)));
 
         public Visibility WeekColumnVisibility
         {
@@ -1648,77 +1534,508 @@ namespace ZapanControls.Controls.CalendarPicker
                     vc.UpdateCalendar();
                 }
             }
-            vc.OnPropertyChanged(new PropertyChangedEventArgs(WeekColumnVisibilityPropName));
+            vc.RaisePropertyChanged(new PropertyChangedEventArgs(WeekColumnVisibilityPropName));
         }
         #endregion
         #endregion
 
-        #region Theming
-        /// <summary>
-        /// Load the default theme
-        /// </summary>
-        private void LoadDefaultTheme()
+        #region Theme Properties
+        #region ControlBorderBrush
+        public static readonly DependencyProperty ControlBorderBrushProperty = DependencyProperty.Register(
+            "ControlBorderBrush", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ControlBorderBrush
         {
-            //string registrationName = GetRegistrationName(CalendarPickerThemes.OfficeBlack.ToString(), typeof(Calendar));
-            string registrationName = GetRegistrationName(CalendarPickerThemes.Oceatech.ToString(), typeof(Calendar));
-            Resources.MergedDictionaries.Add(_rdThemeDictionaries[registrationName]);
+            get => (Brush)GetValue(ControlBorderBrushProperty);
+            set => SetValue(ControlBorderBrushProperty, value);
         }
+        #endregion
 
-        /// <summary>
-        /// Instance theme dictionary and add themes
-        /// </summary>
-        private void RegisterAttachedThemes()
+        #region ControlBackground
+        public static readonly DependencyProperty ControlBackgroundProperty = DependencyProperty.Register(
+            "ControlBackground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ControlBackground
         {
-            _rdThemeDictionaries = new Dictionary<string, ResourceDictionary>();
-            RegisterTheme(AeroNormalColorTheme, typeof(Calendar));
-            RegisterTheme(ClassicTheme, typeof(Calendar));
-            RegisterTheme(LunaHomesteadTheme, typeof(Calendar));
-            RegisterTheme(LunaMetallicTheme, typeof(Calendar));
-            RegisterTheme(LunaNormalTheme, typeof(Calendar));
-            RegisterTheme(RoyaleTheme, typeof(Calendar));
-            RegisterTheme(ZuneTheme, typeof(Calendar));
-            RegisterTheme(OfficeBlack, typeof(Calendar));
-            RegisterTheme(OfficeBlue, typeof(Calendar));
-            RegisterTheme(OfficeSilver, typeof(Calendar));
-            RegisterTheme(Oceatech, typeof(Calendar));
+            get => (Brush)GetValue(ControlBackgroundProperty);
+            set => SetValue(ControlBackgroundProperty, value);
         }
+        #endregion
 
-        /// <summary>
-        /// Register a theme with internal dictionary
-        /// </summary>
-        public void RegisterTheme(ThemePath theme, Type ownerType)
+        #region Header
+        #region HeaderNormalForeground
+        public static readonly DependencyProperty HeaderNormalForegroundProperty = DependencyProperty.Register(
+            "HeaderNormalForeground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush HeaderNormalForeground
         {
-            // test args
-            if ((theme.Name == null) || (theme.DictionaryPath == null))
-                throw new ArgumentNullException("Theme name/path is null");
-
-            if (ownerType == null)
-                throw new ArgumentNullException("Invalid ownerType");
-
-            // get registration name vhCalendar.Calendar;CustomTheme
-            string registrationName = GetRegistrationName(theme.Name, ownerType);
-
-            try
-            {
-                if (!_rdThemeDictionaries.ContainsKey(registrationName))
-                {
-                    // create the Uri
-                    Uri themeUri = new Uri(theme.DictionaryPath, UriKind.Relative);
-                    // register the new theme
-                    _rdThemeDictionaries[registrationName] = Application.LoadComponent(themeUri) as ResourceDictionary;
-                }
-            }
-            catch (Exception)
-            {  }
+            get => (Brush)GetValue(HeaderNormalForegroundProperty);
+            set => SetValue(HeaderNormalForegroundProperty, value);
         }
+        #endregion
 
-        /// <summary>
-        /// Get themes formal registration name
-        /// </summary>
-        private string GetRegistrationName(string themeName, Type ownerType)
+        #region HeaderFocusedForeground
+        public static readonly DependencyProperty HeaderFocusedForegroundProperty = DependencyProperty.Register(
+            "HeaderFocusedForeground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush HeaderFocusedForeground
         {
-            return $"{ownerType};{themeName}";
+            get => (Brush)GetValue(HeaderFocusedForegroundProperty);
+            set => SetValue(HeaderFocusedForegroundProperty, value);
         }
+        #endregion
+
+        #region HeaderPressedForeground
+        public static readonly DependencyProperty HeaderPressedForegroundProperty = DependencyProperty.Register(
+            "HeaderPressedForeground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush HeaderPressedForeground
+        {
+            get => (Brush)GetValue(HeaderPressedForegroundProperty);
+            set => SetValue(HeaderPressedForegroundProperty, value);
+        }
+        #endregion
+
+        #region HeaderNormalBorderBrush
+        public static readonly DependencyProperty HeaderNormalBorderBrushProperty = DependencyProperty.Register(
+            "HeaderNormalBorderBrush", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush HeaderNormalBorderBrush
+        {
+            get => (Brush)GetValue(HeaderNormalBorderBrushProperty);
+            set => SetValue(HeaderNormalBorderBrushProperty, value);
+        }
+        #endregion
+
+        #region HeaderFocusedBorderBrush
+        public static readonly DependencyProperty HeaderFocusedBorderBrushProperty = DependencyProperty.Register(
+            "HeaderFocusedBorderBrush", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush HeaderFocusedBorderBrush
+        {
+            get => (Brush)GetValue(HeaderFocusedBorderBrushProperty);
+            set => SetValue(HeaderFocusedBorderBrushProperty, value);
+        }
+        #endregion
+
+        #region HeaderPressedBorderBrush
+        public static readonly DependencyProperty HeaderPressedBorderBrushProperty = DependencyProperty.Register(
+            "HeaderPressedBorderBrush", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush HeaderPressedBorderBrush
+        {
+            get => (Brush)GetValue(HeaderPressedBorderBrushProperty);
+            set => SetValue(HeaderPressedBorderBrushProperty, value);
+        }
+        #endregion
+
+        #region HeaderNormalBackground
+        public static readonly DependencyProperty HeaderNormalBackgroundProperty = DependencyProperty.Register(
+            "HeaderNormalBackground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush HeaderNormalBackground
+        {
+            get => (Brush)GetValue(HeaderNormalBackgroundProperty);
+            set => SetValue(HeaderNormalBackgroundProperty, value);
+        }
+        #endregion
+
+        #region HeaderFocusedBackground
+        public static readonly DependencyProperty HeaderFocusedBackgroundProperty = DependencyProperty.Register(
+            "HeaderFocusedBackground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush HeaderFocusedBackground
+        {
+            get => (Brush)GetValue(HeaderFocusedBackgroundProperty);
+            set => SetValue(HeaderFocusedBackgroundProperty, value);
+        }
+        #endregion
+
+        #region HeaderPressedBackground
+        public static readonly DependencyProperty HeaderPressedBackgroundProperty = DependencyProperty.Register(
+            "HeaderPressedBackground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush HeaderPressedBackground
+        {
+            get => (Brush)GetValue(HeaderPressedBackgroundProperty);
+            set => SetValue(HeaderPressedBackgroundProperty, value);
+        }
+        #endregion
+        #endregion
+
+        #region Navigation Buttons
+        #region ArrowBorderBrush
+        public static readonly DependencyProperty ArrowBorderBrushProperty = DependencyProperty.Register(
+            "ArrowBorderBrush", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ArrowBorderBrush
+        {
+            get => (Brush)GetValue(ArrowBorderBrushProperty);
+            set => SetValue(ArrowBorderBrushProperty, value);
+        }
+        #endregion
+
+        #region ArrowNormalFill
+        public static readonly DependencyProperty ArrowNormalFillProperty = DependencyProperty.Register(
+            "ArrowNormalFill", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ArrowNormalFill
+        {
+            get => (Brush)GetValue(ArrowNormalFillProperty);
+            set => SetValue(ArrowNormalFillProperty, value);
+        }
+        #endregion
+
+        #region ArrowFocusedFill
+        public static readonly DependencyProperty ArrowFocusedFillProperty = DependencyProperty.Register(
+            "ArrowFocusedFill", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ArrowFocusedFill
+        {
+            get => (Brush)GetValue(ArrowFocusedFillProperty);
+            set => SetValue(ArrowFocusedFillProperty, value);
+        }
+        #endregion
+
+        #region ArrowPressedFill
+        public static readonly DependencyProperty ArrowPressedFillProperty = DependencyProperty.Register(
+            "ArrowPressedFill", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ArrowPressedFill
+        {
+            get => (Brush)GetValue(ArrowPressedFillProperty);
+            set => SetValue(ArrowPressedFillProperty, value);
+        }
+        #endregion
+        #endregion
+
+        #region Day Column
+        #region DayNamesForeground
+        public static readonly DependencyProperty DayNamesForegroundProperty = DependencyProperty.Register(
+            "DayNamesForeground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush DayNamesForeground
+        {
+            get => (Brush)GetValue(DayNamesForegroundProperty);
+            set => SetValue(DayNamesForegroundProperty, value);
+        }
+        #endregion
+
+        #region DayNamesBorderBrush
+        public static readonly DependencyProperty DayNamesBorderBrushProperty = DependencyProperty.Register(
+            "DayNamesBorderBrush", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush DayNamesBorderBrush
+        {
+            get => (Brush)GetValue(DayNamesBorderBrushProperty);
+            set => SetValue(DayNamesBorderBrushProperty, value);
+        }
+        #endregion
+
+        #region DayNamesBackground
+        public static readonly DependencyProperty DayNamesBackgroundProperty = DependencyProperty.Register(
+            "DayNamesBackground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush DayNamesBackground
+        {
+            get => (Brush)GetValue(DayNamesBackgroundProperty);
+            set => SetValue(DayNamesBackgroundProperty, value);
+        }
+        #endregion
+        #endregion
+
+        #region Week Column
+        #region WeekColumnForeground
+        public static readonly DependencyProperty WeekColumnForegroundProperty = DependencyProperty.Register(
+            "WeekColumnForeground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush WeekColumnForeground
+        {
+            get => (Brush)GetValue(WeekColumnForegroundProperty);
+            set => SetValue(WeekColumnForegroundProperty, value);
+        }
+        #endregion
+
+        #region WeekColumnBorderBrush
+        public static readonly DependencyProperty WeekColumnBorderBrushProperty = DependencyProperty.Register(
+            "WeekColumnBorderBrush", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush WeekColumnBorderBrush
+        {
+            get => (Brush)GetValue(WeekColumnBorderBrushProperty);
+            set => SetValue(WeekColumnBorderBrushProperty, value);
+        }
+        #endregion
+
+        #region WeekColumnBackground
+        public static readonly DependencyProperty WeekColumnBackgroundProperty = DependencyProperty.Register(
+            "WeekColumnBackground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush WeekColumnBackground
+        {
+            get => (Brush)GetValue(WeekColumnBackgroundProperty);
+            set => SetValue(WeekColumnBackgroundProperty, value);
+        }
+        #endregion
+        #endregion
+
+        #region Button
+        #region Normal
+        #region ButtonNormalForeground
+        public static readonly DependencyProperty ButtonNormalForegroundProperty = DependencyProperty.Register(
+            "ButtonNormalForeground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonNormalForeground
+        {
+            get => (Brush)GetValue(ButtonNormalForegroundProperty);
+            set => SetValue(ButtonNormalForegroundProperty, value);
+        }
+        #endregion
+
+        #region ButtonNormalBorderBrush
+        public static readonly DependencyProperty ButtonNormalBorderBrushProperty = DependencyProperty.Register(
+            "ButtonNormalBorderBrush", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonNormalBorderBrush
+        {
+            get => (Brush)GetValue(ButtonNormalBorderBrushProperty);
+            set => SetValue(ButtonNormalBorderBrushProperty, value);
+        }
+        #endregion
+
+        #region ButtonNormalBackground
+        public static readonly DependencyProperty ButtonNormalBackgroundProperty = DependencyProperty.Register(
+            "ButtonNormalBackground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonNormalBackground
+        {
+            get => (Brush)GetValue(ButtonNormalBackgroundProperty);
+            set => SetValue(ButtonNormalBackgroundProperty, value);
+        }
+        #endregion
+        #endregion
+
+        #region Focused
+        #region ButtonFocusedForeground
+        public static readonly DependencyProperty ButtonFocusedForegroundProperty = DependencyProperty.Register(
+            "ButtonFocusedForeground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonFocusedForeground
+        {
+            get => (Brush)GetValue(ButtonFocusedForegroundProperty);
+            set => SetValue(ButtonFocusedForegroundProperty, value);
+        }
+        #endregion
+
+        #region ButtonFocusedBorderBrush
+        public static readonly DependencyProperty ButtonFocusedBorderBrushProperty = DependencyProperty.Register(
+            "ButtonFocusedBorderBrush", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonFocusedBorderBrush
+        {
+            get => (Brush)GetValue(ButtonFocusedBorderBrushProperty);
+            set => SetValue(ButtonFocusedBorderBrushProperty, value);
+        }
+        #endregion
+
+        #region ButtonFocusedBackground
+        public static readonly DependencyProperty ButtonFocusedBackgroundProperty = DependencyProperty.Register(
+            "ButtonFocusedBackground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonFocusedBackground
+        {
+            get => (Brush)GetValue(ButtonFocusedBackgroundProperty);
+            set => SetValue(ButtonFocusedBackgroundProperty, value);
+        }
+        #endregion
+        #endregion
+
+        #region Selected
+        #region ButtonSelectedForeground
+        public static readonly DependencyProperty ButtonSelectedForegroundProperty = DependencyProperty.Register(
+            "ButtonSelectedForeground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonSelectedForeground
+        {
+            get => (Brush)GetValue(ButtonSelectedForegroundProperty);
+            set => SetValue(ButtonSelectedForegroundProperty, value);
+        }
+        #endregion
+
+        #region ButtonSelectedBorderBrush
+        public static readonly DependencyProperty ButtonSelectedBorderBrushProperty = DependencyProperty.Register(
+            "ButtonSelectedBorderBrush", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonSelectedBorderBrush
+        {
+            get => (Brush)GetValue(ButtonSelectedBorderBrushProperty);
+            set => SetValue(ButtonSelectedBorderBrushProperty, value);
+        }
+        #endregion
+
+        #region ButtonSelectedBackground
+        public static readonly DependencyProperty ButtonSelectedBackgroundProperty = DependencyProperty.Register(
+            "ButtonSelectedBackground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonSelectedBackground
+        {
+            get => (Brush)GetValue(ButtonSelectedBackgroundProperty);
+            set => SetValue(ButtonSelectedBackgroundProperty, value);
+        }
+        #endregion
+        #endregion
+
+        #region Defaulted
+        #region ButtonDefaultedForeground
+        public static readonly DependencyProperty ButtonDefaultedForegroundProperty = DependencyProperty.Register(
+            "ButtonDefaultedForeground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonDefaultedForeground
+        {
+            get => (Brush)GetValue(ButtonDefaultedForegroundProperty);
+            set => SetValue(ButtonDefaultedForegroundProperty, value);
+        }
+        #endregion
+
+        #region ButtonDefaultedBorderBrush
+        public static readonly DependencyProperty ButtonDefaultedBorderBrushProperty = DependencyProperty.Register(
+            "ButtonDefaultedBorderBrush", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonDefaultedBorderBrush
+        {
+            get => (Brush)GetValue(ButtonDefaultedBorderBrushProperty);
+            set => SetValue(ButtonDefaultedBorderBrushProperty, value);
+        }
+        #endregion
+
+        #region ButtonDefaultedBackground
+        public static readonly DependencyProperty ButtonDefaultedBackgroundProperty = DependencyProperty.Register(
+            "ButtonDefaultedBackground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonDefaultedBackground
+        {
+            get => (Brush)GetValue(ButtonDefaultedBackgroundProperty);
+            set => SetValue(ButtonDefaultedBackgroundProperty, value);
+        }
+        #endregion
+        #endregion
+
+        #region Pressed
+        #region ButtonPressedForeground
+        public static readonly DependencyProperty ButtonPressedForegroundProperty = DependencyProperty.Register(
+            "ButtonPressedForeground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonPressedForeground
+        {
+            get => (Brush)GetValue(ButtonPressedForegroundProperty);
+            set => SetValue(ButtonPressedForegroundProperty, value);
+        }
+        #endregion
+
+        #region ButtonPressedBorderBrush
+        public static readonly DependencyProperty ButtonPressedBorderBrushProperty = DependencyProperty.Register(
+            "ButtonPressedBorderBrush", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonPressedBorderBrush
+        {
+            get => (Brush)GetValue(ButtonPressedBorderBrushProperty);
+            set => SetValue(ButtonPressedBorderBrushProperty, value);
+        }
+        #endregion
+
+        #region ButtonPressedBackground
+        public static readonly DependencyProperty ButtonPressedBackgroundProperty = DependencyProperty.Register(
+            "ButtonPressedBackground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonPressedBackground
+        {
+            get => (Brush)GetValue(ButtonPressedBackgroundProperty);
+            set => SetValue(ButtonPressedBackgroundProperty, value);
+        }
+        #endregion
+        #endregion
+
+        #region Disabled
+        #region ButtonTransparent
+        public static readonly DependencyProperty ButtonTransparentProperty = DependencyProperty.Register(
+            "ButtonTransparent", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonTransparent
+        {
+            get => (Brush)GetValue(ButtonTransparentProperty);
+            set => SetValue(ButtonTransparentProperty, value);
+        }
+        #endregion
+
+        #region ButtonDisabledForeground
+        public static readonly DependencyProperty ButtonDisabledForegroundProperty = DependencyProperty.Register(
+            "ButtonDisabledForeground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonDisabledForeground
+        {
+            get => (Brush)GetValue(ButtonDisabledForegroundProperty);
+            set => SetValue(ButtonDisabledForegroundProperty, value);
+        }
+        #endregion
+
+        #region ButtonDisabledBorderBrush
+        public static readonly DependencyProperty ButtonDisabledBorderBrushProperty = DependencyProperty.Register(
+            "ButtonDisabledBorderBrush", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonDisabledBorderBrush
+        {
+            get => (Brush)GetValue(ButtonDisabledBorderBrushProperty);
+            set => SetValue(ButtonDisabledBorderBrushProperty, value);
+        }
+        #endregion
+
+        #region ButtonDisabledBackground
+        public static readonly DependencyProperty ButtonDisabledBackgroundProperty = DependencyProperty.Register(
+            "ButtonDisabledBackground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ButtonDisabledBackground
+        {
+            get => (Brush)GetValue(ButtonDisabledBackgroundProperty);
+            set => SetValue(ButtonDisabledBackgroundProperty, value);
+        }
+        #endregion
+        #endregion
+        #endregion
+
+        #region Footer
+        #region FooterForeground
+        public static readonly DependencyProperty FooterForegroundProperty = DependencyProperty.Register(
+            "FooterForeground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush FooterForeground
+        {
+            get => (Brush)GetValue(FooterForegroundProperty);
+            set => SetValue(FooterForegroundProperty, value);
+        }
+        #endregion
+
+        #region FooterBorderBrush
+        public static readonly DependencyProperty FooterBorderBrushProperty = DependencyProperty.Register(
+            "FooterBorderBrush", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush FooterBorderBrush
+        {
+            get => (Brush)GetValue(FooterBorderBrushProperty);
+            set => SetValue(FooterBorderBrushProperty, value);
+        }
+        #endregion
+
+        #region FooterBackground
+        public static readonly DependencyProperty FooterBackgroundProperty = DependencyProperty.Register(
+            "FooterBackground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush FooterBackground
+        {
+            get => (Brush)GetValue(FooterBackgroundProperty);
+            set => SetValue(FooterBackgroundProperty, value);
+        }
+        #endregion
+        #endregion
         #endregion
 
         #region Control Methods
@@ -2074,7 +2391,7 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <summary>
         /// List the week numbers
         /// </summary>
-        private void ListWeekNumbers(int month, int year)
+        private void ListWeekNumbers()
         {
             UniformGrid grdWeek = (UniformGrid)FindElement("Part_WeekGrid");
             if (grdWeek != null)
@@ -2439,7 +2756,7 @@ namespace ZapanControls.Controls.CalendarPicker
                     ListDaysOfAllMonths(month, year);
 
                 if (WeekColumnVisibility == Visibility.Visible)
-                    ListWeekNumbers(month, year);
+                    ListWeekNumbers();
 
                 //footer
                 TextBlock txtCurrentDate = (TextBlock)FindElement("Part_CurrentDateText");
@@ -2509,7 +2826,7 @@ namespace ZapanControls.Controls.CalendarPicker
             if (_dispatcherTimer == null)
             {
                 _dispatcherTimer = new DispatcherTimer();
-                _dispatcherTimer.Tick += new EventHandler(_dispatcherTimer_Tick);
+                _dispatcherTimer.Tick += new EventHandler(DispatcherTimer_Tick);
                 _dispatcherTimer.Interval = new TimeSpan(1000);
             }
             _dispatcherTimer.Start();
