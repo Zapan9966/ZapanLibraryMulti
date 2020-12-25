@@ -80,7 +80,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ControlBorderBrushKey
         {
-            get { return GetRegisteredKey(_ControlBorderBrushKey, "ControlBorderBrush"); }
+            get { return _ControlBorderBrushKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ControlBorderBrush"); }
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ControlBackgroundKey
         {
-            get { return GetRegisteredKey(_ControlBackgroundKey, "ControlBackground"); }
+            get { return _ControlBackgroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ControlBackground"); }
         }
         #endregion
 
@@ -98,7 +98,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey HeaderNormalForegroundKey
         {
-            get { return GetRegisteredKey(_HeaderNormalForegroundKey, "HeaderNormalForeground"); }
+            get { return _HeaderNormalForegroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "HeaderNormalForeground"); }
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey HeaderFocusedForegroundKey
         {
-            get { return GetRegisteredKey(_HeaderFocusedForegroundKey, "HeaderFocusedForeground"); }
+            get { return _HeaderFocusedForegroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "HeaderFocusedForeground"); }
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey HeaderPressedForegroundKey
         {
-            get { return GetRegisteredKey(_HeaderPressedForegroundKey, "HeaderPressedForeground"); }
+            get { return _HeaderPressedForegroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "HeaderPressedForeground"); }
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey HeaderNormalBorderBrushKey
         {
-            get { return GetRegisteredKey(_HeaderNormalBorderBrushKey, "HeaderNormalBorderBrush"); }
+            get { return _HeaderNormalBorderBrushKey.GetRegisteredKey(typeof(CalendarResourceKeys), "HeaderNormalBorderBrush"); }
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey HeaderFocusedBorderBrushKey
         {
-            get { return GetRegisteredKey(_HeaderFocusedBorderBrushKey, "HeaderFocusedBorderBrush"); }
+            get { return _HeaderFocusedBorderBrushKey.GetRegisteredKey(typeof(CalendarResourceKeys), "HeaderFocusedBorderBrush"); }
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey HeaderPressedBorderBrushKey
         {
-            get { return GetRegisteredKey(_HeaderPressedBorderBrushKey, "HeaderPressedBorderBrush"); }
+            get { return _HeaderPressedBorderBrushKey.GetRegisteredKey(typeof(CalendarResourceKeys), "HeaderPressedBorderBrush"); }
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey HeaderNormalBackgroundKey
         {
-            get { return GetRegisteredKey(_HeaderNormalBackgroundKey, "HeaderNormalBackground"); }
+            get { return _HeaderNormalBackgroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "HeaderNormalBackground"); }
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey HeaderFocusedBackgroundKey
         {
-            get { return GetRegisteredKey(_HeaderFocusedBackgroundKey, "HeaderFocusedBackground"); }
+            get { return _HeaderFocusedBackgroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "HeaderFocusedBackground"); }
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey HeaderPressedBackgroundKey
         {
-            get { return GetRegisteredKey(_HeaderPressedBackgroundKey, "HeaderPressedBackground"); }
+            get { return _HeaderPressedBackgroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "HeaderPressedBackground"); }
         }
         #endregion
 
@@ -172,7 +172,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ArrowBorderBrushKey
         {
-            get { return GetRegisteredKey(_ArrowBorderBrushKey, "ArrowBorderBrush"); }
+            get { return _ArrowBorderBrushKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ArrowBorderBrush"); }
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ArrowNormalFillKey
         {
-            get { return GetRegisteredKey(_ArrowNormalFillKey, "ArrowNormalFill"); }
+            get { return _ArrowNormalFillKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ArrowNormalFill"); }
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ArrowFocusedFillKey
         {
-            get { return GetRegisteredKey(_ArrowFocusedFillKey, "ArrowFocusedFill"); }
+            get { return _ArrowFocusedFillKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ArrowFocusedFill"); }
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ArrowPressedFillKey
         {
-            get { return GetRegisteredKey(_ArrowPressedFillKey, "ArrowPressedFill"); }
+            get { return _ArrowPressedFillKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ArrowPressedFill"); }
         }
         #endregion
 
@@ -206,7 +206,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey DayNamesForegroundKey
         {
-            get { return GetRegisteredKey(_DayNamesForegroundKey, "DayNamesForeground"); }
+            get { return _DayNamesForegroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "DayNamesForeground"); }
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey DayNamesBorderBrushKey
         {
-            get { return GetRegisteredKey(_DayNamesBorderBrushKey, "DayNamesBorderBrush"); }
+            get { return _DayNamesBorderBrushKey.GetRegisteredKey(typeof(CalendarResourceKeys), "DayNamesBorderBrush"); }
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey DayNamesBackgroundKey
         {
-            get { return GetRegisteredKey(_DayNamesBackgroundKey, "DayNamesBackground"); }
+            get { return _DayNamesBackgroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "DayNamesBackground"); }
         }
         #endregion
 
@@ -232,7 +232,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey WeekColumnForegroundKey
         {
-            get { return GetRegisteredKey(_WeekColumnForegroundKey, "WeekColumnForeground"); }
+            get { return _WeekColumnForegroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "WeekColumnForeground"); }
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey WeekColumnBorderBrushKey
         {
-            get { return GetRegisteredKey(_WeekColumnBorderBrushKey, "WeekColumnBorderBrush"); }
+            get { return _WeekColumnBorderBrushKey.GetRegisteredKey(typeof(CalendarResourceKeys), "WeekColumnBorderBrush"); }
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey WeekColumnBackgroundKey
         {
-            get { return GetRegisteredKey(_WeekColumnBackgroundKey, "WeekColumnBackground"); }
+            get { return _WeekColumnBackgroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "WeekColumnBackground"); }
         }
         #endregion
 
@@ -259,7 +259,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ButtonNormalForegroundKey
         {
-            get { return GetRegisteredKey(_ButtonNormalForegroundKey, "ButtonNormalForeground"); }
+            get { return _ButtonNormalForegroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ButtonNormalForeground"); }
         }
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ButtonNormalBorderBrushKey
         {
-            get { return GetRegisteredKey(_ButtonNormalBorderBrushKey, "ButtonNormalBorderBrush"); }
+            get { return _ButtonNormalBorderBrushKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ButtonNormalBorderBrush"); }
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ButtonNormalBackgroundKey
         {
-            get { return GetRegisteredKey(_ButtonNormalBackgroundKey, "ButtonNormalBackground"); }
+            get { return _ButtonNormalBackgroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ButtonNormalBackground"); }
         }
         #endregion
 
@@ -285,7 +285,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ButtonFocusedForegroundKey
         {
-            get { return GetRegisteredKey(_ButtonFocusedForegroundKey, "ButtonFocusedForeground"); }
+            get { return _ButtonFocusedForegroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ButtonFocusedForeground"); }
         }
 
         /// <summary>
@@ -293,7 +293,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ButtonFocusedBorderBrushKey
         {
-            get { return GetRegisteredKey(_ButtonFocusedBorderBrushKey, "ButtonFocusedBorderBrush"); }
+            get { return _ButtonFocusedBorderBrushKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ButtonFocusedBorderBrush"); }
         }
 
         /// <summary>
@@ -301,7 +301,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ButtonFocusedBackgroundKey
         {
-            get { return GetRegisteredKey(_ButtonFocusedBackgroundKey, "ButtonFocusedBackground"); }
+            get { return _ButtonFocusedBackgroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ButtonFocusedBackground"); }
         }
         #endregion
 
@@ -311,7 +311,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ButtonSelectedForegroundKey
         {
-            get { return GetRegisteredKey(_ButtonSelectedForegroundKey, "ButtonSelectedForeground"); }
+            get { return _ButtonSelectedForegroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ButtonSelectedForeground"); }
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ButtonSelectedBorderBrushKey
         {
-            get { return GetRegisteredKey(_ButtonSelectedBorderBrushKey, "ButtonSelectedBorderBrush"); }
+            get { return _ButtonSelectedBorderBrushKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ButtonSelectedBorderBrush"); }
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ButtonSelectedBackgroundKey
         {
-            get { return GetRegisteredKey(_ButtonSelectedBackgroundKey, "ButtonSelectedBackground"); }
+            get { return _ButtonSelectedBackgroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ButtonSelectedBackground"); }
         }
         #endregion
 
@@ -337,7 +337,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ButtonDefaultedForegroundKey
         {
-            get { return GetRegisteredKey(_ButtonDefaultedForegroundKey, "ButtonDefaultedForeground"); }
+            get { return _ButtonDefaultedForegroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ButtonDefaultedForeground"); }
         }
 
         /// <summary>
@@ -345,7 +345,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ButtonDefaultedBorderBrushKey
         {
-            get { return GetRegisteredKey(_ButtonDefaultedBorderBrushKey, "ButtonDefaultedBorderBrush"); }
+            get { return _ButtonDefaultedBorderBrushKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ButtonDefaultedBorderBrush"); }
         }
 
         /// <summary>
@@ -353,7 +353,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ButtonDefaultedBackgroundKey
         {
-            get { return GetRegisteredKey(_ButtonDefaultedBackgroundKey, "ButtonDefaultedBackground"); }
+            get { return _ButtonDefaultedBackgroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ButtonDefaultedBackground"); }
         }
         #endregion
 
@@ -363,7 +363,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ButtonPressedForegroundKey
         {
-            get { return GetRegisteredKey(_ButtonPressedForegroundKey, "ButtonPressedForeground"); }
+            get { return _ButtonPressedForegroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ButtonPressedForeground"); }
         }
 
         /// <summary>
@@ -371,7 +371,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ButtonPressedBorderBrushKey
         {
-            get { return GetRegisteredKey(_ButtonPressedBorderBrushKey, "ButtonPressedBorderBrush"); }
+            get { return _ButtonPressedBorderBrushKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ButtonPressedBorderBrush"); }
         }
 
         /// <summary>
@@ -379,7 +379,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ButtonPressedBackgroundKey
         {
-            get { return GetRegisteredKey(_ButtonPressedBackgroundKey, "ButtonPressedBackground"); }
+            get { return _ButtonPressedBackgroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ButtonPressedBackground"); }
         }
         #endregion
 
@@ -389,7 +389,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ButtonTransparentKey
         {
-            get { return GetRegisteredKey(_ButtonTransparentKey, "ButtonTransparent"); }
+            get { return _ButtonTransparentKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ButtonTransparent"); }
         }
 
         /// <summary>
@@ -397,7 +397,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ButtonDisabledForegroundKey
         {
-            get { return GetRegisteredKey(_ButtonDisabledForegroundKey, "ButtonDisabledForeground"); }
+            get { return _ButtonDisabledForegroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ButtonDisabledForeground"); }
         }
 
         /// <summary>
@@ -405,7 +405,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ButtonDisabledBorderBrushKey
         {
-            get { return GetRegisteredKey(_ButtonDisabledBorderBrushKey, "ButtonDisabledBorderBrush"); }
+            get { return _ButtonDisabledBorderBrushKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ButtonDisabledBorderBrush"); }
         }
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey ButtonDisabledBackgroundKey
         {
-            get { return GetRegisteredKey(_ButtonDisabledBackgroundKey, "ButtonDisabledBackground"); }
+            get { return _ButtonDisabledBackgroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "ButtonDisabledBackground"); }
         }
         #endregion
         #endregion
@@ -424,7 +424,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey FooterForegroundKey
         {
-            get { return GetRegisteredKey(_FooterForegroundKey, "FooterForeground"); }
+            get { return _FooterForegroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "FooterForeground"); }
         }
 
         /// <summary>
@@ -432,7 +432,7 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey FooterBorderBrushKey
         {
-            get { return GetRegisteredKey(_FooterBorderBrushKey, "FooterBorderBrush"); }
+            get { return _FooterBorderBrushKey.GetRegisteredKey(typeof(CalendarResourceKeys), "FooterBorderBrush"); }
         }
 
         /// <summary>
@@ -440,27 +440,9 @@ namespace ZapanControls.Controls.ResourceKeys
         /// </summary>
         public static ComponentResourceKey FooterBackgroundKey
         {
-            get { return GetRegisteredKey(_FooterBackgroundKey, "FooterBackground"); }
+            get { return _FooterBackgroundKey.GetRegisteredKey(typeof(CalendarResourceKeys), "FooterBackground"); }
         }
         #endregion
-        #endregion
-
-        #region Helper
-        /// <summary>
-        /// Return ResourceKey from resourceId
-        /// </summary>
-        /// <param name="resKey"></param>
-        /// <param name="resourceId"></param>
-        /// <returns></returns>
-        private static ComponentResourceKey GetRegisteredKey(ComponentResourceKey resKey, string resourceId)
-        {
-            if (resKey == null)
-            {
-                return new ComponentResourceKey(typeof(CalendarResourceKeys), resourceId);
-            }
-            else
-                return resKey;
-        }
         #endregion
     }
 }

@@ -13,7 +13,7 @@ using ZapanControls.Libraries;
 
 namespace ZapanControls.Controls.Primitives
 {
-    public abstract class ThemableControl : Control, INotifyPropertyChanged
+    public abstract class ThemableControl : Control, ITheme, INotifyPropertyChanged
     {
         #region Property Name Constants
         private const string ThemePropName = "Theme";
@@ -27,12 +27,11 @@ namespace ZapanControls.Controls.Primitives
 
         #region Theme
         /// <summary>
-        /// Get/Sets the Calender theme
+        /// Get/Sets the theme
         /// </summary>
         public static DependencyProperty ThemeProperty = DependencyProperty.Register(
             "Theme", typeof(string), typeof(ThemableControl), 
-            new FrameworkPropertyMetadata(
-                null,
+            new FrameworkPropertyMetadata(null,
                 FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure,
                 new PropertyChangedCallback(OnThemeChanged),
                 new CoerceValueCallback(CoerceThemeChange)));
@@ -125,7 +124,7 @@ namespace ZapanControls.Controls.Primitives
         public void RegisterTheme(ThemePath theme, Type ownerType)
         {
             // test args
-            if ((theme.Name == null) || (theme.DictionaryPath == null))
+            if (theme.Name == null || theme.DictionaryPath == null)
                 throw new ArgumentNullException("Theme name/path is null");
 
             if (ownerType == null)
@@ -152,6 +151,8 @@ namespace ZapanControls.Controls.Primitives
         /// </summary>
         private void RegisterAttachedThemes()
         {
+            _rdThemeDictionaries.Clear();
+
             var themeFields = GetType().GetFields(BindingFlags.Public | BindingFlags.Static)
                 .Where(f => f.FieldType == typeof(ThemePath));
 
@@ -189,12 +190,12 @@ namespace ZapanControls.Controls.Primitives
         /// <summary>
         /// Get themes formal registration name
         /// </summary>
-        private string GetRegistrationName(string themeName, Type ownerType)
+        public string GetRegistrationName(string themeName, Type ownerType)
         {
             return $"{ownerType};{themeName}";
         }
 
-        private string GetThemeName(string key)
+        public string GetThemeName(string key)
         {
             return key?.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries)[1];
         }
