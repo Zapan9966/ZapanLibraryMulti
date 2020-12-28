@@ -1,0 +1,125 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:r="clr-namespace:ZapanControls.Controls.ResourceKeys"
+                    xmlns:z="clr-namespace:ZapanControls.Controls">
+
+    <ControlTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=ButtonTemplate}" TargetType="{x:Type z:ZapSplitButton}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Border x:Name="PART_Button" 
+                    Margin="0" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                    UseLayoutRounding="{TemplateBinding UseLayoutRounding}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    BorderBrush="{TemplateBinding BorderBrush}"                            
+                    Background="{TemplateBinding Background}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <ContentPresenter x:Name="PART_Content"   
+                                      Grid.Column="0"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      Content="{TemplateBinding Content}"
+                                      ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"                              
+                                      Margin="{TemplateBinding Padding}"
+                                      Width="Auto" 
+                                      RecognizesAccessKey="True"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                      UseLayoutRounding="{TemplateBinding UseLayoutRounding}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+
+                    <Path x:Name="path"
+                          Visibility="Collapsed"
+                          Grid.Column="1" 
+                          Data="M0,0L3,3 6,0z" 
+                          Margin="5,2,4,0" 
+                          Stroke="{TemplateBinding Foreground}"
+                          Fill="{TemplateBinding Foreground}" 
+                          HorizontalAlignment="Center" 
+                          VerticalAlignment="Center" 
+                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                          UseLayoutRounding="{TemplateBinding UseLayoutRounding}"/>
+
+                </Grid>                
+            </Border>
+
+            <z:ZapButton x:Name="PART_DropDown"
+                         Grid.Column="1"
+                         Margin="0" 
+                         Width="16">
+                <Path Name="PART_DropDown_Path"
+                      Grid.RowSpan="2" 
+                      Data="M0,0L3,3 6,0z"
+                      Margin="0,2,0,0" 
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Stroke="{TemplateBinding Foreground}"
+                      Fill="{TemplateBinding Foreground}" 
+                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                      UseLayoutRounding="{TemplateBinding UseLayoutRounding}"/>
+            </z:ZapButton>
+
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Mode" Value="Dropdown">
+                <Setter TargetName="PART_DropDown" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="path" Property="Visibility"  Value="Visible"/>
+            </Trigger>
+            <!--dropdow triggers-->
+            <Trigger Property="IsKeyboardFocused" SourceName="PART_DropDown" Value="True">
+                <Setter TargetName="PART_DropDown_Path" Property="Fill" Value="{Binding FocusedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}"/>
+                <Setter TargetName="PART_DropDown_Path" Property="Stroke" Value="{Binding FocusedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" SourceName="PART_DropDown" Value="True">
+                <Setter TargetName="PART_DropDown_Path" Property="Fill" Value="{Binding FocusedForeground, RelativeSource={RelativeSource TemplatedParent}}"/>
+                <Setter TargetName="PART_DropDown_Path" Property="Stroke" Value="{Binding FocusedForeground, RelativeSource={RelativeSource TemplatedParent}}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" SourceName="PART_DropDown" Value="True">
+                <Setter TargetName="PART_DropDown_Path" Property="Fill" Value="{Binding PressedForeground, RelativeSource={RelativeSource TemplatedParent}}"/>
+                <Setter TargetName="PART_DropDown_Path" Property="Stroke" Value="{Binding PressedForeground, RelativeSource={RelativeSource TemplatedParent}}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" SourceName="PART_DropDown" Value="False">
+                <Setter TargetName="PART_DropDown_Path" Property="Fill" Value="{Binding DisabledForeground, RelativeSource={RelativeSource TemplatedParent}}"/>
+                <Setter TargetName="PART_DropDown_Path" Property="Stroke" Value="{Binding DisabledForeground, RelativeSource={RelativeSource TemplatedParent}}"/>
+            </Trigger>
+            <!--button triggers-->
+            <Trigger Property="IsKeyboardFocused" Value="True">
+                <Setter TargetName="PART_Button" Property="BorderBrush" Value="{Binding FocusedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}" />
+                <Setter TargetName="PART_Content" Property="TextBlock.Foreground" Value="{Binding FocusedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}" />
+                <Setter TargetName="path" Property="Stroke" Value="{Binding FocusedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}"/>
+                <Setter TargetName="path" Property="Fill" Value="{Binding FocusedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" SourceName="PART_Button"  Value="True">
+                <Setter TargetName="PART_Button" Property="Background" Value="{Binding FocusedBackground, RelativeSource={RelativeSource TemplatedParent}}"/>
+                <Setter TargetName="PART_Button" Property="BorderBrush" Value="{Binding FocusedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}"/>
+                <Setter TargetName="PART_Content" Property="TextBlock.Foreground" Value="{Binding FocusedForeground, RelativeSource={RelativeSource TemplatedParent}}" />
+                <Setter TargetName="path" Property="Stroke" Value="{Binding FocusedForeground, RelativeSource={RelativeSource TemplatedParent}}"/>
+                <Setter TargetName="path" Property="Fill" Value="{Binding FocusedForeground, RelativeSource={RelativeSource TemplatedParent}}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter TargetName="PART_Button" Property="Background" Value="{Binding PressedBackground, RelativeSource={RelativeSource TemplatedParent}}" />
+                <Setter TargetName="PART_Button" Property="BorderBrush" Value="{Binding PressedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}" />
+                <Setter TargetName="PART_Content" Property="TextBlock.Foreground" Value="{Binding PressedForeground, RelativeSource={RelativeSource TemplatedParent}}" />
+                <Setter TargetName="path" Property="Stroke" Value="{Binding PressedForeground, RelativeSource={RelativeSource TemplatedParent}}"/>
+                <Setter TargetName="path" Property="Fill" Value="{Binding PressedForeground, RelativeSource={RelativeSource TemplatedParent}}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="PART_Button" Property="Background" Value="{Binding DisabledBackground, RelativeSource={RelativeSource TemplatedParent}}" />
+                <Setter TargetName="PART_Button" Property="BorderBrush" Value="{Binding DisabledBorderBrush, RelativeSource={RelativeSource TemplatedParent}}" />
+                <Setter TargetName="PART_Content" Property="TextBlock.Foreground" Value="{Binding DisabledForeground, RelativeSource={RelativeSource TemplatedParent}}" />
+                <Setter TargetName="path" Property="Stroke" Value="{Binding DisabledForeground, RelativeSource={RelativeSource TemplatedParent}}"/>
+                <Setter TargetName="path" Property="Fill" Value="{Binding DisabledForeground, RelativeSource={RelativeSource TemplatedParent}}"/>
+                <Setter TargetName="PART_Content" Property="Opacity" Value="0.4" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+</ResourceDictionary>

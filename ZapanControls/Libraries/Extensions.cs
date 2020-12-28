@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Reflection;
@@ -9,7 +10,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
+using System.Windows.Data;
+using System.Windows.Markup;
 using System.Windows.Media;
+using System.Xml;
 
 namespace ZapanControls.Libraries
 {
@@ -286,6 +290,14 @@ namespace ZapanControls.Libraries
         public static string TitleCase(this string text)
         {
             return Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(text);
+        }
+
+        public static BindingBase Clone(this BindingBase bindingBase)
+        {
+            var xaml = XamlWriter.Save(bindingBase);
+            var stringReader = new StringReader(xaml);
+            var xmlReader = XmlReader.Create(stringReader);
+            return (BindingBase)XamlReader.Load(xmlReader);
         }
 
         public static T Clone<T>(this T obj)

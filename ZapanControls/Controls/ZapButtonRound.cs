@@ -4,7 +4,7 @@ using ZapanControls.Controls.Primitives;
 
 namespace ZapanControls.Controls
 {
-    public class ZapButtonRound : ZapButtonBase
+    public class ZapButtonRound : ZapButtonBaseOld
     {
         #region Constructors
 

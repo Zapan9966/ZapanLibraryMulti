@@ -129,7 +129,7 @@ namespace ZapanControls.Controls.CalendarPicker
     TemplatePart(Name = "Part_CurrentDateText", Type = typeof(TextBlock)),
     TemplatePart(Name = "Part_AnimationContainer", Type = typeof(Grid)),
     TemplatePart(Name = "Part_FooterContainer", Type = typeof(Grid))]
-    public class Calendar : ThemableControl //Control, INotifyPropertyChanged
+    public class Calendar : ThemableControl
     {
         #region Property Name Constants
         /// <summary>

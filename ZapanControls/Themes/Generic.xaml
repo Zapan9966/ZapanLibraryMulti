@@ -3,7 +3,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapButton/Generic.xaml" />
+        
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapButtons.xaml" />
+        
+        
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapContextMenu.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapDataGrid.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapListView.xaml" />

@@ -151,9 +151,17 @@ namespace ZapanControls.Controls.Primitives
         /// </summary>
         private void RegisterAttachedThemes()
         {
-            _rdThemeDictionaries.Clear();
+            // Attach base attached themes
+            var themeFields = typeof(ZapButtonBase).GetFields(BindingFlags.Public | BindingFlags.Static)
+                .Where(f => f.FieldType == typeof(ThemePath));
 
-            var themeFields = GetType().GetFields(BindingFlags.Public | BindingFlags.Static)
+            foreach (var field in themeFields)
+            {
+                RegisterTheme((ThemePath)field.GetValue(this), GetType());
+            }
+
+            // Attach control attached themes
+            themeFields = GetType().GetFields(BindingFlags.Public | BindingFlags.Static)
                 .Where(f => f.FieldType == typeof(ThemePath));
 
             foreach (var field in themeFields)

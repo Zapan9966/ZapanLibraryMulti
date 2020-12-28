@@ -3,7 +3,7 @@ using ZapanControls.Controls.Primitives;
 
 namespace ZapanControls.Controls
 {
-    public class ZapButtonGlass : ZapButtonBase
+    public class ZapButtonGlass : ZapButtonBaseOld
     {
 
         #region Constructors

@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:r="clr-namespace:ZapanControls.Controls.ResourceKeys"
+                    xmlns:p="clr-namespace:ZapanControls.Controls.Primitives"
+                    xmlns:z="clr-namespace:ZapanControls.Controls">
+
+    <Style TargetType="{x:Type p:ZapButtonBase}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="Template" Value="{DynamicResource {x:Static r:ZapButtonResourceKeys.ButtonTemplateKey}}" />
+    </Style>
+
+    <Style TargetType="{x:Type z:ZapToggleButton}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="Template" Value="{DynamicResource {x:Static r:ZapButtonResourceKeys.ButtonTemplateKey}}" />
+    </Style>
+
+</ResourceDictionary>

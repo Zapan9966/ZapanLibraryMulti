@@ -5,20 +5,31 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Threading;
+using ZapanControls.Controls.Primitives;
 using ZapanControls.Controls.Themes;
 using ZapanControls.Libraries;
 
-namespace ZapanControls.Controls.Primitives
+namespace ZapanControls.Controls
 {
-    public class ZapButtonBase : Button, ITheme, INotifyPropertyChanged
+    public class ZapToggleButton : ToggleButton, ITheme, INotifyPropertyChanged
     {
         #region Property Name Constants
         private const string ThemePropName = "Theme";
         private const string ButtonTemplatePropName = "ButtonTemplate";
+        #endregion
+
+        #region Fields
+        private readonly Dictionary<string, ResourceDictionary> _rdThemeDictionaries;
+        private readonly Dictionary<string, ResourceDictionary> _rdTemplateDictionaries;
+        private readonly Dictionary<DependencyProperty, object> _defaultThemeProperties;
         #endregion
 
         #region Theme Declarations
@@ -30,16 +41,16 @@ namespace ZapanControls.Controls.Primitives
         public static ThemePath Danger = new ThemePath(ZapButtonThemes.Danger, "/ZapanControls;component/Themes/ZapButton/Danger.xaml");
         #endregion
 
-        #region Fields
-        private readonly Dictionary<string, ResourceDictionary> _rdThemeDictionaries;
-        private readonly Dictionary<string, ResourceDictionary> _rdTemplateDictionaries;
-        private readonly Dictionary<DependencyProperty, object> _defaultThemeProperties;
+        #region Template Declarations
+        public static TemplatePath Flat = new TemplatePath(ZapButtonTemplates.Flat, "/ZapanControls;component/Themes/ZapButton/Template.Toggle.Flat.xaml");
+        public static TemplatePath Glass = new TemplatePath(ZapButtonTemplates.Glass, "/ZapanControls;component/Themes/ZapButton/Template.Toggle.Glass.xaml");
+        public static TemplatePath Round = new TemplatePath(ZapButtonTemplates.Round, "/ZapanControls;component/Themes/ZapButton/Template.Toggle.Round.xaml");
         #endregion
 
         #region Properties
         #region ButtonTemplate
         public static readonly DependencyProperty ButtonTemplateProperty = DependencyProperty.Register(
-            "ButtonTemplate", typeof(string), typeof(ZapButtonBase),
+            "ButtonTemplate", typeof(string), typeof(ZapToggleButton),
             new FrameworkPropertyMetadata(null,
                 FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure,
                 new PropertyChangedCallback(OnButtonTemplateChanged),
@@ -54,51 +65,51 @@ namespace ZapanControls.Controls.Primitives
         private static void OnButtonTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             // test args
-            if (!(d is ZapButtonBase zb) || e == null)
+            if (!(d is ZapToggleButton ztb) || e == null)
                 throw new ArgumentNullException("Invalid Theme property");
 
             string curTemplateName = e.OldValue as string;
-            string curRegisteredTemplateName = zb.GetRegistrationName(curTemplateName, zb.GetType());
+            string curRegisteredTemplateName = ztb.GetRegistrationName(curTemplateName, ztb.GetType());
 
-            if (zb._rdTemplateDictionaries.ContainsKey(curRegisteredTemplateName))
+            if (ztb._rdTemplateDictionaries.ContainsKey(curRegisteredTemplateName))
             {
                 // remove current template
-                ResourceDictionary curTemplateDictionary = zb._rdTemplateDictionaries[curRegisteredTemplateName];
-                zb.Resources.MergedDictionaries.Remove(curTemplateDictionary);
+                ResourceDictionary curTemplateDictionary = ztb._rdTemplateDictionaries[curRegisteredTemplateName];
+                ztb.Resources.MergedDictionaries.Remove(curTemplateDictionary);
             }
 
             // new template name
             string newTemplateName = e.NewValue as string;
 
             if (string.IsNullOrEmpty(newTemplateName))
-                newTemplateName = zb._rdTemplateDictionaries.FirstOrDefault().Key;
+                newTemplateName = ztb._rdTemplateDictionaries.FirstOrDefault().Key;
 
-            string newRegisteredTemplateName = zb.GetRegistrationName(newTemplateName, zb.GetType());
+            string newRegisteredTemplateName = ztb.GetRegistrationName(newTemplateName, ztb.GetType());
 
             // add the resource
-            if (!zb._rdTemplateDictionaries.ContainsKey(newRegisteredTemplateName))
+            if (!ztb._rdTemplateDictionaries.ContainsKey(newRegisteredTemplateName))
             {
                 throw new ArgumentNullException("Invalid Template property");
             }
             else
             {
                 // add the dictionary
-                ResourceDictionary newTemplateDictionary = zb._rdTemplateDictionaries[newRegisteredTemplateName];
-                zb.Resources.MergedDictionaries.Add(newTemplateDictionary);
+                ResourceDictionary newTemplateDictionary = ztb._rdTemplateDictionaries[newRegisteredTemplateName];
+                ztb.Resources.MergedDictionaries.Add(newTemplateDictionary);
 
-                if (zb.ButtonTemplate == "Round")
+                if (ztb.ButtonTemplate == "Round")
                 {
-                    zb.MinHeight = 20d;
-                    zb.MinWidth = 20d;
+                    ztb.MinHeight = 20d;
+                    ztb.MinWidth = 20d;
                 }
                 else
                 {
-                    zb.MinHeight = 0d;
-                    zb.MinWidth = 0d;
+                    ztb.MinHeight = 0d;
+                    ztb.MinWidth = 0d;
                 }
             }
 
-            zb.RaisePropertyChanged(new PropertyChangedEventArgs(ButtonTemplatePropName));
+            ztb.RaisePropertyChanged(new PropertyChangedEventArgs(ButtonTemplatePropName));
         }
 
         private static object CoerceButtonTemplateChange(DependencyObject d, object o)
@@ -107,10 +118,60 @@ namespace ZapanControls.Controls.Primitives
         }
         #endregion
 
+        #region Checked
+        #region CheckedBackground
+        public static readonly DependencyProperty CheckedBackgroundProperty = DependencyProperty.Register(
+            "CheckedBackground", typeof(Brush), typeof(ZapToggleButton),
+            new FrameworkPropertyMetadata(null,
+                FrameworkPropertyMetadataOptions.AffectsRender,
+                OnCheckedBackgroundChanged));
+
+        public Brush CheckedBackground
+        {
+            get => (Brush)GetValue(CheckedBackgroundProperty);
+            set => SetValue(CheckedBackgroundProperty, value);
+        }
+
+        private static void OnCheckedBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, CheckedBackgroundProperty, e.NewValue);
+        #endregion
+
+        #region CheckedBorderBrush
+        public static readonly DependencyProperty CheckedBorderBrushProperty = DependencyProperty.Register(
+            "CheckedBorderBrush", typeof(Brush), typeof(ZapToggleButton),
+            new FrameworkPropertyMetadata(null,
+                FrameworkPropertyMetadataOptions.AffectsRender,
+                OnCheckedBorderBrushChanged));
+
+        public Brush CheckedBorderBrush
+        {
+            get => (Brush)GetValue(CheckedBorderBrushProperty);
+            set => SetValue(CheckedBorderBrushProperty, value);
+        }
+
+        private static void OnCheckedBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, CheckedBorderBrushProperty, e.NewValue);
+        #endregion
+
+        #region CheckedForeground
+        public static readonly DependencyProperty CheckedForegroundProperty = DependencyProperty.Register(
+            "CheckedForeground", typeof(Brush), typeof(ZapToggleButton),
+            new FrameworkPropertyMetadata(null,
+                FrameworkPropertyMetadataOptions.AffectsRender,
+                OnCheckedForegroundChanged));
+
+        public Brush CheckedForeground
+        {
+            get => (Brush)GetValue(CheckedForegroundProperty);
+            set => SetValue(CheckedForegroundProperty, value);
+        }
+
+        private static void OnCheckedForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, CheckedForegroundProperty, e.NewValue);
+        #endregion
+        #endregion
+
         #region Focused
         #region FocusedBackground
         public static readonly DependencyProperty FocusedBackgroundProperty = DependencyProperty.Register(
-            "FocusedBackground", typeof(Brush), typeof(ZapButtonBase),
+            "FocusedBackground", typeof(Brush), typeof(ZapToggleButton),
             new FrameworkPropertyMetadata(null,
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnFocusedBackgroundChanged));
@@ -126,7 +187,7 @@ namespace ZapanControls.Controls.Primitives
 
         #region FocusedBorderBrush
         public static readonly DependencyProperty FocusedBorderBrushProperty = DependencyProperty.Register(
-            "FocusedBorderBrush", typeof(Brush), typeof(ZapButtonBase),
+            "FocusedBorderBrush", typeof(Brush), typeof(ZapToggleButton),
             new FrameworkPropertyMetadata(null,
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnFocusedBorderBrushChanged));
@@ -142,7 +203,7 @@ namespace ZapanControls.Controls.Primitives
 
         #region FocusedForeground
         public static readonly DependencyProperty FocusedForegroundProperty = DependencyProperty.Register(
-            "FocusedForeground", typeof(Brush), typeof(ZapButtonBase),
+            "FocusedForeground", typeof(Brush), typeof(ZapToggleButton),
             new FrameworkPropertyMetadata(null,
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnFocusedForegroundChanged));
@@ -160,7 +221,7 @@ namespace ZapanControls.Controls.Primitives
         #region Pressed
         #region PressedBackground
         public static readonly DependencyProperty PressedBackgroundProperty = DependencyProperty.Register(
-            "PressedBackground", typeof(Brush), typeof(ZapButtonBase),
+            "PressedBackground", typeof(Brush), typeof(ZapToggleButton),
             new FrameworkPropertyMetadata(null,
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnPressedBackgroundChanged));
@@ -176,7 +237,7 @@ namespace ZapanControls.Controls.Primitives
 
         #region PressedBorderBrush
         public static readonly DependencyProperty PressedBorderBrushProperty = DependencyProperty.Register(
-            "PressedBorderBrush", typeof(Brush), typeof(ZapButtonBase),
+            "PressedBorderBrush", typeof(Brush), typeof(ZapToggleButton),
             new FrameworkPropertyMetadata(null,
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnPressedBorderBrushChanged));
@@ -192,7 +253,7 @@ namespace ZapanControls.Controls.Primitives
 
         #region PressedForeground
         public static readonly DependencyProperty PressedForegroundProperty = DependencyProperty.Register(
-            "PressedForeground", typeof(Brush), typeof(ZapButtonBase),
+            "PressedForeground", typeof(Brush), typeof(ZapToggleButton),
             new FrameworkPropertyMetadata(null,
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnPressedForegroundChanged));
@@ -210,7 +271,7 @@ namespace ZapanControls.Controls.Primitives
         #region Disabled
         #region DisabledBackground
         public static readonly DependencyProperty DisabledBackgroundProperty = DependencyProperty.Register(
-            "DisabledBackground", typeof(Brush), typeof(ZapButtonBase),
+            "DisabledBackground", typeof(Brush), typeof(ZapToggleButton),
             new FrameworkPropertyMetadata(null,
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnDisabledBackgroundChanged));
@@ -226,7 +287,7 @@ namespace ZapanControls.Controls.Primitives
 
         #region DisabledBorderBrush
         public static readonly DependencyProperty DisabledBorderBrushProperty = DependencyProperty.Register(
-            "DisabledBorderBrush", typeof(Brush), typeof(ZapButtonBase),
+            "DisabledBorderBrush", typeof(Brush), typeof(ZapToggleButton),
             new FrameworkPropertyMetadata(null,
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnDisabledBorderBrushChanged));
@@ -242,7 +303,7 @@ namespace ZapanControls.Controls.Primitives
 
         #region DisabledForeground
         public static readonly DependencyProperty DisabledForegroundProperty = DependencyProperty.Register(
-            "DisabledForeground", typeof(Brush), typeof(ZapButtonBase),
+            "DisabledForeground", typeof(Brush), typeof(ZapToggleButton),
             new FrameworkPropertyMetadata(null,
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnDisabledForegroundChanged));
@@ -262,7 +323,7 @@ namespace ZapanControls.Controls.Primitives
         /// Get/Sets the theme
         /// </summary>
         public static DependencyProperty ThemeProperty = DependencyProperty.Register(
-            "Theme", typeof(string), typeof(ZapButtonBase),
+            "Theme", typeof(string), typeof(ZapToggleButton),
             new FrameworkPropertyMetadata(null,
                 FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure,
                 new PropertyChangedCallback(OnThemeChanged),
@@ -277,43 +338,43 @@ namespace ZapanControls.Controls.Primitives
         private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             // test args
-            if (!(d is ZapButtonBase zb) || e == null)
+            if (!(d is ZapToggleButton ztb) || e == null)
                 throw new ArgumentNullException("Invalid Theme property");
 
             // current theme
             string curThemeName = e.OldValue as string;
-            string curRegisteredThemeName = zb.GetRegistrationName(curThemeName, zb.GetType());
+            string curRegisteredThemeName = ztb.GetRegistrationName(curThemeName, ztb.GetType());
 
-            if (zb._rdThemeDictionaries.ContainsKey(curRegisteredThemeName))
+            if (ztb._rdThemeDictionaries.ContainsKey(curRegisteredThemeName))
             {
                 // remove current theme
-                ResourceDictionary curThemeDictionary = zb._rdThemeDictionaries[curRegisteredThemeName];
-                zb.Resources.MergedDictionaries.Remove(curThemeDictionary);
+                ResourceDictionary curThemeDictionary = ztb._rdThemeDictionaries[curRegisteredThemeName];
+                ztb.Resources.MergedDictionaries.Remove(curThemeDictionary);
             }
 
             // new theme name
             string newThemeName = e.NewValue as string;
 
             if (string.IsNullOrEmpty(newThemeName))
-                newThemeName = zb._rdThemeDictionaries.FirstOrDefault().Key;
+                newThemeName = ztb._rdTemplateDictionaries.FirstOrDefault().Key;
 
-            string newRegisteredThemeName = zb.GetRegistrationName(newThemeName, zb.GetType());
+            string newRegisteredThemeName = ztb.GetRegistrationName(newThemeName, ztb.GetType());
 
             // add the resource
-            if (!zb._rdThemeDictionaries.ContainsKey(newRegisteredThemeName))
+            if (!ztb._rdThemeDictionaries.ContainsKey(newRegisteredThemeName))
             {
                 throw new ArgumentNullException("Invalid Theme property");
             }
             else
             {
                 // add the dictionary
-                ResourceDictionary newThemeDictionary = zb._rdThemeDictionaries[newRegisteredThemeName];
-                zb.Resources.MergedDictionaries.Add(newThemeDictionary);
+                ResourceDictionary newThemeDictionary = ztb._rdThemeDictionaries[newRegisteredThemeName];
+                ztb.Resources.MergedDictionaries.Add(newThemeDictionary);
                 // Raise theme successfully changed event
-                zb.RaiseEvent(new RoutedEventArgs(ThemeChangedSuccessEvent, zb));
+                ztb.RaiseEvent(new RoutedEventArgs(ThemeChangedSuccessEvent, ztb));
             }
 
-            zb.RaisePropertyChanged(new PropertyChangedEventArgs(ThemePropName));
+            ztb.RaisePropertyChanged(new PropertyChangedEventArgs(ThemePropName));
         }
 
         private static object CoerceThemeChange(DependencyObject d, object o)
@@ -343,11 +404,53 @@ namespace ZapanControls.Controls.Primitives
         #region Padding
         private static void OnPaddingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, PaddingProperty, e.NewValue);
         #endregion
+
+        #region Height
+        private static void OnHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ZapToggleButton ztb)
+            {
+                if (ztb.ButtonTemplate == "Round")
+                {
+                    double height = (double)e.NewValue;
+                    if (double.IsNaN(height) || double.IsInfinity(height))
+                    {
+                        ztb.Height = ztb.MinHeight;
+                    }
+                    else if (ztb.Width != height)
+                    {
+                        ztb.Width = height;
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region Width
+        private static void OnWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ZapToggleButton ztb)
+            {
+                if (ztb.ButtonTemplate == "Round")
+                {
+                    double width = (double)e.NewValue;
+                    if (double.IsNaN(width) || double.IsInfinity(width))
+                    {
+                        ztb.Width = ztb.MinWidth;
+                    }
+                    else if (ztb.Height != width)
+                    {
+                        ztb.Height = width;
+                    }
+                }
+            }
+        }
+        #endregion
         #endregion
 
         #region ThemeChangedSuccessEvent
         public static readonly RoutedEvent ThemeChangedSuccessEvent = EventManager.RegisterRoutedEvent(
-            "ThemeChangedSuccess", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ZapButtonBase));
+            "ThemeChangedSuccess", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ZapToggleButton));
 
         public event RoutedEventHandler ThemeChangedSuccess
         {
@@ -365,6 +468,10 @@ namespace ZapanControls.Controls.Primitives
             SetThemePropertyDefault(BackgroundProperty, TryFindResource(ResourceKeys.ZapButtonResourceKeys.BackgroundKey));
             SetThemePropertyDefault(BorderBrushProperty, TryFindResource(ResourceKeys.ZapButtonResourceKeys.BorderBrushKey));
             SetThemePropertyDefault(ForegroundProperty, TryFindResource(ResourceKeys.ZapButtonResourceKeys.ForegroundKey));
+            // Normal
+            SetThemePropertyDefault(CheckedBackgroundProperty, TryFindResource(ResourceKeys.ZapButtonResourceKeys.CheckedBackgroundKey));
+            SetThemePropertyDefault(CheckedBorderBrushProperty, TryFindResource(ResourceKeys.ZapButtonResourceKeys.CheckedBorderBrushKey));
+            SetThemePropertyDefault(CheckedForegroundProperty, TryFindResource(ResourceKeys.ZapButtonResourceKeys.CheckedForegroundKey));
             // Focused
             SetThemePropertyDefault(FocusedBackgroundProperty, TryFindResource(ResourceKeys.ZapButtonResourceKeys.FocusedBackgroundKey));
             SetThemePropertyDefault(FocusedBorderBrushProperty, TryFindResource(ResourceKeys.ZapButtonResourceKeys.FocusedBorderBrushKey));
@@ -380,22 +487,24 @@ namespace ZapanControls.Controls.Primitives
         }
         #endregion
 
-        #region Constructor
-        static ZapButtonBase()
+        #region Constructors
+        static ZapToggleButton()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(ZapButtonBase), new FrameworkPropertyMetadata(typeof(ZapButtonBase)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ZapToggleButton), new FrameworkPropertyMetadata(typeof(ZapToggleButton)));
 
             FrameworkPropertyMetadataOptions options = FrameworkPropertyMetadataOptions.AffectsRender;
             // Control
-            BorderThicknessProperty.OverrideMetadata(typeof(ZapButtonBase), new FrameworkPropertyMetadata(new Thickness(0), options, OnBorderThicknessChanged));
-            PaddingProperty.OverrideMetadata(typeof(ZapButtonBase), new FrameworkPropertyMetadata(new Thickness(0), options, OnPaddingChanged));
+            BorderThicknessProperty.OverrideMetadata(typeof(ZapToggleButton), new FrameworkPropertyMetadata(new Thickness(0), options, OnBorderThicknessChanged));
+            PaddingProperty.OverrideMetadata(typeof(ZapToggleButton), new FrameworkPropertyMetadata(new Thickness(0), options, OnPaddingChanged));
+            WidthProperty.OverrideMetadata(typeof(ZapToggleButton), new FrameworkPropertyMetadata(double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure, OnWidthChanged));
+            HeightProperty.OverrideMetadata(typeof(ZapToggleButton), new FrameworkPropertyMetadata(double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure, OnHeightChanged));
             // Normal
-            BackgroundProperty.OverrideMetadata(typeof(ZapButtonBase), new FrameworkPropertyMetadata(null, options, OnBackgroundChanged));
-            BorderBrushProperty.OverrideMetadata(typeof(ZapButtonBase), new FrameworkPropertyMetadata(null, options, OnBorderBrushChanged));
-            ForegroundProperty.OverrideMetadata(typeof(ZapButtonBase), new FrameworkPropertyMetadata(null, options, OnForegroundChanged));
+            BackgroundProperty.OverrideMetadata(typeof(ZapToggleButton), new FrameworkPropertyMetadata(null, options, OnBackgroundChanged));
+            BorderBrushProperty.OverrideMetadata(typeof(ZapToggleButton), new FrameworkPropertyMetadata(null, options, OnBorderBrushChanged));
+            ForegroundProperty.OverrideMetadata(typeof(ZapToggleButton), new FrameworkPropertyMetadata(null, options, OnForegroundChanged));
         }
 
-        public ZapButtonBase()
+        public ZapToggleButton()
         {
             _defaultThemeProperties = new Dictionary<DependencyProperty, object>();
 
@@ -421,6 +530,18 @@ namespace ZapanControls.Controls.Primitives
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+
+            ContentPresenter content = (ContentPresenter)Template.FindName("PART_Content", this);
+            if (content != null)
+            {
+                content.SizeChanged += (s, e) =>
+                {
+                    if (ButtonTemplate == "Round")
+                    {
+                        Width = content.ActualWidth + 4;
+                    }
+                };
+            }
 
             foreach (var property in _defaultThemeProperties)
             {
@@ -475,17 +596,7 @@ namespace ZapanControls.Controls.Primitives
         /// </summary>
         private void RegisterAttachedThemes()
         {
-            // Attach base attached themes
-            var themeFields = typeof(ZapButtonBase).GetFields(BindingFlags.Public | BindingFlags.Static)
-                .Where(f => f.FieldType == typeof(ThemePath));
-
-            foreach (var field in themeFields)
-            {
-                RegisterTheme((ThemePath)field.GetValue(this), GetType());
-            }
-
-            // Attach control attached themes
-            themeFields = GetType().GetFields(BindingFlags.Public | BindingFlags.Static)
+            var themeFields = GetType().GetFields(BindingFlags.Public | BindingFlags.Static)
                 .Where(f => f.FieldType == typeof(ThemePath));
 
             foreach (var field in themeFields)
@@ -527,31 +638,22 @@ namespace ZapanControls.Controls.Primitives
             return $"{ownerType};{themeName}";
         }
 
-        /// <summary>
-        /// Get themes name from formal registration name
-        /// </summary>
         public string GetThemeName(string key)
         {
             return key?.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries)[1];
         }
 
-        /// <summary>
-        /// Set themes default propertie value
-        /// </summary>
-        internal virtual void SetThemePropertyDefault(DependencyProperty p, object value)
+        internal void SetThemePropertyDefault(DependencyProperty p, object value)
         {
             _defaultThemeProperties.Add(p, value);
             SetCurrentValue(p, value);
         }
 
-        /// <summary>
-        /// Set dependency property default theme value if value is null
-        /// </summary>
         private static void SetValueCommon(DependencyObject o, DependencyProperty p, object value)
         {
-            if (o is ZapButtonBase zb)
+            if (o is ZapToggleButton ztb)
             {
-                if (!(BindingOperations.GetBinding(zb, p) is Binding))
+                if (!(BindingOperations.GetBinding(ztb, p) is Binding))
                 {
                     if (value is Thickness t)
                     {
@@ -566,11 +668,11 @@ namespace ZapanControls.Controls.Primitives
 
                     if (value == null)
                     {
-                        if (zb._defaultThemeProperties.ContainsKey(p))
-                            value = zb._defaultThemeProperties[p];
-
-                        zb.SetCurrentValue(p, value);
+                        if (ztb._defaultThemeProperties.ContainsKey(p))
+                            value = ztb._defaultThemeProperties[p];
                     }
+
+                    ztb.SetCurrentValue(p, value);
                 }
             }
         }
@@ -624,6 +726,23 @@ namespace ZapanControls.Controls.Primitives
         private string GetTemplateName(string key)
         {
             return key?.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries)[1];
+        }
+
+        /// <summary>
+        /// Load the default template
+        /// </summary>
+        private void LoadDefaultTemplate(ZapButtonTemplates template, Type ownerType)
+        {
+            string registrationName = GetRegistrationName(template, ownerType);
+            LoadDefaultTemplate(registrationName);
+        }
+
+        /// <summary>
+        /// Get template formal registration name
+        /// </summary>
+        private string GetRegistrationName(ZapButtonTemplates template, Type ownerType)
+        {
+            return GetRegistrationName(template.ToString(), ownerType);
         }
         #endregion
 

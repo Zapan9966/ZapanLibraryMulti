@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:r="clr-namespace:ZapanControls.Controls.ResourceKeys"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- ================== -->
+    <!-- = Contactel Keys = -->
+    <!-- ================== -->
+
+    <!--control-->
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=BorderThickness}">1</Thickness>
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=Padding}">3</Thickness>
+
+    <!--normal-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=Background}" Color="#FF4B4242" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=BorderBrush}" Color="#FF383131" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=Foreground}" Color="White" />
+
+    <!--checked (toggle button only)-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=CheckedBackground}" Color="Orange" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=CheckedBorderBrush}" Color="DarkOrange" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=CheckedForeground}" Color="White" />
+
+    <!--focused-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=FocusedBackground}" Color="OrangeRed" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=FocusedBorderBrush}" Color="#FFB43100" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=FocusedForeground}" Color="White" />
+
+    <!--pressed-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=PressedBackground}" Color="#FFB43100" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=PressedBorderBrush}" Color="OrangeRed" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=PressedForeground}" Color="White" Opacity="0.75" />
+
+    <!--disabled-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=DisabledBackground}" Color="Gray" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=DisabledBorderBrush}" Color="DimGray" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=DisabledForeground}" Color="LightGray" />
+
+</ResourceDictionary>

@@ -4,7 +4,7 @@ using ZapanControls.Controls.Primitives;
 
 namespace ZapanControls.Controls
 {
-    public class ZapButtonFlat : ZapButtonBase
+    public class ZapButtonFlat : ZapButtonBaseOld
     {
         #region Default Static Properties
 

@@ -8,10 +8,10 @@ using ZapanControls.Libraries;
 
 namespace ZapanControls.Controls.Primitives
 {
-    [TemplatePart(Name = "PART_DropDown", Type = typeof(ZapButtonBase))]
+    [TemplatePart(Name = "PART_DropDown", Type = typeof(ZapButtonBaseOld))]
     [ContentProperty("Items")]
     [DefaultProperty("Items")]
-    public class ZapSplitButtonBase : ZapButtonBase
+    public class ZapSplitButtonBase : ZapButtonBaseOld
     {
         #region Dependancy properties
 
