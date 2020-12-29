@@ -3,9 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapButton/Generic.xaml" />
-        
-        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapButtons.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapButton/Generic.xaml" />      
+        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapButtons.xaml" /> <!-- A Supprimer -->
         
         
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapContextMenu.xaml" />
@@ -18,7 +17,8 @@
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapTabControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapTabItem.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapTabItemAdd.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapWindow.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapWindow/Generic.xaml" />
         
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/CalendarPicker/vhCalendar.Generic.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapDatePicker/ZapDatePicker.xaml" />

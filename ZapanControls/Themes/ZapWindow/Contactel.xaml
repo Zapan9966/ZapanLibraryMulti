@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ZapanControls.Themes.ZapWindow">
+    
+    <!-- ===================== -->
+    <!-- =  CONTACTEL Style  = -->
+    <!-- ===================== -->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/ZapanControls;component/Themes/ZapWindow/Generic.xaml"/>
+        <ResourceDictionary Source="/ZapanControls;component/Themes/ZapWindow/Contactel.Keys.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

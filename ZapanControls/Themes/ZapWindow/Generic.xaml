@@ -1,0 +1,89 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:r="clr-namespace:ZapanControls.Controls.ResourceKeys"
+                    xmlns:z="clr-namespace:ZapanControls.Controls"
+                    xmlns:s="clr-namespace:System.Windows.Shell;assembly=PresentationFramework">
+
+    <Style TargetType="{x:Type z:ZapWindow}">
+        <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="AllowsTransparency" Value="True"/>
+        <Setter Property="s:WindowChrome.WindowChrome">
+            <Setter.Value>
+                <s:WindowChrome GlassFrameThickness="0" 
+                                ResizeBorderThickness="6" 
+                                CaptionHeight="0" 
+                                CornerRadius="0" 
+                                NonClientFrameEdges="None"
+                                UseAeroCaptionButtons="True" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type z:ZapWindow}">
+                    <Border x:Name="windowBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Border x:Name="moveBorder" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="{TemplateBinding TitleBarBackground}"/>
+
+                            <Image x:Name="iconImage" Grid.Row="0" Grid.Column="0" Margin="10,0,0,0"  Width="18" Height="18" VerticalAlignment="Center"
+                                   Source="{TemplateBinding Icon}" Focusable="False" IsHitTestVisible="False"/>
+
+                            <TextBlock Grid.Row="0" Grid.Column="1" IsHitTestVisible="False" VerticalAlignment="Center" Margin="10,0,0,0" Focusable="False"
+                                       Text="{TemplateBinding Title}" Foreground="{TemplateBinding TitleBarForeground}" />
+
+                            <ContentPresenter Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Panel.ZIndex="100"
+                                              Content="{DynamicResource {x:Static r:ZapWindowResourceKeys.WindowTemplateKey}}"
+                                              Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}}"
+                                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+                            <Border x:Name="adornerBorder" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+                                <AdornerDecorator>
+                                    <Grid>
+                                        <ContentPresenter />
+                                        <Grid x:Name="gridDim" Visibility="Collapsed">
+                                            <Grid.Background>
+                                                <SolidColorBrush Color="Black" Opacity="0.75"/>
+                                            </Grid.Background>
+                                        </Grid>
+                                    </Grid>
+                                </AdornerDecorator>
+                            </Border>
+
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Icon" Value="{x:Null}">
+                            <Setter TargetName="iconImage" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="WindowTemplate" Value="Glass" />
+                                <Condition Property="WindowState" Value="Normal" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="windowBorder" Property="CornerRadius" Value="4,4,0,0" />
+                            <Setter TargetName="moveBorder" Property="CornerRadius" Value="4,4,0,0" />
+                        </MultiTrigger>
+                        <Trigger Property="WindowState" Value="Maximized">
+                            <Setter TargetName="windowBorder" Property="BorderThickness" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
