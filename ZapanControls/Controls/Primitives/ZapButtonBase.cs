@@ -37,6 +37,10 @@ namespace ZapanControls.Controls.Primitives
         private readonly Dictionary<DependencyProperty, object> _defaultThemeProperties;
         #endregion
 
+        #region Private Properties
+        public bool HasInitialized { get; private set; }
+        #endregion
+
         #region Properties
         #region ButtonTemplate
         public static readonly DependencyProperty ButtonTemplateProperty = DependencyProperty.Register(
@@ -85,16 +89,8 @@ namespace ZapanControls.Controls.Primitives
                 ResourceDictionary newTemplateDictionary = zb._rdTemplateDictionaries[newRegisteredTemplateName];
                 zb.Resources.MergedDictionaries.Add(newTemplateDictionary);
 
-                if (zb.ButtonTemplate == "Round")
-                {
-                    zb.MinHeight = 20d;
-                    zb.MinWidth = 20d;
-                }
-                else
-                {
-                    zb.MinHeight = 0d;
-                    zb.MinWidth = 0d;
-                }
+                if (zb.HasInitialized)
+                    zb.OnApplyTemplate();
             }
 
             zb.RaisePropertyChanged(new PropertyChangedEventArgs(ButtonTemplatePropName));
@@ -417,6 +413,18 @@ namespace ZapanControls.Controls.Primitives
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+            HasInitialized = true;
+
+            if (ButtonTemplate == "Round")
+            {
+                MinHeight = 20d;
+                MinWidth = 20d;
+            }
+            else
+            {
+                MinHeight = 0d;
+                MinWidth = 0d;
+            }
 
             foreach (var property in _defaultThemeProperties)
             {

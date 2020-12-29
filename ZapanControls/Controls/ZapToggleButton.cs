@@ -44,6 +44,10 @@ namespace ZapanControls.Controls
         public static TemplatePath Round = new TemplatePath(ZapButtonTemplates.Round, "/ZapanControls;component/Themes/ZapButton/Template.Toggle.Round.xaml");
         #endregion
 
+        #region Private Properties
+        public bool HasInitialized { get; private set; }
+        #endregion
+
         #region Properties
         #region ButtonTemplate
         public static readonly DependencyProperty ButtonTemplateProperty = DependencyProperty.Register(
@@ -92,16 +96,8 @@ namespace ZapanControls.Controls
                 ResourceDictionary newTemplateDictionary = ztb._rdTemplateDictionaries[newRegisteredTemplateName];
                 ztb.Resources.MergedDictionaries.Add(newTemplateDictionary);
 
-                if (ztb.ButtonTemplate == "Round")
-                {
-                    ztb.MinHeight = 20d;
-                    ztb.MinWidth = 20d;
-                }
-                else
-                {
-                    ztb.MinHeight = 0d;
-                    ztb.MinWidth = 0d;
-                }
+                if (ztb.HasInitialized)
+                    ztb.OnApplyTemplate();
             }
 
             ztb.RaisePropertyChanged(new PropertyChangedEventArgs(ButtonTemplatePropName));
@@ -523,6 +519,7 @@ namespace ZapanControls.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+            HasInitialized = true;
 
             ContentPresenter content = (ContentPresenter)Template.FindName("PART_Content", this);
             if (content != null)
@@ -534,6 +531,17 @@ namespace ZapanControls.Controls
                         Width = content.ActualWidth + 4;
                     }
                 };
+            }
+
+            if (ButtonTemplate == "Round")
+            {
+                MinHeight = 20d;
+                MinWidth = 20d;
+            }
+            else
+            {
+                MinHeight = 0d;
+                MinWidth = 0d;
             }
 
             foreach (var property in _defaultThemeProperties)
