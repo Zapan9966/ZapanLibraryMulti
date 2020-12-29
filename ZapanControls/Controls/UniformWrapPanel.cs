@@ -18,8 +18,8 @@ namespace ZapanControls.Controls
 
         private static void IsAutoUniformChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            if (sender is UniformWrapPanel)
-                ((UniformWrapPanel)sender).InvalidateVisual();
+            if (sender is UniformWrapPanel panel)
+                panel.InvalidateVisual();
         }
 
         protected override Size MeasureOverride(Size availableSize)

@@ -61,7 +61,9 @@ namespace ZapanControls.Controls.Primitives
 
             // new theme name
             string newThemeName = e.NewValue as string;
-            string newRegisteredThemeName = tc.GetRegistrationName(newThemeName, tc.GetType());
+            string newRegisteredThemeName = !string.IsNullOrEmpty(newThemeName) ?
+                tc.GetRegistrationName(newThemeName, tc.GetType())
+                : tc._rdThemeDictionaries.FirstOrDefault().Key;
 
             // add the resource
             if (!tc._rdThemeDictionaries.ContainsKey(newRegisteredThemeName))

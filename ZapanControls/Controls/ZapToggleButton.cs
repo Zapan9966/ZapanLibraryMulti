@@ -5,14 +5,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
-using System.Windows.Threading;
 using ZapanControls.Controls.Primitives;
 using ZapanControls.Controls.Themes;
 using ZapanControls.Libraries;
@@ -80,11 +77,9 @@ namespace ZapanControls.Controls
 
             // new template name
             string newTemplateName = e.NewValue as string;
-
-            if (string.IsNullOrEmpty(newTemplateName))
-                newTemplateName = ztb._rdTemplateDictionaries.FirstOrDefault().Key;
-
-            string newRegisteredTemplateName = ztb.GetRegistrationName(newTemplateName, ztb.GetType());
+            string newRegisteredTemplateName = !string.IsNullOrEmpty(newTemplateName) ?
+                ztb.GetRegistrationName(newTemplateName, ztb.GetType())
+                : ztb._rdTemplateDictionaries.FirstOrDefault().Key;
 
             // add the resource
             if (!ztb._rdTemplateDictionaries.ContainsKey(newRegisteredTemplateName))
@@ -354,11 +349,9 @@ namespace ZapanControls.Controls
 
             // new theme name
             string newThemeName = e.NewValue as string;
-
-            if (string.IsNullOrEmpty(newThemeName))
-                newThemeName = ztb._rdTemplateDictionaries.FirstOrDefault().Key;
-
-            string newRegisteredThemeName = ztb.GetRegistrationName(newThemeName, ztb.GetType());
+            string newRegisteredThemeName = !string.IsNullOrEmpty(newThemeName) ?
+                ztb.GetRegistrationName(newThemeName, ztb.GetType())
+                : ztb._rdThemeDictionaries.FirstOrDefault().Key;
 
             // add the resource
             if (!ztb._rdThemeDictionaries.ContainsKey(newRegisteredThemeName))
@@ -468,7 +461,7 @@ namespace ZapanControls.Controls
             SetThemePropertyDefault(BackgroundProperty, TryFindResource(ResourceKeys.ZapButtonResourceKeys.BackgroundKey));
             SetThemePropertyDefault(BorderBrushProperty, TryFindResource(ResourceKeys.ZapButtonResourceKeys.BorderBrushKey));
             SetThemePropertyDefault(ForegroundProperty, TryFindResource(ResourceKeys.ZapButtonResourceKeys.ForegroundKey));
-            // Normal
+            // Checked
             SetThemePropertyDefault(CheckedBackgroundProperty, TryFindResource(ResourceKeys.ZapButtonResourceKeys.CheckedBackgroundKey));
             SetThemePropertyDefault(CheckedBorderBrushProperty, TryFindResource(ResourceKeys.ZapButtonResourceKeys.CheckedBorderBrushKey));
             SetThemePropertyDefault(CheckedForegroundProperty, TryFindResource(ResourceKeys.ZapButtonResourceKeys.CheckedForegroundKey));

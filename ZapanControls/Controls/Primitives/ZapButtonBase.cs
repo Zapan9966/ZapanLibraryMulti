@@ -24,6 +24,7 @@ namespace ZapanControls.Controls.Primitives
         #region Theme Declarations
         public static ThemePath Oceatech = new ThemePath(ZapButtonThemes.Oceatech, "/ZapanControls;component/Themes/ZapButton/Oceatech.xaml");
         public static ThemePath Contactel = new ThemePath(ZapButtonThemes.Contactel, "/ZapanControls;component/Themes/ZapButton/Contactel.xaml");
+        // Basic themes
         public static ThemePath Info = new ThemePath(ZapButtonThemes.Info, "/ZapanControls;component/Themes/ZapButton/Info.xaml");
         public static ThemePath Success = new ThemePath(ZapButtonThemes.Success, "/ZapanControls;component/Themes/ZapButton/Success.xaml");
         public static ThemePath Warning = new ThemePath(ZapButtonThemes.Warning, "/ZapanControls;component/Themes/ZapButton/Warning.xaml");
@@ -69,11 +70,9 @@ namespace ZapanControls.Controls.Primitives
 
             // new template name
             string newTemplateName = e.NewValue as string;
-
-            if (string.IsNullOrEmpty(newTemplateName))
-                newTemplateName = zb._rdTemplateDictionaries.FirstOrDefault().Key;
-
-            string newRegisteredTemplateName = zb.GetRegistrationName(newTemplateName, zb.GetType());
+            string newRegisteredTemplateName = !string.IsNullOrEmpty(newTemplateName) ?
+                zb.GetRegistrationName(newTemplateName, zb.GetType())
+                : zb._rdTemplateDictionaries.FirstOrDefault().Key;
 
             // add the resource
             if (!zb._rdTemplateDictionaries.ContainsKey(newRegisteredTemplateName))
@@ -117,8 +116,7 @@ namespace ZapanControls.Controls.Primitives
 
         public Brush FocusedBackground
         {
-            get => (Brush)GetValue(FocusedBackgroundProperty);
-            set => SetValue(FocusedBackgroundProperty, value);
+            get => (Brush)GetValue(FocusedBackgroundProperty); set => SetValue(FocusedBackgroundProperty, value);
         }
 
         private static void OnFocusedBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, FocusedBackgroundProperty, e.NewValue);
@@ -293,11 +291,9 @@ namespace ZapanControls.Controls.Primitives
 
             // new theme name
             string newThemeName = e.NewValue as string;
-
-            if (string.IsNullOrEmpty(newThemeName))
-                newThemeName = zb._rdThemeDictionaries.FirstOrDefault().Key;
-
-            string newRegisteredThemeName = zb.GetRegistrationName(newThemeName, zb.GetType());
+            string newRegisteredThemeName = !string.IsNullOrEmpty(newThemeName) ?
+                zb.GetRegistrationName(newThemeName, zb.GetType())
+                : zb._rdThemeDictionaries.FirstOrDefault().Key;
 
             // add the resource
             if (!zb._rdThemeDictionaries.ContainsKey(newRegisteredThemeName))
