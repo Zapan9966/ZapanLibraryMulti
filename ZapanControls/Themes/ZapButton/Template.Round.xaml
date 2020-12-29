@@ -84,10 +84,6 @@
                               UseLayoutRounding="{TemplateBinding UseLayoutRounding}"/>
         </Grid>
         <ControlTemplate.Triggers>
-            <Trigger Property="IsKeyboardFocused" Value="True">
-                <Setter TargetName="RefractionLayer" Property="Stroke" Value="{Binding FocusedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}" />
-                <Setter TargetName="PART_Content" Property="TextBlock.Foreground" Value="{Binding FocusedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}" />
-            </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter TargetName="background" Property="Fill" Value="{Binding FocusedBackground, RelativeSource={RelativeSource TemplatedParent}}" />
                 <Setter TargetName="RefractionLayer" Property="Stroke" Value="{Binding FocusedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}" />

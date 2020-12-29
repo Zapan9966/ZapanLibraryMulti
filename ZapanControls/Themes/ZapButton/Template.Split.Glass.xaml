@@ -139,10 +139,6 @@
                 <Setter TargetName="PART_Button" Property="CornerRadius" Value="4,0,0,0"/>
             </MultiTrigger>
             <!--dropdow triggers-->
-            <Trigger Property="IsKeyboardFocused" SourceName="PART_DropDown" Value="True">
-                <Setter TargetName="PART_DropDown_Path" Property="Fill" Value="{Binding FocusedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}"/>
-                <Setter TargetName="PART_DropDown_Path" Property="Stroke" Value="{Binding FocusedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}"/>
-            </Trigger>
             <Trigger Property="IsMouseOver" SourceName="PART_DropDown" Value="True">
                 <Setter TargetName="PART_DropDown_Path" Property="Fill" Value="{Binding FocusedForeground, RelativeSource={RelativeSource TemplatedParent}}"/>
                 <Setter TargetName="PART_DropDown_Path" Property="Stroke" Value="{Binding FocusedForeground, RelativeSource={RelativeSource TemplatedParent}}"/>

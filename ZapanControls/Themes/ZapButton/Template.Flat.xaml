@@ -25,10 +25,6 @@
             
         </Border>
         <ControlTemplate.Triggers>
-            <Trigger Property="IsKeyboardFocused" Value="True">
-                <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding FocusedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}" />
-                <Setter TargetName="PART_Content" Property="TextBlock.Foreground" Value="{Binding FocusedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}" />
-            </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter TargetName="PART_Border" Property="Background" Value="{Binding FocusedBackground, RelativeSource={RelativeSource TemplatedParent}}" />
                 <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding FocusedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}" />
