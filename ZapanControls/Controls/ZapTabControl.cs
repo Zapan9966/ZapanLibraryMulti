@@ -6,8 +6,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,7 +13,6 @@ using System.Windows.Media;
 using ZapanControls.Controls.ControlEventArgs;
 using ZapanControls.Controls.Primitives;
 using ZapanControls.Controls.Themes;
-using ZapanControls.Helpers;
 using ZapanControls.Libraries;
 
 namespace ZapanControls.Controls

@@ -6,22 +6,29 @@ namespace ZapanControls.Controls
 {
     public class UniformWrapPanel : WrapPanel
     {
+        #region Properties
+        #region IsAutoUniform
+        public static readonly DependencyProperty IsAutoUniformProperty = DependencyProperty.Register(
+            "IsAutoUniform", typeof(bool), typeof(UniformWrapPanel),
+            new FrameworkPropertyMetadata(true,
+                FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure,
+                new PropertyChangedCallback(IsAutoUniformChanged)));
+
         public bool IsAutoUniform
         {
-            get { return (bool)GetValue(IsAutoUniformProperty); }
-            set { SetValue(IsAutoUniformProperty, value); }
+            get => (bool)GetValue(IsAutoUniformProperty);
+            set => SetValue(IsAutoUniformProperty, value);
         }
-
-        public static readonly DependencyProperty IsAutoUniformProperty =
-            DependencyProperty.Register("IsAutoUniform", typeof(bool), typeof(UniformWrapPanel),
-            new FrameworkPropertyMetadata(true, new PropertyChangedCallback(IsAutoUniformChanged)));
 
         private static void IsAutoUniformChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             if (sender is UniformWrapPanel panel)
                 panel.InvalidateVisual();
         }
+        #endregion
+        #endregion
 
+        #region Overrides
         protected override Size MeasureOverride(Size availableSize)
         {
             if (Children.Count > 0 && IsAutoUniform)
@@ -53,5 +60,6 @@ namespace ZapanControls.Controls
             }
             return base.MeasureOverride(availableSize);
         }
+        #endregion
     }
 }
