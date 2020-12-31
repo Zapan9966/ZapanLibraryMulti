@@ -66,7 +66,7 @@ namespace ZapanControls.Controls
         /// Identifie la propriété de dépendance <see cref="AddTooltip"/>.
         /// </summary>
         private static readonly DependencyProperty AddTooltipProperty = DependencyProperty.Register(
-            "AddTooltip", typeof(string), typeof(OldZapTabControl), new FrameworkPropertyMetadata("Ajouter un onglet", FrameworkPropertyMetadataOptions.AffectsRender));
+            "AddTooltip", typeof(string), typeof(ZapTabControl), new FrameworkPropertyMetadata("Ajouter un onglet", FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
         /// Obtient ou défini le texte de l'info-bulle du bouton Fermer.
