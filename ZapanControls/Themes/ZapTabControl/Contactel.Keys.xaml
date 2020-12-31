@@ -1,0 +1,42 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:r="clr-namespace:ZapanControls.Controls.ResourceKeys"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- ================== -->
+    <!-- = Contactel Keys = -->
+    <!-- ================== -->
+
+    <!--control-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapTabControlResourceKeys}, ResourceId=Background}" Color="White" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapTabControlResourceKeys}, ResourceId=BorderBrush}" Color="OrangeRed" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapTabControlResourceKeys}, ResourceId=Foreground}" Color="Black" />
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapTabControlResourceKeys}, ResourceId=BorderThickness}">1</Thickness>
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapTabControlResourceKeys}, ResourceId=Padding}">3</Thickness>
+    <Viewbox x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapTabControlResourceKeys}, ResourceId=AddContent}" Width="16" Height="16">
+        <Canvas Width="24" Height="24">
+            <Path Fill="White" Data="M20 14H14V20H10V14H4V10H10V4H14V10H20V14Z" />
+        </Canvas>
+    </Viewbox>
+
+    <!--normal-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapTabControlResourceKeys}, ResourceId=ItemBackground}" Color="#FF4B4242" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapTabControlResourceKeys}, ResourceId=ItemBorderBrush}" Color="#FF383131" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapTabControlResourceKeys}, ResourceId=ItemForeground}" Color="White" />
+
+    <!--focused-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapTabControlResourceKeys}, ResourceId=ItemFocusedBackground}" Color="Orange" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapTabControlResourceKeys}, ResourceId=ItemFocusedBorderBrush}" Color="DarkOrange" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapTabControlResourceKeys}, ResourceId=ItemFocusedForeground}" Color="White" />
+
+    <!--selected-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapTabControlResourceKeys}, ResourceId=ItemSelectedBackground}" Color="OrangeRed" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapTabControlResourceKeys}, ResourceId=ItemSelectedBorderBrush}" Color="OrangeRed" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapTabControlResourceKeys}, ResourceId=ItemSelectedForeground}" Color="White" />
+
+    <!--disabled-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapTabControlResourceKeys}, ResourceId=ItemDisabledBackground}" Color="Gray" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapTabControlResourceKeys}, ResourceId=ItemDisabledBorderBrush}" Color="DimGray" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapTabControlResourceKeys}, ResourceId=ItemDisabledForeground}" Color="LightGray" />
+
+</ResourceDictionary>

@@ -1,42 +1,37 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
+using ZapanControls.Controls.ControlEventArgs;
 using ZapanControls.Helpers;
-using ZapanControls.Libraries;
 
 namespace ZapanControls.Controls
 {
     internal sealed class ZapTabItemAdd : TabItem
     {
-        #region Commands
-
-        /// <summary>
-        /// Commande qui gère l'ajout d'un onglet
-        /// </summary>
-        public ICommand AddTabCommand { get; }
-
-        //private void OnAddTabClick(RoutedEventArgs e)
-        private void OnAddTabClick(object parameters)
+        #region Internal Event Handlers
+        internal void OnTabAddClick(object sender, RoutedEventArgs e)
         {
-            ZapTabControl tc = VisualTreeHelpers.FindParent<ZapTabControl>(this);
-
-            if (tc != null)
+            if (Parent is ZapTabControl tc)
             {
-                if (tc.SelectedItem == this)
-                    tc.SelectedItem = tc.LastSelectedTab ?? tc.Items[tc.Items.Count - 1];
+                var eventArgs = new TabAddEventArgs(ZapTabControl.TabAddEvent, this);
+                RaiseEvent(eventArgs);
 
-                if (tc.OnAddTab(parameters) is ZapTabItem newTab)
+                if (!eventArgs.Handled)
+                    eventArgs.Handled = true;
+
+                if (eventArgs.NewTabItem != null)
                 {
-                    tc.Items.Add(newTab);
-                    newTab.Focus();
+                    tc.Items.Add(eventArgs.NewTabItem);
 
-                    tc.SelectedItem = newTab;
+                    if (eventArgs.NewTabItem is Control ctrl)
+                        ctrl.Focus();
+
+                    tc.SelectedItem = eventArgs.NewTabItem;
                 }
             }
         }
-
         #endregion
 
+        #region Constructors
         /// <summary>
         /// Constructeur de la classe <see cref="ZapTabItemAdd"/>
         /// </summary>
@@ -47,18 +42,21 @@ namespace ZapanControls.Controls
 
         public ZapTabItemAdd()
         {
-            AddTabCommand = new RelayCommand<object>(
-                param => OnAddTabClick(param),
-                param => true);
+
         }
+        #endregion
 
         #region Overrides
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-        }
 
+            if (VisualTreeHelpers.FindChild(this, "tabAdd") is ZapButton tabAdd)
+            {
+                tabAdd.Click -= OnTabAddClick;
+                tabAdd.Click += OnTabAddClick;
+            }
+        }
         #endregion
 
     }

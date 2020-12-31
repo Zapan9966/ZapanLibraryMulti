@@ -5,8 +5,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using ZapanControls.Libraries;
@@ -24,7 +22,6 @@ namespace ZapanControls.Controls.Primitives
         #endregion
 
         #region Properties
-
         #region Theme
         /// <summary>
         /// Get/Sets the theme
@@ -100,7 +97,6 @@ namespace ZapanControls.Controls.Primitives
 
         internal abstract void OnThemeChangedSuccess(object sender, RoutedEventArgs e);
         #endregion
-
         #endregion
 
         #region Constructors

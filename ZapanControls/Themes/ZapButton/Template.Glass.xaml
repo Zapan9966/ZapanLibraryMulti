@@ -47,7 +47,7 @@
                                   UseLayoutRounding="{TemplateBinding UseLayoutRounding}"
                                   Margin="{TemplateBinding Padding}" />
 
-                <Border Opacity="0" HorizontalAlignment="Stretch" x:Name="glow" Width="Auto" Grid.RowSpan="2" CornerRadius="4" 
+                <Border x:Name="glow" Opacity="0" HorizontalAlignment="Stretch" Width="Auto" Grid.RowSpan="2" CornerRadius="4" IsHitTestVisible="False"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
                     <Border.Background>
                         <RadialGradientBrush>
@@ -65,7 +65,7 @@
                     </Border.Background>
                 </Border>
 
-                <Border x:Name="shine" HorizontalAlignment="Stretch" Margin="0" Width="Auto" CornerRadius="3,3,0,0"
+                <Border x:Name="shine" HorizontalAlignment="Stretch" Margin="0" Width="Auto" CornerRadius="3,3,0,0" IsHitTestVisible="False"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
                     <Border.Background>
                         <LinearGradientBrush EndPoint="0.494,0.889" StartPoint="0.494,0.028">

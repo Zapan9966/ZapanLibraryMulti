@@ -1,8 +1,7 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using ZapanControls.Libraries;
+using ZapanControls.Controls.ControlEventArgs;
+using ZapanControls.Helpers;
 
 namespace ZapanControls.Controls
 {
@@ -11,47 +10,41 @@ namespace ZapanControls.Controls
     /// </summary>
     public sealed class ZapTabItem : TabItem
     {
-
-        #region Dependancy Properties
-
+        #region Properties
+        #region IsClosable
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapTabItem.IsClosable"/>.
+        /// Identifie la propriété de dépendance <see cref="IsClosable"/>.
         /// </summary>
         private static readonly DependencyProperty IsClosableProperty = DependencyProperty.Register(
-            "IsClosable", typeof(bool), typeof(ZapTabItem), new FrameworkPropertyMetadata(true));
+            "IsClosable", typeof(bool), typeof(ZapTabItem),
+            new FrameworkPropertyMetadata(true,
+                FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
         /// Obtient ou défini la valeur indiquant si l'onglet peut être fermé.
         /// </summary>
-        public bool IsClosable
-        {
-            get { return (bool)GetValue(IsClosableProperty); }
-            set { SetValue(IsClosableProperty, value); }
-        }
-
+        public bool IsClosable { get => (bool)GetValue(IsClosableProperty); set => SetValue(IsClosableProperty, value); }
+        #endregion
         #endregion
 
-        #region Commands
-
-        /// <summary>
-        /// Commande qui gère la fermeture d'un onglet
-        /// </summary>
-        public ICommand CloseTabCommand { get; }
-
-        private void OnCloseTab(RoutedEventArgs e)
+        #region Internal Event Handlers
+        private void OnBtnCloseClick(object sender, RoutedEventArgs e)
         {
-            if (Parent is ZapTabControl zapTabControl)
-                if (zapTabControl.OnCloseTab(e ?? new RoutedEventArgs()))
-                    zapTabControl.Items.Remove(this);
+            if (Parent is ZapTabControl tc)
+            {
+                var eventArgs = new CloseValidationEnventArgs(ZapTabControl.CloseValidationEvent, this);
+                RaiseEvent(eventArgs);
 
-            if (e.RoutedEvent != null)
-                e.Handled = true;
+                if (!eventArgs.Handled)
+                    eventArgs.Handled = true;
+
+                if (eventArgs.CanClose)
+                    tc.Items.Remove(this);
+            }
         }
-
         #endregion
 
         #region Constructors
-
         /// <summary>
         /// Constructeur de la classe <see cref="ZapTabItem"/>
         /// </summary>
@@ -62,21 +55,21 @@ namespace ZapanControls.Controls
 
         public ZapTabItem()
         {
-            CloseTabCommand = new RelayCommand<RoutedEventArgs>(
-                param => OnCloseTab(param),
-                param => true);
-        }
 
+        }
         #endregion
 
         #region Overrides
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+
+            if (VisualTreeHelpers.FindChild(this, "btnCloseTab") is ZapButton btnCloseTab)
+            {
+                btnCloseTab.Click -= OnBtnCloseClick;
+                btnCloseTab.Click += OnBtnCloseClick;
+            }
         }
-
         #endregion
-
     }
 }

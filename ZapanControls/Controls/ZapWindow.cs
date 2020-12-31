@@ -11,6 +11,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using ZapanControls.Controls.ControlEventArgs;
 using ZapanControls.Controls.Primitives;
 using ZapanControls.Controls.Themes;
 using ZapanControls.Helpers;
@@ -345,7 +346,7 @@ namespace ZapanControls.Controls
         /// Représente la méthode qui gère la validation de fermeture de la fenêtre.
         /// </summary>
         /// <returns>Renvoi <see cref="True"/> si la fenêtre doit être fermée, sinon <see cref="False"/></returns>
-        public delegate void CloseValidationEventHandler(object sender, WindowCloseValidationEnventArgs e);
+        public delegate void CloseValidationEventHandler(object sender, CloseValidationEnventArgs e);
 
         public static readonly RoutedEvent CloseValidationEvent = EventManager.RegisterRoutedEvent(
             "CloseValidation", RoutingStrategy.Bubble, typeof(CloseValidationEventHandler), typeof(ZapWindow));
@@ -406,7 +407,7 @@ namespace ZapanControls.Controls
 
         private void OnBtnCloseClick(object sender, RoutedEventArgs e)
         {
-            var eventArgs = new WindowCloseValidationEnventArgs(CloseValidationEvent, this);
+            var eventArgs = new CloseValidationEnventArgs(CloseValidationEvent, this);
             RaiseEvent(eventArgs);
 
             if (!eventArgs.Handled)
@@ -472,7 +473,6 @@ namespace ZapanControls.Controls
             if (_rdThemeDictionaries.Any())
                 SetCurrentValue(ThemeProperty, GetThemeName(_rdThemeDictionaries.FirstOrDefault().Key));
         }
-
         #endregion
 
         #region Control Methods
@@ -886,18 +886,5 @@ namespace ZapanControls.Controls
         }
 
         #endregion
-    }
-
-    public class WindowCloseValidationEnventArgs : RoutedEventArgs
-    {
-        public bool CanClose { get; set; }
-
-        public WindowCloseValidationEnventArgs(RoutedEvent routedEvent, object source)
-        {
-            RoutedEvent = routedEvent;
-            Source = source;
-            Handled = false;
-            CanClose = true;
-        }
     }
 }

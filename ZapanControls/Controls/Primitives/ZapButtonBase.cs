@@ -110,10 +110,7 @@ namespace ZapanControls.Controls.Primitives
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnFocusedBackgroundChanged));
 
-        public Brush FocusedBackground
-        {
-            get => (Brush)GetValue(FocusedBackgroundProperty); set => SetValue(FocusedBackgroundProperty, value);
-        }
+        public Brush FocusedBackground { get => (Brush)GetValue(FocusedBackgroundProperty); set => SetValue(FocusedBackgroundProperty, value); }
 
         private static void OnFocusedBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, FocusedBackgroundProperty, e.NewValue);
         #endregion
