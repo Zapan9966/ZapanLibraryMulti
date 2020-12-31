@@ -490,7 +490,7 @@ namespace ZapanControls.Controls
             // Normal
             BackgroundProperty.OverrideMetadata(typeof(ZapToggleButton), new FrameworkPropertyMetadata(null, options, OnBackgroundChanged));
             BorderBrushProperty.OverrideMetadata(typeof(ZapToggleButton), new FrameworkPropertyMetadata(null, options, OnBorderBrushChanged));
-            ForegroundProperty.OverrideMetadata(typeof(ZapToggleButton), new FrameworkPropertyMetadata(null, options, OnForegroundChanged));
+            ForegroundProperty.OverrideMetadata(typeof(ZapToggleButton), new FrameworkPropertyMetadata(null, options, OnForegroundChanged) { Inherits = false });
         }
 
         public ZapToggleButton()

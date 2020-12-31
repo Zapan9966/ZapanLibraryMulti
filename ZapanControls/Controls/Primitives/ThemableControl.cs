@@ -112,7 +112,6 @@ namespace ZapanControls.Controls.Primitives
             if (_rdThemeDictionaries.Any())
                 SetCurrentValue(ThemeProperty, GetThemeName(_rdThemeDictionaries.FirstOrDefault().Key));
         }
-
         #endregion
 
         #region Theming

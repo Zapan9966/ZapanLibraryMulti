@@ -58,6 +58,5 @@ namespace ZapanControls.Controls
             }
         }
         #endregion
-
     }
 }

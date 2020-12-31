@@ -381,7 +381,7 @@ namespace ZapanControls.Controls.Primitives
             // Normal
             BackgroundProperty.OverrideMetadata(typeof(ZapButtonBase), new FrameworkPropertyMetadata(null, options, OnBackgroundChanged));
             BorderBrushProperty.OverrideMetadata(typeof(ZapButtonBase), new FrameworkPropertyMetadata(null, options, OnBorderBrushChanged));
-            ForegroundProperty.OverrideMetadata(typeof(ZapButtonBase), new FrameworkPropertyMetadata(null, options, OnForegroundChanged));
+            ForegroundProperty.OverrideMetadata(typeof(ZapButtonBase), new FrameworkPropertyMetadata(null, options, OnForegroundChanged) { Inherits = false });
         }
 
         public ZapButtonBase()
