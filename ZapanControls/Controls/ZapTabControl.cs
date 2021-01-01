@@ -523,7 +523,7 @@ namespace ZapanControls.Controls
             // Control
             BackgroundProperty.OverrideMetadata(typeof(ZapTabControl), new FrameworkPropertyMetadata(null, options, OnBackgroundChanged));
             BorderBrushProperty.OverrideMetadata(typeof(ZapTabControl), new FrameworkPropertyMetadata(null, options, OnBorderBrushChanged));
-            ForegroundProperty.OverrideMetadata(typeof(ZapTabControl), new FrameworkPropertyMetadata(null, options, OnForegroundChanged));
+            ForegroundProperty.OverrideMetadata(typeof(ZapTabControl), new FrameworkPropertyMetadata(null, options, OnForegroundChanged) { Inherits = false });
             BorderThicknessProperty.OverrideMetadata(typeof(ZapTabControl), new FrameworkPropertyMetadata(new Thickness(0), options, OnBorderThicknessChanged));
             PaddingProperty.OverrideMetadata(typeof(ZapTabControl), new FrameworkPropertyMetadata(new Thickness(0), options, OnPaddingChanged));
         }

@@ -87,12 +87,6 @@
                 <Setter TargetName="PART_DropDown_Path" Property="Stroke" Value="{Binding DisabledForeground, RelativeSource={RelativeSource TemplatedParent}}"/>
             </Trigger>
             <!--button triggers-->
-            <Trigger Property="IsKeyboardFocused" Value="True">
-                <Setter TargetName="PART_Button" Property="BorderBrush" Value="{Binding FocusedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}" />
-                <Setter TargetName="PART_Content" Property="TextBlock.Foreground" Value="{Binding FocusedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}" />
-                <Setter TargetName="path" Property="Stroke" Value="{Binding FocusedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}"/>
-                <Setter TargetName="path" Property="Fill" Value="{Binding FocusedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}"/>
-            </Trigger>
             <Trigger Property="IsMouseOver" SourceName="PART_Button"  Value="True">
                 <Setter TargetName="PART_Button" Property="Background" Value="{Binding FocusedBackground, RelativeSource={RelativeSource TemplatedParent}}"/>
                 <Setter TargetName="PART_Button" Property="BorderBrush" Value="{Binding FocusedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}"/>

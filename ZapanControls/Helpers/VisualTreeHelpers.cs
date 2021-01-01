@@ -23,9 +23,9 @@ namespace ZapanControls.Helpers
                 for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
                 {
                     DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-                    if (child != null && child is T)
+                    if (child != null && child is T t)
                     {
-                        yield return (T)child;
+                        yield return t;
                     }
 
                     foreach (T childOfChild in FindVisualChildren<T>(child))
@@ -45,7 +45,7 @@ namespace ZapanControls.Helpers
                 for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
                 {
                     DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-                    if (child is FrameworkElement && ((FrameworkElement)child).Name == name)
+                    if (child is FrameworkElement element && element.Name == name)
                     {
                         yield return child as FrameworkElement;
                     }
@@ -77,6 +77,24 @@ namespace ZapanControls.Helpers
                 return parent;
             else
                 return FindParent<T>(parentObject);
+        }
+
+        /// <summary>
+        /// Recherche le contrôle parent d'un objet dans le template.
+        /// </summary>
+        public static T FindTemplatedParent<T>(DependencyObject child) where T : DependencyObject
+        {
+            //get parent item
+            DependencyObject parentObject = LogicalTreeHelper.GetParent(child);
+
+            //we've reached the end of the tree
+            if (parentObject == null) return null;
+
+            //check if the parent matches the type we're looking for
+            if (parentObject is T parent)
+                return parent;
+            else
+                return FindTemplatedParent<T>(parentObject);
         }
 
         /// <summary>
@@ -139,7 +157,7 @@ namespace ZapanControls.Helpers
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
             {
                 var child = VisualTreeHelper.GetChild(parent, i);
-                if (child is FrameworkElement && ((FrameworkElement)child).Name == name)
+                if (child is FrameworkElement element && element.Name == name)
                 {
                     return child as FrameworkElement;
                 }
@@ -170,7 +188,7 @@ namespace ZapanControls.Helpers
                 {
                     var accesor = parent.GetType().GetProperty(elements[0]);
 
-                    if ((accesor?.CanWrite ?? false))
+                    if (accesor?.CanWrite ?? false)
                         accesor.SetValue(parent, data);
                 }
                 string[] innerElements = elements.Skip(1).ToArray();

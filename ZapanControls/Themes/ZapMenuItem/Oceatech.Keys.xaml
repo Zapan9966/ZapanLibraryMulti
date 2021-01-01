@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:r="clr-namespace:ZapanControls.Controls.ResourceKeys"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- ================= -->
+    <!-- = Oceatech Keys = -->
+    <!-- ================= -->
+    
+    <!--control-->
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapMenuItemResourceKeys}, ResourceId=BorderThickness}">1</Thickness>
+
+    <!--normal-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapMenuItemResourceKeys}, ResourceId=Background}" Color="#FF959595" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapMenuItemResourceKeys}, ResourceId=BorderBrush}" Color="Indigo" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapMenuItemResourceKeys}, ResourceId=Foreground}" Color="Black" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapMenuItemResourceKeys}, ResourceId=SubMenuForeground}" Color="White" />
+    
+    <!--checked-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapMenuItemResourceKeys}, ResourceId=CheckedBackground}" Color="Magenta" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapMenuItemResourceKeys}, ResourceId=CheckedBorderBrush}" Color="DarkMagenta" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapMenuItemResourceKeys}, ResourceId=CheckedForeground}" Color="White" />
+
+    <!--focused-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapMenuItemResourceKeys}, ResourceId=FocusedBackground}" Color="DarkViolet" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapMenuItemResourceKeys}, ResourceId=FocusedBorderBrush}" Color="Indigo" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapMenuItemResourceKeys}, ResourceId=FocusedForeground}" Color="White" />
+
+    <!--pressed-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapMenuItemResourceKeys}, ResourceId=PressedBackground}" Color="Indigo" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapMenuItemResourceKeys}, ResourceId=PressedBorderBrush}" Color="DarkViolet" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapMenuItemResourceKeys}, ResourceId=PressedForeground}" Color="White" Opacity="0.75" />
+
+    <!--disabled-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapMenuItemResourceKeys}, ResourceId=DisabledBackground}" Color="Gray" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapMenuItemResourceKeys}, ResourceId=DisabledBorderBrush}" Color="DimGray" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapMenuItemResourceKeys}, ResourceId=DisabledForeground}" Color="LightGray" />
+
+</ResourceDictionary>

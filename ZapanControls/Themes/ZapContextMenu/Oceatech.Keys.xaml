@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:r="clr-namespace:ZapanControls.Controls.ResourceKeys"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- ================= -->
+    <!-- = Oceatech Keys = -->
+    <!-- ================= -->
+
+    <!--control-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapContextMenuResourceKeys}, ResourceId=Background}" Color="#FF959595" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapContextMenuResourceKeys}, ResourceId=BorderBrush}" Color="Indigo" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapContextMenuResourceKeys}, ResourceId=Foreground}" Color="White" />
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapContextMenuResourceKeys}, ResourceId=BorderThickness}">1</Thickness>
+
+</ResourceDictionary>

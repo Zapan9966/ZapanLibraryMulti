@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
@@ -7,8 +8,10 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Markup;
+using System.Windows.Media;
 using ZapanControls.Controls.Primitives;
 using ZapanControls.Controls.Themes;
+using ZapanControls.Converters;
 using ZapanControls.Helpers;
 using ZapanControls.Libraries;
 
@@ -17,7 +20,7 @@ namespace ZapanControls.Controls
     [TemplatePart(Name = "PART_DropDown", Type = typeof(ZapButtonBase))]
     [ContentProperty("Items")]
     [DefaultProperty("Items")]
-    public class ZapSplitButton : ZapButtonBase
+    public sealed class ZapSplitButton : ZapButtonBase
     {
         #region Theme Declarations
 
@@ -259,13 +262,15 @@ namespace ZapanControls.Controls
             {
                 if (ContextMenu.ActualWidth < ActualWidth)
                 {
-                    ContextMenu.Width = ActualWidth + BorderThickness.Left * 4;
+                    ContextMenu.Width = ActualWidth + BorderThickness.Left * 4 + 1;
                 }
             }
             else
             {
                 ContextMenu.Width = double.NaN;
             }
+
+            SetBindingsOnItems(Items, 1);
 
             if (ButtonTemplate == "Glass")
             {
@@ -499,6 +504,114 @@ namespace ZapanControls.Controls
         #endregion
 
         #region Control Methods
+        private void SetBindingsOnItems(ItemCollection itemCollection, int level)
+        {
+            var relativeSource = level == 1 ?
+                new RelativeSource(RelativeSourceMode.FindAncestor, typeof(ZapContextMenu), 1)
+                : new RelativeSource(RelativeSourceMode.FindAncestor, typeof(ZapMenuItem), 1);
+
+            foreach (var item in itemCollection)
+            {
+                if (item is ZapMenuItem menuItem)
+                {
+                    #region Normal
+                    menuItem.SetBinding(BackgroundProperty, new Binding
+                    {
+                        RelativeSource = relativeSource,
+                        Path = new PropertyPath($"{(level == 1 ? "PlacementTarget." : null)}Background"),
+                        Mode = BindingMode.OneWay
+                    });
+
+                    menuItem.SetBinding(BorderBrushProperty, new Binding
+                    {
+                        RelativeSource = relativeSource,
+                        Path = new PropertyPath($"{(level == 1 ? "PlacementTarget." : null)}BorderBrush"),
+                        Mode = BindingMode.OneWay
+                    });
+
+                    menuItem.SetBinding(ZapMenuItem.SubMenuForegroundProperty, new Binding
+                    {
+                        RelativeSource = relativeSource,
+                        Path = new PropertyPath($"{(level == 1 ? "PlacementTarget." : "SubMenu")}Foreground"),
+                        Mode = BindingMode.OneWay
+                    });
+                    #endregion
+
+                    #region Focused
+                    menuItem.SetBinding(ZapMenuItem.FocusedBackgroundProperty, new Binding
+                    {
+                        RelativeSource = relativeSource,
+                        Path = new PropertyPath($"{(level == 1 ? "PlacementTarget." : null)}FocusedBackground"),
+                        Mode = BindingMode.OneWay
+                    });
+
+                    menuItem.SetBinding(ZapMenuItem.FocusedBorderBrushProperty, new Binding
+                    {
+                        RelativeSource = relativeSource,
+                        Path = new PropertyPath($"{(level == 1 ? "PlacementTarget." : null)}FocusedBackground"),
+                        Mode = BindingMode.OneWay
+                    });
+
+                    menuItem.SetBinding(ZapMenuItem.FocusedForegroundProperty, new Binding
+                    {
+                        RelativeSource = relativeSource,
+                        Path = new PropertyPath($"{(level == 1 ? "PlacementTarget." : null)}FocusedForeground"),
+                        Mode = BindingMode.OneWay
+                    });
+                    #endregion
+
+                    #region Pressed
+                    menuItem.SetBinding(ZapMenuItem.PressedBackgroundProperty, new Binding
+                    {
+                        RelativeSource = relativeSource,
+                        Path = new PropertyPath($"{(level == 1 ? "PlacementTarget." : null)}PressedBackground"),
+                        Mode = BindingMode.OneWay
+                    });
+
+                    menuItem.SetBinding(ZapMenuItem.PressedBorderBrushProperty, new Binding
+                    {
+                        RelativeSource = relativeSource,
+                        Path = new PropertyPath($"{(level == 1 ? "PlacementTarget." : null)}PressedBackground"),
+                        Mode = BindingMode.OneWay
+                    });
+
+                    menuItem.SetBinding(ZapMenuItem.PressedForegroundProperty, new Binding
+                    {
+                        RelativeSource = relativeSource,
+                        Path = new PropertyPath($"{(level == 1 ? "PlacementTarget." : null)}PressedForeground"),
+                        Mode = BindingMode.OneWay
+                    });
+                    #endregion
+
+                    #region Disabled
+                    menuItem.SetBinding(ZapMenuItem.DisabledBackgroundProperty, new Binding
+                    {
+                        RelativeSource = relativeSource,
+                        Path = new PropertyPath($"{(level == 1 ? "PlacementTarget." : null)}DisabledBackground"),
+                        Mode = BindingMode.OneWay
+                    });
+
+                    menuItem.SetBinding(ZapMenuItem.DisabledBorderBrushProperty, new Binding
+                    {
+                        RelativeSource = relativeSource,
+                        Path = new PropertyPath($"{(level == 1 ? "PlacementTarget." : null)}DisabledBackground"),
+                        Mode = BindingMode.OneWay
+                    });
+
+                    menuItem.SetBinding(ZapMenuItem.DisabledForegroundProperty, new Binding
+                    {
+                        RelativeSource = relativeSource,
+                        Path = new PropertyPath($"{(level == 1 ? "PlacementTarget." : null)}DisabledForeground"),
+                        Mode = BindingMode.OneWay
+                    });
+                    #endregion
+
+                    if (menuItem.Items.Count > 0)
+                        SetBindingsOnItems(menuItem.Items, level + 1);
+                }
+            }
+        }
+
         /// <summary>
         /// Make sure the Context menu is not null
         /// </summary>
@@ -506,8 +619,40 @@ namespace ZapanControls.Controls
         {
             if (ContextMenu == null)
             {
-                ContextMenu = new ZapContextMenu { PlacementTarget = this };
-                ContextMenu.Opened += OnContextMenuOpened; 
+                ZapContextMenu contextMenu = new ZapContextMenu { PlacementTarget = this };
+
+                #region Bindings
+                #region ContextMenu
+                var backgroundBinding = new Binding
+                {
+                    RelativeSource = new RelativeSource(RelativeSourceMode.Self),
+                    Path = new PropertyPath("PlacementTarget.Background"),
+                    Converter = new ColorBrithnessConverter(),
+                    ConverterParameter = -15,
+                    Mode = BindingMode.OneWay
+                };
+                contextMenu.SetBinding(BackgroundProperty, backgroundBinding);
+
+                var borderBrushBinding = new Binding
+                {
+                    RelativeSource = new RelativeSource(RelativeSourceMode.Self),
+                    Path = new PropertyPath("PlacementTarget.BorderBrush"),
+                    Mode = BindingMode.OneWay
+                };
+                contextMenu.SetBinding(BorderBrushProperty, borderBrushBinding);
+
+                var foregroundBinding = new Binding
+                {
+                    RelativeSource = new RelativeSource(RelativeSourceMode.Self),
+                    Path = new PropertyPath("PlacementTarget.Foreground"),
+                    Mode = BindingMode.OneWay
+                };
+                contextMenu.SetBinding(ForegroundProperty, foregroundBinding);
+                #endregion
+                #endregion
+
+                ContextMenu = contextMenu;
+                ContextMenu.Opened += OnContextMenuOpened;
                 ContextMenu.Closed += OnContextMenuClosed;
             }
         }

@@ -56,7 +56,7 @@
     </ControlTemplate>
 
     <!-- TopLevelHeader -->
-    <ControlTemplate x:Key="TopLevelHeaderTemplateKey" TargetType="{x:Type l:ZapMenuItem}">
+    <!--<ControlTemplate x:Key="TopLevelHeaderTemplateKey" TargetType="{x:Type l:ZapMenuItem}">
         <Border Name="Border" >
             <Grid>
                 <ContentPresenter Margin="6,3,6,3" 
@@ -111,10 +111,10 @@
                 <Setter TargetName="Content" Property="Opacity" Value="0.4" />
             </Trigger>
         </ControlTemplate.Triggers>
-    </ControlTemplate>
+    </ControlTemplate>-->
 
     <!-- SubmenuItem -->
-    <ControlTemplate x:Key="SubmenuItemTemplateKey" TargetType="{x:Type l:ZapMenuItem}">
+    <!--<ControlTemplate x:Key="SubmenuItemTemplateKey" TargetType="{x:Type l:ZapMenuItem}">
         <Border Name="Border" >
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -199,10 +199,10 @@
                 <Setter TargetName="Icon" Property="Opacity" Value="0.4" />
             </Trigger>
         </ControlTemplate.Triggers>
-    </ControlTemplate>
+    </ControlTemplate>-->
 
     <!-- SubmenuHeader -->
-    <ControlTemplate x:Key="SubmenuHeaderTemplateKey" TargetType="{x:Type l:ZapMenuItem}">
+    <!--<ControlTemplate x:Key="SubmenuHeaderTemplateKey" TargetType="{x:Type l:ZapMenuItem}">
         <Border Name="Border" >
             <Grid SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                   UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
@@ -263,10 +263,10 @@
             <Trigger Property="Icon" Value="{x:Null}">
                 <Setter TargetName="Icon" Property="Visibility" Value="Hidden"/>
             </Trigger>
-            <Trigger Property="IsRoundPopup" Value="True">
+            --><!--<Trigger Property="IsRoundPopup" Value="True">
                 <Setter TargetName="SubmenuBorder" Property="CornerRadius" Value="4"/>
                 <Setter TargetName="SubmenuBorder" Property="Padding" Value="0,3,0,3"/>
-            </Trigger>
+            </Trigger>--><!--
             <Trigger Property="IsHighlighted" Value="True">
                 <Setter Property="Foreground" Value="{Binding MouseOverForeground, RelativeSource={RelativeSource Self}}"/>
                 <Setter TargetName="Border" Property="Background" Value="{Binding MouseOverBackground, RelativeSource={RelativeSource TemplatedParent}}"/>
@@ -288,7 +288,7 @@
                 <Setter TargetName="Icon" Property="Opacity" Value="0.4" />
             </Trigger>
         </ControlTemplate.Triggers>
-    </ControlTemplate>
+    </ControlTemplate>-->
     
     <!-- MenuItem Style -->
     <Style TargetType="{x:Type l:ZapMenuItem}">
