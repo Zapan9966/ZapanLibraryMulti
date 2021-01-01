@@ -52,6 +52,7 @@ using ZapanControls.Helpers;
 using ZapanControls.Controls.Themes;
 using System.Collections.Generic;
 using ZapanControls.Controls.Primitives;
+using ZapanControls.Controls.ControlEventArgs;
 #endregion
 
 namespace ZapanControls.Controls.DatePicker
@@ -173,26 +174,23 @@ namespace ZapanControls.Controls.DatePicker
         #endregion
 
         #region ThemableControl implementation
-        internal override void OnThemeChangedSuccess(object sender, RoutedEventArgs e)
+        public override void OnThemeChanged(object sender, ThemeChangedEventArgs e)
         {
             // Control
-            SetCurrentValue(BackgroundProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.BackgroundKey));
-            SetCurrentValue(BorderBrushProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.BorderBrushKey));
-
+            this.SetValueCommon(BackgroundProperty, ResourceKeys.ZapDatePickerResourceKeys.BackgroundKey);
+            this.SetValueCommon(BorderBrushProperty, ResourceKeys.ZapDatePickerResourceKeys.BorderBrushKey);
             // Button background
-            SetCurrentValue(ButtonBackgroundProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.ButtonBackgroundKey));
-            SetCurrentValue(ButtonBackgroundHoverProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.ButtonBackgroundHoverKey));
-            SetCurrentValue(ButtonBackgroundPressedProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.ButtonBackgroundPressedKey));
-
+            this.SetValueCommon(ButtonBackgroundProperty, ResourceKeys.ZapDatePickerResourceKeys.ButtonBackgroundKey);
+            this.SetValueCommon(ButtonBackgroundHoverProperty, ResourceKeys.ZapDatePickerResourceKeys.ButtonBackgroundHoverKey);
+            this.SetValueCommon(ButtonBackgroundPressedProperty, ResourceKeys.ZapDatePickerResourceKeys.ButtonBackgroundPressedKey);
             // Button borderbrush
-            SetCurrentValue(ButtonBorderProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.ButtonBorderKey));
-            SetCurrentValue(ButtonBorderHoverProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.ButtonBorderHoverKey));
-            SetCurrentValue(ButtonBorderPressedProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.ButtonBorderPressedKey));
-
+            this.SetValueCommon(ButtonBorderProperty, ResourceKeys.ZapDatePickerResourceKeys.ButtonBorderKey);
+            this.SetValueCommon(ButtonBorderHoverProperty, ResourceKeys.ZapDatePickerResourceKeys.ButtonBorderHoverKey);
+            this.SetValueCommon(ButtonBorderPressedProperty, ResourceKeys.ZapDatePickerResourceKeys.ButtonBorderPressedKey);
             // Icon
-            SetCurrentValue(IconNormalProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.IconNormalKey));
-            SetCurrentValue(IconHoverProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.IconHoverKey));
-            SetCurrentValue(IconPressedProperty, TryFindResource(ResourceKeys.ZapDatePickerResourceKeys.IconPressedKey));
+            this.SetValueCommon(IconNormalProperty, ResourceKeys.ZapDatePickerResourceKeys.IconNormalKey);
+            this.SetValueCommon(IconHoverProperty, ResourceKeys.ZapDatePickerResourceKeys.IconHoverKey);
+            this.SetValueCommon(IconPressedProperty, ResourceKeys.ZapDatePickerResourceKeys.IconPressedKey);
         }
         #endregion
 
@@ -212,7 +210,6 @@ namespace ZapanControls.Controls.DatePicker
         #endregion
 
         #region Properties
-
         #region Calendar Object
         /// <summary>
         /// Gets/Sets Calendar object
@@ -233,8 +230,7 @@ namespace ZapanControls.Controls.DatePicker
         /// </summary>
         public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register(
             "ButtonStyle", typeof(ButtonType), typeof(ZapDatePicker), 
-            new FrameworkPropertyMetadata(
-                ButtonType.Flat,
+            new FrameworkPropertyMetadata(ButtonType.Flat,
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 new PropertyChangedCallback(OnButtonStyleChanged)));
 
@@ -845,7 +841,6 @@ namespace ZapanControls.Controls.DatePicker
             set { SetValue(WeekColumnVisibilityProperty, value); }
         }
         #endregion
-
         #endregion
 
         #region SelectedDateChangedEvent

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+using ZapanControls.Controls.ControlEventArgs;
 using ZapanControls.Controls.Primitives;
-using ZapanControls.Controls.Themes;
+using ZapanControls.Controls.Templates;
 
 namespace ZapanControls.Controls
 {
-    public class ZapButton : ZapButtonBase
+    public sealed class ZapButton : ZapButtonBase
     {
         #region Theme Declarations
 
@@ -24,7 +24,7 @@ namespace ZapanControls.Controls
         {
             if (d is ZapButton zb)
             {
-                if (zb.ButtonTemplate == "Round")
+                if (zb.ZapTemplate == "Round")
                 {
                     double height = (double)e.NewValue;
                     if (double.IsNaN(height) || double.IsInfinity(height))
@@ -45,7 +45,7 @@ namespace ZapanControls.Controls
         {
             if (d is ZapButton zb)
             {
-                if (zb.ButtonTemplate == "Round")
+                if (zb.ZapTemplate == "Round")
                 {
                     double width = (double)e.NewValue;
                     if (double.IsNaN(width) || double.IsInfinity(width))
@@ -85,7 +85,7 @@ namespace ZapanControls.Controls
             {
                 content.SizeChanged += (s, e) =>
                 {
-                    if (ButtonTemplate == "Round")
+                    if (ZapTemplate == "Round")
                     {
                         Width = content.ActualWidth + 4;
                     }
@@ -93,28 +93,9 @@ namespace ZapanControls.Controls
             }
         }
 
-        protected override void OnThemeChangedSuccess(object sender, RoutedEventArgs e)
+        protected override void OnThemeChanged(object sender, ThemeChangedEventArgs e)
         {
-            base.OnThemeChangedSuccess(sender, e);
-        }
-        #endregion
-
-        #region Templating
-        /// <summary>
-        /// Load the default template
-        /// </summary>
-        private void LoadDefaultTemplate(ZapButtonTemplates template, Type ownerType)
-        {
-            string registrationName = GetRegistrationName(template, ownerType);
-            LoadDefaultTemplate(registrationName);
-        }
-
-        /// <summary>
-        /// Get template formal registration name
-        /// </summary>
-        private string GetRegistrationName(ZapButtonTemplates template, Type ownerType)
-        {
-            return GetRegistrationName(template.ToString(), ownerType);
+            base.OnThemeChanged(sender, e);
         }
         #endregion
     }

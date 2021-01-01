@@ -13,8 +13,10 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using ZapanControls.Controls.ControlEventArgs;
 using ZapanControls.Controls.Primitives;
+using ZapanControls.Controls.Templates;
 using ZapanControls.Controls.Themes;
 using ZapanControls.Helpers;
+using ZapanControls.Interfaces;
 using ZapanControls.Libraries;
 
 namespace ZapanControls.Controls
@@ -22,17 +24,9 @@ namespace ZapanControls.Controls
     /// <summary>
     /// Fenêtre personnalisée
     /// </summary>
-    public partial class ZapWindow : Window, ITheme, INotifyPropertyChanged
+    public partial class ZapWindow : Window, ITemplate
     {
-        #region Property Name Constants
-        private const string ThemePropName = "Theme";
-        private const string WindowTemplatePropName = "WindowTemplate";
-        #endregion
-
         #region Fields
-        private readonly Dictionary<string, ResourceDictionary> _rdThemeDictionaries;
-        private readonly Dictionary<string, ResourceDictionary> _rdTemplateDictionaries;
-        private readonly Dictionary<DependencyProperty, object> _defaultThemeProperties;
         private readonly DeferredAction _centerDeferred;
 
         private HwndSource _hwndSource;
@@ -57,10 +51,6 @@ namespace ZapanControls.Controls
         /// Obtient la grille qui grise la fenêtre.
         /// </summary>
         public Grid GridDim { get; private set; }
-        #endregion
-
-        #region HasInitialized
-        public bool HasInitialized { get => _hasInitialized; private set => Set(ref _hasInitialized, value); }
         #endregion
 
         #region IsReady
@@ -140,7 +130,7 @@ namespace ZapanControls.Controls
         /// </summary>
         public Brush TitleBarBackground { get => (Brush)GetValue(TitleBarBackgroundProperty); set => SetValue(TitleBarBackgroundProperty, value); }
 
-        private static void OnTitleBarBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, TitleBarBackgroundProperty, e.NewValue);
+        private static void OnTitleBarBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(TitleBarBackgroundProperty, e.NewValue);
         #endregion
 
         #region TitleBarForeground
@@ -158,7 +148,7 @@ namespace ZapanControls.Controls
         /// </summary>
         public Brush TitleBarForeground { get => (Brush)GetValue(TitleBarForegroundProperty); set => SetValue(TitleBarForegroundProperty, value); }
 
-        private static void OnTitleBarForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, TitleBarForegroundProperty, e.NewValue);
+        private static void OnTitleBarForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(TitleBarForegroundProperty, e.NewValue);
         #endregion
 
         #region TitleBarHeight
@@ -176,8 +166,42 @@ namespace ZapanControls.Controls
         /// </summary>
         public double TitleBarHeight { get => (double)GetValue(TitleBarHeightProperty); set => SetValue(TitleBarHeightProperty, value); }
 
-        private static void OnTitleBarHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, TitleBarHeightProperty, e.NewValue);
+        private static void OnTitleBarHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(TitleBarHeightProperty, e.NewValue);
         #endregion
+        #endregion
+        #endregion
+
+        #region Template Properties
+        #region HasInitialized
+        public bool HasInitialized { get => _hasInitialized; private set => Set(ref _hasInitialized, value); }
+        #endregion
+
+        #region TemplateDictionaries
+        public Dictionary<string, ResourceDictionary> TemplateDictionaries { get; internal set; } = new Dictionary<string, ResourceDictionary>();
+        #endregion
+
+        #region ZapTemplate
+        public static readonly DependencyProperty ZapTemplateProperty = DependencyProperty.Register(
+            "ZapTemplate", typeof(string), typeof(ZapWindow),
+            new FrameworkPropertyMetadata(null,
+                FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure,
+                new PropertyChangedCallback(OnZapTemplateChanged),
+                new CoerceValueCallback(CoerceZapTemplateChange)));
+
+        public string ZapTemplate { get => (string)GetValue(ZapTemplateProperty); set => SetValue(ZapTemplateProperty, value); }
+
+        private static void OnZapTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.TemplateChanged(e, TemplateChangedEvent);
+
+        private static object CoerceZapTemplateChange(DependencyObject d, object o)
+        {
+            return o;
+        }
+        #endregion
+        #endregion
+
+        #region Theme Properties
+        #region DefaultThemeProperties
+        public Dictionary<DependencyProperty, object> DefaultThemeProperties { get; internal set; } = new Dictionary<DependencyProperty, object>();
         #endregion
 
         #region Theme
@@ -193,45 +217,7 @@ namespace ZapanControls.Controls
 
         public string Theme { get => (string)GetValue(ThemeProperty); set => SetValue(ThemeProperty, value); }
 
-        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            // test args
-            if (!(d is ZapWindow w) || e == null)
-                throw new ArgumentNullException("Invalid Theme property");
-
-            // current theme
-            string curThemeName = e.OldValue as string;
-            string curRegisteredThemeName = w.GetRegistrationName(curThemeName, w.GetType());
-
-            if (w._rdThemeDictionaries.ContainsKey(curRegisteredThemeName))
-            {
-                // remove current theme
-                ResourceDictionary curThemeDictionary = w._rdThemeDictionaries[curRegisteredThemeName];
-                w.Resources.MergedDictionaries.Remove(curThemeDictionary);
-            }
-
-            // new theme name
-            string newThemeName = e.NewValue as string;
-            string newRegisteredThemeName = !string.IsNullOrEmpty(newThemeName) ?
-                w.GetRegistrationName(newThemeName, w.GetType())
-                : w._rdThemeDictionaries.FirstOrDefault().Key;
-
-            // add the resource
-            if (!w._rdThemeDictionaries.ContainsKey(newRegisteredThemeName))
-            {
-                throw new ArgumentNullException("Invalid Theme property");
-            }
-            else
-            {
-                // add the dictionary
-                ResourceDictionary newThemeDictionary = w._rdThemeDictionaries[newRegisteredThemeName];
-                w.Resources.MergedDictionaries.Add(newThemeDictionary);
-                // Raise theme successfully changed event
-                w.RaiseEvent(new RoutedEventArgs(ThemeChangedSuccessEvent, w));
-            }
-
-            w.RaisePropertyChanged(new PropertyChangedEventArgs(ThemePropName));
-        }
+        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.ThemeChanged(e, ThemeChangedEvent);
 
         private static object CoerceThemeChange(DependencyObject d, object o)
         {
@@ -239,74 +225,22 @@ namespace ZapanControls.Controls
         }
         #endregion
 
-        #region WindowTemplate
-        public static readonly DependencyProperty WindowTemplateProperty = DependencyProperty.Register(
-            "WindowTemplate", typeof(string), typeof(ZapWindow),
-            new FrameworkPropertyMetadata(null,
-                FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure,
-                new PropertyChangedCallback(OnWindowTemplateChanged),
-                new CoerceValueCallback(CoerceWindowTemplateChange)));
-
-        public string WindowTemplate { get => (string)GetValue(WindowTemplateProperty); set => SetValue(WindowTemplateProperty, value); }
-
-        private static void OnWindowTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            // test args
-            if (!(d is ZapWindow w) || e == null)
-                throw new ArgumentNullException("Invalid Theme property");
-
-            string curTemplateName = e.OldValue as string;
-            string curRegisteredTemplateName = w.GetRegistrationName(curTemplateName, w.GetType());
-
-            if (w._rdTemplateDictionaries.ContainsKey(curRegisteredTemplateName))
-            {
-                // remove current template
-                ResourceDictionary curTemplateDictionary = w._rdTemplateDictionaries[curRegisteredTemplateName];
-                w.Resources.MergedDictionaries.Remove(curTemplateDictionary);
-            }
-
-            // new template name
-            string newTemplateName = e.NewValue as string;
-            string newRegisteredTemplateName = !string.IsNullOrEmpty(newTemplateName) ? 
-                w.GetRegistrationName(newTemplateName, w.GetType())
-                : w._rdTemplateDictionaries.FirstOrDefault().Key;
-
-            // add the resource
-            if (!w._rdTemplateDictionaries.ContainsKey(newRegisteredTemplateName))
-            {
-                throw new ArgumentNullException("Invalid Template property");
-            }
-            else
-            {
-                // add the dictionary
-                ResourceDictionary newTemplateDictionary = w._rdTemplateDictionaries[newRegisteredTemplateName];
-                w.Resources.MergedDictionaries.Add(newTemplateDictionary);
-
-                if (w.HasInitialized)
-                    w.OnApplyTemplate();
-            }
-
-            w.RaisePropertyChanged(new PropertyChangedEventArgs(WindowTemplatePropName));
-        }
-
-        private static object CoerceWindowTemplateChange(DependencyObject d, object o)
-        {
-            return o;
-        }
+        #region ThemeDictionaries
+        public Dictionary<string, ResourceDictionary> ThemeDictionaries { get; internal set; } = new Dictionary<string, ResourceDictionary>();
         #endregion
         #endregion
 
         #region Native Properties Changed
         #region Background
-        private static void OnBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, BackgroundProperty, e.NewValue);
+        private static void OnBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(BackgroundProperty, e.NewValue);
         #endregion
 
         #region BorderBrush
-        private static void OnBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, BorderBrushProperty, e.NewValue);
+        private static void OnBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(BorderBrushProperty, e.NewValue);
         #endregion
 
         #region BorderThickness
-        private static void OnBorderThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, BorderThicknessProperty, e.NewValue);
+        private static void OnBorderThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(BorderThicknessProperty, e.NewValue);
         #endregion
         #endregion
 
@@ -346,7 +280,7 @@ namespace ZapanControls.Controls
         /// Représente la méthode qui gère la validation de fermeture de la fenêtre.
         /// </summary>
         /// <returns>Renvoi <see cref="True"/> si la fenêtre doit être fermée, sinon <see cref="False"/></returns>
-        public delegate void CloseValidationEventHandler(object sender, CloseValidationEnventArgs e);
+        public delegate void CloseValidationEventHandler(object sender, CloseValidationEventArgs e);
 
         public static readonly RoutedEvent CloseValidationEvent = EventManager.RegisterRoutedEvent(
             "CloseValidation", RoutingStrategy.Bubble, typeof(CloseValidationEventHandler), typeof(ZapWindow));
@@ -357,23 +291,30 @@ namespace ZapanControls.Controls
         public event CloseValidationEventHandler CloseValidation { add => AddHandler(CloseValidationEvent, value); remove => RemoveHandler(CloseValidationEvent, value); }
         #endregion
 
-        #region ThemeChangedSuccessEvent
-        public static readonly RoutedEvent ThemeChangedSuccessEvent = EventManager.RegisterRoutedEvent(
-            "ThemeChangedSuccess", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ZapWindow));
+        #region TemplateChanged
+        public static readonly RoutedEvent TemplateChangedEvent = EventManager.RegisterRoutedEvent(
+            "TemplateChanged", RoutingStrategy.Bubble, typeof(ITemplate.TemplateChangedEventHandler), typeof(ZapWindow));
 
-        public event RoutedEventHandler ThemeChangedSuccess { add => AddHandler(ThemeChangedSuccessEvent, value); remove => RemoveHandler(ThemeChangedSuccessEvent, value); }
+        public event ITemplate.TemplateChangedEventHandler TemplateChanged { add => AddHandler(TemplateChangedEvent, value); remove => RemoveHandler(TemplateChangedEvent, value); }
+        #endregion
 
-        protected virtual void OnThemeChangedSuccess(object sender, RoutedEventArgs e)
+        #region ThemeChanged
+        public static readonly RoutedEvent ThemeChangedEvent = EventManager.RegisterRoutedEvent(
+            "ThemeChanged", RoutingStrategy.Bubble, typeof(ITheme.ThemeChangedEventHandler), typeof(ZapWindow));
+
+        public event ITheme.ThemeChangedEventHandler ThemeChanged { add => AddHandler(ThemeChangedEvent, value); remove => RemoveHandler(ThemeChangedEvent, value); }
+
+        protected virtual void OnThemeChanged(object sender, ThemeChangedEventArgs e)
         {
-            _defaultThemeProperties.Clear();
+            DefaultThemeProperties.Clear();
             // Control
-            SetThemePropertyDefault(BackgroundProperty, TryFindResource(ResourceKeys.ZapWindowResourceKeys.BackgroundKey));
-            SetThemePropertyDefault(BorderBrushProperty, TryFindResource(ResourceKeys.ZapWindowResourceKeys.BorderBrushKey));
-            SetThemePropertyDefault(BorderThicknessProperty, TryFindResource(ResourceKeys.ZapWindowResourceKeys.BorderThicknessKey));
+            this.SetThemePropertyDefault(BackgroundProperty, ResourceKeys.ZapWindowResourceKeys.BackgroundKey);
+            this.SetThemePropertyDefault(BorderBrushProperty, ResourceKeys.ZapWindowResourceKeys.BorderBrushKey);
+            this.SetThemePropertyDefault(BorderThicknessProperty, ResourceKeys.ZapWindowResourceKeys.BorderThicknessKey);
             // TitleBar
-            SetThemePropertyDefault(TitleBarBackgroundProperty, TryFindResource(ResourceKeys.ZapWindowResourceKeys.TitleBarBackgroundKey));
-            SetThemePropertyDefault(TitleBarForegroundProperty, TryFindResource(ResourceKeys.ZapWindowResourceKeys.TitleBarForegroundKey));
-            SetThemePropertyDefault(TitleBarHeightProperty, TryFindResource(ResourceKeys.ZapWindowResourceKeys.TitleBarHeightKey));
+            this.SetThemePropertyDefault(TitleBarBackgroundProperty, ResourceKeys.ZapWindowResourceKeys.TitleBarBackgroundKey);
+            this.SetThemePropertyDefault(TitleBarForegroundProperty, ResourceKeys.ZapWindowResourceKeys.TitleBarForegroundKey);
+            this.SetThemePropertyDefault(TitleBarHeightProperty, ResourceKeys.ZapWindowResourceKeys.TitleBarHeightKey);
         }
         #endregion
         #endregion
@@ -407,7 +348,7 @@ namespace ZapanControls.Controls
 
         private void OnBtnCloseClick(object sender, RoutedEventArgs e)
         {
-            var eventArgs = new CloseValidationEnventArgs(CloseValidationEvent, this);
+            var eventArgs = new CloseValidationEventArgs(CloseValidationEvent, this);
             RaiseEvent(eventArgs);
 
             if (!eventArgs.Handled)
@@ -455,23 +396,15 @@ namespace ZapanControls.Controls
         {
             _startupResized = false;
             _centerDeferred = DeferredAction.Create(() => CenterWindowDefered());
-            _defaultThemeProperties = new Dictionary<DependencyProperty, object>();
 
-            _rdTemplateDictionaries = new Dictionary<string, ResourceDictionary>();
-            RegisterAttachedTemplates();
+            // Load Templates
+            this.RegisterAttachedTemplates(typeof(ZapWindow));
+            this.LoadDefaultTemplate(ZapTemplateProperty);
 
-            // Load first template
-            if (_rdTemplateDictionaries.Any())
-                SetCurrentValue(WindowTemplateProperty, GetThemeName(_rdTemplateDictionaries.FirstOrDefault().Key));
-
-            _rdThemeDictionaries = new Dictionary<string, ResourceDictionary>();
-            RegisterAttachedThemes();
-
-            ThemeChangedSuccess += OnThemeChangedSuccess;
-
-            // Load first theme
-            if (_rdThemeDictionaries.Any())
-                SetCurrentValue(ThemeProperty, GetThemeName(_rdThemeDictionaries.FirstOrDefault().Key));
+            // Load Themes
+            ThemeChanged += OnThemeChanged;
+            this.RegisterAttachedThemes(typeof(ZapWindow));
+            this.LoadDefaultTheme(ThemeProperty);
         }
         #endregion
 
@@ -599,200 +532,6 @@ namespace ZapanControls.Controls
                 btnClose.Click -= OnBtnCloseClick;
                 btnClose.Click += OnBtnCloseClick;
             }
-
-            foreach (var property in _defaultThemeProperties)
-            {
-                // Update bindings with theme default values
-                if (BindingOperations.GetBinding(this, property.Key) is BindingBase binding)
-                {
-                    var newBinding = binding.Clone();
-
-                    if (binding.FallbackValue == null || binding.FallbackValue == DependencyProperty.UnsetValue)
-                        newBinding.FallbackValue = property.Value;
-
-                    if (binding.TargetNullValue == null || binding.TargetNullValue == DependencyProperty.UnsetValue)
-                        newBinding.TargetNullValue = property.Value;
-
-                    SetBinding(property.Key, newBinding);
-                }
-            }
-        }
-        #endregion
-
-        #region Theming
-        /// <summary>
-        /// Register a theme with internal dictionary
-        /// </summary>
-        public void RegisterTheme(ThemePath theme, Type ownerType)
-        {
-            // test args
-            if (theme.Name == null || theme.DictionaryPath == null)
-                throw new ArgumentNullException("Theme name/path is null");
-
-            if (ownerType == null)
-                throw new ArgumentNullException("Invalid ownerType");
-
-            string registrationName = GetRegistrationName(theme, ownerType);
-
-            try
-            {
-                if (!_rdThemeDictionaries.ContainsKey(registrationName))
-                {
-                    // create the Uri
-                    Uri themeUri = new Uri(theme.DictionaryPath, UriKind.Relative);
-                    // register the new theme
-                    _rdThemeDictionaries[registrationName] = Application.LoadComponent(themeUri) as ResourceDictionary;
-                }
-            }
-            catch (Exception)
-            { }
-        }
-
-        /// <summary>
-        /// Instance theme dictionary and add themes
-        /// </summary>
-        private void RegisterAttachedThemes()
-        {
-            // Attach control attached themes
-            var themeFields = typeof(ZapWindow).GetFields(BindingFlags.Public | BindingFlags.Static)
-                .Where(f => f.FieldType == typeof(ThemePath));
-
-            foreach (var field in themeFields)
-            {
-                RegisterTheme((ThemePath)field.GetValue(this), GetType());
-            }
-        }
-
-        /// <summary>
-        /// Load the default theme
-        /// </summary>
-        internal void LoadDefaultTheme(ZapWindowThemes theme, Type ownerType)
-        {
-            string registrationName = GetRegistrationName(theme, ownerType);
-            Resources.MergedDictionaries.Add(_rdThemeDictionaries[registrationName]);
-        }
-
-        /// <summary>
-        /// Get themes formal registration name
-        /// </summary>
-        private string GetRegistrationName(ZapWindowThemes theme, Type ownerType)
-        {
-            return GetRegistrationName(theme.ToString(), ownerType);
-        }
-
-        /// <summary>
-        /// Get themes formal registration name
-        /// </summary>
-        private string GetRegistrationName(ThemePath theme, Type ownerType)
-        {
-            return GetRegistrationName(theme.Name, ownerType);
-        }
-
-        /// <summary>
-        /// Get themes formal registration name
-        /// </summary>
-        public string GetRegistrationName(string themeName, Type ownerType)
-        {
-            return $"{ownerType};{themeName}";
-        }
-
-        /// <summary>
-        /// Get themes name from formal registration name
-        /// </summary>
-        public string GetThemeName(string key)
-        {
-            return key?.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries)[1];
-        }
-
-        /// <summary>
-        /// Set themes default propertie value
-        /// </summary>
-        internal virtual void SetThemePropertyDefault(DependencyProperty p, object value)
-        {
-            _defaultThemeProperties.Add(p, value);
-            SetCurrentValue(p, value);
-        }
-
-        /// <summary>
-        /// Set dependency property default theme value if value is null
-        /// </summary>
-        private static void SetValueCommon(DependencyObject o, DependencyProperty p, object value)
-        {
-            if (o is ZapWindow w)
-            {
-                if (!(BindingOperations.GetBinding(w, p) is Binding))
-                {
-                    if (value is Thickness t)
-                    {
-                        if (t == new Thickness(0))
-                            value = null;
-                    }
-                    else if (value is double d)
-                    {
-                        if (d == 0d)
-                            value = null;
-                    }
-
-                    if (value == null)
-                    {
-                        if (w._defaultThemeProperties.ContainsKey(p))
-                            value = w._defaultThemeProperties[p];
-
-                        w.SetCurrentValue(p, value);
-                    }
-                }
-            }
-        }
-        #endregion
-
-        #region Templating
-        public void RegisterTemplate(TemplatePath template, Type ownerType)
-        {
-            // test args
-            if (template.Name == null || template.DictionaryPath == null)
-                throw new ArgumentNullException("Template name/path is null");
-
-            if (ownerType == null)
-                throw new ArgumentNullException("Invalid ownerType");
-
-            string registrationName = GetRegistrationName(template.Name, ownerType);
-
-            try
-            {
-                if (!_rdTemplateDictionaries.ContainsKey(registrationName))
-                {
-                    // create the Uri
-                    Uri templateUri = new Uri(template.DictionaryPath, UriKind.Relative);
-                    // register the new template
-                    _rdTemplateDictionaries[registrationName] = Application.LoadComponent(templateUri) as ResourceDictionary;
-                }
-            }
-            catch (Exception)
-            { }
-        }
-
-        private void RegisterAttachedTemplates()
-        {
-            var templateFields = typeof(ZapWindow).GetFields(BindingFlags.Public | BindingFlags.Static)
-                .Where(f => f.FieldType == typeof(TemplatePath));
-
-            foreach (var field in templateFields)
-            {
-                RegisterTemplate((TemplatePath)field.GetValue(this), GetType());
-            }
-        }
-
-        /// <summary>
-        /// Load the default template
-        /// </summary>
-        internal void LoadDefaultTemplate(string registrationName)
-        {
-            Resources.MergedDictionaries.Add(_rdTemplateDictionaries[registrationName]);
-        }
-
-        private string GetTemplateName(string key)
-        {
-            return key?.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries)[1];
         }
         #endregion
 

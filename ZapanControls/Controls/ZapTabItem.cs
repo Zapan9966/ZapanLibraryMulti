@@ -15,7 +15,7 @@ namespace ZapanControls.Controls
         /// <summary>
         /// Identifie la propriété de dépendance <see cref="IsClosable"/>.
         /// </summary>
-        private static readonly DependencyProperty IsClosableProperty = DependencyProperty.Register(
+        public static readonly DependencyProperty IsClosableProperty = DependencyProperty.Register(
             "IsClosable", typeof(bool), typeof(ZapTabItem),
             new FrameworkPropertyMetadata(true,
                 FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
@@ -32,7 +32,7 @@ namespace ZapanControls.Controls
         {
             if (Parent is ZapTabControl tc)
             {
-                var eventArgs = new CloseValidationEnventArgs(ZapTabControl.CloseValidationEvent, this);
+                var eventArgs = new CloseValidationEventArgs(ZapTabControl.CloseValidationEvent, this);
                 RaiseEvent(eventArgs);
 
                 if (!eventArgs.Handled)

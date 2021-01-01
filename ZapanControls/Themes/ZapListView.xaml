@@ -25,7 +25,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <l:ZapButtonFlat x:Name="btnRemoveFilters" 
+                        <l:ZapButton x:Name="btnRemoveFilters" 
                                          Grid.Column="0" 
                                          Grid.Row="0"
                                          FontFamily="Webdings" 
@@ -39,8 +39,8 @@
                                          Background="{Binding HeaderBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
                                          BorderBrush="{Binding HeaderBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
                                          Foreground="{Binding HeaderForeground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
-                                         MouseOverBackground="{Binding HeaderBackgroundMouseOver, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
-                                         IsPressedBackground="{Binding HeaderBackgroundIsPressed, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                         FocusedBackground="{Binding HeaderBackgroundMouseOver, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
+                                         PressedBackground="{Binding HeaderBackgroundIsPressed, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
                                          Command="{Binding RemoveFiltersCommand, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
                                          Focusable="False" />
 

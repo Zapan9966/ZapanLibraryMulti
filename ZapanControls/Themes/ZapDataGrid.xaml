@@ -77,16 +77,15 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridRowHeader}">
-                    <l:ZapToggleButtonFlat x:Name="RowHeaderToggleButton"  
+                    <l:ZapToggleButton x:Name="RowHeaderToggleButton"  
                                            Width="{Binding ButtonColumnsActualWidth, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
                                            Command="{Binding ToggleButtonCommand, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
                                            CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                                            Background="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" 
                                            BorderBrush="{Binding BorderBrush, TargetNullValue=Indigo, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" 
                                            BorderThickness="0,1,1,1"
-                                           IsCheckedBackground="{Binding RowSelectionActiveBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
-                                           IsCheckedBorderBrush="{Binding BorderBrush, TargetNullValue=Indigo, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
-                                           IsCheckedBorderThickness="0,1,1,1"
+                                           CheckedBackground="{Binding RowSelectionActiveBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                           CheckedBorderBrush="{Binding BorderBrush, TargetNullValue=Indigo, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
                                            IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"
                                            Margin="0,-1,0,0"/>                        
                 </ControlTemplate>
@@ -308,11 +307,11 @@
                                             <Grid.Effect>
                                                 <DropShadowEffect ShadowDepth="1" Direction="270" />
                                             </Grid.Effect>
-                                            <l:ZapButtonFlat x:Name="SelectAllButton"
+                                            <l:ZapButton x:Name="SelectAllButton"
                                                              Background="{Binding ColumnHeaderBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
                                                              BorderBrush="{Binding ColumnHeaderBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
-                                                             MouseOverBackground="{Binding ColumnHeaderBackgroundMouseOver, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
-                                                             IsPressedBackground="{Binding ColumnHeaderBackgroundIsPressed, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                             FocusedBackground="{Binding ColumnHeaderBackgroundMouseOver, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                             PressedBackground="{Binding ColumnHeaderBackgroundIsPressed, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
                                                              BorderThickness="0,0,1,1"
                                                              ToolTip="Sélectionner toutes les lignes"                                                             
                                                              Command="{x:Static DataGrid.SelectAllCommand}"
@@ -323,12 +322,12 @@
                                                                                   ConverterParameter={x:Static DataGridHeadersVisibility.All},
 										                                          Converter={x:Static DataGrid.HeadersVisibilityConverter},
 										                                          RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"/>
-                                            <l:ZapButtonFlat x:Name="RemoveFiltersButton"
+                                            <l:ZapButton x:Name="RemoveFiltersButton"
                                                              Background="{Binding ColumnHeaderBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
                                                              BorderBrush="{Binding ColumnHeaderBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
                                                              Foreground="{Binding ColumnHeaderForeground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
-                                                             MouseOverBackground="{Binding ColumnHeaderBackgroundMouseOver, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
-                                                             IsPressedBackground="{Binding ColumnHeaderBackgroundIsPressed, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                             FocusedBackground="{Binding ColumnHeaderBackgroundMouseOver, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
+                                                             PressedBackground="{Binding ColumnHeaderBackgroundIsPressed, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
                                                              FontFamily="Webdings" 
                                                              FontSize="13.333" 
                                                              Content="r"

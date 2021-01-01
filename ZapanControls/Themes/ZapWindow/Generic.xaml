@@ -46,7 +46,7 @@
                                        Text="{TemplateBinding Title}" Foreground="{TemplateBinding TitleBarForeground}" />
 
                             <ContentPresenter Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Panel.ZIndex="100"
-                                              Content="{DynamicResource {x:Static r:ZapWindowResourceKeys.WindowTemplateKey}}"
+                                              Content="{DynamicResource {x:Static r:ZapWindowResourceKeys.ZapTemplateKey}}"
                                               Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}}"
                                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
@@ -71,7 +71,7 @@
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="WindowTemplate" Value="Glass" />
+                                <Condition Property="ZapTemplate" Value="Glass" />
                                 <Condition Property="WindowState" Value="Normal" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="windowBorder" Property="CornerRadius" Value="4,4,0,0" />

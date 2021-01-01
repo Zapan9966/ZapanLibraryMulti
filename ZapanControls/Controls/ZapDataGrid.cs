@@ -30,7 +30,7 @@ namespace ZapanControls.Controls
         private double _buttonColumnsActualWidth;
         private bool _isFiltering;
         private BackgroundWorker _worker;
-        private ZapButtonFlat _btnRemoveFilters;
+        private ZapButton _btnRemoveFilters;
         private IEnumerable<dynamic> _fullItems;
 
         private Grid _loadingGrid;
@@ -542,7 +542,7 @@ namespace ZapanControls.Controls
         /// </summary>
         public ICommand ToggleButtonCommand { get; }
 
-        private static void ToggleButtonClick(ZapToggleButtonFlat toggleButton)
+        private static void ToggleButtonClick(ZapToggleButton toggleButton)
         {
 
         }
@@ -722,7 +722,7 @@ namespace ZapanControls.Controls
 
         public ZapDataGrid()
         {
-            ToggleButtonCommand = new RelayCommand<ZapToggleButtonFlat>(
+            ToggleButtonCommand = new RelayCommand<ZapToggleButton>(
                 param => ToggleButtonClick(param),
                 param => true);
 
@@ -1193,7 +1193,7 @@ namespace ZapanControls.Controls
             _loadingProgress = (ProgressBar)VisualTreeHelpers.FindChild(this, "loadingProgress");
             _loadingIndicator = (ZapLoadingIndicator)VisualTreeHelpers.FindChild(this, "loadingIndicator");
 
-            _btnRemoveFilters = (ZapButtonFlat)VisualTreeHelpers.FindChild(this, "RemoveFiltersButton");
+            _btnRemoveFilters = (ZapButton)VisualTreeHelpers.FindChild(this, "RemoveFiltersButton");
 
             base.OnApplyTemplate();
         }

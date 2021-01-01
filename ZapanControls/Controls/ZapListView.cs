@@ -32,7 +32,7 @@ namespace ZapanControls.Controls
         private bool _disposed;
         private bool _isFiltering;
         private BackgroundWorker _worker;
-        private ZapButtonFlat _btnRemoveFilters;
+        private ZapButton _btnRemoveFilters;
         private Grid _loadingGrid;
         private ProgressBar _loadingProgress;
         private ZapLoadingIndicator _loadingIndicator;
@@ -1508,7 +1508,7 @@ namespace ZapanControls.Controls
             _loadingProgress = (ProgressBar)VisualTreeHelpers.FindChild(this, "loadingProgress");
             _loadingIndicator = (ZapLoadingIndicator)VisualTreeHelpers.FindChild(this, "loadingIndicator");
 
-            _btnRemoveFilters = (ZapButtonFlat)VisualTreeHelpers.FindChild(this, "btnRemoveFilters");
+            _btnRemoveFilters = (ZapButton)VisualTreeHelpers.FindChild(this, "btnRemoveFilters");
 
             base.OnApplyTemplate();
         }

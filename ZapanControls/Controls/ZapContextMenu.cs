@@ -1,30 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
+using ZapanControls.Controls.ControlEventArgs;
 using ZapanControls.Controls.Primitives;
 using ZapanControls.Controls.Themes;
+using ZapanControls.Interfaces;
 using ZapanControls.Libraries;
 
 namespace ZapanControls.Controls
 {
-    public sealed class ZapContextMenu : ContextMenu, ITheme, INotifyPropertyChanged
+    public sealed class ZapContextMenu : ContextMenu, ITheme
     {
-        #region Property Name Constants
-        private const string ThemePropName = "Theme";
-        #endregion
-
         #region Fields
-        private readonly Dictionary<string, ResourceDictionary> _rdThemeDictionaries;
-        private readonly Dictionary<DependencyProperty, object> _defaultThemeProperties;
-        private bool _hasInitialized;
+
         #endregion
 
         #region Theme Declarations
@@ -45,9 +37,11 @@ namespace ZapanControls.Controls
         /// </summary>
         public CornerRadius CornerRadius { get => (CornerRadius)GetValue(CornerRadiusProperty); set => SetValue(CornerRadiusProperty, value); }
         #endregion
+        #endregion
 
-        #region HasInitialized
-        public bool HasInitialized { get => _hasInitialized; private set => Set(ref _hasInitialized, value); }
+        #region Theme Properties
+        #region DefaultThemeProperties
+        public Dictionary<DependencyProperty, object> DefaultThemeProperties { get; internal set; } = new Dictionary<DependencyProperty, object>();
         #endregion
 
         #region Theme
@@ -63,86 +57,52 @@ namespace ZapanControls.Controls
 
         public string Theme { get => (string)GetValue(ThemeProperty); set => SetValue(ThemeProperty, value); }
 
-        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            // test args
-            if (!(d is ZapContextMenu cm) || e == null)
-                throw new ArgumentNullException("Invalid Theme property");
-
-            // current theme
-            string curThemeName = e.OldValue as string;
-            string curRegisteredThemeName = cm.GetRegistrationName(curThemeName, cm.GetType());
-
-            if (cm._rdThemeDictionaries.ContainsKey(curRegisteredThemeName))
-            {
-                // remove current theme
-                ResourceDictionary curThemeDictionary = cm._rdThemeDictionaries[curRegisteredThemeName];
-                cm.Resources.MergedDictionaries.Remove(curThemeDictionary);
-            }
-
-            // new theme name
-            string newThemeName = e.NewValue as string;
-            string newRegisteredThemeName = !string.IsNullOrEmpty(newThemeName) ?
-                cm.GetRegistrationName(newThemeName, cm.GetType())
-                : cm._rdThemeDictionaries.FirstOrDefault().Key;
-
-            // add the resource
-            if (!cm._rdThemeDictionaries.ContainsKey(newRegisteredThemeName))
-            {
-                throw new ArgumentNullException("Invalid Theme property");
-            }
-            else
-            {
-                // add the dictionary
-                ResourceDictionary newThemeDictionary = cm._rdThemeDictionaries[newRegisteredThemeName];
-                cm.Resources.MergedDictionaries.Add(newThemeDictionary);
-                // Raise theme successfully changed event
-                cm.RaiseEvent(new RoutedEventArgs(ThemeChangedSuccessEvent, cm));
-            }
-
-            cm.RaisePropertyChanged(new PropertyChangedEventArgs(ThemePropName));
-        }
+        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.ThemeChanged(e, ThemeChangedEvent);
 
         private static object CoerceThemeChange(DependencyObject d, object o)
         {
             return o;
         }
         #endregion
+
+        #region ThemeDictionaries
+        public Dictionary<string, ResourceDictionary> ThemeDictionaries { get; internal set; } = new Dictionary<string, ResourceDictionary>();
+        #endregion
         #endregion
 
         #region Native Properties Changed
         #region Background
-        private static void OnBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, BackgroundProperty, e.NewValue);
+        private static void OnBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(BackgroundProperty, e.NewValue);
         #endregion
 
         #region BorderBrush
-        private static void OnBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, BorderBrushProperty, e.NewValue);
+        private static void OnBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(BorderBrushProperty, e.NewValue);
         #endregion
 
         #region BorderThickness
-        private static void OnBorderThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, BorderThicknessProperty, e.NewValue);
+        private static void OnBorderThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(BorderThicknessProperty, e.NewValue);
         #endregion
 
         #region Foreground
-        private static void OnForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, ForegroundProperty, e.NewValue);
+        private static void OnForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ForegroundProperty, e.NewValue);
         #endregion
         #endregion
 
         #region Events
         #region ThemeChangedSuccessEvent
-        public static readonly RoutedEvent ThemeChangedSuccessEvent = EventManager.RegisterRoutedEvent(
-            "ThemeChangedSuccess", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ZapContextMenu));
+        public static readonly RoutedEvent ThemeChangedEvent = EventManager.RegisterRoutedEvent(
+            "ThemeChanged", RoutingStrategy.Bubble, typeof(ITheme.ThemeChangedEventHandler), typeof(ZapContextMenu));
 
-        public event RoutedEventHandler ThemeChangedSuccess { add => AddHandler(ThemeChangedSuccessEvent, value); remove => RemoveHandler(ThemeChangedSuccessEvent, value); }
+        public event ITheme.ThemeChangedEventHandler ThemeChanged { add => AddHandler(ThemeChangedEvent, value); remove => RemoveHandler(ThemeChangedEvent, value); }
 
-        private void OnThemeChangedSuccess(object sender, RoutedEventArgs e)
+        private void OnThemeChanged(object sender, ThemeChangedEventArgs e)
         {
-            _defaultThemeProperties.Clear();
+            DefaultThemeProperties.Clear();
             // Control
-            SetThemePropertyDefault(BackgroundProperty, TryFindResource(ResourceKeys.ZapContextMenuResourceKeys.BackgroundKey));
-            SetThemePropertyDefault(BorderBrushProperty, TryFindResource(ResourceKeys.ZapContextMenuResourceKeys.BorderBrushKey));
-            SetThemePropertyDefault(BorderThicknessProperty, TryFindResource(ResourceKeys.ZapContextMenuResourceKeys.BorderThicknessKey));
-            SetThemePropertyDefault(ForegroundProperty, TryFindResource(ResourceKeys.ZapContextMenuResourceKeys.ForegroundKey));
+            this.SetThemePropertyDefault(BackgroundProperty, ResourceKeys.ZapContextMenuResourceKeys.BackgroundKey);
+            this.SetThemePropertyDefault(BorderBrushProperty, ResourceKeys.ZapContextMenuResourceKeys.BorderBrushKey);
+            this.SetThemePropertyDefault(BorderThicknessProperty, ResourceKeys.ZapContextMenuResourceKeys.BorderThicknessKey);
+            this.SetThemePropertyDefault(ForegroundProperty, ResourceKeys.ZapContextMenuResourceKeys.ForegroundKey);
         }
         #endregion
         #endregion
@@ -162,16 +122,10 @@ namespace ZapanControls.Controls
 
         public ZapContextMenu()
         {
-            _defaultThemeProperties = new Dictionary<DependencyProperty, object>();
-
-            _rdThemeDictionaries = new Dictionary<string, ResourceDictionary>();
-            RegisterAttachedThemes();
-
-            ThemeChangedSuccess += OnThemeChangedSuccess;
-
-            // Load first theme
-            if (_rdThemeDictionaries.Any())
-                SetCurrentValue(ThemeProperty, GetThemeName(_rdThemeDictionaries.FirstOrDefault().Key));
+            // Load Themes
+            ThemeChanged += OnThemeChanged;
+            this.RegisterAttachedThemes(typeof(ZapContextMenu));
+            this.LoadDefaultTheme(ThemeProperty);
         }
         #endregion
 
@@ -179,150 +133,6 @@ namespace ZapanControls.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            HasInitialized = true;
-
-            foreach (var property in _defaultThemeProperties)
-            {
-                // Update bindings with theme default values
-                if (BindingOperations.GetBinding(this, property.Key) is BindingBase binding)
-                {
-                    var newBinding = binding.Clone();
-
-                    if (binding.FallbackValue == null || binding.FallbackValue == DependencyProperty.UnsetValue)
-                        newBinding.FallbackValue = property.Value;
-
-                    if (binding.TargetNullValue == null || binding.TargetNullValue == DependencyProperty.UnsetValue)
-                        newBinding.TargetNullValue = property.Value;
-
-                    SetBinding(property.Key, newBinding);
-                }
-            }
-        }
-        #endregion
-
-        #region Theming
-        /// <summary>
-        /// Register a theme with internal dictionary
-        /// </summary>
-        public void RegisterTheme(ThemePath theme, Type ownerType)
-        {
-            // test args
-            if (theme.Name == null || theme.DictionaryPath == null)
-                throw new ArgumentNullException("Theme name/path is null");
-
-            if (ownerType == null)
-                throw new ArgumentNullException("Invalid ownerType");
-
-            string registrationName = GetRegistrationName(theme, ownerType);
-
-            try
-            {
-                if (!_rdThemeDictionaries.ContainsKey(registrationName))
-                {
-                    // create the Uri
-                    Uri themeUri = new Uri(theme.DictionaryPath, UriKind.Relative);
-                    // register the new theme
-                    _rdThemeDictionaries[registrationName] = Application.LoadComponent(themeUri) as ResourceDictionary;
-                }
-            }
-            catch (Exception)
-            { }
-        }
-
-        /// <summary>
-        /// Instance theme dictionary and add themes
-        /// </summary>
-        private void RegisterAttachedThemes()
-        {
-            // Attach control attached themes
-            var themeFields = GetType().GetFields(BindingFlags.Public | BindingFlags.Static)
-                .Where(f => f.FieldType == typeof(ThemePath));
-
-            foreach (var field in themeFields)
-            {
-                RegisterTheme((ThemePath)field.GetValue(this), GetType());
-            }
-        }
-
-        /// <summary>
-        /// Load the default theme
-        /// </summary>
-        internal void LoadDefaultTheme(ZapContextMenuThemes theme, Type ownerType)
-        {
-            string registrationName = GetRegistrationName(theme, ownerType);
-            Resources.MergedDictionaries.Add(_rdThemeDictionaries[registrationName]);
-        }
-
-        /// <summary>
-        /// Get themes formal registration name
-        /// </summary>
-        private string GetRegistrationName(ZapContextMenuThemes theme, Type ownerType)
-        {
-            return GetRegistrationName(theme.ToString(), ownerType);
-        }
-
-        /// <summary>
-        /// Get themes formal registration name
-        /// </summary>
-        private string GetRegistrationName(ThemePath theme, Type ownerType)
-        {
-            return GetRegistrationName(theme.Name, ownerType);
-        }
-
-        /// <summary>
-        /// Get themes formal registration name
-        /// </summary>
-        public string GetRegistrationName(string themeName, Type ownerType)
-        {
-            return $"{ownerType};{themeName}";
-        }
-
-        /// <summary>
-        /// Get themes name from formal registration name
-        /// </summary>
-        public string GetThemeName(string key)
-        {
-            return key?.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries)[1];
-        }
-
-        /// <summary>
-        /// Set themes default propertie value
-        /// </summary>
-        internal void SetThemePropertyDefault(DependencyProperty p, object value)
-        {
-            _defaultThemeProperties.Add(p, value);
-            SetCurrentValue(p, value);
-        }
-
-        /// <summary>
-        /// Set dependency property default theme value if value is null
-        /// </summary>
-        private static void SetValueCommon(DependencyObject o, DependencyProperty p, object value)
-        {
-            if (o is ZapContextMenu cm)
-            {
-                if (!(BindingOperations.GetBinding(cm, p) is Binding))
-                {
-                    if (value is Thickness t)
-                    {
-                        if (t == new Thickness(0))
-                            value = null;
-                    }
-                    else if (value is double d)
-                    {
-                        if (d == 0d)
-                            value = null;
-                    }
-
-                    if (value == null)
-                    {
-                        if (cm._defaultThemeProperties.ContainsKey(p))
-                            value = cm._defaultThemeProperties[p];
-
-                        cm.SetCurrentValue(p, value);
-                    }
-                }
-            }
         }
         #endregion
 

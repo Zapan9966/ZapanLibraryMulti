@@ -5,7 +5,7 @@ namespace ZapanControls.Controls.ResourceKeys
     public static class ZapTabControlResourceKeys
     {
         #region Fields
-        private static readonly ComponentResourceKey _TabsTemplateKey = null;
+        private static readonly ComponentResourceKey _ZapTemplateKey = null;
         private static readonly ComponentResourceKey _TabAddTemplateKey = null;
 
         private static readonly ComponentResourceKey _BackgroundKey = null;
@@ -35,7 +35,7 @@ namespace ZapanControls.Controls.ResourceKeys
 
         #region Resource Keys
         #region Control
-        public static ComponentResourceKey TabsTemplateKey => _TabsTemplateKey.GetRegisteredKey(typeof(ZapTabControlResourceKeys), "TabsTemplate");
+        public static ComponentResourceKey ZapTemplateKey => _ZapTemplateKey.GetRegisteredKey(typeof(ZapTabControlResourceKeys), "ZapTemplate");
         public static ComponentResourceKey TabAddTemplateKey => _TabAddTemplateKey.GetRegisteredKey(typeof(ZapTabControlResourceKeys), "TabAddTemplate");
         public static ComponentResourceKey BackgroundKey => _BackgroundKey.GetRegisteredKey(typeof(ZapTabControlResourceKeys), "Background");
         public static ComponentResourceKey BorderBrushKey => _BorderBrushKey.GetRegisteredKey(typeof(ZapTabControlResourceKeys), "BorderBrush");

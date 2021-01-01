@@ -1,4 +1,4 @@
-﻿namespace ZapanControls.Controls.Themes
+﻿namespace ZapanControls.Controls.Templates
 {
     public enum ZapSplitButtonTemplates
     {

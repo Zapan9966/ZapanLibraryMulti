@@ -109,6 +109,7 @@ using ZapanControls.Libraries;
 using ZapanControls.Controls.Themes;
 using ZapanControls.Controls.Primitives;
 using ZapanControls.Controls.ResourceKeys;
+using ZapanControls.Controls.ControlEventArgs;
 #endregion
 
 namespace ZapanControls.Controls.CalendarPicker
@@ -637,7 +638,7 @@ namespace ZapanControls.Controls.CalendarPicker
         #endregion
 
         #region ThemableControl implementation
-        internal override void OnThemeChangedSuccess(object sender, RoutedEventArgs e)
+        public override void OnThemeChanged(object sender, ThemeChangedEventArgs e)
         {
             if (e.Source is Calendar c)
             {

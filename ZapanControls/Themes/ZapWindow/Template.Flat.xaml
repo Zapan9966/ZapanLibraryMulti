@@ -4,7 +4,7 @@
                     xmlns:z="clr-namespace:ZapanControls.Controls"
                     xmlns:c="clr-namespace:ZapanControls.Converters">
 
-    <Grid x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=WindowTemplate}" 
+    <Grid x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapWindowResourceKeys}, ResourceId=ZapTemplate}" 
           HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,0,0,1">
         <Grid.Resources>
             <BooleanToVisibilityConverter x:Key="ZapWindowBoolToVis" />

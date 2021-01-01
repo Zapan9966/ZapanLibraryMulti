@@ -3,7 +3,7 @@
                     xmlns:r="clr-namespace:ZapanControls.Controls.ResourceKeys"
                     xmlns:z="clr-namespace:ZapanControls.Controls">
 
-    <ControlTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=ButtonTemplate}" TargetType="{x:Type z:ZapToggleButton}">
+    <ControlTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=ZapTemplate}" TargetType="{x:Type z:ZapToggleButton}">
         <ControlTemplate.Resources>
 
             <Storyboard x:Key="Timeline1">

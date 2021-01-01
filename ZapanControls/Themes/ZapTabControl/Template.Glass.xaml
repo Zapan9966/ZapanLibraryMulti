@@ -15,7 +15,7 @@
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
 
-    <ControlTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapTabControlResourceKeys}, ResourceId=TabsTemplate}" TargetType="{x:Type z:ZapTabItem}">
+    <ControlTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapTabControlResourceKeys}, ResourceId=ZapTemplate}" TargetType="{x:Type z:ZapTabItem}">
         <Border x:Name="PART_Border" 
                 Background="{Binding ItemBackground, RelativeSource={RelativeSource AncestorType={x:Type z:ZapTabControl}}}"
                 BorderBrush="{Binding ItemBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type z:ZapTabControl}}}"

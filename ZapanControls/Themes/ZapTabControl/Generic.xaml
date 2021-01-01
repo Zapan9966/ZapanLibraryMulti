@@ -6,7 +6,7 @@
     <Style TargetType="{x:Type z:ZapTabItem}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
-        <Setter Property="Template" Value="{DynamicResource {x:Static r:ZapTabControlResourceKeys.TabsTemplateKey}}" />
+        <Setter Property="Template" Value="{DynamicResource {x:Static r:ZapTabControlResourceKeys.ZapTemplateKey}}" />
     </Style>
 
     <Style TargetType="{x:Type z:ZapTabItemAdd}">

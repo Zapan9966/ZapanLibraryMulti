@@ -4,15 +4,15 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Media;
 using ZapanControls.Controls.ControlEventArgs;
 using ZapanControls.Controls.Primitives;
+using ZapanControls.Controls.Templates;
 using ZapanControls.Controls.Themes;
+using ZapanControls.Interfaces;
 using ZapanControls.Libraries;
 
 namespace ZapanControls.Controls
@@ -20,17 +20,9 @@ namespace ZapanControls.Controls
     /// <summary>
     /// TabControl qui prend en charge l'ajout/suppression d'onglet.
     /// </summary>
-    public sealed class ZapTabControl : TabControl, ITheme, INotifyPropertyChanged
+    public sealed class ZapTabControl : TabControl, ITemplate
     {
-        #region Property Name Constants
-        private const string ThemePropName = "Theme";
-        private const string TabsTemplatePropName = "TabsTemplate";
-        #endregion
-
         #region Fields
-        private readonly Dictionary<string, ResourceDictionary> _rdThemeDictionaries;
-        private readonly Dictionary<string, ResourceDictionary> _rdTemplateDictionaries;
-        private readonly Dictionary<DependencyProperty, object> _defaultThemeProperties;
         private bool _hasInitialized;
         #endregion
 
@@ -106,10 +98,6 @@ namespace ZapanControls.Controls
         }
         #endregion
 
-        #region HasInitialized
-        public bool HasInitialized { get => _hasInitialized; private set => Set(ref _hasInitialized, value); }
-        #endregion
-
         #region ItemNormal
         #region ItemBackground
         public static readonly DependencyProperty ItemBackgroundProperty = DependencyProperty.Register(
@@ -120,7 +108,7 @@ namespace ZapanControls.Controls
 
         public Brush ItemBackground { get => (Brush)GetValue(ItemBackgroundProperty); set => SetValue(ItemBackgroundProperty, value); }
 
-        private static void OnItemBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, ItemBackgroundProperty, e.NewValue);
+        private static void OnItemBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ItemBackgroundProperty, e.NewValue);
         #endregion
 
         #region ItemBorderBrush
@@ -132,7 +120,7 @@ namespace ZapanControls.Controls
 
         public Brush ItemBorderBrush { get => (Brush)GetValue(ItemBorderBrushProperty); set => SetValue(ItemBorderBrushProperty, value); }
 
-        private static void OnItemBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, ItemBorderBrushProperty, e.NewValue);
+        private static void OnItemBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ItemBorderBrushProperty, e.NewValue);
         #endregion
 
         #region ItemForeground
@@ -144,7 +132,7 @@ namespace ZapanControls.Controls
 
         public Brush ItemForeground { get => (Brush)GetValue(ItemForegroundProperty); set => SetValue(ItemForegroundProperty, value); }
 
-        private static void OnItemForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, ItemForegroundProperty, e.NewValue);
+        private static void OnItemForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ItemForegroundProperty, e.NewValue);
         #endregion
         #endregion
 
@@ -158,7 +146,7 @@ namespace ZapanControls.Controls
 
         public Brush ItemFocusedBackground { get => (Brush)GetValue(ItemFocusedBackgroundProperty); set => SetValue(ItemFocusedBackgroundProperty, value); }
 
-        private static void OnItemFocusedBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, ItemFocusedBackgroundProperty, e.NewValue);
+        private static void OnItemFocusedBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ItemFocusedBackgroundProperty, e.NewValue);
         #endregion
 
         #region ItemFocusedForeground
@@ -170,7 +158,7 @@ namespace ZapanControls.Controls
 
         public Brush ItemFocusedBorderBrush { get => (Brush)GetValue(ItemFocusedBorderBrushProperty); set => SetValue(ItemFocusedBorderBrushProperty, value); }
 
-        private static void OnItemFocusedBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, ItemFocusedBorderBrushProperty, e.NewValue);
+        private static void OnItemFocusedBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ItemFocusedBorderBrushProperty, e.NewValue);
         #endregion
 
         #region ItemFocusedForeground
@@ -182,7 +170,7 @@ namespace ZapanControls.Controls
 
         public Brush ItemFocusedForeground { get => (Brush)GetValue(ItemFocusedForegroundProperty); set => SetValue(ItemFocusedForegroundProperty, value); }
 
-        private static void OnItemFocusedForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, ItemFocusedForegroundProperty, e.NewValue);
+        private static void OnItemFocusedForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ItemFocusedForegroundProperty, e.NewValue);
         #endregion
         #endregion
 
@@ -196,7 +184,7 @@ namespace ZapanControls.Controls
 
         public Brush ItemSelectedBackground { get => (Brush)GetValue(ItemSelectedBackgroundProperty); set => SetValue(ItemSelectedBackgroundProperty, value); }
 
-        private static void OnItemSelectedBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, ItemSelectedBackgroundProperty, e.NewValue);
+        private static void OnItemSelectedBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ItemSelectedBackgroundProperty, e.NewValue);
         #endregion
 
         #region ItemSelectedForeground
@@ -208,7 +196,7 @@ namespace ZapanControls.Controls
 
         public Brush ItemSelectedBorderBrush { get => (Brush)GetValue(ItemSelectedBorderBrushProperty); set => SetValue(ItemSelectedBorderBrushProperty, value); }
 
-        private static void OnItemSelectedBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, ItemSelectedBorderBrushProperty, e.NewValue);
+        private static void OnItemSelectedBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ItemSelectedBorderBrushProperty, e.NewValue);
         #endregion
 
         #region ItemSelectedForeground
@@ -220,7 +208,7 @@ namespace ZapanControls.Controls
 
         public Brush ItemSelectedForeground { get => (Brush)GetValue(ItemSelectedForegroundProperty); set => SetValue(ItemSelectedForegroundProperty, value); }
 
-        private static void OnItemSelectedForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, ItemSelectedForegroundProperty, e.NewValue);
+        private static void OnItemSelectedForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ItemSelectedForegroundProperty, e.NewValue);
         #endregion
         #endregion
 
@@ -234,7 +222,7 @@ namespace ZapanControls.Controls
 
         public Brush ItemDisabledBackground { get => (Brush)GetValue(ItemDisabledBackgroundProperty); set => SetValue(ItemDisabledBackgroundProperty, value); }
 
-        private static void OnItemDisabledBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, ItemDisabledBackgroundProperty, e.NewValue);
+        private static void OnItemDisabledBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ItemDisabledBackgroundProperty, e.NewValue);
         #endregion
 
         #region ItemDisabledForeground
@@ -246,7 +234,7 @@ namespace ZapanControls.Controls
 
         public Brush ItemDisabledBorderBrush { get => (Brush)GetValue(ItemDisabledBorderBrushProperty); set => SetValue(ItemDisabledBorderBrushProperty, value); }
 
-        private static void OnItemDisabledBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, ItemDisabledBorderBrushProperty, e.NewValue);
+        private static void OnItemDisabledBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ItemDisabledBorderBrushProperty, e.NewValue);
         #endregion
 
         #region ItemDisabledForeground
@@ -258,87 +246,46 @@ namespace ZapanControls.Controls
 
         public Brush ItemDisabledForeground { get => (Brush)GetValue(ItemDisabledForegroundProperty); set => SetValue(ItemDisabledForegroundProperty, value); }
 
-        private static void OnItemDisabledForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, ItemDisabledForegroundProperty, e.NewValue);
+        private static void OnItemDisabledForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ItemDisabledForegroundProperty, e.NewValue);
         #endregion
         #endregion
 
         #region LastSelectedTab
         public object LastSelectedTab { get; private set; }
         #endregion
+        #endregion
 
-        #region TabsTemplate
-        public static readonly DependencyProperty TabsTemplateProperty = DependencyProperty.Register(
-            "TabsTemplate", typeof(string), typeof(ZapTabControl),
+        #region Template Properties
+        #region HasInitialized
+        public bool HasInitialized { get => _hasInitialized; private set => Set(ref _hasInitialized, value); }
+        #endregion
+
+        #region TemplateDictionaries
+        public Dictionary<string, ResourceDictionary> TemplateDictionaries { get; internal set; } = new Dictionary<string, ResourceDictionary>();
+        #endregion
+
+        #region ZapTemplate
+        public static readonly DependencyProperty ZapTemplateProperty = DependencyProperty.Register(
+            "ZapTemplate", typeof(string), typeof(ZapTabControl),
             new FrameworkPropertyMetadata(null,
                 FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure,
-                new PropertyChangedCallback(OnWindowTemplateChanged),
-                new CoerceValueCallback(CoerceWindowTemplateChange)));
+                new PropertyChangedCallback(OnZapTemplateChanged),
+                new CoerceValueCallback(CoerceZapTemplateChange)));
 
-        public string TabsTemplate { get => (string)GetValue(TabsTemplateProperty); set => SetValue(TabsTemplateProperty, value); }
+        public string ZapTemplate { get => (string)GetValue(ZapTemplateProperty); set => SetValue(ZapTemplateProperty, value); }
 
-        private static void OnWindowTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            // test args
-            if (!(d is ZapTabControl tc) || e == null)
-                throw new ArgumentNullException("Invalid Theme property");
+        private static void OnZapTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.TemplateChanged(e, TemplateChangedEvent);
 
-            string curTemplateName = e.OldValue as string;
-            string curRegisteredTemplateName = tc.GetRegistrationName(curTemplateName, tc.GetType());
-
-            if (tc._rdTemplateDictionaries.ContainsKey(curRegisteredTemplateName))
-            {
-                // remove current template
-                ResourceDictionary curTemplateDictionary = tc._rdTemplateDictionaries[curRegisteredTemplateName];
-                tc.Resources.MergedDictionaries.Remove(curTemplateDictionary);
-
-                foreach (var item in tc.Items)
-                {
-                    if (item is ZapTabItem tab)
-                        tab.Resources.MergedDictionaries.Remove(curTemplateDictionary);
-                }
-            }
-
-            // new template name
-            string newTemplateName = e.NewValue as string;
-            string newRegisteredTemplateName = !string.IsNullOrEmpty(newTemplateName) ?
-                tc.GetRegistrationName(newTemplateName, tc.GetType())
-                : tc._rdTemplateDictionaries.FirstOrDefault().Key;
-
-            // add the resource
-            if (!tc._rdTemplateDictionaries.ContainsKey(newRegisteredTemplateName))
-            {
-                throw new ArgumentNullException("Invalid Template property");
-            }
-            else
-            {
-                // add the dictionary
-                ResourceDictionary newTemplateDictionary = tc._rdTemplateDictionaries[newRegisteredTemplateName];
-                tc.Resources.MergedDictionaries.Add(newTemplateDictionary);
-
-                foreach (var item in tc.Items)
-                {
-                    if (item is ZapTabItem tab)
-                        tab.Resources.MergedDictionaries.Add(newTemplateDictionary);
-                }
-
-                if (tc.HasInitialized)
-                {
-                    tc.OnApplyTemplate();
-                    foreach (var tab in tc.Items)
-                    {
-                        if (tab is ZapTabItem zTab)
-                            zTab.OnApplyTemplate();
-                    }
-                }
-            }
-
-            tc.RaisePropertyChanged(new PropertyChangedEventArgs(TabsTemplatePropName));
-        }
-
-        private static object CoerceWindowTemplateChange(DependencyObject d, object o)
+        private static object CoerceZapTemplateChange(DependencyObject d, object o)
         {
             return o;
         }
+        #endregion
+        #endregion
+
+        #region Theme Properties
+        #region DefaultThemeProperties
+        public Dictionary<DependencyProperty, object> DefaultThemeProperties { get; internal set; } = new Dictionary<DependencyProperty, object>();
         #endregion
 
         #region Theme
@@ -354,72 +301,38 @@ namespace ZapanControls.Controls
 
         public string Theme { get => (string)GetValue(ThemeProperty); set => SetValue(ThemeProperty, value); }
 
-        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            // test args
-            if (!(d is ZapTabControl tc) || e == null)
-                throw new ArgumentNullException("Invalid Theme property");
-
-            // current theme
-            string curThemeName = e.OldValue as string;
-            string curRegisteredThemeName = tc.GetRegistrationName(curThemeName, tc.GetType());
-
-            if (tc._rdThemeDictionaries.ContainsKey(curRegisteredThemeName))
-            {
-                // remove current theme
-                ResourceDictionary curThemeDictionary = tc._rdThemeDictionaries[curRegisteredThemeName];
-                tc.Resources.MergedDictionaries.Remove(curThemeDictionary);
-            }
-
-            // new theme name
-            string newThemeName = e.NewValue as string;
-            string newRegisteredThemeName = !string.IsNullOrEmpty(newThemeName) ?
-                tc.GetRegistrationName(newThemeName, tc.GetType())
-                : tc._rdThemeDictionaries.FirstOrDefault().Key;
-
-            // add the resource
-            if (!tc._rdThemeDictionaries.ContainsKey(newRegisteredThemeName))
-            {
-                throw new ArgumentNullException("Invalid Theme property");
-            }
-            else
-            {
-                // add the dictionary
-                ResourceDictionary newThemeDictionary = tc._rdThemeDictionaries[newRegisteredThemeName];
-                tc.Resources.MergedDictionaries.Add(newThemeDictionary);
-                // Raise theme successfully changed event
-                tc.RaiseEvent(new RoutedEventArgs(ThemeChangedSuccessEvent, tc));
-            }
-
-            tc.RaisePropertyChanged(new PropertyChangedEventArgs(ThemePropName));
-        }
+        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.ThemeChanged(e, ThemeChangedEvent);
 
         private static object CoerceThemeChange(DependencyObject d, object o)
         {
             return o;
         }
         #endregion
+
+        #region ThemeDictionaries
+        public Dictionary<string, ResourceDictionary> ThemeDictionaries { get; internal set; } = new Dictionary<string, ResourceDictionary>();
+        #endregion
         #endregion
 
         #region Native Properties Changed
         #region Background
-        private static void OnBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, BackgroundProperty, e.NewValue);
+        private static void OnBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(BackgroundProperty, e.NewValue);
         #endregion
 
         #region BorderBrush
-        private static void OnBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, BorderBrushProperty, e.NewValue);
+        private static void OnBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(BorderBrushProperty, e.NewValue);
         #endregion
 
         #region BorderThickness
-        private static void OnBorderThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, BorderThicknessProperty, e.NewValue);
+        private static void OnBorderThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(BorderThicknessProperty, e.NewValue);
         #endregion
 
         #region Foreground
-        private static void OnForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, ForegroundProperty, e.NewValue);
+        private static void OnForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ForegroundProperty, e.NewValue);
         #endregion
 
         #region Padding
-        private static void OnPaddingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetValueCommon(d, PaddingProperty, e.NewValue);
+        private static void OnPaddingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(PaddingProperty, e.NewValue);
         #endregion
         #endregion
 
@@ -444,7 +357,7 @@ namespace ZapanControls.Controls
         /// Représente la méthode qui gère la validation de fermeture de l'onglet.
         /// </summary>
         /// <returns>Renvoi <see cref="True"/> si l'onglet doit être fermé, sinon <see cref="False"/></returns>
-        public delegate void CloseValidationEventHandler(object sender, CloseValidationEnventArgs e);
+        public delegate void CloseValidationEventHandler(object sender, CloseValidationEventArgs e);
 
         public static readonly RoutedEvent CloseValidationEvent = EventManager.RegisterRoutedEvent(
             "CloseValidation", RoutingStrategy.Bubble, typeof(CloseValidationEventHandler), typeof(ZapTabControl));
@@ -462,38 +375,45 @@ namespace ZapanControls.Controls
         public event EventHandler<NotifyCollectionChangedEventArgs> ItemsChanged;
         #endregion
 
-        #region ThemeChangedSuccess
-        public static readonly RoutedEvent ThemeChangedSuccessEvent = EventManager.RegisterRoutedEvent(
-            "ThemeChangedSuccess", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ZapTabControl));
+        #region TemplateChanged
+        public static readonly RoutedEvent TemplateChangedEvent = EventManager.RegisterRoutedEvent(
+            "TemplateChanged", RoutingStrategy.Bubble, typeof(ITemplate.TemplateChangedEventHandler), typeof(ZapTabControl));
 
-        public event RoutedEventHandler ThemeChangedSuccess { add => AddHandler(ThemeChangedSuccessEvent, value); remove => RemoveHandler(ThemeChangedSuccessEvent, value); }
+        public event ITemplate.TemplateChangedEventHandler TemplateChanged { add => AddHandler(TemplateChangedEvent, value); remove => RemoveHandler(TemplateChangedEvent, value); }
+        #endregion
 
-        private void OnThemeChangedSuccess(object sender, RoutedEventArgs e)
+        #region ThemeChanged
+        public static readonly RoutedEvent ThemeChangedEvent = EventManager.RegisterRoutedEvent(
+            "ThemeChanged", RoutingStrategy.Bubble, typeof(ITheme.ThemeChangedEventHandler), typeof(ZapTabControl));
+
+        public event ITheme.ThemeChangedEventHandler ThemeChanged { add => AddHandler(ThemeChangedEvent, value); remove => RemoveHandler(ThemeChangedEvent, value); }
+
+        private void OnThemeChanged(object sender, ThemeChangedEventArgs e)
         {
-            _defaultThemeProperties.Clear();
+            DefaultThemeProperties.Clear();
             // Control
-            SetThemePropertyDefault(BackgroundProperty, TryFindResource(ResourceKeys.ZapTabControlResourceKeys.BackgroundKey));
-            SetThemePropertyDefault(BorderBrushProperty, TryFindResource(ResourceKeys.ZapTabControlResourceKeys.BorderBrushKey));
-            SetThemePropertyDefault(ForegroundProperty, TryFindResource(ResourceKeys.ZapTabControlResourceKeys.ForegroundKey));
-            SetThemePropertyDefault(BorderThicknessProperty, TryFindResource(ResourceKeys.ZapTabControlResourceKeys.BorderThicknessKey));
-            SetThemePropertyDefault(PaddingProperty, TryFindResource(ResourceKeys.ZapTabControlResourceKeys.PaddingKey));
-            SetThemePropertyDefault(AddContentProperty, TryFindResource(ResourceKeys.ZapTabControlResourceKeys.AddContentKey));
+            this.SetThemePropertyDefault(BackgroundProperty, ResourceKeys.ZapTabControlResourceKeys.BackgroundKey);
+            this.SetThemePropertyDefault(BorderBrushProperty, ResourceKeys.ZapTabControlResourceKeys.BorderBrushKey);
+            this.SetThemePropertyDefault(ForegroundProperty, ResourceKeys.ZapTabControlResourceKeys.ForegroundKey);
+            this.SetThemePropertyDefault(BorderThicknessProperty, ResourceKeys.ZapTabControlResourceKeys.BorderThicknessKey);
+            this.SetThemePropertyDefault(PaddingProperty, ResourceKeys.ZapTabControlResourceKeys.PaddingKey);
+            this.SetThemePropertyDefault(AddContentProperty, ResourceKeys.ZapTabControlResourceKeys.AddContentKey);
             // ItemNormal
-            SetThemePropertyDefault(ItemBackgroundProperty, TryFindResource(ResourceKeys.ZapTabControlResourceKeys.ItemBackgroundKey));
-            SetThemePropertyDefault(ItemBorderBrushProperty, TryFindResource(ResourceKeys.ZapTabControlResourceKeys.ItemBorderBrushKey));
-            SetThemePropertyDefault(ItemForegroundProperty, TryFindResource(ResourceKeys.ZapTabControlResourceKeys.ItemForegroundKey));
+            this.SetThemePropertyDefault(ItemBackgroundProperty, ResourceKeys.ZapTabControlResourceKeys.ItemBackgroundKey);
+            this.SetThemePropertyDefault(ItemBorderBrushProperty, ResourceKeys.ZapTabControlResourceKeys.ItemBorderBrushKey);
+            this.SetThemePropertyDefault(ItemForegroundProperty, ResourceKeys.ZapTabControlResourceKeys.ItemForegroundKey);
             // ItemFocused
-            SetThemePropertyDefault(ItemFocusedBackgroundProperty, TryFindResource(ResourceKeys.ZapTabControlResourceKeys.ItemFocusedBackgroundKey));
-            SetThemePropertyDefault(ItemFocusedBorderBrushProperty, TryFindResource(ResourceKeys.ZapTabControlResourceKeys.ItemFocusedBorderBrushKey));
-            SetThemePropertyDefault(ItemFocusedForegroundProperty, TryFindResource(ResourceKeys.ZapTabControlResourceKeys.ItemFocusedForegroundKey));
+            this.SetThemePropertyDefault(ItemFocusedBackgroundProperty, ResourceKeys.ZapTabControlResourceKeys.ItemFocusedBackgroundKey);
+            this.SetThemePropertyDefault(ItemFocusedBorderBrushProperty, ResourceKeys.ZapTabControlResourceKeys.ItemFocusedBorderBrushKey);
+            this.SetThemePropertyDefault(ItemFocusedForegroundProperty, ResourceKeys.ZapTabControlResourceKeys.ItemFocusedForegroundKey);
             // ItemSelected
-            SetThemePropertyDefault(ItemSelectedBackgroundProperty, TryFindResource(ResourceKeys.ZapTabControlResourceKeys.ItemSelectedBackgroundKey));
-            SetThemePropertyDefault(ItemSelectedBorderBrushProperty, TryFindResource(ResourceKeys.ZapTabControlResourceKeys.ItemSelectedBorderBrushKey));
-            SetThemePropertyDefault(ItemSelectedForegroundProperty, TryFindResource(ResourceKeys.ZapTabControlResourceKeys.ItemSelectedForegroundKey));
+            this.SetThemePropertyDefault(ItemSelectedBackgroundProperty, ResourceKeys.ZapTabControlResourceKeys.ItemSelectedBackgroundKey);
+            this.SetThemePropertyDefault(ItemSelectedBorderBrushProperty, ResourceKeys.ZapTabControlResourceKeys.ItemSelectedBorderBrushKey);
+            this.SetThemePropertyDefault(ItemSelectedForegroundProperty, ResourceKeys.ZapTabControlResourceKeys.ItemSelectedForegroundKey);
             // ItemDisabled
-            SetThemePropertyDefault(ItemDisabledBackgroundProperty, TryFindResource(ResourceKeys.ZapTabControlResourceKeys.ItemDisabledBackgroundKey));
-            SetThemePropertyDefault(ItemDisabledBorderBrushProperty, TryFindResource(ResourceKeys.ZapTabControlResourceKeys.ItemDisabledBorderBrushKey));
-            SetThemePropertyDefault(ItemDisabledForegroundProperty, TryFindResource(ResourceKeys.ZapTabControlResourceKeys.ItemDisabledForegroundKey));
+            this.SetThemePropertyDefault(ItemDisabledBackgroundProperty, ResourceKeys.ZapTabControlResourceKeys.ItemDisabledBackgroundKey);
+            this.SetThemePropertyDefault(ItemDisabledBorderBrushProperty, ResourceKeys.ZapTabControlResourceKeys.ItemDisabledBorderBrushKey);
+            this.SetThemePropertyDefault(ItemDisabledForegroundProperty, ResourceKeys.ZapTabControlResourceKeys.ItemDisabledForegroundKey);
         }
         #endregion
         #endregion
@@ -530,23 +450,14 @@ namespace ZapanControls.Controls
 
         public ZapTabControl()
         {
-            _defaultThemeProperties = new Dictionary<DependencyProperty, object>();
+            // Load Templates
+            this.RegisterAttachedTemplates(typeof(ZapTabControl));
+            this.LoadDefaultTemplate(ZapTemplateProperty);
 
-            _rdTemplateDictionaries = new Dictionary<string, ResourceDictionary>();
-            RegisterAttachedTemplates();
-
-            // Load first template
-            if (_rdTemplateDictionaries.Any())
-                SetCurrentValue(TabsTemplateProperty, GetThemeName(_rdTemplateDictionaries.FirstOrDefault().Key));
-
-            _rdThemeDictionaries = new Dictionary<string, ResourceDictionary>();
-            RegisterAttachedThemes();
-
-            ThemeChangedSuccess += OnThemeChangedSuccess;
-
-            // Load first theme
-            if (_rdThemeDictionaries.Any())
-                SetCurrentValue(ThemeProperty, GetThemeName(_rdThemeDictionaries.FirstOrDefault().Key));
+            // Load Themes
+            ThemeChanged += OnThemeChanged;
+            this.RegisterAttachedThemes(typeof(ZapTabControl));
+            this.LoadDefaultTheme(ThemeProperty);
 
             SelectionChanged += InternalOnSelectionChanged;
         }
@@ -581,23 +492,6 @@ namespace ZapanControls.Controls
         {
             base.OnApplyTemplate();
             HasInitialized = true;
-
-            foreach (var property in _defaultThemeProperties)
-            {
-                // Update bindings with theme default values
-                if (BindingOperations.GetBinding(this, property.Key) is BindingBase binding)
-                {
-                    var newBinding = binding.Clone();
-
-                    if (binding.FallbackValue == null || binding.FallbackValue == DependencyProperty.UnsetValue)
-                        newBinding.FallbackValue = property.Value;
-
-                    if (binding.TargetNullValue == null || binding.TargetNullValue == DependencyProperty.UnsetValue)
-                        newBinding.TargetNullValue = property.Value;
-
-                    SetBinding(property.Key, newBinding);
-                }
-            }
         }
 
         protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
@@ -614,183 +508,6 @@ namespace ZapanControls.Controls
                     SelectedIndex = 1;
             }
             base.OnInitialized(e);
-        }
-        #endregion
-
-        #region Theming
-        /// <summary>
-        /// Register a theme with internal dictionary
-        /// </summary>
-        public void RegisterTheme(ThemePath theme, Type ownerType)
-        {
-            // test args
-            if (theme.Name == null || theme.DictionaryPath == null)
-                throw new ArgumentNullException("Theme name/path is null");
-
-            if (ownerType == null)
-                throw new ArgumentNullException("Invalid ownerType");
-
-            string registrationName = GetRegistrationName(theme, ownerType);
-
-            try
-            {
-                if (!_rdThemeDictionaries.ContainsKey(registrationName))
-                {
-                    // create the Uri
-                    Uri themeUri = new Uri(theme.DictionaryPath, UriKind.Relative);
-                    // register the new theme
-                    _rdThemeDictionaries[registrationName] = Application.LoadComponent(themeUri) as ResourceDictionary;
-                }
-            }
-            catch (Exception)
-            { }
-        }
-
-        /// <summary>
-        /// Instance theme dictionary and add themes
-        /// </summary>
-        private void RegisterAttachedThemes()
-        {
-            // Attach control attached themes
-            var themeFields = GetType().GetFields(BindingFlags.Public | BindingFlags.Static)
-                .Where(f => f.FieldType == typeof(ThemePath));
-
-            foreach (var field in themeFields)
-            {
-                RegisterTheme((ThemePath)field.GetValue(this), GetType());
-            }
-        }
-
-        /// <summary>
-        /// Load the default theme
-        /// </summary>
-        internal void LoadDefaultTheme(ZapTabControlThemes theme, Type ownerType)
-        {
-            string registrationName = GetRegistrationName(theme, ownerType);
-            Resources.MergedDictionaries.Add(_rdThemeDictionaries[registrationName]);
-        }
-
-        /// <summary>
-        /// Get themes formal registration name
-        /// </summary>
-        private string GetRegistrationName(ZapTabControlThemes theme, Type ownerType)
-        {
-            return GetRegistrationName(theme.ToString(), ownerType);
-        }
-
-        /// <summary>
-        /// Get themes formal registration name
-        /// </summary>
-        private string GetRegistrationName(ThemePath theme, Type ownerType)
-        {
-            return GetRegistrationName(theme.Name, ownerType);
-        }
-
-        /// <summary>
-        /// Get themes formal registration name
-        /// </summary>
-        public string GetRegistrationName(string themeName, Type ownerType)
-        {
-            return $"{ownerType};{themeName}";
-        }
-
-        /// <summary>
-        /// Get themes name from formal registration name
-        /// </summary>
-        public string GetThemeName(string key)
-        {
-            return key?.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries)[1];
-        }
-
-        /// <summary>
-        /// Set themes default propertie value
-        /// </summary>
-        internal void SetThemePropertyDefault(DependencyProperty p, object value)
-        {
-            _defaultThemeProperties.Add(p, value);
-            SetCurrentValue(p, value);
-        }
-
-        /// <summary>
-        /// Set dependency property default theme value if value is null
-        /// </summary>
-        private static void SetValueCommon(DependencyObject o, DependencyProperty p, object value)
-        {
-            if (o is ZapTabControl tc)
-            {
-                if (!(BindingOperations.GetBinding(tc, p) is Binding))
-                {
-                    if (value is Thickness t)
-                    {
-                        if (t == new Thickness(0))
-                            value = null;
-                    }
-                    else if (value is double d)
-                    {
-                        if (d == 0d)
-                            value = null;
-                    }
-
-                    if (value == null)
-                    {
-                        if (tc._defaultThemeProperties.ContainsKey(p))
-                            value = tc._defaultThemeProperties[p];
-
-                        tc.SetCurrentValue(p, value);
-                    }
-                }
-            }
-        }
-        #endregion
-
-        #region Templating
-        public void RegisterTemplate(TemplatePath template, Type ownerType)
-        {
-            // test args
-            if (template.Name == null || template.DictionaryPath == null)
-                throw new ArgumentNullException("Template name/path is null");
-
-            if (ownerType == null)
-                throw new ArgumentNullException("Invalid ownerType");
-
-            string registrationName = GetRegistrationName(template.Name, ownerType);
-
-            try
-            {
-                if (!_rdTemplateDictionaries.ContainsKey(registrationName))
-                {
-                    // create the Uri
-                    Uri templateUri = new Uri(template.DictionaryPath, UriKind.Relative);
-                    // register the new template
-                    _rdTemplateDictionaries[registrationName] = Application.LoadComponent(templateUri) as ResourceDictionary;
-                }
-            }
-            catch (Exception)
-            { }
-        }
-
-        private void RegisterAttachedTemplates()
-        {
-            var templateFields = GetType().GetFields(BindingFlags.Public | BindingFlags.Static)
-                .Where(f => f.FieldType == typeof(TemplatePath));
-
-            foreach (var field in templateFields)
-            {
-                RegisterTemplate((TemplatePath)field.GetValue(this), GetType());
-            }
-        }
-
-        /// <summary>
-        /// Load the default template
-        /// </summary>
-        internal void LoadDefaultTemplate(string registrationName)
-        {
-            Resources.MergedDictionaries.Add(_rdTemplateDictionaries[registrationName]);
-        }
-
-        private string GetTemplateName(string key)
-        {
-            return key?.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries)[1];
         }
         #endregion
 
