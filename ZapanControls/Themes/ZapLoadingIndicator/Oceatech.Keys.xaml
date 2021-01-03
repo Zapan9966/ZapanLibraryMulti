@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:r="clr-namespace:ZapanControls.Controls.ResourceKeys"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- ================= -->
+    <!-- = Oceatech Keys = -->
+    <!-- ================= -->
+    
+    <!--control-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapLoadingIndicatorResourceKeys}, ResourceId=AccentColor}" Color="DarkViolet" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapLoadingIndicatorResourceKeys}, ResourceId=Background}" Color="Transparent" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapLoadingIndicatorResourceKeys}, ResourceId=BorderBrush}" Color="Transparent" />
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapLoadingIndicatorResourceKeys}, ResourceId=BorderThickness}">0</Thickness>
+    <sys:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapLoadingIndicatorResourceKeys}, ResourceId=SpeedRatio}">1.0</sys:Double>
+
+</ResourceDictionary>

@@ -426,7 +426,7 @@
                                                 <StackPanel>
                                                     <TextBlock Text="Chargement des données en cours, patienter..." VerticalAlignment="Center" Foreground="White"/>
                                                     <ProgressBar x:Name="loadingProgress" Margin="0,5,0,0" Height="10"/>
-                                                    <l:ZapLoadingIndicator x:Name="loadingIndicator" IndicatorStyle="ThreeDots" Margin="0,5,0,0"/>
+                                                    <!--<l:ZapLoadingIndicator x:Name="loadingIndicator" IndicatorStyle="ThreeDots" Margin="0,5,0,0"/>-->
                                                 </StackPanel>
                                             </Border>
                                         </Grid>

@@ -7,6 +7,7 @@
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapButton/Generic.xaml" />     
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapContextMenu/Generic.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapDatePicker/ZapDatePicker.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapLoadingIndicator/Generic.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapMenuItem/Generic.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapScrollBar/Generic.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapScrollViewer/Generic.xaml" />
@@ -16,7 +17,6 @@
 
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapDataGrid.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapListView.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapLoadingIndicator.xaml" />        
         
 
     </ResourceDictionary.MergedDictionaries>

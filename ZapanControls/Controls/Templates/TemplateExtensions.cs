@@ -13,11 +13,6 @@ namespace ZapanControls.Controls.Templates
     {
         private const string ZapTemplatePropName = "ZapTemplate";
 
-        private static string TemplateRegistrationName(this Enum template, Type ownerType)
-        {
-            return template.ToString().TemplateRegistrationName(ownerType);
-        }
-
         public static string TemplateRegistrationName(this TemplatePath template, Type ownerType)
         {
             return template.Name.TemplateRegistrationName(ownerType);
@@ -85,7 +80,7 @@ namespace ZapanControls.Controls.Templates
         {
             // test args
             if (!(o is ITemplate t) || !(o is FrameworkElement fe) || e == null)
-                throw new ArgumentNullException("Invalid Theme property");
+                throw new ArgumentNullException("Invalid ZapTemplate property");
 
             string curTemplateName = e.OldValue as string;
             string curRegisteredTemplateName = curTemplateName.TemplateRegistrationName(o.GetType());
@@ -106,7 +101,7 @@ namespace ZapanControls.Controls.Templates
             // add the resource
             if (!t.TemplateDictionaries.ContainsKey(newRegisteredTemplateName))
             {
-                throw new ArgumentNullException("Invalid Template property");
+                throw new ArgumentNullException("Invalid ZapTemplate property");
             }
             else
             {
