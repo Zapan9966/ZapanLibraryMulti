@@ -23,6 +23,7 @@ namespace ZapanControls.Controls
     public sealed class ZapTabControl : TabControl, ITemplate
     {
         #region Fields
+        private readonly ZapTabItemAdd _tabAdd;
         private bool _hasInitialized;
         #endregion
 
@@ -84,15 +85,11 @@ namespace ZapanControls.Controls
             {
                 if (canAddItem)
                 {
-                    if (!tc.Items.Cast<object>().Any(i => i is ZapTabItemAdd))
-                        tc.Items.Insert(0, new ZapTabItemAdd());
+                    tc.Items.Insert(0, tc._tabAdd);
                 }
                 else
                 {
-                    tc.Items.Cast<object>()
-                        .Where(i => i is ZapTabItemAdd)
-                        .ToList()
-                        .ForEach(i => tc.Items.Remove(i));
+                    tc.Items.Remove(tc._tabAdd);
                 }
             }
         }
@@ -450,6 +447,8 @@ namespace ZapanControls.Controls
 
         public ZapTabControl()
         {
+            _tabAdd = new ZapTabItemAdd();
+
             // Load Templates
             this.RegisterAttachedTemplates(typeof(ZapTabControl));
             this.LoadDefaultTemplate(ZapTemplateProperty);
