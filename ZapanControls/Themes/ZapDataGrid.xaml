@@ -374,8 +374,7 @@
                                                         ButtonBorderThickness="{Binding ScrollBarButtonBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
                                                         DisabledThumbInnerBackground="{Binding ScrollBarDisabledThumbInnerBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
                                                         DisabledButtonBackground="{Binding ScrollBarDisabledButtonBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
-                                                        DisabledButtonBorderBrush="{Binding ScrollBarDisabledButtonBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
-                                                        DisabledButtonBorderThickness="{Binding ScrollBarDisabledButtonBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" />
+                                                        DisabledButtonBorderBrush="{Binding ScrollBarDisabledButtonBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"/>
                                         
                                         <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
                                             <Grid.ColumnDefinitions>
@@ -400,8 +399,7 @@
                                                             ButtonBorderThickness="{Binding ScrollBarButtonBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
                                                             DisabledThumbInnerBackground="{Binding ScrollBarDisabledThumbInnerBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
                                                             DisabledButtonBackground="{Binding ScrollBarDisabledButtonBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
-                                                            DisabledButtonBorderBrush="{Binding ScrollBarDisabledButtonBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}"
-                                                            DisabledButtonBorderThickness="{Binding ScrollBarDisabledButtonBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" />
+                                                            DisabledButtonBorderBrush="{Binding ScrollBarDisabledButtonBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapDataGrid}}}" />
                                         </Grid>
 
                                         <Grid x:Name="loadingGrid" 

@@ -190,12 +190,7 @@ namespace ZapanControls.Controls.Primitives
                 new PropertyChangedCallback(OnThemeChanged),
                 new CoerceValueCallback(CoerceThemeChange)));
 
-        public string Theme
-        {
-            get { return (string)GetValue(ThemeProperty); }
-            set { SetValue(ThemeProperty, value); }
-        }
-
+        public string Theme { get => (string)GetValue(ThemeProperty); set => SetValue(ThemeProperty, value); }
         private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.ThemeChanged(e, ThemeChangedEvent);
 
         private static object CoerceThemeChange(DependencyObject d, object o)
@@ -306,7 +301,7 @@ namespace ZapanControls.Controls.Primitives
             base.OnApplyTemplate();
             HasInitialized = true;
 
-            if (ZapTemplate == "Round")
+            if (ZapTemplate == ZapButtonTemplates.Round.ToString())
             {
                 MinHeight = 20d;
                 MinWidth = 20d;

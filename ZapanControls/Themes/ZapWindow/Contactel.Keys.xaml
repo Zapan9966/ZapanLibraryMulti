@@ -8,13 +8,13 @@
     <!-- ================== -->
 
     <!--control-->
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=Background}" Color="White" />
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=BorderBrush}" Color="OrangeRed" />
-    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=BorderThickness}">1</Thickness>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapWindowResourceKeys}, ResourceId=Background}" Color="White" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapWindowResourceKeys}, ResourceId=BorderBrush}" Color="OrangeRed" />
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapWindowResourceKeys}, ResourceId=BorderThickness}">1</Thickness>
     
     <!--titlebar-->
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=TitleBarBackground}" Color="#FF463E3E" />
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=TitleBarForeground}" Color="White" />
-    <sys:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapButtonResourceKeys}, ResourceId=TitleBarHeight}">30.0</sys:Double>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapWindowResourceKeys}, ResourceId=TitleBarBackground}" Color="#FF463E3E" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapWindowResourceKeys}, ResourceId=TitleBarForeground}" Color="White" />
+    <sys:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapWindowResourceKeys}, ResourceId=TitleBarHeight}">30.0</sys:Double>
 
 </ResourceDictionary>

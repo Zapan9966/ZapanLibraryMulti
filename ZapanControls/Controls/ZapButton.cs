@@ -24,7 +24,7 @@ namespace ZapanControls.Controls
         {
             if (d is ZapButton zb)
             {
-                if (zb.ZapTemplate == "Round")
+                if (zb.ZapTemplate == ZapButtonTemplates.Round.ToString())
                 {
                     double height = (double)e.NewValue;
                     if (double.IsNaN(height) || double.IsInfinity(height))
@@ -45,7 +45,7 @@ namespace ZapanControls.Controls
         {
             if (d is ZapButton zb)
             {
-                if (zb.ZapTemplate == "Round")
+                if (zb.ZapTemplate == ZapButtonTemplates.Round.ToString())
                 {
                     double width = (double)e.NewValue;
                     if (double.IsNaN(width) || double.IsInfinity(width))

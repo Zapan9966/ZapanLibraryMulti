@@ -150,8 +150,7 @@
                                         ButtonBorderThickness="{Binding ScrollBarButtonBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
                                         DisabledThumbInnerBackground="{Binding ScrollBarDisabledThumbInnerBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
                                         DisabledButtonBackground="{Binding ScrollBarDisabledButtonBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
-                                        DisabledButtonBorderBrush="{Binding ScrollBarDisabledButtonBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
-                                        DisabledButtonBorderThickness="{Binding ScrollBarDisabledButtonBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}" />
+                                        DisabledButtonBorderBrush="{Binding ScrollBarDisabledButtonBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}" />
 
                         <l:ZapScrollBar x:Name="PART_HorizontalScrollBar"
                                         Grid.Row="2" 
@@ -173,8 +172,7 @@
                                         ButtonBorderThickness="{Binding ScrollBarButtonBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
                                         DisabledThumbInnerBackground="{Binding ScrollBarDisabledThumbInnerBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
                                         DisabledButtonBackground="{Binding ScrollBarDisabledButtonBackground, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
-                                        DisabledButtonBorderBrush="{Binding ScrollBarDisabledButtonBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}"
-                                        DisabledButtonBorderThickness="{Binding ScrollBarDisabledButtonBorderThickness, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}" />
+                                        DisabledButtonBorderBrush="{Binding ScrollBarDisabledButtonBorderBrush, RelativeSource={RelativeSource AncestorType={x:Type l:ZapListView}}}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

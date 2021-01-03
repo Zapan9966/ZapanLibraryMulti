@@ -17,18 +17,18 @@ namespace ZapanControls.Controls.ResourceKeys
         #endregion
 
         #region Resource Keys
-        public static ComponentResourceKey ZapTemplateKey => _ZapTemplateKey.GetRegisteredKey(typeof(ZapButtonResourceKeys), "ZapTemplate");
+        public static ComponentResourceKey ZapTemplateKey => _ZapTemplateKey.GetRegisteredKey(typeof(ZapWindowResourceKeys), "ZapTemplate");
 
         #region Control
-        public static ComponentResourceKey BackgroundKey => _BackgroundKey.GetRegisteredKey(typeof(ZapButtonResourceKeys), "Background");
-        public static ComponentResourceKey BorderBrushKey => _BorderBrushKey.GetRegisteredKey(typeof(ZapButtonResourceKeys), "BorderBrush");
-        public static ComponentResourceKey BorderThicknessKey => _BorderThicknessKey.GetRegisteredKey(typeof(ZapButtonResourceKeys), "BorderThickness");
+        public static ComponentResourceKey BackgroundKey => _BackgroundKey.GetRegisteredKey(typeof(ZapWindowResourceKeys), "Background");
+        public static ComponentResourceKey BorderBrushKey => _BorderBrushKey.GetRegisteredKey(typeof(ZapWindowResourceKeys), "BorderBrush");
+        public static ComponentResourceKey BorderThicknessKey => _BorderThicknessKey.GetRegisteredKey(typeof(ZapWindowResourceKeys), "BorderThickness");
         #endregion
 
         #region TitleBar
-        public static ComponentResourceKey TitleBarBackgroundKey => _TitleBarBackgroundKey.GetRegisteredKey(typeof(ZapButtonResourceKeys), "TitleBarBackground");
-        public static ComponentResourceKey TitleBarForegroundKey => _TitleBarForegroundKey.GetRegisteredKey(typeof(ZapButtonResourceKeys), "TitleBarForeground");
-        public static ComponentResourceKey TitleBarHeightKey => _TitleBarHeightKey.GetRegisteredKey(typeof(ZapButtonResourceKeys), "TitleBarHeight");
+        public static ComponentResourceKey TitleBarBackgroundKey => _TitleBarBackgroundKey.GetRegisteredKey(typeof(ZapWindowResourceKeys), "TitleBarBackground");
+        public static ComponentResourceKey TitleBarForegroundKey => _TitleBarForegroundKey.GetRegisteredKey(typeof(ZapWindowResourceKeys), "TitleBarForeground");
+        public static ComponentResourceKey TitleBarHeightKey => _TitleBarHeightKey.GetRegisteredKey(typeof(ZapWindowResourceKeys), "TitleBarHeight");
         #endregion
         #endregion
     }

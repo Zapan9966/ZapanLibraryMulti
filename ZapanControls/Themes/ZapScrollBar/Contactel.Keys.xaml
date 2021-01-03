@@ -1,0 +1,38 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:r="clr-namespace:ZapanControls.Controls.ResourceKeys"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- ================== -->
+    <!-- = Contactel Keys = -->
+    <!-- ================== -->
+
+    <!--control-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollBarResourceKeys}, ResourceId=Background}" Color="#FF463E3E" />
+    <!--<LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollBarResourceKeys}, ResourceId=Background}" StartPoint="0,0" EndPoint="1,0">
+        <GradientStopCollection>
+            <GradientStop Color="#FF363636" Offset="0"/>
+            <GradientStop Color="#FF505050" Offset="0.5"/>
+            <GradientStop Color="#FF363636" Offset="1"/>
+        </GradientStopCollection>
+    </LinearGradientBrush>-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollBarResourceKeys}, ResourceId=BorderBrush}" Color="Transparent" />
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollBarResourceKeys}, ResourceId=BorderThickness}">0</Thickness>
+
+    <!--buttons-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollBarResourceKeys}, ResourceId=ButtonBackground}" Color="OrangeRed" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollBarResourceKeys}, ResourceId=ButtonBorderBrush}" Color="Transparent" />
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollBarResourceKeys}, ResourceId=ButtonBorderThickness}">0</Thickness>
+
+    <!--thumb-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollBarResourceKeys}, ResourceId=ThumbInnerBackground}" Color="#FF463E3E" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollBarResourceKeys}, ResourceId=ThumbBackground}" Color="OrangeRed" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollBarResourceKeys}, ResourceId=ThumbBorderBrush}" Color="Transparent" />
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollBarResourceKeys}, ResourceId=ThumbBorderThickness}">0</Thickness>
+
+    <!--disabled-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollBarResourceKeys}, ResourceId=DisabledThumbInnerBackground}" Color="OrangeRed" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollBarResourceKeys}, ResourceId=DisabledButtonBackground}" Color="#FFE8EDF9" Opacity="0.5" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollBarResourceKeys}, ResourceId=DisabledButtonBorderBrush}" Color="Transparent" />
+
+</ResourceDictionary>

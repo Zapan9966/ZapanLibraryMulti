@@ -262,7 +262,7 @@ namespace ZapanControls.Controls
         #endregion
 
         #region Events
-        #region ThemeChangedSuccessEvent
+        #region ThemeChangedEvent
         public static readonly RoutedEvent ThemeChangedEvent = EventManager.RegisterRoutedEvent(
             "ThemeChanged", RoutingStrategy.Bubble, typeof(ITheme.ThemeChangedEventHandler), typeof(ZapMenuItem));
 

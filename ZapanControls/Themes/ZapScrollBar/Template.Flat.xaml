@@ -1,0 +1,35 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:r="clr-namespace:ZapanControls.Controls.ResourceKeys"
+                    xmlns:z="clr-namespace:ZapanControls.Controls"
+                    xmlns:c="clr-namespace:ZapanControls.Converters">
+
+    <ControlTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollBarResourceKeys}, ResourceId=ZapTemplate}" TargetType="{x:Type Thumb}">
+        <Grid Name="Grid">
+            <Rectangle Width="Auto"
+                       Height="Auto"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       Fill="Transparent" 
+                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                       UseLayoutRounding="{TemplateBinding UseLayoutRounding}"/>
+            <Rectangle Name="Rectangle"                       
+                       Height="Auto"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       Fill="{TemplateBinding Background}"
+                       Stroke="{TemplateBinding BorderBrush}"
+                       StrokeThickness="{TemplateBinding BorderThickness}"
+                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                       UseLayoutRounding="{TemplateBinding UseLayoutRounding}"
+                       Width="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type z:ZapScrollBar}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*0.7}"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Tag" Value="Horizontal">
+                <Setter TargetName="Rectangle" Property="Width" Value="Auto" />
+                <Setter TargetName="Rectangle" Property="Height" Value="{Binding Height, RelativeSource={RelativeSource AncestorType={x:Type z:ZapScrollBar}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*0.7}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+</ResourceDictionary>
