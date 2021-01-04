@@ -9,6 +9,7 @@
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapDatePicker/ZapDatePicker.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapLoadingIndicator/Generic.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapMenuItem/Generic.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapProgress/Generic.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapScrollBar/Generic.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapScrollViewer/Generic.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ZapanControls;component/Themes/ZapTabControl/Generic.xaml" />

@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:r="clr-namespace:ZapanControls.Controls.ResourceKeys"
+                    xmlns:z="clr-namespace:ZapanControls.Controls">
+
+    <Style TargetType="{x:Type z:ZapProgress}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="Template" Value="{DynamicResource {x:Static r:ZapProgressResourceKeys.ZapTemplateKey}}" />
+    </Style>
+
+</ResourceDictionary>

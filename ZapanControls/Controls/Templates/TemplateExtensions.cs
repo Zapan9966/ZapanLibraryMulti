@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -72,8 +73,10 @@ namespace ZapanControls.Controls.Templates
                     t.TemplateDictionaries[registrationName] = Application.LoadComponent(themeUri) as ResourceDictionary;
                 }
             }
-            catch (Exception)
-            { }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
 
         public static void TemplateChanged(this DependencyObject o, DependencyPropertyChangedEventArgs e, RoutedEvent successEvent)

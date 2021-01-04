@@ -1,0 +1,32 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:r="clr-namespace:ZapanControls.Controls.ResourceKeys"
+                    xmlns:t="clr-namespace:ZapanControls.Controls.Templates"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- ================= -->
+    <!-- = Oceatech Keys = -->
+    <!-- ================= -->
+
+    <!--control-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapProgressResourceKeys}, ResourceId=Background}" Color="DarkViolet" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapProgressResourceKeys}, ResourceId=BorderBrush}" Color="Indigo" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapProgressResourceKeys}, ResourceId=Foreground}" Color="White" />
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapProgressResourceKeys}, ResourceId=BorderThickness}">1</Thickness>
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapProgressResourceKeys}, ResourceId=Padding}">20</Thickness>
+    <CornerRadius x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapProgressResourceKeys}, ResourceId=CornerRadius}">6</CornerRadius>
+    
+    <!--progress-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapProgressResourceKeys}, ResourceId=ProgressBarInnerBackground}" Color="White" Opacity="0.5" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapProgressResourceKeys}, ResourceId=ProgressBarBackground}" Color="Magenta" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapProgressResourceKeys}, ResourceId=ProgressBarBorderBrush}" Color="Indigo" />
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapProgressResourceKeys}, ResourceId=ProgressBarBorderThickness}">1</Thickness>
+    
+    <!--loading indicator-->
+    <t:ZapLoadingIndicatorTemplates x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapProgressResourceKeys}, ResourceId=IndicatorTemplate}">ThreeDots</t:ZapLoadingIndicatorTemplates>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapProgressResourceKeys}, ResourceId=IndicatorAccentColor}" Color="Indigo" />
+    <sys:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapProgressResourceKeys}, ResourceId=IndicatorSpeedRatio}">1.0</sys:Double>
+    <sys:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapProgressResourceKeys}, ResourceId=IndicatorHeight}">20.0</sys:Double>
+    <sys:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapProgressResourceKeys}, ResourceId=IndicatorWidth}">70.0</sys:Double>
+
+</ResourceDictionary>
