@@ -348,7 +348,7 @@ namespace ZapanControls.Controls
 
             OrientationProperty.OverrideMetadata(typeof(ZapScrollBar), new FrameworkPropertyMetadata(Orientation.Vertical, FrameworkPropertyMetadataOptions.AffectsArrange, OnOrientationChanged));
             HeightProperty.OverrideMetadata(typeof(ZapScrollBar), new FrameworkPropertyMetadata(double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure, OnHeightChanged));
-            WidthProperty.OverrideMetadata(typeof(ZapScrollBar), new FrameworkPropertyMetadata(20.0, FrameworkPropertyMetadataOptions.AffectsMeasure, OnWidthChanged));
+            WidthProperty.OverrideMetadata(typeof(ZapScrollBar), new FrameworkPropertyMetadata(15.0, FrameworkPropertyMetadataOptions.AffectsMeasure, OnWidthChanged));
         }
 
         public ZapScrollBar()

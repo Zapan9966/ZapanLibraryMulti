@@ -221,7 +221,7 @@ namespace ZapanControls.DataTemplateSelectors
             "RowBorderBrush", typeof(Brush), typeof(ZapDataGrid), new FrameworkPropertyMetadata(Brushes.Transparent));
 
         /// <summary>
-        /// Obtient ou défini la couleur des bordures des éléments du <see cref="ListView"/>. 
+        /// Obtient ou défini la couleur des bordures des éléments du <see cref="System.Windows.Controls.ListView"/>. 
         /// </summary>
         public Brush RowBorderBrush
         {
@@ -236,7 +236,7 @@ namespace ZapanControls.DataTemplateSelectors
             "RowForeground", typeof(Brush), typeof(ZapDataGrid), new FrameworkPropertyMetadata(Brushes.White));
 
         /// <summary>
-        /// Obtient ou défini la couleur de la police des éléments du <see cref="ListView"/>. 
+        /// Obtient ou défini la couleur de la police des éléments du <see cref="System.Windows.Controls.ListView"/>. 
         /// </summary>
         public Brush RowForeground
         {
@@ -251,7 +251,7 @@ namespace ZapanControls.DataTemplateSelectors
             "RowBorderThickness", typeof(Thickness), typeof(ZapDataGrid), new FrameworkPropertyMetadata(new Thickness(0)));
 
         /// <summary>
-        /// Obtient ou défini la taille des bordures des éléments du <see cref="ListView"/>. 
+        /// Obtient ou défini la taille des bordures des éléments du <see cref="System.Windows.Controls.ListView"/>. 
         /// </summary>
         public Thickness RowBorderThickness
         {
@@ -270,7 +270,7 @@ namespace ZapanControls.DataTemplateSelectors
             "RowMouseOverBackground", typeof(Brush), typeof(ZapDataGrid), new FrameworkPropertyMetadata(_rowMouseOverBackground));
 
         /// <summary>
-        /// Obtient ou défini la couleur de fond des éléments du <see cref="ListView"/> lors du survol de la souris. 
+        /// Obtient ou défini la couleur de fond des éléments du <see cref="System.Windows.Controls.ListView"/> lors du survol de la souris. 
         /// </summary>
         public Brush RowMouseOverBackground
         {
@@ -285,7 +285,7 @@ namespace ZapanControls.DataTemplateSelectors
             "RowMouseOverForeground", typeof(Brush), typeof(ZapDataGrid), new FrameworkPropertyMetadata(Brushes.BlueViolet));
 
         /// <summary>
-        /// Obtient ou défini la couleur de la police des éléments du <see cref="ListView"/> lors du survol de la souris. 
+        /// Obtient ou défini la couleur de la police des éléments du <see cref="System.Windows.Controls.ListView"/> lors du survol de la souris. 
         /// </summary>
         public Brush RowMouseOverForeground
         {
@@ -304,7 +304,7 @@ namespace ZapanControls.DataTemplateSelectors
             "RowSelectionBackground", typeof(Brush), typeof(ZapDataGrid), new FrameworkPropertyMetadata(_rowSelectionActiveBackground));
 
         /// <summary>
-        /// Obtient ou défini la couleur de fond des éléments sélectionnés lorsque le <see cref="ListView"/> a le focus. 
+        /// Obtient ou défini la couleur de fond des éléments sélectionnés lorsque le <see cref="System.Windows.Controls.ListView"/> a le focus. 
         /// </summary>
         public Brush RowSelectionBackground
         {
@@ -319,7 +319,7 @@ namespace ZapanControls.DataTemplateSelectors
             "RowSelectionForeground", typeof(Brush), typeof(ZapDataGrid), new FrameworkPropertyMetadata(Brushes.White));
 
         /// <summary>
-        /// Obtient ou défini la couleur de la police des éléments sélectionnés du <see cref="ListView"/>. 
+        /// Obtient ou défini la couleur de la police des éléments sélectionnés du <see cref="System.Windows.Controls.ListView"/>. 
         /// </summary>
         public Brush RowSelectionForeground
         {

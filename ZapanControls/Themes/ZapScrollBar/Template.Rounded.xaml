@@ -24,7 +24,7 @@
                        StrokeThickness="{TemplateBinding BorderThickness}"
                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                        UseLayoutRounding="{TemplateBinding UseLayoutRounding}"
-                       Width="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type z:ZapScrollBar}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*0.7}"/>
+                       Width="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type z:ZapScrollBar}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*0.71}"/>
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="Tag" Value="Horizontal">

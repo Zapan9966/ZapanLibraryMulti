@@ -28,8 +28,8 @@
     </LinearGradientBrush>-->
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollViewerResourceKeys}, ResourceId=ScrollBarBorderBrush}" Color="Transparent" />
     <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollViewerResourceKeys}, ResourceId=ScrollBarBorderThickness}">0</Thickness>
-    <sys:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollViewerResourceKeys}, ResourceId=ScrollBarHeight}">20.0</sys:Double>
-    <sys:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollViewerResourceKeys}, ResourceId=ScrollBarWidth}">20.0</sys:Double>
+    <sys:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollViewerResourceKeys}, ResourceId=ScrollBarHeight}">15.0</sys:Double>
+    <sys:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollViewerResourceKeys}, ResourceId=ScrollBarWidth}">15.0</sys:Double>
 
     <!--scrollbar buttons-->
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapScrollViewerResourceKeys}, ResourceId=ButtonBackground}" Color="OrangeRed" />

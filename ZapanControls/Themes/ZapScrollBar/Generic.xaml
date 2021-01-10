@@ -59,6 +59,8 @@
                             </Grid.RowDefinitions>
                             <RepeatButton x:Name="DecreaseRepeat"
 						                  Command="ScrollBar.LineUpCommand"
+                                          HorizontalContentAlignment="Center"
+                                          VerticalContentAlignment="Center"
 						                  Foreground="{TemplateBinding ButtonBackground}"
 						                  Style="{StaticResource ScrollButtons}"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
@@ -69,8 +71,8 @@
                                          HorizontalAlignment="Center" VerticalAlignment="Center"
                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                          UseLayoutRounding="{TemplateBinding UseLayoutRounding}"
-                                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type RepeatButton}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*1.60}" 
-                                         Height="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type RepeatButton}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*1.60}">
+                                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type RepeatButton}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*1.55}" 
+                                         Height="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type RepeatButton}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*1.55}">
                                     <Canvas Width="24" Height="24">
                                         <Path x:Name="DecreaseArrow"                                           
                                               Data="M7,15L12,10L17,15H7Z" 
@@ -86,7 +88,7 @@
                                        Grid.Row="1"
                                        HorizontalAlignment="Center"
                                        Fill="{TemplateBinding ThumbInnerBackground}"
-                                       Width="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type z:ZapScrollBar}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*0.7}"
+                                       Width="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type z:ZapScrollBar}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*0.71}"
 						               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                                        UseLayoutRounding="{TemplateBinding UseLayoutRounding}" />
                             <Track x:Name="PART_Track"
@@ -114,6 +116,8 @@
                             <RepeatButton x:Name="IncreaseRepeat"
 						                  Grid.Row="2"
 						                  Command="ScrollBar.LineDownCommand"
+                                          HorizontalContentAlignment="Center"
+                                          VerticalContentAlignment="Center"
 						                  Foreground="{TemplateBinding ButtonBackground}"
 						                  Style="{StaticResource ScrollButtons}"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
@@ -124,8 +128,8 @@
                                          HorizontalAlignment="Center" VerticalAlignment="Center"
                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                          UseLayoutRounding="{TemplateBinding UseLayoutRounding}"
-                                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type RepeatButton}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*1.60}" 
-                                         Height="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type RepeatButton}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*1.60}">
+                                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type RepeatButton}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*1.55}" 
+                                         Height="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type RepeatButton}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*1.55}">
                                     <Canvas Width="24" Height="24">
                                         <Path x:Name="IncreaseArrow"
                                               Data="M7,10L12,15L17,10H7Z" 
@@ -191,19 +195,19 @@
                             </Setter>
                             <Setter Property="Width" Value="Auto" />
                             <Setter TargetName="Thumb" Property="Tag" Value="Horizontal" />
-                            <Setter TargetName="InnerTrack" Property="Width" Value="{Binding Height, RelativeSource={RelativeSource AncestorType={x:Type z:ZapScrollBar}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*0.7}" />
+                            <Setter TargetName="InnerTrack" Property="Width" Value="{Binding Height, RelativeSource={RelativeSource AncestorType={x:Type z:ZapScrollBar}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*0.71}" />
                             <!--decrease-->
                             <Setter TargetName="DecreaseRepeat" Property="Height" Value="{Binding Height, RelativeSource={RelativeSource AncestorType={x:Type z:ZapScrollBar}}}" />
                             <Setter TargetName="DecreaseRepeat" Property="Width" Value="{Binding Height, RelativeSource={RelativeSource AncestorType={x:Type z:ZapScrollBar}}}" />
-                            <Setter TargetName="DecreaseViewbox" Property="Height" Value="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type RepeatButton}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*1.60}" />
-                            <Setter TargetName="DecreaseViewbox" Property="Width" Value="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type RepeatButton}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*1.60}" />
+                            <Setter TargetName="DecreaseViewbox" Property="Height" Value="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type RepeatButton}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*1.55}" />
+                            <Setter TargetName="DecreaseViewbox" Property="Width" Value="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type RepeatButton}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*1.55}" />
                             <Setter TargetName="DecreaseRepeat" Property="Command" Value="ScrollBar.LineLeftCommand" />
                             <Setter TargetName="PageUp" Property="Command" Value="ScrollBar.PageRightCommand" />
                             <!--increase-->
                             <Setter TargetName="IncreaseRepeat" Property="Height" Value="{Binding Height, RelativeSource={RelativeSource AncestorType={x:Type z:ZapScrollBar}}}" />
                             <Setter TargetName="IncreaseRepeat" Property="Width" Value="{Binding Height, RelativeSource={RelativeSource AncestorType={x:Type z:ZapScrollBar}}}" />
-                            <Setter TargetName="InceaseViewbox" Property="Height" Value="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type RepeatButton}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*1.60}" />
-                            <Setter TargetName="InceaseViewbox" Property="Width" Value="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type RepeatButton}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*1.60}" />
+                            <Setter TargetName="InceaseViewbox" Property="Height" Value="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type RepeatButton}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*1.55}" />
+                            <Setter TargetName="InceaseViewbox" Property="Width" Value="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type RepeatButton}}, Converter={c:MathConverter}, ConverterParameter=@VALUE*1.55}" />
                             <Setter TargetName="IncreaseRepeat" Property="Command" Value="ScrollBar.LineRightCommand" />
                             <Setter TargetName="PageDown" Property="Command" Value="ScrollBar.PageLeftCommand" />
                         </Trigger>
