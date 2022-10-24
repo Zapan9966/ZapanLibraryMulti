@@ -21,7 +21,7 @@ using Ctrl = System.Windows.Controls;
 
 namespace ZapanControls.Controls
 {
-    public sealed class ZapListView : ListView, INotifyPropertyChanged, IDisposable
+    public sealed class ZapListViewOld : Ctrl.ListView, INotifyPropertyChanged, IDisposable
     {
         private static readonly ResourceDictionary _dict = new ResourceDictionary
         {
@@ -38,7 +38,7 @@ namespace ZapanControls.Controls
         private ZapLoadingIndicator _loadingIndicator;
         private Dictionary<string, KeyValuePair<object, IValueConverter>> _filtersDictionary;
 
-        private ZapGridViewColumn _sortedColumn;
+        private GridViewColumn _sortedColumn;
         private ListSortDirection? _sortDirection;
 
         public Dictionary<string, KeyValuePair<object, IValueConverter>> FiltersDictionary
@@ -132,10 +132,10 @@ namespace ZapanControls.Controls
         #region ListView Properties
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapListView.IsSearchAsync"/>.
+        /// Identifie la propriété de dépendance <see cref="ZapListViewOld.IsSearchAsync"/>.
         /// </summary>
         private static readonly DependencyProperty IsSearchAsyncProperty = DependencyProperty.Register(
-            "IsSearchAsync", typeof(bool), typeof(ZapListView), new FrameworkPropertyMetadata(true));
+            "IsSearchAsync", typeof(bool), typeof(ZapListViewOld), new FrameworkPropertyMetadata(true));
 
         /// <summary>
         /// Obtient ou défini la valeur indiquant si la recherche dans le listview est asynchrone. 
@@ -147,10 +147,10 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapListView.IsAutoResizeColumns"/>.
+        /// Identifie la propriété de dépendance <see cref="ZapListViewOld.IsAutoResizeColumns"/>.
         /// </summary>
         private static readonly DependencyProperty IsAutoResizeColumnsProperty = DependencyProperty.Register(
-            "IsAutoResizeColumns", typeof(bool), typeof(ZapListView), new FrameworkPropertyMetadata(true));
+            "IsAutoResizeColumns", typeof(bool), typeof(ZapListViewOld), new FrameworkPropertyMetadata(true));
 
         /// <summary>
         /// Obtient ou défini la valeur indiquant si les colonnes doivent être redimenssionnées automatiquement. 
@@ -162,10 +162,10 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapListView.HeaderVisibility"/>.
+        /// Identifie la propriété de dépendance <see cref="ZapListViewOld.HeaderVisibility"/>.
         /// </summary>
         private static readonly DependencyProperty HeaderVisibilityProperty = DependencyProperty.Register(
-            "HeaderVisibility", typeof(Visibility), typeof(ZapListView), new FrameworkPropertyMetadata(Visibility.Visible));
+            "HeaderVisibility", typeof(Visibility), typeof(ZapListViewOld), new FrameworkPropertyMetadata(Visibility.Visible));
 
         /// <summary>
         /// Obtient ou défini de la visibilité des entêtes de colonne. 
@@ -177,10 +177,10 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapListView.DisabledBackground"/>.
+        /// Identifie la propriété de dépendance <see cref="ZapListViewOld.DisabledBackground"/>.
         /// </summary>
         private static readonly DependencyProperty DisabledBackgroundProperty = DependencyProperty.Register(
-            "DisabledBackground", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(_disabledBackground));
+            "DisabledBackground", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(_disabledBackground));
 
         /// <summary>
         /// Obtient ou défini la couleur de fond lorsque le ListView est désactivé. 
@@ -196,10 +196,10 @@ namespace ZapanControls.Controls
         #region Header Properties
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapListView.HeaderBackground"/>.
+        /// Identifie la propriété de dépendance <see cref="ZapListViewOld.HeaderBackground"/>.
         /// </summary>
         private static readonly DependencyProperty HeaderBackgroundProperty = DependencyProperty.Register(
-            "HeaderBackground", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(_headerBackground_LinearGradientBrushDefault));
+            "HeaderBackground", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(_headerBackground_LinearGradientBrushDefault));
 
         /// <summary>
         /// Obtient ou défini la couleur de fond de l'en-tête des colonnes. 
@@ -211,10 +211,10 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapListView.HeaderBorderBrush"/>.
+        /// Identifie la propriété de dépendance <see cref="ZapListViewOld.HeaderBorderBrush"/>.
         /// </summary>
         private static readonly DependencyProperty HeaderBorderBrushProperty = DependencyProperty.Register(
-            "HeaderBorderBrush", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(Brushes.Indigo));
+            "HeaderBorderBrush", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(Brushes.Indigo));
 
         /// <summary>
         /// Obtient ou défini la couleur des bordures de l'en-tête des colonnes. 
@@ -226,10 +226,10 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapListView.HeaderForeground"/>.
+        /// Identifie la propriété de dépendance <see cref="ZapListViewOld.HeaderForeground"/>.
         /// </summary>
         private static readonly DependencyProperty HeaderForegroundProperty = DependencyProperty.Register(
-            "HeaderForeground", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(Brushes.FloralWhite));
+            "HeaderForeground", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(Brushes.FloralWhite));
 
         /// <summary>
         /// Obtient ou défini la couleur de la police de l'en-tête des colonnes. 
@@ -241,10 +241,10 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapListView.HeaderBackgroundMouseOver"/>.
+        /// Identifie la propriété de dépendance <see cref="ZapListViewOld.HeaderBackgroundMouseOver"/>.
         /// </summary>
         private static readonly DependencyProperty HeaderBackgroundMouseOverProperty = DependencyProperty.Register(
-            "HeaderBackgroundMouseOver", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(_headerBackgroundMouseOver_LinearGradientBrushDefault));
+            "HeaderBackgroundMouseOver", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(_headerBackgroundMouseOver_LinearGradientBrushDefault));
 
         /// <summary>
         /// Obtient ou défini la couleur de fond de l'en-tête des colonnes quand la souris est au dessus. 
@@ -256,10 +256,10 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapListView.HeaderBackgroundIsPressed"/>.
+        /// Identifie la propriété de dépendance <see cref="ZapListViewOld.HeaderBackgroundIsPressed"/>.
         /// </summary>
         private static readonly DependencyProperty HeaderBackgroundIsPressedProperty = DependencyProperty.Register(
-            "HeaderBackgroundIsPressed", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(_headerBackgroundIsPressed_LinearGradientBrushDefault));
+            "HeaderBackgroundIsPressed", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(_headerBackgroundIsPressed_LinearGradientBrushDefault));
 
         /// <summary>
         /// Obtient ou défini la couleur de fond de l'en-tête des colonnes quand la souris est au dessus. 
@@ -275,13 +275,13 @@ namespace ZapanControls.Controls
         #region ItemContainer
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapListView.ItemBackground"/>.
+        /// Identifie la propriété de dépendance <see cref="ZapListViewOld.ItemBackground"/>.
         /// </summary>
         private static readonly DependencyProperty ItemBackgroundProperty = DependencyProperty.Register(
-            "ItemBackground", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(Brushes.Transparent));
+            "ItemBackground", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(Brushes.Transparent));
 
         /// <summary>
-        /// Obtient ou défini la couleur de fond des éléments du <see cref="ListView"/>. 
+        /// Obtient ou défini la couleur de fond des éléments du <see cref="Ctrl.ListView"/>. 
         /// </summary>
         public Brush ItemBackground
         {
@@ -290,13 +290,13 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapListView.ItemBorderBrush"/>.
+        /// Identifie la propriété de dépendance <see cref="ZapListViewOld.ItemBorderBrush"/>.
         /// </summary>
         private static readonly DependencyProperty ItemBorderBrushProperty = DependencyProperty.Register(
-            "ItemBorderBrush", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(Brushes.Transparent));
+            "ItemBorderBrush", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(Brushes.Transparent));
 
         /// <summary>
-        /// Obtient ou défini la couleur des bordures des éléments du <see cref="ListView"/>. 
+        /// Obtient ou défini la couleur des bordures des éléments du <see cref="Ctrl.ListView"/>. 
         /// </summary>
         public Brush ItemBorderBrush
         {
@@ -305,13 +305,13 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapListView.ItemForeground"/>.
+        /// Identifie la propriété de dépendance <see cref="ZapListViewOld.ItemForeground"/>.
         /// </summary>
         private static readonly DependencyProperty ItemForegroundProperty = DependencyProperty.Register(
-            "ItemForeground", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(Brushes.White));
+            "ItemForeground", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(Brushes.White));
 
         /// <summary>
-        /// Obtient ou défini la couleur de la police des éléments du <see cref="ListView"/>. 
+        /// Obtient ou défini la couleur de la police des éléments du <see cref="Ctrl.ListView"/>. 
         /// </summary>
         public Brush ItemForeground
         {
@@ -320,13 +320,13 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapListView.ItemBorderThickness"/>.
+        /// Identifie la propriété de dépendance <see cref="ZapListViewOld.ItemBorderThickness"/>.
         /// </summary>
         private static readonly DependencyProperty ItemBorderThicknessProperty = DependencyProperty.Register(
-            "ItemBorderThickness", typeof(Thickness), typeof(ZapListView), new FrameworkPropertyMetadata(new Thickness(0)));
+            "ItemBorderThickness", typeof(Thickness), typeof(ZapListViewOld), new FrameworkPropertyMetadata(new Thickness(0)));
 
         /// <summary>
-        /// Obtient ou défini la taille des bordures des éléments du <see cref="ListView"/>. 
+        /// Obtient ou défini la taille des bordures des éléments du <see cref="Ctrl.ListView"/>. 
         /// </summary>
         public Thickness ItemBorderThickness
         {
@@ -339,13 +339,13 @@ namespace ZapanControls.Controls
         #region Item MouseOver
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapListView.ItemMouseOverBackground"/>.
+        /// Identifie la propriété de dépendance <see cref="ZapListViewOld.ItemMouseOverBackground"/>.
         /// </summary>
         private static readonly DependencyProperty ItemMouseOverBackgroundProperty = DependencyProperty.Register(
-            "ItemMouseOverBackground", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(_itemMouseOverBackground));
+            "ItemMouseOverBackground", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(_itemMouseOverBackground));
 
         /// <summary>
-        /// Obtient ou défini la couleur de fond des éléments du <see cref="ListView"/> lors du survol de la souris. 
+        /// Obtient ou défini la couleur de fond des éléments du <see cref="Ctrl.ListView"/> lors du survol de la souris. 
         /// </summary>
         public Brush ItemMouseOverBackground
         {
@@ -354,13 +354,13 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapListView.ItemMouseOverForeground"/>.
+        /// Identifie la propriété de dépendance <see cref="ZapListViewOld.ItemMouseOverForeground"/>.
         /// </summary>
         private static readonly DependencyProperty ItemMouseOverForegroundProperty = DependencyProperty.Register(
-            "ItemMouseOverForeground", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(Brushes.BlueViolet));
+            "ItemMouseOverForeground", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(Brushes.BlueViolet));
 
         /// <summary>
-        /// Obtient ou défini la couleur de la police des éléments du <see cref="ListView"/> lors du survol de la souris. 
+        /// Obtient ou défini la couleur de la police des éléments du <see cref="Ctrl.ListView"/> lors du survol de la souris. 
         /// </summary>
         public Brush ItemMouseOverForeground
         {
@@ -373,13 +373,13 @@ namespace ZapanControls.Controls
         #region ListViewItem Selection
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapListView.ItemSelectionActiveBackground"/>.
+        /// Identifie la propriété de dépendance <see cref="ZapListViewOld.ItemSelectionActiveBackground"/>.
         /// </summary>
         private static readonly DependencyProperty ItemSelectionActiveBackgroundProperty = DependencyProperty.Register(
-            "ItemSelectionActiveBackground", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(_itemSelectionActiveBackground));
+            "ItemSelectionActiveBackground", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(_itemSelectionActiveBackground));
 
         /// <summary>
-        /// Obtient ou défini la couleur de fond des éléments sélectionnés lorsque le <see cref="ListView"/> a le focus. 
+        /// Obtient ou défini la couleur de fond des éléments sélectionnés lorsque le <see cref="Ctrl.ListView"/> a le focus. 
         /// </summary>
         public Brush ItemSelectionActiveBackground
         {
@@ -388,13 +388,13 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapListView.ItemSelectionInactiveBackground"/>.
+        /// Identifie la propriété de dépendance <see cref="ZapListViewOld.ItemSelectionInactiveBackground"/>.
         /// </summary>
         private static readonly DependencyProperty ItemSelectionInactiveBackgroundProperty = DependencyProperty.Register(
-            "ItemSelectionInactiveBackground", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(_itemSelectionInactiveBackground));
+            "ItemSelectionInactiveBackground", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(_itemSelectionInactiveBackground));
 
         /// <summary>
-        /// Obtient ou défini la couleur de fond des éléments sélectionnés lorsque le <see cref="ListView"/> n'a pas le focus. 
+        /// Obtient ou défini la couleur de fond des éléments sélectionnés lorsque le <see cref="Ctrl.ListView"/> n'a pas le focus. 
         /// </summary>
         public Brush ItemSelectionInactiveBackground
         {
@@ -403,13 +403,13 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapListView.ItemSelectionForeground"/>.
+        /// Identifie la propriété de dépendance <see cref="ZapListViewOld.ItemSelectionForeground"/>.
         /// </summary>
         private static readonly DependencyProperty ItemSelectionForegroundProperty = DependencyProperty.Register(
-            "ItemSelectionForeground", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(Brushes.LavenderBlush));
+            "ItemSelectionForeground", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(Brushes.LavenderBlush));
 
         /// <summary>
-        /// Obtient ou défini la couleur de la police des éléments sélectionnés du <see cref="ListView"/>. 
+        /// Obtient ou défini la couleur de la police des éléments sélectionnés du <see cref="Ctrl.ListView"/>. 
         /// </summary>
         public Brush ItemSelectionForeground
         {
@@ -422,7 +422,7 @@ namespace ZapanControls.Controls
         #region ScrollBar
 
         private static readonly DependencyProperty ScrollBarBackgroundProperty = DependencyProperty.Register(
-            "ScrollBarBackground", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(_scrollBarBackground));
+            "ScrollBarBackground", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(_scrollBarBackground));
 
         public Brush ScrollBarBackground
         {
@@ -433,7 +433,7 @@ namespace ZapanControls.Controls
         #region ScrollBar Thumb properties
 
         private static readonly DependencyProperty ScrollBarThumbInnerBackgroundProperty = DependencyProperty.Register(
-            "ScrollBarThumbInnerBackground", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(_scrollBarThumbInnerBackground));
+            "ScrollBarThumbInnerBackground", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(_scrollBarThumbInnerBackground));
 
         public Brush ScrollBarThumbInnerBackground
         {
@@ -442,7 +442,7 @@ namespace ZapanControls.Controls
         }
 
         private static readonly DependencyProperty ScrollBarThumbBackgroundProperty = DependencyProperty.Register(
-            "ScrollBarThumbBackground", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(Brushes.DarkViolet));
+            "ScrollBarThumbBackground", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(Brushes.DarkViolet));
 
         public Brush ScrollBarThumbBackground
         {
@@ -451,7 +451,7 @@ namespace ZapanControls.Controls
         }
 
         private static readonly DependencyProperty ScrollBarThumbBorderBrushProperty = DependencyProperty.Register(
-            "ScrollBarThumbBorderBrush", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(null));
+            "ScrollBarThumbBorderBrush", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(null));
 
         public Brush ScrollBarThumbBorderBrush
         {
@@ -460,7 +460,7 @@ namespace ZapanControls.Controls
         }
 
         private static readonly DependencyProperty ScrollBarThumbBorderThicknessProperty = DependencyProperty.Register(
-            "ScrollBarThumbBorderThickness", typeof(Thickness), typeof(ZapListView), new FrameworkPropertyMetadata(null));
+            "ScrollBarThumbBorderThickness", typeof(Thickness), typeof(ZapListViewOld), new FrameworkPropertyMetadata(null));
 
         public Thickness ScrollBarThumbBorderThickness
         {
@@ -473,7 +473,7 @@ namespace ZapanControls.Controls
         #region ScrollBar Buttons properties
 
         private static readonly DependencyProperty ScrollBarButtonBackgroundProperty = DependencyProperty.Register(
-            "ScrollBarButtonBackground", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(Brushes.DarkViolet));
+            "ScrollBarButtonBackground", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(Brushes.DarkViolet));
 
         public Brush ScrollBarButtonBackground
         {
@@ -482,7 +482,7 @@ namespace ZapanControls.Controls
         }
 
         private static readonly DependencyProperty ScrollBarButtonBorderBrushProperty = DependencyProperty.Register(
-            "ScrollBarButtonBorderBrush", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(null));
+            "ScrollBarButtonBorderBrush", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(null));
 
         public Brush ScrollBarButtonBorderBrush
         {
@@ -491,7 +491,7 @@ namespace ZapanControls.Controls
         }
 
         private static readonly DependencyProperty ScrollBarButtonBorderThicknessProperty = DependencyProperty.Register(
-            "ScrollBarButtonBorderThickness", typeof(double), typeof(ZapListView), new FrameworkPropertyMetadata(null));
+            "ScrollBarButtonBorderThickness", typeof(double), typeof(ZapListViewOld), new FrameworkPropertyMetadata(null));
 
         public double ScrollBarButtonBorderThickness
         {
@@ -504,7 +504,7 @@ namespace ZapanControls.Controls
         #region ScrollBar Disabled properties
 
         private static readonly DependencyProperty ScrollBarDisabledThumbInnerBackgroundProperty = DependencyProperty.Register(
-            "ScrollBarDisabledThumbInnerBackground", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(_scrollBarDisabledButtonBackground));
+            "ScrollBarDisabledThumbInnerBackground", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(_scrollBarDisabledButtonBackground));
 
         public Brush ScrollBarDisabledThumbInnerBackground
         {
@@ -513,7 +513,7 @@ namespace ZapanControls.Controls
         }
 
         private static readonly DependencyProperty ScrollBarDisabledButtonBackgroundProperty = DependencyProperty.Register(
-            "ScrollBarDisabledButtonBackground", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(_scrollBarDisabledButtonBackground));
+            "ScrollBarDisabledButtonBackground", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(_scrollBarDisabledButtonBackground));
 
         public Brush ScrollBarDisabledButtonBackground
         {
@@ -522,7 +522,7 @@ namespace ZapanControls.Controls
         }
 
         private static readonly DependencyProperty ScrollBarDisabledButtonBorderBrushProperty = DependencyProperty.Register(
-            "ScrollBarDisabledButtonBorderBrush", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(null));
+            "ScrollBarDisabledButtonBorderBrush", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(null));
 
         public Brush ScrollBarDisabledButtonBorderBrush
         {
@@ -531,7 +531,7 @@ namespace ZapanControls.Controls
         }
 
         private static readonly DependencyProperty ScrollBarDisabledButtonBorderThicknessProperty = DependencyProperty.Register(
-            "ScrollBarDisabledButtonBorderThickness", typeof(double), typeof(ZapListView), new FrameworkPropertyMetadata(null));
+            "ScrollBarDisabledButtonBorderThickness", typeof(double), typeof(ZapListViewOld), new FrameworkPropertyMetadata(null));
 
         public double ScrollBarDisabledButtonBorderThickness
         {
@@ -546,7 +546,7 @@ namespace ZapanControls.Controls
         #region Loading Indicator
 
         private static readonly DependencyProperty LoadingIndicatorBackgroundProperty = DependencyProperty.Register(
-            "LoadingIndicatorBackground", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(Brushes.DarkViolet));
+            "LoadingIndicatorBackground", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(Brushes.DarkViolet));
 
         public Brush LoadingIndicatorBackground
         {
@@ -555,7 +555,7 @@ namespace ZapanControls.Controls
         }
 
         private static readonly DependencyProperty LoadingIndicatorForegroundProperty = DependencyProperty.Register(
-            "LoadingIndicatorForeground", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(Brushes.White));
+            "LoadingIndicatorForeground", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(Brushes.White));
 
         public Brush LoadingIndicatorForeground
         {
@@ -564,7 +564,7 @@ namespace ZapanControls.Controls
         }
 
         private static readonly DependencyProperty LoadingIndicatorBorderBrushProperty = DependencyProperty.Register(
-            "LoadingIndicatorBorderBrush", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(Brushes.Indigo));
+            "LoadingIndicatorBorderBrush", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(Brushes.Indigo));
 
         public Brush LoadingIndicatorBorderBrush
         {
@@ -573,7 +573,7 @@ namespace ZapanControls.Controls
         }
 
         private static readonly DependencyProperty LoadingIndicatorAccentColorProperty = DependencyProperty.Register(
-            "LoadingIndicatorAccentColor", typeof(Brush), typeof(ZapListView), new FrameworkPropertyMetadata(Brushes.Indigo));
+            "LoadingIndicatorAccentColor", typeof(Brush), typeof(ZapListViewOld), new FrameworkPropertyMetadata(Brushes.Indigo));
 
         public Brush LoadingIndicatorAccentColor
         {
@@ -582,7 +582,7 @@ namespace ZapanControls.Controls
         }
 
         private static readonly DependencyProperty LoadingIndicatorBorderThicknessProperty = DependencyProperty.Register(
-            "LoadingIndicatorBorderThickness", typeof(Thickness), typeof(ZapListView), new FrameworkPropertyMetadata(new Thickness(2)));
+            "LoadingIndicatorBorderThickness", typeof(Thickness), typeof(ZapListViewOld), new FrameworkPropertyMetadata(new Thickness(2)));
 
         public Thickness LoadingIndicatorBorderThickness
         {
@@ -591,7 +591,7 @@ namespace ZapanControls.Controls
         }
 
         private static readonly DependencyProperty LoadingIndicatorCornerRadiusProperty = DependencyProperty.Register(
-            "LoadingIndicatorCornerRadius", typeof(CornerRadius), typeof(ZapListView), new FrameworkPropertyMetadata(new CornerRadius(6)));
+            "LoadingIndicatorCornerRadius", typeof(CornerRadius), typeof(ZapListViewOld), new FrameworkPropertyMetadata(new CornerRadius(6)));
 
         public CornerRadius LoadingIndicatorCornerRadius
         {
@@ -600,7 +600,7 @@ namespace ZapanControls.Controls
         }
 
         private static readonly DependencyProperty LoadingIndicatorTextProperty = DependencyProperty.Register(
-            "LoadingIndicatorText", typeof(string), typeof(ZapListView), new FrameworkPropertyMetadata("Chargement des données en cours, patienter..."));
+            "LoadingIndicatorText", typeof(string), typeof(ZapListViewOld), new FrameworkPropertyMetadata("Chargement des données en cours, patienter..."));
 
         public string LoadingIndicatorText
         {
@@ -687,11 +687,11 @@ namespace ZapanControls.Controls
                 // Réinitialidation des indicateurs de tri sur les colonnes
                 if (View is GridView gridView)
                 {
-                    foreach (ZapGridViewColumn col in gridView.Columns)
+                    foreach (GridViewColumn col in gridView.Columns)
                         col.SortDirection = null;
                 }
 
-                if (header.Column is ZapGridViewColumn column)
+                if (header.Column is GridViewColumn column)
                 {
                     ListSortDirection direction = _sortedColumn == column && _sortDirection == ListSortDirection.Ascending ?
                         ListSortDirection.Descending : ListSortDirection.Ascending;
@@ -727,7 +727,7 @@ namespace ZapanControls.Controls
         /// </summary>
         public ICommand ItemMouseDoubleClickCommand { get; }
 
-        private void OnItemMouseDoubleClick(ListViewItem row)
+        private void OnItemMouseDoubleClick(Ctrl.ListViewItem row)
         {
             ItemMouseDoubleClick?.Invoke(row, new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left)
             {
@@ -746,7 +746,7 @@ namespace ZapanControls.Controls
         public event EventHandler<NotifyCollectionChangedEventArgs> ItemsChanged;
 
         /// <summary>
-        /// Se produit lors du double clique sur un élément du <see cref="ZapListView"/>.
+        /// Se produit lors du double clique sur un élément du <see cref="ZapListViewOld"/>.
         /// </summary>
         public event MouseButtonEventHandler ItemMouseDoubleClick;
 
@@ -831,9 +831,9 @@ namespace ZapanControls.Controls
         #region Constructors
 
         /// <summary>
-        /// Constructeur de la classe <see cref="ZapListView"/>.
+        /// Constructeur de la classe <see cref="ZapListViewOld"/>.
         /// </summary>
-        public ZapListView()
+        public ZapListViewOld()
         {
             RemoveDateCommand = new RelayCommand<Ctrl.DatePicker>(
                 param => RemoveDateClick(param),
@@ -851,7 +851,7 @@ namespace ZapanControls.Controls
                 param => OnColumnHeaderClick(param),
                 param => true);
 
-            ItemMouseDoubleClickCommand = new RelayCommand<ListViewItem>(
+            ItemMouseDoubleClickCommand = new RelayCommand<Ctrl.ListViewItem>(
                 param => OnItemMouseDoubleClick(param),
                 param => true);
 
@@ -865,7 +865,7 @@ namespace ZapanControls.Controls
         #endregion
 
         /// <summary>
-        /// Méthode qui gère le chargement du <see cref="ZapListView"/>.
+        /// Méthode qui gère le chargement du <see cref="ZapListViewOld"/>.
         /// </summary>
         private void InternalZapListView_Loaded(object sender, RoutedEventArgs e)
         {
@@ -878,9 +878,9 @@ namespace ZapanControls.Controls
             }
 
             _sortedColumn = VisualTreeHelpers.FindVisualChildren<GridViewColumnHeader>(this)
-                .Where(h => h.Column is ZapGridViewColumn)
+                .Where(h => h.Column is GridViewColumn)
                 .Select(h => h.Column)
-                .Cast<ZapGridViewColumn>()
+                .Cast<GridViewColumn>()
                 .FirstOrDefault(c => c.SortDirection != null);
             _sortDirection = _sortedColumn?.SortDirection;
 
@@ -897,9 +897,9 @@ namespace ZapanControls.Controls
         {
             if (View is GridView gridView)
             {
-                foreach (GridViewColumn col in gridView.Columns)
+                foreach (Ctrl.GridViewColumn col in gridView.Columns)
                 {
-                    if (col is ZapGridViewColumn zCol)
+                    if (col is GridViewColumn zCol)
                     {
                         if (zCol.IsVisible)
                         {
@@ -939,7 +939,7 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Méthode qui gère l'actualisation du <see cref="ZapListView"/>.
+        /// Méthode qui gère l'actualisation du <see cref="ZapListViewOld"/>.
         /// </summary>
         public void Refresh()
         {
@@ -950,7 +950,7 @@ namespace ZapanControls.Controls
         #region Filter Methods
 
         /// <summary>
-        /// Méthode qui gère le filtrage des éléments du <see cref="ZapListView"/>.
+        /// Méthode qui gère le filtrage des éléments du <see cref="ZapListViewOld"/>.
         /// </summary>
         public async void FilterListView(bool forceLoadingIndicatorStyle = false, bool showLoadingIndicator = true)
         {
@@ -972,7 +972,7 @@ namespace ZapanControls.Controls
             {
                 if (header.Content == null) continue;
 
-                if (header.Column is ZapGridViewColumn column)
+                if (header.Column is GridViewColumn column)
                 {
                     if (column.IsVisible)
                     {
@@ -1264,14 +1264,14 @@ namespace ZapanControls.Controls
             {
                 gv.ColumnHeaderContainerStyle = (Style)_dict["ZapGridViewColumnHeaderStyle"];
 
-                foreach (ZapGridViewColumn column in gv.Columns)
+                foreach (GridViewColumn column in gv.Columns)
                 {
                     string templateFormat;
                     string template = string.Empty;
 
                     switch (column.SearchType)
                     {
-                        case ColumnSearchType.Date:
+                        case ColumnSearchTypes.Date:
                             templateFormat = @"<DataTemplate>
                                 <StackPanel Margin=""0"">
                                     <StackPanel Orientation=""Horizontal"" HorizontalAlignment=""Center"">
@@ -1355,7 +1355,7 @@ namespace ZapanControls.Controls
 
                             template = string.Format(templateFormat);
                             break;
-                        case ColumnSearchType.Text:
+                        case ColumnSearchTypes.Text:
                             templateFormat = @"<DataTemplate>
                                 <StackPanel x:Name=""panel"" Margin=""0"">
                                     <StackPanel Orientation=""Horizontal"" HorizontalAlignment=""Center"" >
@@ -1411,7 +1411,7 @@ namespace ZapanControls.Controls
 
                             template = string.Format(templateFormat);
                             break;
-                        case ColumnSearchType.ComboBox:
+                        case ColumnSearchTypes.ComboBox:
                             if (!string.IsNullOrEmpty(column.ComboBoxSource))
                             {
                                 templateFormat = @"<DataTemplate>
@@ -1651,19 +1651,4 @@ namespace ZapanControls.Controls
         }
 
     }
-
-    #region Enums
-
-    /// <summary>
-    /// Types de recherche pouvant être utilisé sur une colonne.
-    /// </summary>
-    public enum ColumnSearchType
-    {
-        None = 0,
-        Date = 1,
-        Text = 2,
-        ComboBox = 3
-    }
-
-    #endregion
 }

@@ -58,6 +58,24 @@ namespace ZapanControls.Helpers
             }
         }
 
+        public static FrameworkElement FindVisualChild(DependencyObject depObj, string name)
+        {
+            if (depObj != null)
+            {
+                if (depObj is FrameworkElement) (depObj as FrameworkElement).ApplyTemplate();
+
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child is FrameworkElement element && element.Name == name)
+                    {
+                        return child as FrameworkElement;
+                    }
+                }
+            }
+            return null;
+        }
+
         /// <summary>
         /// Recherche le contrôle parent d'un objet.
         /// </summary>

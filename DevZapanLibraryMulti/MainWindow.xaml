@@ -1,16 +1,657 @@
-﻿<Window x:Class="DevZapanLibraryMulti_NETCOREAPP3_1.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DevZapanLibraryMulti"
-        xmlns:z="http://schemas.zapan.com/wpf/controls/2020"
-        mc:Ignorable="d"
-        Title="MainWindow NETCOREAPP3_1" Height="450" Width="800">
+﻿<z:ZapWindow x:Class="DevZapanLibraryMulti_NETCOREAPP3_1.MainWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:DevZapanLibraryMulti"
+             xmlns:z="http://schemas.zapan.com/wpf/controls/2020"
+             xmlns:cp="clr-namespace:ZapanControls.Controls.CalendarPicker;assembly=ZapanControls"
+             xmlns:dp="clr-namespace:ZapanControls.Controls.DatePicker;assembly=ZapanControls"             
+             mc:Ignorable="d"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             Theme="Contactel"
+             Title="MainWindow NETCOREAPP3_1"              
+             Height="450" Width="1000">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="437*"/>
+            <ColumnDefinition Width="217*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <z:ZapTabControl x:Name="tabControl" Grid.ColumnSpan="3" Grid.RowSpan="2" Theme="Oceatech" TabAdd="ZapTabControl_TabAdd" CanAddItem="True" Background="#505050">
+            <z:ZapTabControl.ContextMenu>
+                <z:ZapContextMenu Theme="Contactel" StaysOpen="True">
+                    <z:ZapMenuItem Header="Submenus">
+                        <z:ZapMenuItem Header="Submenus level 1">
+                            <z:ZapMenuItem Header="Submenus level 2">
+                                <z:ZapMenuItem Header="Submenus level 3" />
+                            </z:ZapMenuItem>
+                        </z:ZapMenuItem>
+                    </z:ZapMenuItem>
+                    <z:ZapMenuItem Header="Test" />
+                    <z:ZapMenuItem Header="Test" />
+                    <z:ZapMenuItem Header="Test" />
+                </z:ZapContextMenu>
+            </z:ZapTabControl.ContextMenu>
+            <z:ZapTabItem Header="ListView" IsClosable="False">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <z:ListView ItemDoubleClick="ListView_ItemDoubleClick">
+                        <z:ListView.View>
+                            <z:GridView>
+                                <z:GridViewColumn Header="Column 1" SortDirection="Descending" SearchType="Text" />
+                                <z:GridViewColumn Header="Column 1" SortDirection="Descending" SearchType="Text" />
+                                <z:GridViewColumn Header="Column 1" SortDirection="Descending" SearchType="Text" />
+                                <z:GridViewColumn Header="Column 1" SortDirection="Descending" SearchType="Text" />
+                                <z:GridViewColumn Header="Column 1" SortDirection="Descending" SearchType="Text" />
+                                <z:GridViewColumn Header="Column 1" SortDirection="Descending" SearchType="Text" />
+                                <z:GridViewColumn Header="Column 1" SortDirection="Descending" SearchType="Text" />
+                                <z:GridViewColumn Header="Column 1" SortDirection="Descending" SearchType="Text" />
+                            </z:GridView>
+                        </z:ListView.View>
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" Background="Red" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                        <z:ListViewItem Content="test" />
+                    </z:ListView>
+
+                    <ListView Grid.Column="1">
+                        <ListView.View>
+                            <GridView>
+                                <GridView.Columns>
+                                    <GridViewColumn Header="Column 1"  />
+                                    <GridViewColumn Header="Column 1"  />
+                                    <GridViewColumn Header="Column 1"  />
+                                    <GridViewColumn Header="Column 1"  />
+                                    <GridViewColumn Header="Column 1"  />
+                                    <GridViewColumn Header="Column 1"  />
+                                    <GridViewColumn Header="Column 1"  />
+                                    <GridViewColumn Header="Column 1"  />
+                                </GridView.Columns>
+                            </GridView>
+                        </ListView.View>
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" Background="Red" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                        <ListViewItem Content="test" />
+                    </ListView>
+
+                </Grid>
+            </z:ZapTabItem>
+            <z:ZapTabItem Header="Progress" IsClosable="False">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <z:ZapProgress x:Name="progressFlat" Grid.Column="0" Grid.Row="0" Value="25" IsIndeterminate="false" Text="Oceatech Flat" />
+                    <z:ZapProgress x:Name="progressGlass" Grid.Column="0" Grid.Row="1" Value="75" ZapTemplate="Glass" IsIndeterminate="false" Text="Oceatech Glass" />
+                    <z:ZapProgress x:Name="progressIndeterminate" Grid.Column="0" Grid.Row="2" Value="00" ZapTemplate="Glass" IsIndeterminate="True" Text="Oceatech Indeterminate" />
+                    <z:ZapProgress x:Name="progressFlat1" Grid.Column="1" Grid.Row="0" Value="40" IsIndeterminate="false" Theme="Contactel" Text="Contactel Flat" />
+                    <z:ZapProgress x:Name="progressGlass1" Grid.Column="1" Grid.Row="1" Value="100" ZapTemplate="Glass" IsIndeterminate="false" Theme="Contactel" Text="Contactel Glass" />
+                    <z:ZapProgress x:Name="progressIndeterminate1" Grid.Column="1" Grid.Row="2" Value="50" ZapTemplate="Glass" IsIndeterminate="True" Theme="Contactel" Text="Contactel Indeterminate" />
+
+                </Grid>
+            </z:ZapTabItem>
+            <z:ZapTabItem Header="LoadingIndicator" IsClosable="False">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="Oceatech" Margin="10,0" />
+                    <TextBlock Grid.Row="0" Grid.Column="2" Text="Contactel" Margin="10,0" />
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Arcs" HorizontalAlignment="Right" Margin="10" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="ArcsRing" HorizontalAlignment="Right" Margin="10" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="DoubleBounce" HorizontalAlignment="Right" Margin="10" />
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="FlipPane" HorizontalAlignment="Right" Margin="10" />
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Pulse" HorizontalAlignment="Right" Margin="10" />
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Ring" HorizontalAlignment="Right" Margin="10" />
+                    <TextBlock Grid.Row="7" Grid.Column="0" Text="ThreeDots" HorizontalAlignment="Right" Margin="10" />
+                    <TextBlock Grid.Row="8" Grid.Column="0" Text="Wave" HorizontalAlignment="Right" Margin="10" />
+
+                    <z:ZapLoadingIndicator Grid.Row="1" Grid.Column="1" ZapTemplate="Arcs" Width="20" Height="20" />
+                    <z:ZapLoadingIndicator Grid.Row="2" Grid.Column="1" ZapTemplate="ArcsRing" Width="20" Height="20" />
+                    <z:ZapLoadingIndicator Grid.Row="3" Grid.Column="1" ZapTemplate="DoubleBounce" Width="20" Height="20" />
+                    <z:ZapLoadingIndicator Grid.Row="4" Grid.Column="1" ZapTemplate="FlipPane" Width="20" Height="20" />
+                    <z:ZapLoadingIndicator Grid.Row="5" Grid.Column="1" ZapTemplate="Pulse" Width="20" Height="20" />
+                    <z:ZapLoadingIndicator Grid.Row="6" Grid.Column="1" ZapTemplate="Ring" Width="20" Height="20" />
+                    <z:ZapLoadingIndicator Grid.Row="7" Grid.Column="1" ZapTemplate="ThreeDots" Width="40" />
+                    <z:ZapLoadingIndicator Grid.Row="8" Grid.Column="1" ZapTemplate="Wave" Height="25" />
+
+                    <z:ZapLoadingIndicator Grid.Row="1" Grid.Column="2" Theme="Contactel" ZapTemplate="Arcs" Width="20" Height="20" />
+                    <z:ZapLoadingIndicator Grid.Row="2" Grid.Column="2" Theme="Contactel" ZapTemplate="ArcsRing" Width="20" Height="20" />
+                    <z:ZapLoadingIndicator Grid.Row="3" Grid.Column="2" Theme="Contactel" ZapTemplate="DoubleBounce" Width="20" Height="20" />
+                    <z:ZapLoadingIndicator Grid.Row="4" Grid.Column="2" Theme="Contactel" ZapTemplate="FlipPane" Width="20" Height="20" />
+                    <z:ZapLoadingIndicator Grid.Row="5" Grid.Column="2" Theme="Contactel" ZapTemplate="Pulse" Width="20" Height="20" />
+                    <z:ZapLoadingIndicator Grid.Row="6" Grid.Column="2" Theme="Contactel" ZapTemplate="Ring" Width="20" Height="20" />
+                    <z:ZapLoadingIndicator Grid.Row="7" Grid.Column="2" Theme="Contactel" ZapTemplate="ThreeDots" Width="40" />
+                    <z:ZapLoadingIndicator Grid.Row="8" Grid.Column="2" Theme="Contactel" ZapTemplate="Wave" Height="25" />
+
+                </Grid>
+            </z:ZapTabItem>
+            <z:ZapTabItem Header="ScrollBars" IsClosable="False">
+                <Grid Margin="-3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <z:ZapScrollBar Grid.Column="1" Orientation="Horizontal" Theme="Contactel" />
+                    <z:ZapScrollBar Grid.Row="1" ZapTemplate="Rounded" />
+
+                    <z:ZapScrollViewer Grid.Column="1" Grid.Row="1" Theme="Contactel">
+                        <StackPanel>
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                            <TextBlock Text="fkdsjhfjkdshfjhdskjfhjkdshfjkdshfjkhdsfkjhdsjkfhdskjfhkjdshfkjdshfkjdshfkjhdsfjkhdsfjkhdskjfhkdsjfhkjdshfjkdshfjkhdsfjkhdskjfhkdsfhkdsjfhkjdshfkjdshfkdshfkhdsfkjhdsfkjhdskfjhkdsjfhkdsfh" />
+                        </StackPanel>
+                    </z:ZapScrollViewer>
+                </Grid>
+            </z:ZapTabItem>
+            <z:ZapTabItem Header="Buttons" IsClosable="False">
+                <StackPanel>
+                    <UniformGrid Rows="1" Columns="7" VerticalAlignment="Top" Margin="0,10,0,0" >
+                        <TextBlock Text="Button Flat" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" />
+                        <z:ZapButton Margin="0,0,0,0" 
+                                     Content="Oceatech" 
+                                     />
+                        <z:ZapButton Margin="15,0,0,0" 
+                                     Content="Contactel" 
+                                     Theme="Contactel"
+                                     />
+                        <z:ZapButton Margin="15,0,0,0" 
+                                     Content="Info" 
+                                     Theme="Info"
+                                     />
+                        <z:ZapButton Margin="15,0,0,0" 
+                                     Content="Success" 
+                                     Theme="Success"
+                                     />
+                        <z:ZapButton Margin="15,0,0,0" 
+                                     Content="Warning" 
+                                     Theme="Warning"
+                                     />
+                        <z:ZapButton Margin="15,0,0,0" 
+                                     Content="Danger" 
+                                     Theme="Danger"
+                                     />
+                    </UniformGrid>
+
+                    <UniformGrid Rows="1" Columns="7" VerticalAlignment="Top" Margin="0,10,0,0" >
+                        <TextBlock Text="Button Glass" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" />
+                        <z:ZapButton Margin="0,0,0,0" 
+                                     ZapTemplate="Glass"
+                                     Content="Oceatech" 
+                                     />
+                        <z:ZapButton Margin="15,0,0,0" 
+                                     ZapTemplate="Glass"
+                                     Theme="Contactel"
+                                     Content="Oceatech" 
+                                     />
+                        <z:ZapButton Margin="15,0,0,0" 
+                                     ZapTemplate="Glass"
+                                     Theme="Info"
+                                     Content="Info" 
+                                     />
+                        <z:ZapButton Margin="15,0,0,0" 
+                                     ZapTemplate="Glass"
+                                     Theme="Success"
+                                     Content="Success" 
+                                     />
+                        <z:ZapButton Margin="15,0,0,0" 
+                                     ZapTemplate="Glass"
+                                     Theme="Warning"
+                                     Content="Warning" 
+                                     />
+                        <z:ZapButton Margin="15,0,0,0" 
+                                     ZapTemplate="Glass"
+                                     Theme="Danger"
+                                     Content="Danger" 
+                                     />
+                    </UniformGrid>
+
+                    <UniformGrid Rows="1" Columns="7" VerticalAlignment="Top" Margin="0,10,0,0" >
+                        <TextBlock Text="Button Round" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" />
+                        <z:ZapButton Margin="0,0,0,0" 
+                                     Content="R"                             
+                                     ZapTemplate="Round"
+                                     />
+                        <z:ZapButton Margin="15,0,0,0" 
+                                     Content="R"
+                                     Theme="Contactel"
+                                     ZapTemplate="Round"
+                                     />
+                        <z:ZapButton Margin="15,0,0,0" 
+                                     Content="R"
+                                     Theme="Info"
+                                     ZapTemplate="Round"
+                                     />
+                        <z:ZapButton Margin="15,0,0,0" 
+                                     Content="R"
+                                     Theme="Success"
+                                     ZapTemplate="Round"
+                                     />
+                        <z:ZapButton Margin="15,0,0,0" 
+                                     Content="R"
+                                     Theme="Warning"
+                                     ZapTemplate="Round"
+                                     />
+                        <z:ZapButton Margin="15,0,0,0" 
+                                     Content="R"
+                                     Theme="Danger"
+                                     ZapTemplate="Round"
+                                     />
+                    </UniformGrid>
+
+                    <UniformGrid Rows="1" Columns="7" VerticalAlignment="Top" Margin="0,10,0,0" >
+                        <TextBlock Text="SplitButton Flat" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" />
+                        <z:ZapSplitButton Margin="0,0,0,0"
+                                          ZapTemplate="Flat"
+                                          Content="Oceatech">
+                            <z:ZapMenuItem Header="Submenus" Theme="Contactel">
+                                <z:ZapMenuItem Header="SubMenu level 1" IsSubmenuOpen="True">
+                                    <z:ZapMenuItem Header="SubMenu level 2">
+                                        <z:ZapMenuItem Header="SubMenu level 3" />
+                                    </z:ZapMenuItem>
+                                    <Separator />
+                                    <z:ZapMenuItem Header="No Submenu" />
+                                </z:ZapMenuItem>
+                                <Separator />
+                                <z:ZapMenuItem Header="No Submenu" />
+                            </z:ZapMenuItem>
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                        </z:ZapSplitButton>
+                        <z:ZapSplitButton Margin="15,0,0,0"
+                                          ZapTemplate="Flat"
+                                          Theme="Contactel"
+                                          Content="Contactel">
+                            <z:ZapMenuItem Header="Submenus" Theme="Contactel">
+                                <z:ZapMenuItem Header="SubMenu level 1">
+                                    <z:ZapMenuItem Header="SubMenu level 2" />
+                                    <Separator />
+                                    <z:ZapMenuItem Header="No Submenu" />
+                                </z:ZapMenuItem>
+                                <Separator />
+                                <z:ZapMenuItem Header="No Submenu" />
+                            </z:ZapMenuItem>
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                        </z:ZapSplitButton>
+                        <z:ZapSplitButton Margin="15,0,0,0"
+                                          ZapTemplate="Flat"
+                                          Theme="Info"
+                                          Content="Info">
+                            <z:ZapMenuItem Header="Submenus" Theme="Contactel">
+                                <z:ZapMenuItem Header="SubMenu level 1">
+                                    <z:ZapMenuItem Header="SubMenu level 2" />
+                                    <Separator />
+                                    <z:ZapMenuItem Header="No Submenu" />
+                                </z:ZapMenuItem>
+                                <Separator />
+                                <z:ZapMenuItem Header="No Submenu" />
+                            </z:ZapMenuItem>
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                        </z:ZapSplitButton>
+                        <z:ZapSplitButton Margin="15,0,0,0"
+                                          ZapTemplate="Flat"
+                                          Theme="Success"
+                                          Content="Success">
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                        </z:ZapSplitButton>
+                        <z:ZapSplitButton Margin="15,0,0,0"
+                                          ZapTemplate="Flat"
+                                          Theme="Warning"
+                                          Content="Warning">
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                        </z:ZapSplitButton>
+                        <z:ZapSplitButton Margin="15,0,0,0"
+                                          ZapTemplate="Flat"
+                                          Theme="Danger"
+                                          Content="Danger">
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                        </z:ZapSplitButton>
+                    </UniformGrid>
+
+                    <UniformGrid Rows="1" Columns="7" VerticalAlignment="Top" Margin="0,10,0,0" >
+                        <TextBlock Text="SplitButton Glass" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" />
+                        <z:ZapSplitButton Margin="0,0,0,0"
+                                          ZapTemplate="Glass"
+                                          Content="Oceatech">
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                        </z:ZapSplitButton>
+                        <z:ZapSplitButton Margin="15,0,0,0"
+                                          ZapTemplate="Glass"
+                                          Theme="Contactel"
+                                          Content="Contactel">
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                        </z:ZapSplitButton>
+                        <z:ZapSplitButton Margin="15,0,0,0"
+                                          ZapTemplate="Glass"
+                                          Theme="Info"
+                                          Content="Info">
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                        </z:ZapSplitButton>
+                        <z:ZapSplitButton Margin="15,0,0,0"
+                                          ZapTemplate="Glass"
+                                          Theme="Success"
+                                          Content="Success">
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                        </z:ZapSplitButton>
+                        <z:ZapSplitButton Margin="15,0,0,0"
+                                          ZapTemplate="Glass"
+                                          Theme="Warning"
+                                          Content="Warning">
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                        </z:ZapSplitButton>
+                        <z:ZapSplitButton Margin="15,0,0,0"
+                                          ZapTemplate="Glass"
+                                          Theme="Danger"
+                                          Content="Danger">
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                            <z:ZapMenuItem Header="Test 1" />
+                        </z:ZapSplitButton>
+                    </UniformGrid>
+
+                    <UniformGrid Rows="1" Columns="7" VerticalAlignment="Top" Margin="0,10,0,0" >
+                        <TextBlock Text="ToggleButton Flat" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" />
+                        <z:ZapToggleButton Margin="0,0,0,0"                                   
+                                           Content="Oceatech"/>
+                        <z:ZapToggleButton Margin="15,0,0,0"
+                                           Theme="Contactel"
+                                           Content="Contactel"/>
+                        <z:ZapToggleButton Margin="15,0,0,0"
+                                           Theme="Info"
+                                           Content="Info"/>
+                        <z:ZapToggleButton Margin="15,0,0,0"
+                                           Theme="Success"
+                                           Content="Success"/>
+                        <z:ZapToggleButton Margin="15,0,0,0"
+                                           Theme="Warning"
+                                           Content="Warning"/>
+                        <z:ZapToggleButton Margin="15,0,0,0"
+                                           Theme="Danger"
+                                           Content="Danger"/>                
+                    </UniformGrid>
+
+                    <UniformGrid Rows="1" Columns="7" VerticalAlignment="Top" Margin="0,10,0,0" >
+                        <TextBlock Text="ToggleButton Glass" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" />
+                        <z:ZapToggleButton Margin="0,0,0,0"     
+                                           ZapTemplate="Glass"
+                                           Content="Oceatech"/>
+                        <z:ZapToggleButton Margin="15,0,0,0"
+                                           Theme="Contactel"
+                                           ZapTemplate="Glass"
+                                           Content="Contactel"/>
+                        <z:ZapToggleButton Margin="15,0,0,0"
+                                           Theme="Info"
+                                           ZapTemplate="Glass"
+                                           Content="Info"/>
+                        <z:ZapToggleButton Margin="15,0,0,0"
+                                           Theme="Success"
+                                           ZapTemplate="Glass"
+                                           Content="Success"/>
+                        <z:ZapToggleButton Margin="15,0,0,0"
+                                           Theme="Warning"
+                                           ZapTemplate="Glass"
+                                           Content="Warning"/>
+                        <z:ZapToggleButton Margin="15,0,0,0"
+                                           Theme="Danger"
+                                           ZapTemplate="Glass"
+                                           Content="Danger"/>
+                    </UniformGrid>
+
+                    <UniformGrid Rows="1" Columns="7" VerticalAlignment="Top" Margin="0,10,0,0" >
+                        <TextBlock Text="ToggleButton Round" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" />
+                        <z:ZapToggleButton Margin="0,0,0,0" 
+                                           Content="TR"
+                                           ZapTemplate="Round"
+                                           />
+                        <z:ZapToggleButton Margin="15,0,0,0" 
+                                           Content="TR"
+                                           Theme="Contactel"
+                                           ZapTemplate="Round"
+                                           />
+                        <z:ZapToggleButton Margin="15,0,0,0" 
+                                           Content="TR"
+                                           Theme="Info"
+                                           ZapTemplate="Round"
+                                           />
+                        <z:ZapToggleButton Margin="15,0,0,0" 
+                                           Content="TR"
+                                           Theme="Success"
+                                           ZapTemplate="Round"
+                                           />
+                        <z:ZapToggleButton Margin="15,0,0,0" 
+                                           Content="TR"
+                                           Theme="Warning"
+                                           ZapTemplate="Round"
+                                           />
+                        <z:ZapToggleButton Margin="15,0,0,0" 
+                                           Content="TR"
+                                           Theme="Danger"
+                                           ZapTemplate="Round"
+                                           />
+                    </UniformGrid>
+                </StackPanel>
+            </z:ZapTabItem>
+            <z:ZapTabItem Header="Menu" IsClosable="False">
+                <Grid Margin="-3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Menu>
+                        <z:ZapMenuItem Header="No Submenu" Theme="Contactel" />
+                        <z:ZapMenuItem Header="Submenus" Theme="Contactel">
+                            <z:ZapMenuItem Header="SubMenu level 1">
+                                <z:ZapMenuItem Header="SubMenu level 2">
+                                    <z:ZapMenuItem Header="SubMenu level 3" />
+                                </z:ZapMenuItem>
+                                <z:ZapMenuItem Header="SubMenu level 2" />
+                                <Separator />
+                                <z:ZapMenuItem Header="No Submenu" />
+                            </z:ZapMenuItem>
+                            <Separator />
+                            <z:ZapMenuItem Header="No Submenu" />
+                        </z:ZapMenuItem>
+                    </Menu>
+                </Grid>
+            </z:ZapTabItem>
+        </z:ZapTabControl>
+
         <!--<z:ZapButtonFlat Content="Test"/>-->
-        
-        <z:ZapTabControl CanAddItem="True">
+
+        <!--<z:ZapTabControl CanAddItem="True">
             <z:ZapTabItem Header="Test" IsClosable="True">
                 
             </z:ZapTabItem>
@@ -20,7 +661,70 @@
             <z:ZapTabItem Header="Test 3" IsClosable="True">
 
             </z:ZapTabItem>
-        </z:ZapTabControl>
-        
+        </z:ZapTabControl>-->
+
+        <!--<cp:Calendar x:Name="zapCal" 
+                     Grid.Column="1"  
+                     Width="220" Height="220" 
+                     IsTodayHighlighted="True" Grid.ColumnSpan="2" Margin="217,0,216,0"/>
+
+        <ComboBox Name="cbTheme" 
+                  Margin="0,100,0,100"
+                  Height="21" Width="127" 
+                  HorizontalAlignment="Center"
+                  SelectionChanged="cbTheme_SelectionChanged"/>
+
+        <z:ZapButtonFlat Click="ZapButtonFlat_Click" Content="Test" Grid.Row="1" />
+
+        <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+
+            <dp:ZapDatePicker x:Name="Dpk" 
+                              FontSize="20"
+                              Width="220"                              
+                              Margin="10"
+                              IsReadOnly="False"
+                              IsCheckable="False"
+                              ButtonStyle="Image"
+                              DisplayDateEnd="{Binding Fin}"
+                              SelectedDate="{Binding Debut}"/>
+
+            <dp:ZapDatePicker x:Name="DpkC" 
+                              FontSize="20"
+                              Width="220"
+                              Margin="10"
+                              Theme="Contactel"
+                              ButtonStyle="Flat"  
+                              IsReadOnly="False"
+                              IsCheckable="False"
+                              DisplayDateEnd="{Binding Fin}"
+                              SelectedDate="{Binding Debut}"/>
+
+            <dp:ZapDatePicker x:Name="DpkF" 
+                              BorderBrush="Green"
+                              ButtonBackground="#FF777777"
+                              ButtonBackgroundHover="Lime"
+                              ButtonBackgroundPressed="DeepSkyBlue"
+                              ButtonBorder="Green"   
+                              ButtonBorderHover="Yellow"
+                              ButtonBorderPressed="Navy"
+                              IconNormal="Lime"   
+                              IconHover="Yellow"
+                              IconPressed="Firebrick"                              
+                              FontSize="20"
+                              Width="220"
+                              Margin="10"
+                              ButtonStyle="Flat"  
+                              IsReadOnly="False"
+                              IsCheckable="False"
+                              DateFormat="ddMMyyyy"
+                              DisplayDateStart="{Binding Debut}"
+                              SelectedDate="{Binding Fin}"/>
+
+            <TextBlock Text="{Binding Debut, StringFormat={}{0:dd/MM/yyyy}}" />
+        </StackPanel>-->
+
+
+
+
     </Grid>
-</Window>
+</z:ZapWindow>

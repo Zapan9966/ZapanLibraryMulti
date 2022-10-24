@@ -5,12 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DevZapanLibraryMulti_NET472"
         xmlns:z="http://schemas.zapan.com/wpf/controls/2020"
+        xmlns:cp="clr-namespace:ZapanControls.Controls.CalendarPicker;assembly=ZapanControls"
         mc:Ignorable="d"
         Title="MainWindow NET472" Height="450" Width="800">
     <Grid>
         <!--<z:ZapButtonFlat Content="Test"/>-->
 
-        <z:ZapTabControl CanAddItem="True">
+        <!--<z:ZapTabControl CanAddItem="True">
             <z:ZapTabItem Header="Test" IsClosable="True">
 
             </z:ZapTabItem>
@@ -20,7 +21,9 @@
             <z:ZapTabItem Header="Test 3" IsClosable="True">
 
             </z:ZapTabItem>
-        </z:ZapTabControl>
-        
+        </z:ZapTabControl>-->
+
+        <cp:Calendar x:Name="zapCal" Width="220" Height="220"/>
+
     </Grid>
 </Window>

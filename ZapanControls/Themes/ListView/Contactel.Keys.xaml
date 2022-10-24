@@ -1,0 +1,32 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:r="clr-namespace:ZapanControls.Controls.ResourceKeys"
+                    xmlns:t="clr-namespace:ZapanControls.Controls.Templates"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- ================== -->
+    <!-- = Contactel Keys = -->
+    <!-- ================== -->
+
+    <!--control-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=Background}" Color="#FF383131" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=BorderBrush}" Color="OrangeRed" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=Foreground}" Color="White" />
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=BorderThickness}">1</Thickness>
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=Padding}">20</Thickness>
+    <CornerRadius x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=CornerRadius}">6</CornerRadius>
+
+    <!--progress-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ProgressBarInnerBackground}" Color="White" Opacity="0.5" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ProgressBarBackground}" Color="OrangeRed" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ProgressBarBorderBrush}" Color="#FF272121" />
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ProgressBarBorderThickness}">1</Thickness>
+
+    <!--loading indicator-->
+    <t:ZapLoadingIndicatorTemplates x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=IndicatorTemplate}">ThreeDots</t:ZapLoadingIndicatorTemplates>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=IndicatorAccentColor}" Color="OrangeRed" />
+    <sys:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=IndicatorSpeedRatio}">1.0</sys:Double>
+    <sys:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=IndicatorHeight}">20.0</sys:Double>
+    <sys:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=IndicatorWidth}">70.0</sys:Double>
+
+</ResourceDictionary>

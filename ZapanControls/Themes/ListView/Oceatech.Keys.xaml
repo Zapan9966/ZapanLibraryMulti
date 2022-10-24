@@ -1,0 +1,111 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:r="clr-namespace:ZapanControls.Controls.ResourceKeys"
+                    xmlns:t="clr-namespace:ZapanControls.Controls.Templates"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- ================= -->
+    <!-- = Oceatech Keys = -->
+    <!-- ================= -->
+
+    <!--control-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=Background}" Color="#FF505050" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=BorderBrush}" Color="Transparent" />
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=BorderThickness}">0</Thickness>
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=DisabledBackground}" Color="Gray" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=DisabledBorderBrush}" Color="DimGray" />
+    
+    <!--header-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=HeaderBackground}" Color="DarkViolet" />
+    <!--<LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=HeaderBackground}" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStopCollection>
+            <GradientStop Color="DimGray" Offset="1"/>
+            <GradientStop Color="#FF292C31" Offset="0.5"/>
+            <GradientStop Color="DimGray" Offset="0.15"/>
+        </GradientStopCollection>
+    </LinearGradientBrush>-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=HeaderBorderBrush}" Color="Indigo" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=HeaderForeground}" Color="FloralWhite" />
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=HeaderFocusedBackground}" Color="Magenta" />
+    <!--<LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=HeaderFocusedBackground}" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStopCollection>
+            <GradientStop Color="DarkViolet" Offset="1"/>
+            <GradientStop Color="Indigo" Offset="0.5"/>
+            <GradientStop Color="DarkViolet" Offset="0.15"/>
+        </GradientStopCollection>
+    </LinearGradientBrush>-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=HeaderFocusedForeground}" Color="White" />
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=HeaderPressedBackground}" Color="Indigo" />
+    <!--<LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=HeaderPressedBackground}" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStopCollection>
+            <GradientStop Color="Indigo" Offset="1"/>
+            <GradientStop Color="DarkViolet" Offset="0.5"/>
+            <GradientStop Color="Indigo" Offset="0.15"/>
+        </GradientStopCollection>
+    </LinearGradientBrush>-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=HeaderPressedForeground}" Color="White" />
+
+    <!--items-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ItemsBackground}" Color="Transparent" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ItemsBorderBrush}" Color="Transparent" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ItemsForeground}" Color="White" />
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ItemsBorderThickness}">0</Thickness>
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ItemsFocusedBackground}" Color="#FFCC99FF" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ItemsFocusedBorderBrush}" Color="Transparent" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ItemsFocusedForeground}" Color="BlueViolet" />
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ItemsSelectedActiveBackground}" Color="#FF9933FF" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ItemsSelectedInactiveBackground}" Color="#FFAF5FFF" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ItemsSelectedActiveBorderBrush}" Color="Transparent" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ItemsSelectedInactiveBorderBrush}" Color="Transparent" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ItemsSelectedForeground}" Color="LavenderBlush" />
+
+    <!--scrollbars-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ScrollBarsBackground}" Color="#FF636363" />
+    <!--<LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ScrollBarsBackground}" StartPoint="0,0" EndPoint="1,0">
+        <GradientStopCollection>
+            <GradientStop Color="#FF4B4242" Offset="0"/>
+            <GradientStop Color="#FF3B3636" Offset="0.5"/>
+            <GradientStop Color="#FF4b4242" Offset="1"/>
+        </GradientStopCollection>
+    </LinearGradientBrush>-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ScrollBarsBorderBrush}" Color="Transparent" />
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ScrollBarsBorderThickness}">0</Thickness>
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ScrollBarsButtonBackground}" Color="DarkViolet" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ScrollBarsButtonBorderBrush}" Color="Transparent" />
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ScrollBarsButtonBorderThickness}">0</Thickness>
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ScrollBarsThumbInnerBackground}" Color="#FF505050" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ScrollBarsThumbBackground}" Color="DarkViolet" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ScrollBarsThumbBorderBrush}" Color="Transparent" />
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ScrollBarsThumbBorderThickness}">0</Thickness>
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ScrollBarsDisabledThumbInnerBackground}" Color="Transparent" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ScrollBarsDisabledButtonBackground}" Color="#FFE8EDF9" Opacity="0.5" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ScrollBarsDisabledButtonBorderBrush}" Color="Transparent" />
+    
+    <!--progress-->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ProgressBackground}" Color="DarkViolet" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ProgressBorderBrush}" Color="Indigo" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ProgressForeground}" Color="White" />
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ProgressBorderThickness}">1</Thickness>
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ProgressPadding}">20</Thickness>
+    <CornerRadius x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ProgressCornerRadius}">6</CornerRadius>
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ProgressBarInnerBackground}" Color="White" Opacity="0.5" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ProgressBarBackground}" Color="Magenta" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ProgressBarBorderBrush}" Color="Indigo" />
+    <Thickness x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=ProgressBarBorderThickness}">1</Thickness>
+
+    <t:ZapLoadingIndicatorTemplates x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=IndicatorTemplate}">ThreeDots</t:ZapLoadingIndicatorTemplates>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=IndicatorAccentColor}" Color="Indigo" />
+    <sys:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=IndicatorSpeedRatio}">1.0</sys:Double>
+    <sys:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=IndicatorHeight}">20.0</sys:Double>
+    <sys:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ListViewResourceKeys}, ResourceId=IndicatorWidth}">70.0</sys:Double>
+
+</ResourceDictionary>
