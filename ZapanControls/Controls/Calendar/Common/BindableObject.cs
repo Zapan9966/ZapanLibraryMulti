@@ -47,7 +47,7 @@ namespace ZapanControls.Controls.Calendar.Common
         /// </param>	
         public static PropertyChangedEventArgs GetPropertyChangedEventArgs(string propertyName)
         {
-            if (String.IsNullOrEmpty(propertyName))
+            if (string.IsNullOrEmpty(propertyName))
                 throw new ArgumentException("propertyName cannot be null or empty.");
 
             PropertyChangedEventArgs args;
@@ -86,7 +86,7 @@ namespace ZapanControls.Controls.Calendar.Common
         /// </param>
         protected void RaisePropertyChanged(string propertyName)
         {
-            this.VerifyProperty(propertyName);
+            VerifyProperty(propertyName);
 
             PropertyChangedEventHandler handler = this.PropertyChanged;
             if (handler != null)
@@ -98,7 +98,7 @@ namespace ZapanControls.Controls.Calendar.Common
                 handler(this, args);
             }
 
-            this.AfterPropertyChanged(propertyName);
+            AfterPropertyChanged(propertyName);
         }
 
         #endregion // Protected Members

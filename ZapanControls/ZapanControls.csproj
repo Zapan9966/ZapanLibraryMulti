@@ -47,6 +47,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Themes\CalendarPicker\Contactel.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Themes\CalendarPicker\Contactel.Brushes.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="Themes\ListView\Oceatech.Keys.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>

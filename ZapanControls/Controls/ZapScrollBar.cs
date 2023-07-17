@@ -18,18 +18,13 @@ using ZapanControls.Libraries;
 
 namespace ZapanControls.Controls
 {
-    public sealed class ZapScrollBar : ScrollBar, ITemplate
+    public sealed class ZapScrollBar : ScrollBar, ITemplate<string>
     {
         #region Fields
         private bool _hasInitialized;
         #endregion
 
-        #region Theme Declarations
-        public static ThemePath Oceatech = new ThemePath(ZapScrollBarThemes.Oceatech, "/ZapanControls;component/Themes/ZapScrollBar/Oceatech.xaml");
-        public static ThemePath Contactel = new ThemePath(ZapScrollBarThemes.Contactel, "/ZapanControls;component/Themes/ZapScrollBar/Contactel.xaml");
-        #endregion
-
-        #region Tempplate Declaration
+        #region Template Declaration
         public static TemplatePath Flat = new TemplatePath(ZapScrollBarTemplates.Flat, "/ZapanControls;component/Themes/ZapScrollBar/Template.Flat.xaml");
         public static TemplatePath Rounded = new TemplatePath(ZapScrollBarTemplates.Rounded, "/ZapanControls;component/Themes/ZapScrollBar/Template.Rounded.xaml");
         #endregion
@@ -181,7 +176,7 @@ namespace ZapanControls.Controls
 
         public string ZapTemplate { get => (string)GetValue(ZapTemplateProperty); set => SetValue(ZapTemplateProperty, value); }
 
-        private static void OnZapTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.TemplateChanged(e, TemplateChangedEvent);
+        private static void OnZapTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.TemplateChanged<string>(e, TemplateChangedEvent);
 
         private static object CoerceZapTemplateChange(DependencyObject d, object o)
         {
@@ -299,9 +294,13 @@ namespace ZapanControls.Controls
         #region Events
         #region TemplateChanged
         public static readonly RoutedEvent TemplateChangedEvent = EventManager.RegisterRoutedEvent(
-            "TemplateChanged", RoutingStrategy.Bubble, typeof(ITemplate.TemplateChangedEventHandler), typeof(ZapScrollBar));
+            "TemplateChanged", RoutingStrategy.Bubble, typeof(ITemplate<string>.TemplateChangedEventHandler), typeof(ZapScrollBar));
 
-        public event ITemplate.TemplateChangedEventHandler TemplateChanged { add => AddHandler(TemplateChangedEvent, value); remove => RemoveHandler(TemplateChangedEvent, value); }
+        public event ITemplate<string>.TemplateChangedEventHandler TemplateChanged 
+        { 
+            add => AddHandler(TemplateChangedEvent, value); 
+            remove => RemoveHandler(TemplateChangedEvent, value); 
+        }
         #endregion
 
         #region ThemeChanged
@@ -354,12 +353,12 @@ namespace ZapanControls.Controls
         public ZapScrollBar()
         {
             // Load Templates
-            this.RegisterAttachedTemplates(GetType());
-            this.LoadDefaultTemplate(ZapTemplateProperty);
+            this.RegisterAttachedTemplates<string>(GetType());
+            this.LoadDefaultTemplate<string>(ZapTemplateProperty);
 
             // Load Themes
             ThemeChanged += OnThemeChanged;
-            this.RegisterAttachedThemes(GetType());
+            this.RegisterInternalThemes<ZapScrollBarThemes>();
             this.LoadDefaultTheme(ThemeProperty);
         }
         #endregion

@@ -24,7 +24,7 @@ namespace ZapanControls.Controls
     /// <summary>
     /// Fenêtre personnalisée
     /// </summary>
-    public partial class ZapWindow : Window, ITemplate
+    public partial class ZapWindow : Window, ITemplate<string>
     {
         #region Fields
         private readonly DeferredAction _centerDeferred;
@@ -33,11 +33,6 @@ namespace ZapanControls.Controls
         private bool _startupResized;
         private bool _hasInitialized;
         private bool _isReady;
-        #endregion
-
-        #region Theme Declarations
-        public static ThemePath Oceatech = new ThemePath(ZapWindowThemes.Oceatech, "/ZapanControls;component/Themes/ZapWindow/Oceatech.xaml");
-        public static ThemePath Contactel = new ThemePath(ZapWindowThemes.Contactel, "/ZapanControls;component/Themes/ZapWindow/Contactel.xaml");
         #endregion
 
         #region Template Declarations
@@ -190,7 +185,7 @@ namespace ZapanControls.Controls
 
         public string ZapTemplate { get => (string)GetValue(ZapTemplateProperty); set => SetValue(ZapTemplateProperty, value); }
 
-        private static void OnZapTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.TemplateChanged(e, TemplateChangedEvent);
+        private static void OnZapTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.TemplateChanged<string>(e, TemplateChangedEvent);
 
         private static object CoerceZapTemplateChange(DependencyObject d, object o)
         {
@@ -293,9 +288,13 @@ namespace ZapanControls.Controls
 
         #region TemplateChanged
         public static readonly RoutedEvent TemplateChangedEvent = EventManager.RegisterRoutedEvent(
-            "TemplateChanged", RoutingStrategy.Bubble, typeof(ITemplate.TemplateChangedEventHandler), typeof(ZapWindow));
+            "TemplateChanged", RoutingStrategy.Bubble, typeof(ITemplate<string>.TemplateChangedEventHandler), typeof(ZapWindow));
 
-        public event ITemplate.TemplateChangedEventHandler TemplateChanged { add => AddHandler(TemplateChangedEvent, value); remove => RemoveHandler(TemplateChangedEvent, value); }
+        public event ITemplate<string>.TemplateChangedEventHandler TemplateChanged 
+        { 
+            add => AddHandler(TemplateChangedEvent, value); 
+            remove => RemoveHandler(TemplateChangedEvent, value); 
+        }
         #endregion
 
         #region ThemeChanged
@@ -398,12 +397,12 @@ namespace ZapanControls.Controls
             _centerDeferred = DeferredAction.Create(() => CenterWindowDefered());
 
             // Load Templates
-            this.RegisterAttachedTemplates(typeof(ZapWindow));
-            this.LoadDefaultTemplate(ZapTemplateProperty);
+            this.RegisterAttachedTemplates<string>(typeof(ZapWindow));
+            this.LoadDefaultTemplate<string>(ZapTemplateProperty);
 
             // Load Themes
             ThemeChanged += OnThemeChanged;
-            this.RegisterAttachedThemes(typeof(ZapWindow));
+            this.RegisterInternalThemes<ZapWindowThemes>("ZapWindow");
             this.LoadDefaultTheme(ThemeProperty);
         }
         #endregion

@@ -15,15 +15,10 @@ using ZapanControls.Libraries;
 
 namespace ZapanControls.Controls
 {
-    public sealed class ZapScrollViewer : ScrollViewer, ITemplate
+    public sealed class ZapScrollViewer : ScrollViewer, ITemplate<string>
     {
         #region Fields
         private bool _hasInitialized;
-        #endregion
-
-        #region Theme Declarations
-        public static ThemePath Oceatech = new ThemePath(ZapScrollViewerThemes.Oceatech, "/ZapanControls;component/Themes/ZapScrollViewer/Oceatech.xaml");
-        public static ThemePath Contactel = new ThemePath(ZapScrollViewerThemes.Contactel, "/ZapanControls;component/Themes/ZapScrollViewer/Contactel.xaml");
         #endregion
 
         #region Properties
@@ -331,9 +326,13 @@ namespace ZapanControls.Controls
         #region Events
         #region TemplateChanged
         public static readonly RoutedEvent TemplateChangedEvent = EventManager.RegisterRoutedEvent(
-            "TemplateChanged", RoutingStrategy.Bubble, typeof(ITemplate.TemplateChangedEventHandler), typeof(ZapScrollViewer));
+            "TemplateChanged", RoutingStrategy.Bubble, typeof(ITemplate<string>.TemplateChangedEventHandler), typeof(ZapScrollViewer));
 
-        public event ITemplate.TemplateChangedEventHandler TemplateChanged { add => AddHandler(TemplateChangedEvent, value); remove => RemoveHandler(TemplateChangedEvent, value); }
+        public event ITemplate<string>.TemplateChangedEventHandler TemplateChanged 
+        { 
+            add => AddHandler(TemplateChangedEvent, value); 
+            remove => RemoveHandler(TemplateChangedEvent, value); 
+        }
         #endregion
 
         #region ThemeChanged
@@ -377,7 +376,6 @@ namespace ZapanControls.Controls
         #endregion
 
         #region Constructors
-
         static ZapScrollViewer()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ZapScrollViewer), new FrameworkPropertyMetadata(typeof(ZapScrollViewer)));
@@ -394,16 +392,14 @@ namespace ZapanControls.Controls
         public ZapScrollViewer()
         {
             // Load Templates
-            this.RegisterAttachedTemplates(GetType());
-            this.LoadDefaultTemplate(ZapTemplateProperty);
+            this.RegisterAttachedTemplates<string>(GetType());
+            this.LoadDefaultTemplate<string>(ZapTemplateProperty);
 
             // Load Themes
             ThemeChanged += OnThemeChanged;
-            this.RegisterAttachedThemes(typeof(ZapScrollViewer));
-            this.RegisterAttachedThemes(GetType());
+            this.RegisterInternalThemes<ZapScrollViewerThemes>();
             this.LoadDefaultTheme(ThemeProperty);
         }
-
         #endregion
 
         #region Overrides

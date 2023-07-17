@@ -12,7 +12,6 @@ namespace ZapanControls.Controls
         public const string StateNormal = "Normal";
         public const string StateMouseOver = "MouseOver";
         public const string StateDisabled = "Disabled";
-
         public const string GroupCommon = "CommonStates";
 
         static CalendarTimeSlotItem()
@@ -37,21 +36,18 @@ namespace ZapanControls.Controls
 
         public event RoutedEventHandler AddAppointment
         {
-            add { AddHandler(AddAppointmentEvent, value); }
-            remove { RemoveHandler(AddAppointmentEvent, value); }
+            add => AddHandler(AddAppointmentEvent, value);
+            remove => RemoveHandler(AddAppointmentEvent, value);
         }
 
-        protected virtual void OnAddAppointment(RoutedEventArgs e)
-        {
-            RaiseEvent(e);
-        }
+        protected virtual void OnAddAppointment(RoutedEventArgs e) 
+            => RaiseEvent(e);
 
         #endregion
 
         protected override void OnClick()
         {
             base.OnClick();
-
             RaiseAddAppointmentEvent();
         }
 
@@ -68,8 +64,8 @@ namespace ZapanControls.Controls
         /// </summary>
         public DateTime StartTime
         {
-            get { return (DateTime)GetValue(StartTimeProperty); }
-            set { SetValue(StartTimeProperty, value); }
+            get => (DateTime)GetValue(StartTimeProperty);
+            set => SetValue(StartTimeProperty, value);
         }
 
         #endregion
@@ -87,8 +83,8 @@ namespace ZapanControls.Controls
         /// </summary>
         public DateTime EndTime
         {
-            get { return (DateTime)GetValue(EndTimeProperty); }
-            set { SetValue(EndTimeProperty, value); }
+            get => (DateTime)GetValue(EndTimeProperty); 
+            set => SetValue(EndTimeProperty, value);
         }
 
         #endregion

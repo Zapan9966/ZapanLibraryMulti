@@ -9,25 +9,29 @@
         /// <summary>
         /// Office 2007 black theme
         /// </summary>
-        OfficeBlack,
+        Office_Black,
         /// <summary>
         /// Office 2007 blue theme
         /// </summary>
-        OfficeBlue,
+        Office_Blue,
         /// <summary>
         /// Office 2007 silver theme
         /// </summary>
-        OfficeSilver,
+        Office_Silver,
         /// <summary>
         /// Oceatech classic theme
         /// </summary>
         Oceatech,
+        /// <summary>
+        /// Contactel classic theme
+        /// </summary>
+        Contactel,
 
         // OS Themes
         /// <summary>
         /// Aero normal color theme
         /// </summary>
-        AeroNormal,
+        Aero_NormalColor,
         /// <summary
         /// >Win98 theme
         /// </summary>
@@ -35,22 +39,14 @@
         /// <summary>
         /// XP homestead theme
         /// </summary>
-        LunaHomestead,
+        Luna_Homestead,
         /// <summary>
         /// XP normal theme
         /// </summary>
-        LunaNormal,
+        Luna_NormalColor,
         /// <summary>
         /// XP silver theme
         /// </summary>
-        LunaMetallic,
-        /// <summary>
-        /// Media center theme
-        /// </summary>
-        Royale,
-        /// <summary>
-        /// Zune theme
-        /// </summary>
-        Zune,
+        Luna_Metallic,
     };
 }

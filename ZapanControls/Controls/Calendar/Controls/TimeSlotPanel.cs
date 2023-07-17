@@ -5,8 +5,7 @@ using System.Windows.Controls;
 
 namespace ZapanControls.Controls
 {
-    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Cannot be static")]
-    internal class TimeSlotPanel : Panel
+    internal sealed class TimeSlotPanel : Panel
     {
         #region StartTime
 
@@ -19,18 +18,14 @@ namespace ZapanControls.Controls
         /// <summary>
         /// Gets the StartTime property.  This dependency property indicates ....
         /// </summary>
-        public static DateTime GetStartTime(DependencyObject d)
-        {
-            return (DateTime)d.GetValue(StartTimeProperty);
-        }
+        public static DateTime GetStartTime(DependencyObject d) 
+            => (DateTime)d.GetValue(StartTimeProperty);
 
         /// <summary>
         /// Sets the StartTime property.  This dependency property indicates ....
         /// </summary>
-        public static void SetStartTime(DependencyObject d, DateTime value)
-        {
-            d.SetValue(StartTimeProperty, value);
-        }
+        public static void SetStartTime(DependencyObject d, DateTime value) 
+            => d.SetValue(StartTimeProperty, value);
 
         #endregion
 
@@ -45,18 +40,14 @@ namespace ZapanControls.Controls
         /// <summary>
         /// Gets the EndTime property.  This dependency property indicates ....
         /// </summary>
-        public static DateTime GetEndTime(DependencyObject d)
-        {
-            return (DateTime)d.GetValue(EndTimeProperty);
-        }
+        public static DateTime GetEndTime(DependencyObject d) 
+            => (DateTime)d.GetValue(EndTimeProperty);
 
         /// <summary>
         /// Sets the EndTime property.  This dependency property indicates ....
         /// </summary>
-        public static void SetEndTime(DependencyObject d, DateTime value)
-        {
-            d.SetValue(EndTimeProperty, value);
-        }
+        public static void SetEndTime(DependencyObject d, DateTime value) 
+            => d.SetValue(EndTimeProperty, value);
 
         #endregion
 

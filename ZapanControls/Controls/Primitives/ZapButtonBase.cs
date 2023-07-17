@@ -14,20 +14,10 @@ using ZapanControls.Libraries;
 
 namespace ZapanControls.Controls.Primitives
 {
-    public class ZapButtonBase : Button, ITemplate
+    public abstract class ZapButtonBase : Button, ITemplate<string>
     {
         #region Fields
         private bool _hasInitialized;
-        #endregion
-
-        #region Theme Declarations
-        public static ThemePath Oceatech = new ThemePath(ZapButtonThemes.Oceatech, "/ZapanControls;component/Themes/ZapButton/Oceatech.xaml");
-        public static ThemePath Contactel = new ThemePath(ZapButtonThemes.Contactel, "/ZapanControls;component/Themes/ZapButton/Contactel.xaml");
-        // Basic themes
-        public static ThemePath Info = new ThemePath(ZapButtonThemes.Info, "/ZapanControls;component/Themes/ZapButton/Info.xaml");
-        public static ThemePath Success = new ThemePath(ZapButtonThemes.Success, "/ZapanControls;component/Themes/ZapButton/Success.xaml");
-        public static ThemePath Warning = new ThemePath(ZapButtonThemes.Warning, "/ZapanControls;component/Themes/ZapButton/Warning.xaml");
-        public static ThemePath Danger = new ThemePath(ZapButtonThemes.Danger, "/ZapanControls;component/Themes/ZapButton/Danger.xaml");
         #endregion
 
         #region Properties
@@ -165,7 +155,7 @@ namespace ZapanControls.Controls.Primitives
 
         public string ZapTemplate { get => (string)GetValue(ZapTemplateProperty); set => SetValue(ZapTemplateProperty, value); }
 
-        private static void OnZapTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.TemplateChanged(e, TemplateChangedEvent);
+        private static void OnZapTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.TemplateChanged<string>(e, TemplateChangedEvent);
 
         private static object CoerceZapTemplateChange(DependencyObject d, object o)
         {
@@ -229,9 +219,13 @@ namespace ZapanControls.Controls.Primitives
         #region Events
         #region TemplateChanged
         public static readonly RoutedEvent TemplateChangedEvent = EventManager.RegisterRoutedEvent(
-            "TemplateChanged", RoutingStrategy.Bubble, typeof(ITemplate.TemplateChangedEventHandler), typeof(ZapButtonBase));
+            "TemplateChanged", RoutingStrategy.Bubble, typeof(ITemplate<string>.TemplateChangedEventHandler), typeof(ZapButtonBase));
 
-        public event ITemplate.TemplateChangedEventHandler TemplateChanged { add => AddHandler(TemplateChangedEvent, value); remove => RemoveHandler(TemplateChangedEvent, value); }
+        public event ITemplate<string>.TemplateChangedEventHandler TemplateChanged 
+        { 
+            add => AddHandler(TemplateChangedEvent, value); 
+            remove => RemoveHandler(TemplateChangedEvent, value); 
+        }
         #endregion
 
         #region ThemeChanged
@@ -284,13 +278,12 @@ namespace ZapanControls.Controls.Primitives
         public ZapButtonBase()
         {
             // Load Templates
-            this.RegisterAttachedTemplates(GetType());
-            this.LoadDefaultTemplate(ZapTemplateProperty);
+            this.RegisterAttachedTemplates<string>(GetType());
+            this.LoadDefaultTemplate<string>(ZapTemplateProperty);
 
             // Load Themes
             ThemeChanged += OnThemeChanged;
-            this.RegisterAttachedThemes(typeof(ZapButtonBase));
-            this.RegisterAttachedThemes(GetType());
+            this.RegisterInternalThemes<ZapButtonThemes>("ZapButton");
             this.LoadDefaultTheme(ThemeProperty);
         }
         #endregion

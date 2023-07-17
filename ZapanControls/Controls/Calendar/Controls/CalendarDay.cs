@@ -6,8 +6,7 @@ using System.Windows.Data;
 
 namespace ZapanControls.Controls
 {
-    [TemplatePart(Name = CalendarDay.ElementTimeslotItems, Type = typeof(StackPanel))]
-    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Cannot be static")]
+    [TemplatePart(Name = ElementTimeslotItems, Type = typeof(StackPanel))]
     internal sealed class CalendarDay : ItemsControl
     {
         private const string ElementTimeslotItems = "PART_TimeslotItems";
@@ -66,15 +65,11 @@ namespace ZapanControls.Controls
 
         #region ItemsControl Container Override
 
-        protected override DependencyObject GetContainerForItemOverride()
-        {
-            return new CalendarAppointmentItem();
-        }
+        protected override DependencyObject GetContainerForItemOverride() 
+            => new CalendarAppointmentItem();
 
-        protected override bool IsItemItsOwnContainerOverride(object item)
-        {
-            return (item is CalendarAppointmentItem);
-        }
+        protected override bool IsItemItsOwnContainerOverride(object item) 
+            => (item is CalendarAppointmentItem);
 
         #endregion
 

@@ -64,15 +64,10 @@ namespace ZapanControls.Controls.DatePicker
     TemplatePart(Name = "Part_CalendarButton", Type = typeof(Button)),
     TemplatePart(Name = "Part_CalendarGrid", Type = typeof(Grid)),
     TemplatePart(Name = "Part_CalendarPopup", Type = typeof(Popup))]
-    public class ZapDatePicker : ThemableControl
+    public class ZapDatePicker : ThemableControl<ZapDatePickerThemes>
     {
         #region Fields
         private string FormatString = "{0:dd/MM/yyyy}";
-        #endregion
-
-        #region Theme Declarations
-        public static ThemePath Oceatech = new ThemePath(ZapDatePickerThemes.Oceatech, "/ZapanControls;component/Themes/ZapDatePicker/Oceatech.xaml");
-        public static ThemePath Contactel = new ThemePath(ZapDatePickerThemes.Contactel, "/ZapanControls;component/Themes/ZapDatePicker/Contactel.xaml");
         #endregion
 
         #region Local Properties
@@ -174,6 +169,8 @@ namespace ZapanControls.Controls.DatePicker
         #endregion
 
         #region ThemableControl implementation
+        internal override string ThemeFolder => "ZapDatePicker";
+
         public override void OnThemeChanged(object sender, ThemeChangedEventArgs e)
         {
             // Control
@@ -206,7 +203,6 @@ namespace ZapanControls.Controls.DatePicker
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ZapDatePicker), new FrameworkPropertyMetadata(typeof(ZapDatePicker)));
         }
-
         #endregion
 
         #region Properties

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Data;
 using ZapanControls.Controls.ControlEventArgs;
@@ -44,16 +43,17 @@ namespace ZapanControls.Controls.Themes
             }
         }
 
-        public static void RegisterAttachedThemes(this DependencyObject o, Type type)
+        public static void RegisterInternalThemes<ThemesEnum>(this DependencyObject o, string themeFolder = null)
+            where ThemesEnum : Enum
         {
             if (o is ITheme t)
             {
-                var themeFields = type.GetFields(BindingFlags.Public | BindingFlags.Static)
-                    .Where(f => f.FieldType == typeof(ThemePath));
+                themeFolder ??= o.GetType().Name;
+                string uriBase = $"/ZapanControls;component/Themes/{(themeFolder != string.Empty ? $"{themeFolder}/" : null)}";
 
-                foreach (var field in themeFields)
+                foreach (var enumName in Enum.GetNames(typeof(ThemesEnum)))
                 {
-                    t.RegisterTheme((ThemePath)field.GetValue(o), o.GetType());
+                    t.RegisterTheme(new ThemePath(enumName, $"{uriBase}{enumName.Replace("_", ".")}.xaml"), o.GetType());
                 }
             }
         }
@@ -71,13 +71,10 @@ namespace ZapanControls.Controls.Themes
 
             try
             {
-                if (!t.ThemeDictionaries.ContainsKey(registrationName))
-                {
-                    // create the Uri
-                    Uri themeUri = new Uri(theme.DictionaryPath, UriKind.Relative);
-                    // register the new theme
-                    t.ThemeDictionaries[registrationName] = Application.LoadComponent(themeUri) as ResourceDictionary;
-                }
+                // create the Uri
+                Uri themeUri = new Uri(theme.DictionaryPath, UriKind.Relative);
+                // register the new theme
+                t.ThemeDictionaries[registrationName] = Application.LoadComponent(themeUri) as ResourceDictionary;
             }
             catch (Exception)
             { }
@@ -160,8 +157,8 @@ namespace ZapanControls.Controls.Themes
 
             // new theme name
             string newThemeName = e.NewValue as string;
-            string newRegisteredThemeName = !string.IsNullOrEmpty(newThemeName) ?
-                newThemeName.ThemeRegistrationName(o.GetType())
+            string newRegisteredThemeName = !string.IsNullOrEmpty(newThemeName) 
+                ? newThemeName.ThemeRegistrationName(o.GetType())
                 : t.ThemeDictionaries.FirstOrDefault().Key;
 
             // add the resource

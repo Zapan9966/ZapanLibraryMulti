@@ -4,7 +4,7 @@ using ZapanControls.Controls;
 
 namespace ZapanControls.Automation.Peers
 {
-    public class ZapProgressAutomationPeer : RangeBaseAutomationPeer, IRangeValueProvider
+    public sealed class ZapProgressAutomationPeer : RangeBaseAutomationPeer, IRangeValueProvider
     {
         #region Constructor
         public ZapProgressAutomationPeer(ZapProgress owner) : base(owner)
@@ -13,23 +13,22 @@ namespace ZapanControls.Automation.Peers
         }
         #endregion
 
-        override protected string GetClassNameCore()
+        protected override string GetClassNameCore()
         {
             return "ZapProgress";
         }
 
-        override protected AutomationControlType GetAutomationControlTypeCore()
+        protected override AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.ProgressBar;
         }
 
-        override public object GetPattern(PatternInterface patternInterface)
+        public override object GetPattern(PatternInterface patternInterface)
         {
             // Indeterminate ProgressBar should not support RangeValue pattern
-            if (patternInterface == PatternInterface.RangeValue && ((ZapProgress)Owner).IsIndeterminate)
-                return null;
-
-            return base.GetPattern(patternInterface);
+            return patternInterface == PatternInterface.RangeValue && ((ZapProgress)Owner).IsIndeterminate
+                ? null
+                : base.GetPattern(patternInterface);
         }
 
         ///<summary>Indicates that the value can only be read, not modified.

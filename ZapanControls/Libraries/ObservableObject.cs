@@ -14,7 +14,7 @@ namespace ZapanControls.Libraries
     /// <see cref="Freezable"/> object that provides an implementation of the <see cref="INotifyPropertyChanged"/> and <see cref="IDataErrorInfo"/> interface. 
     /// </summary>
     [Serializable]
-    public class ObservableObject : INotifyPropertyChanged, IDataErrorInfo
+    public abstract class ObservableObject : INotifyPropertyChanged, IDataErrorInfo
     {
         /// <summary>Occurs when a property value changes. </summary>
         public event PropertyChangedEventHandler PropertyChanged;

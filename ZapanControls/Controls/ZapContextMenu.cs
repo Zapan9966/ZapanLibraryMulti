@@ -19,11 +19,6 @@ namespace ZapanControls.Controls
 
         #endregion
 
-        #region Theme Declarations
-        public static ThemePath Oceatech = new ThemePath(ZapContextMenuThemes.Oceatech, "/ZapanControls;component/Themes/ZapContextMenu/Oceatech.xaml");
-        public static ThemePath Contactel = new ThemePath(ZapContextMenuThemes.Contactel, "/ZapanControls;component/Themes/ZapContextMenu/Contactel.xaml");
-        #endregion
-
         #region Properties
         #region CornerRadius
         /// <summary>
@@ -124,7 +119,7 @@ namespace ZapanControls.Controls
         {
             // Load Themes
             ThemeChanged += OnThemeChanged;
-            this.RegisterAttachedThemes(typeof(ZapContextMenu));
+            this.RegisterInternalThemes<ZapContextMenuThemes>();
             this.LoadDefaultTheme(ThemeProperty);
         }
         #endregion

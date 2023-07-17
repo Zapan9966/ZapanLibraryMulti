@@ -12,13 +12,17 @@ using ZapanControls.Libraries;
 
 namespace ZapanControls.Controls.Primitives
 {
-    public abstract class ThemableControl : Control, ITheme
+    public abstract class ThemableControl<ThemeEnum> : Control, ITheme
+        where ThemeEnum : Enum
     {
         #region Fields
-
         #endregion
 
         #region Properties
+        #region ThemeFolder
+        internal abstract string ThemeFolder { get; }
+        #endregion
+
         #region DefaultThemeProperties
         public Dictionary<DependencyProperty, object> DefaultThemeProperties { get; internal set; } = new Dictionary<DependencyProperty, object>();
         #endregion
@@ -28,13 +32,17 @@ namespace ZapanControls.Controls.Primitives
         /// Get/Sets the theme
         /// </summary>
         public static DependencyProperty ThemeProperty = DependencyProperty.Register(
-            "Theme", typeof(string), typeof(ThemableControl), 
+            "Theme", typeof(string), typeof(ThemableControl<ThemeEnum>), 
             new FrameworkPropertyMetadata(null,
                 FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure,
                 new PropertyChangedCallback(OnThemeChanged),
                 new CoerceValueCallback(CoerceThemeChange)));
 
-        public string Theme { get => (string)GetValue(ThemeProperty); set => SetValue(ThemeProperty, value); }
+        public string Theme 
+        { 
+            get => (string)GetValue(ThemeProperty); 
+            set => SetValue(ThemeProperty, value); 
+        }
 
         private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.ThemeChanged(e, ThemeChangedEvent);
 
@@ -51,9 +59,13 @@ namespace ZapanControls.Controls.Primitives
 
         #region ThemeChangedEvent
         public static readonly RoutedEvent ThemeChangedEvent = EventManager.RegisterRoutedEvent(
-            "ThemeChanged", RoutingStrategy.Bubble, typeof(ITheme.ThemeChangedEventHandler), typeof(ThemableControl));
+            "ThemeChanged", RoutingStrategy.Bubble, typeof(ITheme.ThemeChangedEventHandler), typeof(ThemableControl<ThemeEnum>));
 
-        public event ITheme.ThemeChangedEventHandler ThemeChanged { add => AddHandler(ThemeChangedEvent, value); remove => RemoveHandler(ThemeChangedEvent, value);}
+        public event ITheme.ThemeChangedEventHandler ThemeChanged 
+        { 
+            add => AddHandler(ThemeChangedEvent, value); 
+            remove => RemoveHandler(ThemeChangedEvent, value);
+        }
 
         public abstract void OnThemeChanged(object sender, ThemeChangedEventArgs e);
         #endregion
@@ -63,8 +75,7 @@ namespace ZapanControls.Controls.Primitives
         {
             // Load Themes
             ThemeChanged += OnThemeChanged;
-            this.RegisterAttachedThemes(typeof(ThemableControl));
-            this.RegisterAttachedThemes(GetType());
+            this.RegisterInternalThemes<ThemeEnum>(ThemeFolder);
             this.LoadDefaultTheme(ThemeProperty);
         }
         #endregion

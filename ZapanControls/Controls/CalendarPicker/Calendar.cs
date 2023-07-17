@@ -130,7 +130,7 @@ namespace ZapanControls.Controls.CalendarPicker
     TemplatePart(Name = "Part_CurrentDateText", Type = typeof(TextBlock)),
     TemplatePart(Name = "Part_AnimationContainer", Type = typeof(Grid)),
     TemplatePart(Name = "Part_FooterContainer", Type = typeof(Grid))]
-    public class Calendar : ThemableControl
+    public class Calendar : ThemableControl<CalendarPickerThemes>
     {
         #region Property Name Constants
         /// <summary>
@@ -151,26 +151,6 @@ namespace ZapanControls.Controls.CalendarPicker
         private const string AllowDragPropName = "AllowDrag";
         private const string AdornDragPropName = "AdornDrag";
         private const string IsAnimatedPropName = "IsAnimated";
-        #endregion
-
-        #region Theme Declarations
-        /// <summary>
-        /// Custom Themes
-        /// </summary>
-        public static ThemePath Oceatech = new ThemePath(CalendarPickerThemes.Oceatech.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Oceatech.xaml");
-        public static ThemePath OfficeBlack = new ThemePath(CalendarPickerThemes.OfficeBlack.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Office.Black.xaml");
-        public static ThemePath OfficeBlue = new ThemePath(CalendarPickerThemes.OfficeBlue.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Office.Blue.xaml");
-        public static ThemePath OfficeSilver = new ThemePath(CalendarPickerThemes.OfficeSilver.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Office.Silver.xaml");
-        /// <summary>
-        /// Operating System Themes
-        /// </summary>
-        public static ThemePath AeroNormalColorTheme = new ThemePath(CalendarPickerThemes.AeroNormal.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Aero.NormalColor.xaml");
-        public static ThemePath ClassicTheme = new ThemePath(CalendarPickerThemes.Classic.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Classic.xaml");
-        public static ThemePath LunaHomesteadTheme = new ThemePath(CalendarPickerThemes.LunaHomestead.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Luna.Homestead.xaml");
-        public static ThemePath LunaNormalTheme = new ThemePath(CalendarPickerThemes.LunaNormal.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Luna.NormalColor.xaml");
-        public static ThemePath LunaMetallicTheme = new ThemePath(CalendarPickerThemes.LunaMetallic.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Luna.Metallic.xaml");
-        public static ThemePath RoyaleTheme = new ThemePath(CalendarPickerThemes.Royale.ToString(), "/ZapanControls;component/Themes/CalendarPicker/CalendarPicker/Royale.xaml");
-        public static ThemePath ZuneTheme = new ThemePath(CalendarPickerThemes.Zune.ToString(), "/ZapanControls;component/Themes/CalendarPicker/Zune.xaml");
         #endregion
 
         #region MonthList Enum
@@ -638,6 +618,8 @@ namespace ZapanControls.Controls.CalendarPicker
         #endregion
 
         #region ThemableControl implementation
+        internal override string ThemeFolder => "CalendarPicker";
+
         public override void OnThemeChanged(object sender, ThemeChangedEventArgs e)
         {
             if (e.Source is Calendar c)
@@ -1351,7 +1333,10 @@ namespace ZapanControls.Controls.CalendarPicker
                         Calendar cld = (Calendar)sender;
                         if (e.NewValue is INotifyCollectionChanged collection)
                         {
-                            collection.CollectionChanged += delegate { cld.RaisePropertyChanged(new PropertyChangedEventArgs(CurrentlySelectedDatePropName)); };
+                            collection.CollectionChanged += delegate 
+                            { 
+                                cld.RaisePropertyChanged(new PropertyChangedEventArgs(CurrentlySelectedDatePropName)); 
+                            };
                         }
                         cld.RaisePropertyChanged(new PropertyChangedEventArgs(CurrentlySelectedDatePropName));
                     },
@@ -2256,9 +2241,9 @@ namespace ZapanControls.Controls.CalendarPicker
                         FontSize = FontSize,
                         FontStyle = FontStyle,
                         FontWeight = FontWeights.Medium,
+                        Tag = dayOfWeeks[j],
+                        Style = (Style)FindResource("DayNameStyle")
                     };
-                    element.Tag = dayOfWeeks[j];
-                    element.Style = (Style)FindResource("DayNameStyle");
                     grdDay.Children.Add(element);
                 }
 
@@ -2280,8 +2265,8 @@ namespace ZapanControls.Controls.CalendarPicker
                         FontSize = FontSize,
                         FontStyle = FontStyle,
                         FontWeight = FontWeight,
+                        Style = (Style)FindResource("WeekNumberStyle")
                     };
-                    element.Style = (Style)FindResource("WeekNumberStyle");
                     grdWeek.Children.Add(element);
                 }
             }

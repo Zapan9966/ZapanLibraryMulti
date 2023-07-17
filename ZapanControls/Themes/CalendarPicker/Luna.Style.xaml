@@ -23,8 +23,8 @@
                         <ControlTemplate TargetType="local:DateButton">
                             <Border x:Name="ButtonBorder"  
                                     BorderThickness="0"
-                                    Background="{Binding ButtonTransparentBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"
-                                    BorderBrush="{Binding ButtonTransparentBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}">
+                                    Background="{Binding ButtonTransparent, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"
+                                    BorderBrush="{Binding ButtonTransparent, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}">
                                 <ContentPresenter Margin="2,1,2,2"
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"
@@ -60,8 +60,8 @@
                             <Border x:Name="Border"
                                     CornerRadius="2" 
                                     BorderThickness="0"
-                                    Background="{Binding ButtonTransparentBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"
-                                    BorderBrush="{Binding ButtonTransparentBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}">
+                                    Background="{Binding ButtonTransparent, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"
+                                    BorderBrush="{Binding ButtonTransparent, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}">
                                 <Grid>
                                     <ContentPresenter Margin="2"
                                                       HorizontalAlignment="Center"
@@ -111,8 +111,8 @@
                             <Border x:Name="Border"  
                                     CornerRadius="2" 
                                     BorderThickness="0"
-                                    Background="{Binding ButtonTransparentBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"
-                                    BorderBrush="{Binding ButtonTransparentBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}">
+                                    Background="{Binding ButtonTransparent, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"
+                                    BorderBrush="{Binding ButtonTransparent, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}">
                                 <Grid>
                                     <ContentPresenter Margin="2"
                                                       HorizontalAlignment="Center"
@@ -172,7 +172,7 @@
                             <Border x:Name="Border" 
                                     SnapsToDevicePixels="True"
                                     CornerRadius="4" Margin="2"
-                                    BorderBrush="{Binding ButtonTransparentBrush, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"
+                                    BorderBrush="{Binding ButtonTransparent, RelativeSource={RelativeSource AncestorType={x:Type local:Calendar}}}"
                                     Background="{TemplateBinding Background}">
                                 <Grid>
                                     <ContentPresenter Margin="0,0,1,1" 

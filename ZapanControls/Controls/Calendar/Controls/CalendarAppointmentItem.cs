@@ -11,7 +11,6 @@ namespace ZapanControls.Controls
         public const string StateNormal = "Normal";
         public const string StateMouseOver = "MouseOver";
         public const string StateDisabled = "Disabled";
-
         public const string GroupCommon = "CommonStates";
 
         static CalendarAppointmentItem()
@@ -25,16 +24,16 @@ namespace ZapanControls.Controls
 
         public bool StartTime
         {
-            get { return (bool)GetValue(StartTimeProperty); }
-            set { SetValue(StartTimeProperty, value); }
+            get => (bool)GetValue(StartTimeProperty); 
+            set => SetValue(StartTimeProperty, value);
         }
 
         public static readonly DependencyProperty EndTimeProperty = TimeSlotPanel.EndTimeProperty.AddOwner(typeof(CalendarAppointmentItem));
 
         public bool EndTime
         {
-            get { return (bool)GetValue(EndTimeProperty); }
-            set { SetValue(EndTimeProperty, value); }
+            get => (bool)GetValue(EndTimeProperty); 
+            set => SetValue(EndTimeProperty, value);
         }
 
         #endregion

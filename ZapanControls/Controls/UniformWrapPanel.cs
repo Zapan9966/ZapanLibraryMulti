@@ -23,7 +23,9 @@ namespace ZapanControls.Controls
         private static void IsAutoUniformChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             if (sender is UniformWrapPanel panel)
+            {
                 panel.InvalidateVisual();
+            }
         }
         #endregion
         #endregion

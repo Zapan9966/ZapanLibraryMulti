@@ -24,8 +24,8 @@ namespace ZapanControls.Behaviours
 
         public string RegularExpression
         {
-            get { return (string)GetValue(RegularExpressionProperty); }
-            set { SetValue(RegularExpressionProperty, value); }
+            get => (string)GetValue(RegularExpressionProperty);
+            set => SetValue(RegularExpressionProperty, value);
         }
 
         public static readonly DependencyProperty MaxLengthProperty =
@@ -33,8 +33,8 @@ namespace ZapanControls.Behaviours
 
         public int MaxLength
         {
-            get { return (int)GetValue(MaxLengthProperty); }
-            set { SetValue(MaxLengthProperty, value); }
+            get => (int)GetValue(MaxLengthProperty);
+            set => SetValue(MaxLengthProperty, value);
         }
 
         public static readonly DependencyProperty EmptyValueProperty =
@@ -42,8 +42,8 @@ namespace ZapanControls.Behaviours
 
         public string EmptyValue
         {
-            get { return (string)GetValue(EmptyValueProperty); }
-            set { SetValue(EmptyValueProperty, value); }
+            get => (string)GetValue(EmptyValueProperty); 
+            set => SetValue(EmptyValueProperty, value);
         }
 
         #endregion
@@ -77,8 +77,8 @@ namespace ZapanControls.Behaviours
         void PreviewTextInputHandler(object sender, TextCompositionEventArgs e)
         {
             string text;
-            if (this.AssociatedObject.Text.Length < AssociatedObject.CaretIndex)
-                text = this.AssociatedObject.Text;
+            if (AssociatedObject.Text.Length < AssociatedObject.CaretIndex)
+                text = AssociatedObject.Text;
             else
             {
                 //  Remaining text after removing selected text.
@@ -150,10 +150,8 @@ namespace ZapanControls.Behaviours
         /// </summary>
         /// <param name="text"> Text for validation </param>
         /// <returns> True - valid, False - invalid </returns>
-        private bool ValidateText(string text)
-        {
-            return (new Regex(RegularExpression, RegexOptions.IgnoreCase)).IsMatch(text) && (MaxLength == int.MinValue || text.Length <= MaxLength);
-        }
+        private bool ValidateText(string text) 
+            => (new Regex(RegularExpression, RegexOptions.IgnoreCase)).IsMatch(text) && (MaxLength == int.MinValue || text.Length <= MaxLength);
 
         /// <summary>
         ///     Handle text selection

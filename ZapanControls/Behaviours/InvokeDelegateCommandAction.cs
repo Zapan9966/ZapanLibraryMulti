@@ -36,8 +36,8 @@ namespace ZapanControls.Behaviours
         /// </summary>
         public object InvokeParameter
         {
-            get { return this.GetValue(InvokeParameterProperty); }
-            set { this.SetValue(InvokeParameterProperty, value); }
+            get => GetValue(InvokeParameterProperty);
+            set => SetValue(InvokeParameterProperty, value);
         }
 
         /// <summary>
@@ -45,8 +45,8 @@ namespace ZapanControls.Behaviours
         /// </summary>
         public ICommand Command
         {
-            get { return (ICommand)this.GetValue(CommandProperty); }
-            set { this.SetValue(CommandProperty, value); }
+            get => (ICommand)GetValue(CommandProperty);
+            set => SetValue(CommandProperty, value);
         }
 
         /// <summary>
@@ -54,11 +54,11 @@ namespace ZapanControls.Behaviours
         /// </summary>
         public string CommandName
         {
-            get { return this.commandName; }
+            get => commandName;
             set
             {
-                if (this.CommandName != value)
-                    this.commandName = value;
+                if (CommandName != value)
+                    commandName = value;
             }
         }
 
@@ -67,8 +67,8 @@ namespace ZapanControls.Behaviours
         /// </summary>
         public object CommandParameter
         {
-            get { return this.GetValue(CommandParameterProperty); }
-            set { this.SetValue(CommandParameterProperty, value); }
+            get => GetValue(CommandParameterProperty);
+            set => SetValue(CommandParameterProperty, value);
         }
 
         /// <summary>
@@ -77,23 +77,23 @@ namespace ZapanControls.Behaviours
         /// <param name="parameter"></param>
         protected override void Invoke(object parameter)
         {
-            this.InvokeParameter = parameter;
+            InvokeParameter = parameter;
 
-            if (this.AssociatedObject != null)
+            if (AssociatedObject != null)
             {
-                ICommand command = this.ResolveCommand();
-                if ((command != null) && command.CanExecute(this.CommandParameter))
-                    command.Execute(this.CommandParameter);
+                ICommand command = ResolveCommand();
+                if ((command != null) && command.CanExecute(CommandParameter))
+                    command.Execute(CommandParameter);
             }
         }
 
         private ICommand ResolveCommand()
         {
             ICommand command = null;
-            if (this.Command != null)
-                return this.Command;
+            if (Command != null)
+                return Command;
 
-            if (this.AssociatedObject is FrameworkElement frameworkElement)
+            if (AssociatedObject is FrameworkElement frameworkElement)
             {
                 object dataContext = frameworkElement.DataContext;
                 if (dataContext != null)
@@ -104,7 +104,7 @@ namespace ZapanControls.Behaviours
                         .FirstOrDefault(
                             p =>
                             typeof(ICommand).IsAssignableFrom(p.PropertyType) &&
-                            string.Equals(p.Name, this.CommandName, StringComparison.Ordinal)
+                            string.Equals(p.Name, CommandName, StringComparison.Ordinal)
                         );
 
                     if (commandPropertyInfo != null)

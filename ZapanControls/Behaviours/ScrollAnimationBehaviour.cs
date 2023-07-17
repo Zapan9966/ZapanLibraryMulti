@@ -24,15 +24,11 @@ namespace ZapanControls.Behaviours
         private static readonly DependencyProperty VerticalOffsetProperty = DependencyProperty.RegisterAttached(
             "VerticalOffset", typeof(double), typeof(ScrollAnimationBehavior), new UIPropertyMetadata(0.0, OnVerticalOffsetChanged));
 
-        public static void SetVerticalOffset(FrameworkElement target, double value)
-        {
-            target?.SetValue(VerticalOffsetProperty, value);
-        }
+        public static void SetVerticalOffset(FrameworkElement target, double value) 
+            => target?.SetValue(VerticalOffsetProperty, value);
 
-        public static double GetVerticalOffset(FrameworkElement target)
-        {
-            return (double)(target?.GetValue(VerticalOffsetProperty) ?? 0);
-        }
+        public static double GetVerticalOffset(FrameworkElement target) 
+            => (double)(target?.GetValue(VerticalOffsetProperty) ?? 0);
 
         #endregion
 
@@ -42,14 +38,10 @@ namespace ZapanControls.Behaviours
             "TimeDuration", typeof(TimeSpan), typeof(ScrollAnimationBehavior), new PropertyMetadata(new TimeSpan(0, 0, 0, 0, 0)));
 
         public static void SetTimeDuration(FrameworkElement target, TimeSpan value)
-        {
-            target?.SetValue(TimeDurationProperty, value);
-        }
+            => target?.SetValue(TimeDurationProperty, value);
 
         public static TimeSpan GetTimeDuration(FrameworkElement target)
-        {
-            return (TimeSpan)(target?.GetValue(TimeDurationProperty) ?? TimeSpan.Zero);
-        }
+            => (TimeSpan)(target?.GetValue(TimeDurationProperty) ?? TimeSpan.Zero);        
 
         #endregion
 
@@ -58,15 +50,11 @@ namespace ZapanControls.Behaviours
         private static readonly DependencyProperty PointsToScrollProperty = DependencyProperty.RegisterAttached(
             "PointsToScroll", typeof(double), typeof(ScrollAnimationBehavior), new PropertyMetadata(0.0));
 
-        public static void SetPointsToScroll(FrameworkElement target, double value)
-        {
-            target?.SetValue(PointsToScrollProperty, value);
-        }
+        public static void SetPointsToScroll(FrameworkElement target, double value) 
+            => target?.SetValue(PointsToScrollProperty, value);
 
         public static double GetPointsToScroll(FrameworkElement target)
-        {
-            return (double)(target?.GetValue(PointsToScrollProperty) ?? 0);
-        }
+            => (double)(target?.GetValue(PointsToScrollProperty) ?? 0);
 
         #endregion
 
@@ -87,15 +75,11 @@ namespace ZapanControls.Behaviours
         private static readonly DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached(
             "IsEnabled", typeof(bool), typeof(ScrollAnimationBehavior), new UIPropertyMetadata(false, OnIsEnabledChanged));
 
-        public static void SetIsEnabled(FrameworkElement target, bool value)
-        {
-            target?.SetValue(IsEnabledProperty, value);
-        }
+        public static void SetIsEnabled(FrameworkElement target, bool value) 
+            => target?.SetValue(IsEnabledProperty, value);
 
         public static bool GetIsEnabled(FrameworkElement target)
-        {
-            return (bool)(target?.GetValue(IsEnabledProperty) ?? false);
-        }
+            => (bool)(target?.GetValue(IsEnabledProperty) ?? false);
 
         #endregion
 
@@ -103,17 +87,12 @@ namespace ZapanControls.Behaviours
 
         private static void OnIsEnabledChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            var target = sender;
-
-            if (target != null && target is ScrollViewer)
+            if (sender is ScrollViewer scroller)
             {
-                ScrollViewer scroller = target as ScrollViewer;
                 scroller.Loaded += new RoutedEventHandler(ScrollerLoaded);
             }
-
-            if (target != null && target is ListBox)
+            else if (sender is ListBox listbox)
             {
-                ListBox listbox = target as ListBox;
                 listbox.Loaded += new RoutedEventHandler(ListboxLoaded);
             }
         }
@@ -305,19 +284,13 @@ namespace ZapanControls.Behaviours
         #region ListBox Event Handlers
 
         private static void ListBoxLayoutUpdated(object sender, EventArgs e)
-        {
-            UpdateScrollPosition(sender);
-        }
+            => UpdateScrollPosition(sender);
 
-        private static void ListBoxLoaded(object sender, RoutedEventArgs e)
-        {
-            UpdateScrollPosition(sender);
-        }
+        private static void ListBoxLoaded(object sender, RoutedEventArgs e) 
+            => UpdateScrollPosition(sender);
 
-        private static void ListBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            UpdateScrollPosition(sender);
-        }
+        private static void ListBoxSelectionChanged(object sender, SelectionChangedEventArgs e) 
+            => UpdateScrollPosition(sender);
 
         #endregion
     }

@@ -35,11 +35,6 @@ namespace ZapanControls.Controls
         private Dictionary<string, KeyValuePair<object, IValueConverter>> _filterDictionary;
         #endregion
 
-        #region Theme Declarations
-        public static ThemePath Oceatech = new ThemePath(ListViewThemes.Oceatech, "/ZapanControls;component/Themes/ListView/Oceatech.xaml");
-        public static ThemePath Contactel = new ThemePath(ListViewThemes.Contactel, "/ZapanControls;component/Themes/ListView/Contactel.xaml");
-        #endregion
-
         #region Properties
         #region AllItems
         public AsyncObservableCollection<dynamic> AllItems { get; private set; }
@@ -923,7 +918,7 @@ namespace ZapanControls.Controls
 
             // Load Themes
             ThemeChanged += OnThemeChanged;
-            this.RegisterAttachedThemes(GetType());
+            this.RegisterInternalThemes<ListViewThemes>();
             this.LoadDefaultTheme(ThemeProperty);
         }
         #endregion

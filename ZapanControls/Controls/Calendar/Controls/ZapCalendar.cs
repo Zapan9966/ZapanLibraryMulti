@@ -34,8 +34,16 @@ namespace ZapanControls.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ZapCalendar), new FrameworkPropertyMetadata(typeof(ZapCalendar)));
 
-            CommandManager.RegisterClassCommandBinding(typeof(ZapCalendar), new CommandBinding(NextDay, new ExecutedRoutedEventHandler(OnExecutedNextDay), new CanExecuteRoutedEventHandler(OnCanExecuteNextDay)));
-            CommandManager.RegisterClassCommandBinding(typeof(ZapCalendar), new CommandBinding(PreviousDay, new ExecutedRoutedEventHandler(OnExecutedPreviousDay), new CanExecuteRoutedEventHandler(OnCanExecutePreviousDay)));
+            CommandManager.RegisterClassCommandBinding(
+                typeof(ZapCalendar), 
+                new CommandBinding(NextDay, new ExecutedRoutedEventHandler(OnExecutedNextDay), 
+                new CanExecuteRoutedEventHandler(OnCanExecuteNextDay)));
+
+            CommandManager.RegisterClassCommandBinding(
+                typeof(ZapCalendar), 
+                new CommandBinding(PreviousDay, 
+                new ExecutedRoutedEventHandler(OnExecutedPreviousDay), 
+                new CanExecuteRoutedEventHandler(OnCanExecutePreviousDay)));
         }
 
         #region CalendarTimeslotItemStyle
@@ -44,12 +52,11 @@ namespace ZapanControls.Controls
             "CalendarTimeslotItemStyle", typeof(Style), typeof(ZapCalendar));
 
         [Category("ZapCalendar")]
-        //[Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public Style CalendarTimeslotItemStyle
         {
-            get { return (Style)GetValue(CalendarTimeslotItemStyleProperty); }
-            set { SetValue(CalendarTimeslotItemStyleProperty, value); }
+            get => (Style)GetValue(CalendarTimeslotItemStyleProperty);
+            set => SetValue(CalendarTimeslotItemStyleProperty, value);
         }
 
         #endregion
@@ -60,12 +67,11 @@ namespace ZapanControls.Controls
             "CalendarLedgerItemStyle", typeof(Style), typeof(ZapCalendar));
 
         [Category("ZapCalendar")]
-        //[Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public Style CalendarLedgerItemStyle
         {
-            get { return (Style)GetValue(CalendarLedgerItemStyleProperty); }
-            set { SetValue(CalendarLedgerItemStyleProperty, value); }
+            get => (Style)GetValue(CalendarLedgerItemStyleProperty); 
+            set => SetValue(CalendarLedgerItemStyleProperty, value);
         }
 
         #endregion
@@ -76,12 +82,11 @@ namespace ZapanControls.Controls
             "CalendarAppointmentItemStyle", typeof(Style), typeof(ZapCalendar));
 
         [Category("ZapCalendar")]
-        //[Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public Style CalendarAppointmentItemStyle
         {
-            get { return (Style)GetValue(CalendarAppointmentItemStyleProperty); }
-            set { SetValue(CalendarAppointmentItemStyleProperty, value); }
+            get => (Style)GetValue(CalendarAppointmentItemStyleProperty); 
+            set => SetValue(CalendarAppointmentItemStyleProperty, value);
         }
 
         #endregion
@@ -92,8 +97,8 @@ namespace ZapanControls.Controls
 
         public event RoutedEventHandler AddAppointment
         {
-            add { AddHandler(AddAppointmentEvent, value); }
-            remove { RemoveHandler(AddAppointmentEvent, value); }
+            add => AddHandler(AddAppointmentEvent, value);
+            remove => RemoveHandler(AddAppointmentEvent, value);
         }
 
         #endregion
@@ -106,14 +111,12 @@ namespace ZapanControls.Controls
 
         public IEnumerable<Appointment> Appointments
         {
-            get { return (ObservableCollection<Appointment>)GetValue(AppointmentsProperty); }
-            set { SetValue(AppointmentsProperty, value); }
+            get => (ObservableCollection<Appointment>)GetValue(AppointmentsProperty);
+            set => SetValue(AppointmentsProperty, value);
         }
 
-        private static void OnAppointmentsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((ZapCalendar)d).OnAppointmentsChanged(e);
-        }
+        private static void OnAppointmentsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => ((ZapCalendar)d).OnAppointmentsChanged(e);
 
         protected virtual void OnAppointmentsChanged(DependencyPropertyChangedEventArgs e)
         {
@@ -126,10 +129,8 @@ namespace ZapanControls.Controls
             FilterAppointments(CurrentDate);
         }
 
-        void Appointments_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            FilterAppointments(CurrentDate);
-        }
+        private void Appointments_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) 
+            => FilterAppointments(CurrentDate);
 
         #endregion
 
@@ -143,14 +144,11 @@ namespace ZapanControls.Controls
         [EditorBrowsable(EditorBrowsableState.Always)]
         public DateTime CurrentDate
         {
-            get { return (DateTime)GetValue(CurrentDateProperty); }
-            set { SetValue(CurrentDateProperty, value); }
+            get => (DateTime)GetValue(CurrentDateProperty); set => SetValue(CurrentDateProperty, value);
         }
 
-        private static void OnCurrentDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((ZapCalendar)d).OnCurrentDateChanged(e);
-        }
+        private static void OnCurrentDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => ((ZapCalendar)d).OnCurrentDateChanged(e);
 
         protected virtual void OnCurrentDateChanged(DependencyPropertyChangedEventArgs e)
         {
@@ -172,8 +170,8 @@ namespace ZapanControls.Controls
         [EditorBrowsable(EditorBrowsableState.Always)]
         public Brush PeakTimeSlotBackground
         {
-            get { return (Brush)GetValue(PeakTimeSlotBackgroundProperty); }
-            set { SetValue(PeakTimeSlotBackgroundProperty, value); }
+            get => (Brush)GetValue(PeakTimeSlotBackgroundProperty); 
+            set => SetValue(PeakTimeSlotBackgroundProperty, value);
         }
 
         private static void OnPeakTimeSlotBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -199,8 +197,8 @@ namespace ZapanControls.Controls
         [EditorBrowsable(EditorBrowsableState.Always)]
         public Brush OffPeakTimeSlotBackground
         {
-            get { return (Brush)GetValue(OffPeakTimeSlotBackgroundProperty); }
-            set { SetValue(OffPeakTimeSlotBackgroundProperty, value); }
+            get => (Brush)GetValue(OffPeakTimeSlotBackgroundProperty); 
+            set => SetValue(OffPeakTimeSlotBackgroundProperty, value);
         }
 
         private static void OnOffPeakTimeSlotBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -262,15 +260,11 @@ namespace ZapanControls.Controls
         public static readonly RoutedCommand NextDay = new RoutedCommand("NextDay", typeof(ZapCalendar));
         public static readonly RoutedCommand PreviousDay = new RoutedCommand("PreviousDay", typeof(ZapCalendar));
 
-        private static void OnCanExecuteNextDay(object sender, CanExecuteRoutedEventArgs e)
-        {
-            ((ZapCalendar)sender).OnCanExecuteNextDay(e);
-        }
+        private static void OnCanExecuteNextDay(object sender, CanExecuteRoutedEventArgs e) 
+            => ((ZapCalendar)sender).OnCanExecuteNextDay(e);
 
-        private static void OnExecutedNextDay(object sender, ExecutedRoutedEventArgs e)
-        {
-            ((ZapCalendar)sender).OnExecutedNextDay(e);
-        }
+        private static void OnExecutedNextDay(object sender, ExecutedRoutedEventArgs e) 
+            => ((ZapCalendar)sender).OnExecutedNextDay(e);
 
         protected virtual void OnCanExecuteNextDay(CanExecuteRoutedEventArgs e)
         {
@@ -289,15 +283,11 @@ namespace ZapanControls.Controls
                 e.Handled = true;
         }
 
-        private static void OnCanExecutePreviousDay(object sender, CanExecuteRoutedEventArgs e)
-        {
-            ((ZapCalendar)sender).OnCanExecutePreviousDay(e);
-        }
+        private static void OnCanExecutePreviousDay(object sender, CanExecuteRoutedEventArgs e) 
+            => ((ZapCalendar)sender).OnCanExecutePreviousDay(e);
 
-        private static void OnExecutedPreviousDay(object sender, ExecutedRoutedEventArgs e)
-        {
-            ((ZapCalendar)sender).OnExecutedPreviousDay(e);
-        }
+        private static void OnExecutedPreviousDay(object sender, ExecutedRoutedEventArgs e) 
+            => ((ZapCalendar)sender).OnExecutedPreviousDay(e);
 
         protected virtual void OnCanExecutePreviousDay(CanExecuteRoutedEventArgs e)
         {

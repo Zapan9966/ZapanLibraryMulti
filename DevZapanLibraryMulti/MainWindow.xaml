@@ -11,7 +11,7 @@
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              Theme="Contactel"
              Title="MainWindow NETCOREAPP3_1"              
-             Height="450" Width="1000">
+             Height="850" Width="1000">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -23,7 +23,13 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <z:ZapTabControl x:Name="tabControl" Grid.ColumnSpan="3" Grid.RowSpan="2" Theme="Oceatech" TabAdd="ZapTabControl_TabAdd" CanAddItem="True" Background="#505050">
+        <z:ZapTabControl x:Name="tabControl" 
+                         Grid.ColumnSpan="3" 
+                         Grid.RowSpan="2" 
+                         Theme="Oceatech" 
+                         TabAdd="ZapTabControl_TabAdd" 
+                         CanAddItem="True" 
+                         Background="#505050">
             <z:ZapTabControl.ContextMenu>
                 <z:ZapContextMenu Theme="Contactel" StaysOpen="True">
                     <z:ZapMenuItem Header="Submenus">
@@ -38,6 +44,114 @@
                     <z:ZapMenuItem Header="Test" />
                 </z:ZapContextMenu>
             </z:ZapTabControl.ContextMenu>
+            <z:ZapTabItem Header="Calendar/Picker" IsClosable="False" IsSelected="True">
+                <StackPanel Orientation="Vertical" >
+                    <z:ZapButton Content="Reload Themes" Margin="15,10,15,0" Click="ZapButton_Click" />
+                    <z:ZapScrollViewer HorizontalScrollBarVisibility="Disabled">
+                        <z:UniformWrapPanel Margin="10">
+
+                            <StackPanel>
+                                <Label Content="Oceatch" Foreground="White" HorizontalAlignment="Center"/>
+                                <cp:Calendar Width="220" Height="220" Margin="5,0" IsTodayHighlighted="True" Theme="Oceatech" />
+                            </StackPanel>
+                            <StackPanel>
+                                <Label Content="Contactel" Foreground="White" HorizontalAlignment="Center"/>
+                                <cp:Calendar Width="220" Height="220" Margin="5,0" IsTodayHighlighted="True" Theme="Contactel">
+                                    
+                                </cp:Calendar>
+                            </StackPanel>
+                            <StackPanel>
+                                <Label Content="OfficeBlack" Foreground="White" HorizontalAlignment="Center"/>
+                                <cp:Calendar Width="220" Height="220" Margin="5,0" IsTodayHighlighted="True" Theme="Office_Black" />
+                            </StackPanel>
+                            <StackPanel>
+                                <Label Content="OfficeBlue" Foreground="White" HorizontalAlignment="Center"/>
+                                <cp:Calendar Width="220" Height="220" Margin="5,0" IsTodayHighlighted="True" Theme="Office_Blue" />
+                            </StackPanel>
+                            <StackPanel>
+                                <Label Content="OfficeSilver" Foreground="White" HorizontalAlignment="Center"/>
+                                <cp:Calendar Width="220" Height="220" Margin="5,0" IsTodayHighlighted="True" Theme="Office_Silver" />
+                            </StackPanel>
+                            <StackPanel>
+                                <Label Content="AeroNormal" Foreground="White" HorizontalAlignment="Center"/>
+                                <cp:Calendar Width="220" Height="220" Margin="5,0" IsTodayHighlighted="True" Theme="Aero_NormalColor" />
+                            </StackPanel>
+                            <StackPanel>
+                                <Label Content="Classic" Foreground="White" HorizontalAlignment="Center"/>
+                                <cp:Calendar Width="220" Height="220" Margin="5,0" IsTodayHighlighted="True" Theme="Classic" />
+                            </StackPanel>
+                            <StackPanel>
+                                <Label Content="LunaHomestead" Foreground="White" HorizontalAlignment="Center"/>
+                                <cp:Calendar Width="220" Height="220" Margin="5,0" IsTodayHighlighted="True" Theme="Luna_Homestead" />
+                            </StackPanel>
+                            <StackPanel>
+                                <Label Content="LunaNormal" Foreground="White" HorizontalAlignment="Center"/>
+                                <cp:Calendar Width="220" Height="220" Margin="5,0" IsTodayHighlighted="True" Theme="Luna_NormalColor" />
+                            </StackPanel>
+                            <StackPanel>
+                                <Label Content="LunaMetallic" Foreground="White" HorizontalAlignment="Center"/>
+                                <cp:Calendar Width="220" Height="220" Margin="5,0" IsTodayHighlighted="True" Theme="Luna_Metallic" />
+                            </StackPanel>
+                        </z:UniformWrapPanel>
+                    </z:ZapScrollViewer>
+                </StackPanel>
+
+
+                <!--<ComboBox Name="cbTheme" 
+                  Margin="0,100,0,100"
+                  Height="21" Width="127" 
+                  HorizontalAlignment="Center"
+                  SelectionChanged="cbTheme_SelectionChanged"/>
+
+                <z:ZapButton Click="ZapButtonFlat_Click" Content="Test" Grid.Row="1" />
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+
+                    <dp:ZapDatePicker x:Name="Dpk" 
+                              FontSize="20"
+                              Width="220"                              
+                              Margin="10"
+                              IsReadOnly="False"
+                              IsCheckable="False"
+                              ButtonStyle="Image"
+                              DisplayDateEnd="{Binding Fin}"
+                              SelectedDate="{Binding Debut}"/>
+
+                    <dp:ZapDatePicker x:Name="DpkC" 
+                              FontSize="20"
+                              Width="220"
+                              Margin="10"
+                              Theme="Contactel"
+                              ButtonStyle="Flat"  
+                              IsReadOnly="False"
+                              IsCheckable="False"
+                              DisplayDateEnd="{Binding Fin}"
+                              SelectedDate="{Binding Debut}"/>
+
+                    <dp:ZapDatePicker x:Name="DpkF" 
+                              BorderBrush="Green"
+                              ButtonBackground="#FF777777"
+                              ButtonBackgroundHover="Lime"
+                              ButtonBackgroundPressed="DeepSkyBlue"
+                              ButtonBorder="Green"   
+                              ButtonBorderHover="Yellow"
+                              ButtonBorderPressed="Navy"
+                              IconNormal="Lime"   
+                              IconHover="Yellow"
+                              IconPressed="Firebrick"                              
+                              FontSize="20"
+                              Width="220"
+                              Margin="10"
+                              ButtonStyle="Flat"  
+                              IsReadOnly="False"
+                              IsCheckable="False"
+                              DateFormat="ddMMyyyy"
+                              DisplayDateStart="{Binding Debut}"
+                              SelectedDate="{Binding Fin}"/>
+
+                    <TextBlock Text="{Binding Debut, StringFormat={}{0:dd/MM/yyyy}}" />
+                </StackPanel>-->
+            </z:ZapTabItem>
             <z:ZapTabItem Header="ListView" IsClosable="False">
                 <Grid >
                     <Grid.ColumnDefinitions>
@@ -169,27 +283,6 @@
 
                 </Grid>
             </z:ZapTabItem>
-            <z:ZapTabItem Header="Progress" IsClosable="False">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <z:ZapProgress x:Name="progressFlat" Grid.Column="0" Grid.Row="0" Value="25" IsIndeterminate="false" Text="Oceatech Flat" />
-                    <z:ZapProgress x:Name="progressGlass" Grid.Column="0" Grid.Row="1" Value="75" ZapTemplate="Glass" IsIndeterminate="false" Text="Oceatech Glass" />
-                    <z:ZapProgress x:Name="progressIndeterminate" Grid.Column="0" Grid.Row="2" Value="00" ZapTemplate="Glass" IsIndeterminate="True" Text="Oceatech Indeterminate" />
-                    <z:ZapProgress x:Name="progressFlat1" Grid.Column="1" Grid.Row="0" Value="40" IsIndeterminate="false" Theme="Contactel" Text="Contactel Flat" />
-                    <z:ZapProgress x:Name="progressGlass1" Grid.Column="1" Grid.Row="1" Value="100" ZapTemplate="Glass" IsIndeterminate="false" Theme="Contactel" Text="Contactel Glass" />
-                    <z:ZapProgress x:Name="progressIndeterminate1" Grid.Column="1" Grid.Row="2" Value="50" ZapTemplate="Glass" IsIndeterminate="True" Theme="Contactel" Text="Contactel Indeterminate" />
-
-                </Grid>
-            </z:ZapTabItem>
             <z:ZapTabItem Header="LoadingIndicator" IsClosable="False">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -239,6 +332,27 @@
                     <z:ZapLoadingIndicator Grid.Row="6" Grid.Column="2" Theme="Contactel" ZapTemplate="Ring" Width="20" Height="20" />
                     <z:ZapLoadingIndicator Grid.Row="7" Grid.Column="2" Theme="Contactel" ZapTemplate="ThreeDots" Width="40" />
                     <z:ZapLoadingIndicator Grid.Row="8" Grid.Column="2" Theme="Contactel" ZapTemplate="Wave" Height="25" />
+
+                </Grid>
+            </z:ZapTabItem>
+            <z:ZapTabItem Header="Progress" IsClosable="False">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <z:ZapProgress x:Name="progressFlat" Grid.Column="0" Grid.Row="0" Value="25" IsIndeterminate="false" Text="Oceatech Flat" />
+                    <z:ZapProgress x:Name="progressGlass" Grid.Column="0" Grid.Row="1" Value="75" ZapTemplate="Glass" IsIndeterminate="false" Text="Oceatech Glass" />
+                    <z:ZapProgress x:Name="progressIndeterminate" Grid.Column="0" Grid.Row="2" Value="00" ZapTemplate="Glass" IsIndeterminate="True" Text="Oceatech Indeterminate" />
+                    <z:ZapProgress x:Name="progressFlat1" Grid.Column="1" Grid.Row="0" Value="40" IsIndeterminate="false" Theme="Contactel" Text="Contactel Flat" />
+                    <z:ZapProgress x:Name="progressGlass1" Grid.Column="1" Grid.Row="1" Value="100" ZapTemplate="Glass" IsIndeterminate="false" Theme="Contactel" Text="Contactel Glass" />
+                    <z:ZapProgress x:Name="progressIndeterminate1" Grid.Column="1" Grid.Row="2" Value="50" ZapTemplate="Glass" IsIndeterminate="True" Theme="Contactel" Text="Contactel Indeterminate" />
 
                 </Grid>
             </z:ZapTabItem>
@@ -645,11 +759,27 @@
                             <z:ZapMenuItem Header="No Submenu" />
                         </z:ZapMenuItem>
                     </Menu>
+                    <Menu>
+                        <z:ZapMenuItem Header="No Submenu" Theme="Oceatech" />
+                        <z:ZapMenuItem Header="Submenus" Theme="Oceatech">
+                            <z:ZapMenuItem Header="SubMenu level 1">
+                                <z:ZapMenuItem Header="SubMenu level 2">
+                                    <z:ZapMenuItem Header="SubMenu level 3" />
+                                </z:ZapMenuItem>
+                                <z:ZapMenuItem Header="SubMenu level 2" />
+                                <Separator />
+                                <z:ZapMenuItem Header="No Submenu" />
+                            </z:ZapMenuItem>
+                            <Separator />
+                            <z:ZapMenuItem Header="No Submenu" />
+                        </z:ZapMenuItem>
+                    </Menu>
                 </Grid>
             </z:ZapTabItem>
+            <z:ZapTabItem Header="Empty" IsClosable="False">
+                
+            </z:ZapTabItem>
         </z:ZapTabControl>
-
-        <!--<z:ZapButtonFlat Content="Test"/>-->
 
         <!--<z:ZapTabControl CanAddItem="True">
             <z:ZapTabItem Header="Test" IsClosable="True">
@@ -663,65 +793,6 @@
             </z:ZapTabItem>
         </z:ZapTabControl>-->
 
-        <!--<cp:Calendar x:Name="zapCal" 
-                     Grid.Column="1"  
-                     Width="220" Height="220" 
-                     IsTodayHighlighted="True" Grid.ColumnSpan="2" Margin="217,0,216,0"/>
-
-        <ComboBox Name="cbTheme" 
-                  Margin="0,100,0,100"
-                  Height="21" Width="127" 
-                  HorizontalAlignment="Center"
-                  SelectionChanged="cbTheme_SelectionChanged"/>
-
-        <z:ZapButtonFlat Click="ZapButtonFlat_Click" Content="Test" Grid.Row="1" />
-
-        <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
-
-            <dp:ZapDatePicker x:Name="Dpk" 
-                              FontSize="20"
-                              Width="220"                              
-                              Margin="10"
-                              IsReadOnly="False"
-                              IsCheckable="False"
-                              ButtonStyle="Image"
-                              DisplayDateEnd="{Binding Fin}"
-                              SelectedDate="{Binding Debut}"/>
-
-            <dp:ZapDatePicker x:Name="DpkC" 
-                              FontSize="20"
-                              Width="220"
-                              Margin="10"
-                              Theme="Contactel"
-                              ButtonStyle="Flat"  
-                              IsReadOnly="False"
-                              IsCheckable="False"
-                              DisplayDateEnd="{Binding Fin}"
-                              SelectedDate="{Binding Debut}"/>
-
-            <dp:ZapDatePicker x:Name="DpkF" 
-                              BorderBrush="Green"
-                              ButtonBackground="#FF777777"
-                              ButtonBackgroundHover="Lime"
-                              ButtonBackgroundPressed="DeepSkyBlue"
-                              ButtonBorder="Green"   
-                              ButtonBorderHover="Yellow"
-                              ButtonBorderPressed="Navy"
-                              IconNormal="Lime"   
-                              IconHover="Yellow"
-                              IconPressed="Firebrick"                              
-                              FontSize="20"
-                              Width="220"
-                              Margin="10"
-                              ButtonStyle="Flat"  
-                              IsReadOnly="False"
-                              IsCheckable="False"
-                              DateFormat="ddMMyyyy"
-                              DisplayDateStart="{Binding Debut}"
-                              SelectedDate="{Binding Fin}"/>
-
-            <TextBlock Text="{Binding Debut, StringFormat={}{0:dd/MM/yyyy}}" />
-        </StackPanel>-->
 
 
 

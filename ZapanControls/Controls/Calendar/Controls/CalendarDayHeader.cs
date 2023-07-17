@@ -7,7 +7,6 @@ using ZapanControls.Converters;
 namespace ZapanControls.Controls
 {
     [TemplatePart(Name = ElementDayHeaderLabel, Type = typeof(TextBlock))]
-    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Cannot be static")]
     internal sealed class CalendarDayHeader : Control
     {
         private const string ElementDayHeaderLabel = "PART_DayHeaderLabel";
@@ -20,10 +19,8 @@ namespace ZapanControls.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(CalendarDayHeader), new FrameworkPropertyMetadata(typeof(CalendarDayHeader)));
         }
 
-        private Binding GetOwnerBinding(string propertyName)
-        {
-            return new Binding(propertyName) { Source = this.Owner };
-        }
+        private Binding GetOwnerBinding(string propertyName) 
+            => new Binding(propertyName) { Source = Owner };
 
         public override void OnApplyTemplate()
         {

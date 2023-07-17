@@ -21,16 +21,11 @@ namespace ZapanControls.Controls
     /// A control featuring a range of loading indicating animations.
     /// </summary>
     [TemplatePart(Name = "Border", Type = typeof(Border))]
-    public class ZapLoadingIndicator : Control, ITheme
+    public class ZapLoadingIndicator : Control, ITemplate<ZapLoadingIndicatorTemplates>
     {
         #region Fields
         private Border PART_Border;
         private bool _hasInitialized;
-        #endregion
-
-        #region Theme Declarations
-        public static ThemePath Oceatech = new ThemePath(ZapLoadingIndicatorThemes.Oceatech, "/ZapanControls;component/Themes/ZapLoadingIndicator/Oceatech.xaml");
-        public static ThemePath Contactel = new ThemePath(ZapLoadingIndicatorThemes.Contactel, "/ZapanControls;component/Themes/ZapLoadingIndicator/Contactel.xaml");
         #endregion
 
         #region Template Declarations
@@ -156,7 +151,11 @@ namespace ZapanControls.Controls
                 new PropertyChangedCallback(OnZapTemplateChanged),
                 new CoerceValueCallback(CoerceZapTemplateChange)));
 
-        public ZapLoadingIndicatorTemplates ZapTemplate { get => (ZapLoadingIndicatorTemplates)GetValue(ZapTemplateProperty); set => SetValue(ZapTemplateProperty, value); }
+        public ZapLoadingIndicatorTemplates ZapTemplate 
+        { 
+            get => (ZapLoadingIndicatorTemplates)GetValue(ZapTemplateProperty); 
+            set => SetValue(ZapTemplateProperty, value); 
+        }
 
         private static void OnZapTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) //=> d.TemplateChanged(e, TemplateChangedEvent);
         {
@@ -253,9 +252,13 @@ namespace ZapanControls.Controls
         #region Events
         #region TemplateChanged
         public static readonly RoutedEvent TemplateChangedEvent = EventManager.RegisterRoutedEvent(
-            "TemplateChanged", RoutingStrategy.Bubble, typeof(ITemplate.TemplateChangedEventHandler), typeof(ZapLoadingIndicator));
+            "TemplateChanged", RoutingStrategy.Bubble, typeof(ITemplate<ZapLoadingIndicatorTemplates>.TemplateChangedEventHandler), typeof(ZapLoadingIndicator));
 
-        public event ITemplate.TemplateChangedEventHandler TemplateChanged { add => AddHandler(TemplateChangedEvent, value); remove => RemoveHandler(TemplateChangedEvent, value); }
+        public event ITemplate<ZapLoadingIndicatorTemplates>.TemplateChangedEventHandler TemplateChanged 
+        { 
+            add => AddHandler(TemplateChangedEvent, value); 
+            remove => RemoveHandler(TemplateChangedEvent, value); 
+        }
         #endregion
 
         #region ThemeChanged
@@ -295,14 +298,13 @@ namespace ZapanControls.Controls
         public ZapLoadingIndicator()
         {
             // Load Templates
-            RegisterAttachedTemplates(typeof(ZapLoadingIndicator));
-            RegisterAttachedTemplates(GetType());
-            LoadDefaultTemplate();
+            this.RegisterAttachedTemplates<ZapLoadingIndicatorTemplates>(typeof(ZapLoadingIndicator));
+            this.RegisterAttachedTemplates<ZapLoadingIndicatorTemplates>(GetType());
+            this.LoadDefaultTemplate<ZapLoadingIndicatorTemplates>(ZapTemplateProperty);
 
             // Load Themes
             ThemeChanged += OnThemeChanged;
-            this.RegisterAttachedThemes(typeof(ZapLoadingIndicator));
-            this.RegisterAttachedThemes(GetType());
+            this.RegisterInternalThemes<ZapLoadingIndicatorThemes>();
             this.LoadDefaultTheme(ThemeProperty);
         }
         #endregion
@@ -335,64 +337,6 @@ namespace ZapanControls.Controls
                 }
                 PART_Border.Visibility = IsActive ? Visibility.Visible : Visibility.Collapsed;
             }
-        }
-        #endregion
-
-        #region Templating
-        private void LoadDefaultTemplate()
-        {
-            if (TemplateDictionaries.Any())
-            {
-                string templateName = TemplateDictionaries.First().Key.GetTemplateName();
-                ZapLoadingIndicatorTemplates template = (ZapLoadingIndicatorTemplates)Enum.Parse(typeof(ZapLoadingIndicatorTemplates), templateName);
-
-                if (template == ZapTemplate)
-                {
-                    string newRegisteredTemplateName = templateName.TemplateRegistrationName(GetType());
-                    ResourceDictionary newTemplateDictionary = TemplateDictionaries[newRegisteredTemplateName];
-                    Resources.MergedDictionaries.Add(newTemplateDictionary);
-                }
-                else
-                {
-                    SetCurrentValue(ZapTemplateProperty, Enum.Parse(typeof(ZapLoadingIndicatorTemplates), TemplateDictionaries.First().Key.GetTemplateName()));
-                }
-            }
-        }
-
-        private void RegisterAttachedTemplates(Type type)
-        {
-            var templateFields = type.GetFields(BindingFlags.Public | BindingFlags.Static)
-                .Where(f => f.FieldType == typeof(TemplatePath));
-
-            foreach (var field in templateFields)
-            {
-                RegisterTemplate((TemplatePath)field.GetValue(this), type);
-            }
-        }
-
-        public void RegisterTemplate(TemplatePath template, Type ownerType)
-        {
-            // test args
-            if (template.Name == null || template.DictionaryPath == null)
-                throw new ArgumentNullException("Theme name/path is null");
-
-            if (ownerType == null)
-                throw new ArgumentNullException("Invalid ownerType");
-
-            string registrationName = template.Name.TemplateRegistrationName(ownerType);
-
-            try
-            {
-                if (!TemplateDictionaries.ContainsKey(registrationName))
-                {
-                    // create the Uri
-                    Uri themeUri = new Uri(template.DictionaryPath, UriKind.Relative);
-                    // register the new theme
-                    TemplateDictionaries[registrationName] = Application.LoadComponent(themeUri) as ResourceDictionary;
-                }
-            }
-            catch (Exception)
-            { }
         }
         #endregion
 

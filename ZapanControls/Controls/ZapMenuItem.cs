@@ -22,11 +22,6 @@ namespace ZapanControls.Controls
         private bool _hasInitialized;
         #endregion
 
-        #region Theme Declarations
-        public static ThemePath Oceatech = new ThemePath(ZapMenuItemThemes.Oceatech, "/ZapanControls;component/Themes/ZapMenuItem/Oceatech.xaml");
-        public static ThemePath Contactel = new ThemePath(ZapMenuItemThemes.Contactel, "/ZapanControls;component/Themes/ZapMenuItem/Contactel.xaml");
-        #endregion
-
         #region Properties
         #region Popup
         /// <summary>
@@ -315,7 +310,7 @@ namespace ZapanControls.Controls
         {
             // Load Themes
             ThemeChanged += OnThemeChanged;
-            this.RegisterAttachedThemes(typeof(ZapMenuItem));
+            this.RegisterInternalThemes<ZapMenuItemThemes>();
             this.LoadDefaultTheme(ThemeProperty);
         }
         #endregion  

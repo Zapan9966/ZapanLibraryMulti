@@ -20,7 +20,7 @@ namespace ZapanControls.Controls
     /// <summary>
     /// TabControl qui prend en charge l'ajout/suppression d'onglet.
     /// </summary>
-    public sealed class ZapTabControl : TabControl, ITemplate
+    public sealed class ZapTabControl : TabControl, ITemplate<string>
     {
         #region Fields
         private readonly ZapTabItemAdd _tabAdd;
@@ -271,7 +271,7 @@ namespace ZapanControls.Controls
 
         public string ZapTemplate { get => (string)GetValue(ZapTemplateProperty); set => SetValue(ZapTemplateProperty, value); }
 
-        private static void OnZapTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.TemplateChanged(e, TemplateChangedEvent);
+        private static void OnZapTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.TemplateChanged<string>(e, TemplateChangedEvent);
 
         private static object CoerceZapTemplateChange(DependencyObject d, object o)
         {
@@ -374,9 +374,13 @@ namespace ZapanControls.Controls
 
         #region TemplateChanged
         public static readonly RoutedEvent TemplateChangedEvent = EventManager.RegisterRoutedEvent(
-            "TemplateChanged", RoutingStrategy.Bubble, typeof(ITemplate.TemplateChangedEventHandler), typeof(ZapTabControl));
+            "TemplateChanged", RoutingStrategy.Bubble, typeof(ITemplate<string>.TemplateChangedEventHandler), typeof(ZapTabControl));
 
-        public event ITemplate.TemplateChangedEventHandler TemplateChanged { add => AddHandler(TemplateChangedEvent, value); remove => RemoveHandler(TemplateChangedEvent, value); }
+        public event ITemplate<string>.TemplateChangedEventHandler TemplateChanged 
+        { 
+            add => AddHandler(TemplateChangedEvent, value); 
+            remove => RemoveHandler(TemplateChangedEvent, value); 
+        }
         #endregion
 
         #region ThemeChanged
@@ -450,12 +454,12 @@ namespace ZapanControls.Controls
             _tabAdd = new ZapTabItemAdd();
 
             // Load Templates
-            this.RegisterAttachedTemplates(typeof(ZapTabControl));
-            this.LoadDefaultTemplate(ZapTemplateProperty);
+            this.RegisterAttachedTemplates<string>(typeof(ZapTabControl));
+            this.LoadDefaultTemplate<string>(ZapTemplateProperty);
 
             // Load Themes
             ThemeChanged += OnThemeChanged;
-            this.RegisterAttachedThemes(typeof(ZapTabControl));
+            this.RegisterInternalThemes<ZapTabControlThemes>();
             this.LoadDefaultTheme(ThemeProperty);
 
             SelectionChanged += InternalOnSelectionChanged;

@@ -17,6 +17,7 @@ using ZapanControls.Controls;
 using ZapanControls.Controls.CalendarPicker;
 using ZapanControls.Databases.MYSQL;
 using ZapanControls.Databases.SQLite;
+using ZapanControls.Helpers;
 
 namespace DevZapanLibraryMulti_NETCOREAPP3_1
 {
@@ -185,7 +186,6 @@ namespace DevZapanLibraryMulti_NETCOREAPP3_1
             //    default:
             //        zapCal.Theme = Themes.AeroNormal.ToString();
             //        break;
-
             //}
         }
 
@@ -219,6 +219,13 @@ namespace DevZapanLibraryMulti_NETCOREAPP3_1
         private void ListView_ItemDoubleClick(object sender, ZapanControls.Controls.ControlEventArgs.ListViewItemDoubleClickEventArgs e)
         {
             var item = e.Item;
+        }
+
+        private void ZapButton_Click(object sender, RoutedEventArgs e)
+        {
+            //VisualTreeHelpers.FindVisualChildren<ZapanControls.Controls.CalendarPicker.Calendar>(this)
+            //    .ToList()
+            //    .ForEach(c => c.ReloadThemes());
         }
     }
 }

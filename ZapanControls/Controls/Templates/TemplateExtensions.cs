@@ -29,18 +29,26 @@ namespace ZapanControls.Controls.Templates
             return key?.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries)[1];
         }
 
-        public static void LoadDefaultTemplate(this FrameworkElement f, DependencyProperty p)
+        public static void LoadDefaultTemplate<TTemplate>(this FrameworkElement f, DependencyProperty p)
         {
-            if (f is ITemplate t)
+            if (f is ITemplate<TTemplate> t)
             {
                 if (t.TemplateDictionaries.Any())
-                    f.SetCurrentValue(p, t.TemplateDictionaries.First().Key.GetTemplateName());
+                {
+                    object template = t.TemplateDictionaries.First().Key.GetTemplateName();
+                    if (typeof(TTemplate).IsEnum)
+                    {
+                        template = (TTemplate)Enum.Parse(typeof(TTemplate), template.ToString());
+                    }
+
+                    f.SetCurrentValue(p, template);
+                }
             }
         }
 
-        public static void RegisterAttachedTemplates(this DependencyObject o, Type type)
+        public static void RegisterAttachedTemplates<TTemplate>(this DependencyObject o, Type type)
         {
-            if (o is ITemplate t)
+            if (o is ITemplate<TTemplate> t)
             {
                 var templateFields = type.GetFields(BindingFlags.Public | BindingFlags.Static)
                     .Where(f => f.FieldType == typeof(TemplatePath));
@@ -52,7 +60,7 @@ namespace ZapanControls.Controls.Templates
             }
         }
 
-        public static void RegisterTemplate(this ITemplate t, TemplatePath template, Type ownerType)
+        public static void RegisterTemplate<TTemplate>(this ITemplate<TTemplate> t, TemplatePath template, Type ownerType)
         {
             // test args
             if (template.Name == null || template.DictionaryPath == null)
@@ -79,10 +87,10 @@ namespace ZapanControls.Controls.Templates
             }
         }
 
-        public static void TemplateChanged(this DependencyObject o, DependencyPropertyChangedEventArgs e, RoutedEvent successEvent)
+        public static void TemplateChanged<TTemplate>(this DependencyObject o, DependencyPropertyChangedEventArgs e, RoutedEvent successEvent)
         {
             // test args
-            if (!(o is ITemplate t) || !(o is FrameworkElement fe) || e == null)
+            if (!(o is ITemplate<TTemplate> t) || !(o is FrameworkElement fe) || e == null)
                 throw new ArgumentNullException("Invalid ZapTemplate property");
 
             string curTemplateName = e.OldValue as string;

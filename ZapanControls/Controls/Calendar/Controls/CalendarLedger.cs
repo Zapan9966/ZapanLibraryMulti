@@ -6,7 +6,6 @@ using System.Windows.Data;
 namespace ZapanControls.Controls
 {
     [TemplatePart(Name = ElementLedgerItems, Type = typeof(StackPanel))]
-    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Cannot be static")]
     internal sealed class CalendarLedger : Control
     {
         private const string ElementLedgerItems = "PART_LedgerItems";
@@ -24,8 +23,8 @@ namespace ZapanControls.Controls
 
         public Style CalendarLedgerItemStyle
         {
-            get { return (Style)GetValue(CalendarLedgerItemStyleProperty); }
-            set { SetValue(CalendarLedgerItemStyleProperty, value); }
+            get => (Style)GetValue(CalendarLedgerItemStyleProperty);
+            set => SetValue(CalendarLedgerItemStyleProperty, value);
         }
 
         #endregion
@@ -58,9 +57,7 @@ namespace ZapanControls.Controls
 
         public ZapCalendar Owner { get; set; }
 
-        private Binding GetOwnerBinding(string propertyName)
-        {
-            return new Binding(propertyName) { Source = this.Owner };
-        }
+        private Binding GetOwnerBinding(string propertyName) 
+            => new Binding(propertyName) { Source = Owner };
     }
 }

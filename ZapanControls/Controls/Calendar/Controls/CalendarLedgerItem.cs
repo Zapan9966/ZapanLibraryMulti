@@ -17,8 +17,8 @@ namespace ZapanControls.Controls
 
         public string TimeslotA
         {
-            get { return (string)GetValue(TimeslotAProperty); }
-            set { SetValue(TimeslotAProperty, value); }
+            get => (string)GetValue(TimeslotAProperty);
+            set => SetValue(TimeslotAProperty, value);
         }
 
         #endregion
@@ -30,8 +30,8 @@ namespace ZapanControls.Controls
 
         public string TimeslotB
         {
-            get { return (string)GetValue(TimeslotBProperty); }
-            set { SetValue(TimeslotBProperty, value); }
+            get => (string)GetValue(TimeslotBProperty);
+            set => SetValue(TimeslotBProperty, value);
         }
 
         #endregion

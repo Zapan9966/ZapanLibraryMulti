@@ -16,7 +16,10 @@ namespace ZapanControls.Behaviours
 
         private static void BoundGridViewColumnPropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            if (!(o is GridViewColumnHeader gridViewColumnHeader) || gridViewColumnHeader.Column == null) return;
+            if (!(o is GridViewColumnHeader gridViewColumnHeader) || gridViewColumnHeader.Column == null)
+            {
+                return;
+            }
             // Set attached property Column.BoundGridViewColumnHeader
             SetBoundGridViewColumnHeader(gridViewColumnHeader.Column, gridViewColumnHeader);
         }

@@ -31,7 +31,7 @@ namespace ZapanControls.Controls
     [TemplatePart(Name = "PART_OuterValue", Type = typeof(TextBlock))]
     [TemplatePart(Name = "PART_InnerValue", Type = typeof(TextBlock))]
     [TemplatePart(Name = "PART_Indicator", Type = typeof(ZapLoadingIndicator))]
-    public sealed class ZapProgress : RangeBase, ITemplate
+    public sealed class ZapProgress : RangeBase, ITemplate<string>
     {
         #region Properties Names
         private const string PercentPropName = "Percent";
@@ -49,11 +49,6 @@ namespace ZapanControls.Controls
         private Border _progress;
         private TextBlock _innerValue;
         private Rectangle _glow;
-        #endregion
-
-        #region Theme Declarations
-        public static ThemePath Oceatech = new ThemePath(ZapProgressThemes.Oceatech, "/ZapanControls;component/Themes/ZapProgress/Oceatech.xaml");
-        public static ThemePath Contactel = new ThemePath(ZapProgressThemes.Contactel, "/ZapanControls;component/Themes/ZapProgress/Contactel.xaml");
         #endregion
 
         #region Template Declaration
@@ -269,7 +264,7 @@ namespace ZapanControls.Controls
 
         public string ZapTemplate { get => (string)GetValue(ZapTemplateProperty); set => SetValue(ZapTemplateProperty, value); }
 
-        private static void OnZapTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.TemplateChanged(e, TemplateChangedEvent);
+        private static void OnZapTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.TemplateChanged<string>(e, TemplateChangedEvent);
 
         private static object CoerceZapTemplateChange(DependencyObject d, object o)
         {
@@ -333,9 +328,13 @@ namespace ZapanControls.Controls
         #region Events
         #region TemplateChanged
         public static readonly RoutedEvent TemplateChangedEvent = EventManager.RegisterRoutedEvent(
-            "TemplateChanged", RoutingStrategy.Bubble, typeof(ITemplate.TemplateChangedEventHandler), typeof(ZapProgress));
+            "TemplateChanged", RoutingStrategy.Bubble, typeof(ITemplate<string>.TemplateChangedEventHandler), typeof(ZapProgress));
 
-        public event ITemplate.TemplateChangedEventHandler TemplateChanged { add => AddHandler(TemplateChangedEvent, value); remove => RemoveHandler(TemplateChangedEvent, value); }
+        public event ITemplate<string>.TemplateChangedEventHandler TemplateChanged 
+        { 
+            add => AddHandler(TemplateChangedEvent, value); 
+            remove => RemoveHandler(TemplateChangedEvent, value); 
+        }
         #endregion
 
         #region ThemeChanged
@@ -400,12 +399,12 @@ namespace ZapanControls.Controls
         public ZapProgress()
         {
             // Load Templates
-            this.RegisterAttachedTemplates(GetType());
-            this.LoadDefaultTemplate(ZapTemplateProperty);
+            this.RegisterAttachedTemplates<string>(GetType());
+            this.LoadDefaultTemplate<string>(ZapTemplateProperty);
 
             // Load Themes
             ThemeChanged += OnThemeChanged;
-            this.RegisterAttachedThemes(GetType());
+            this.RegisterInternalThemes<ZapProgressThemes>();
             this.LoadDefaultTheme(ThemeProperty);
         }
         #endregion
