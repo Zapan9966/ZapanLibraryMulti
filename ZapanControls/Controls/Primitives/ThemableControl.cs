@@ -67,7 +67,10 @@ namespace ZapanControls.Controls.Primitives
             remove => RemoveHandler(ThemeChangedEvent, value);
         }
 
-        public abstract void OnThemeChanged(object sender, ThemeChangedEventArgs e);
+        public virtual void OnThemeChanged(object sender, ThemeChangedEventArgs e)
+        {
+            DefaultThemeProperties.Clear();
+        }
         #endregion
 
         #region Constructors
