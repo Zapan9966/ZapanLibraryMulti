@@ -7,8 +7,9 @@
     <!-- ==================== -->
     
     <!--control-->
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=Background}" Color="White" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=Background}" Color="White" Opacity=".2" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=BorderBrush}" Color="Indigo" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=Foreground}" Color="White" />
 
     <!--button background-->
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=ButtonBackground}" Color="DarkViolet" />

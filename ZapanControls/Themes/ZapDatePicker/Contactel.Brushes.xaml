@@ -9,6 +9,7 @@
     <!--control-->
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=Background}" Color="White" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=BorderBrush}" Color="#4b4242" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=Foreground}" Color="Black" />
 
     <!--button background-->
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=ButtonBackground}" Color="#4b4242" />
@@ -18,10 +19,10 @@
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=ButtonBorder}" Color="#4b4242" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=ButtonBorderHover}" Color="DarkOrange" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=ButtonBorderPressed}" Color="OrangeRed" />
-
+    
     <!--icon-->
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=IconNormal}" Color="#d6024e" />
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=IconHover}" Color="White" />
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=IconPressed}" Color="White" Opacity=".5" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=IconNormal}" Color="OrangeRed" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=IconHover}" Color="#4b4242" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type r:ZapDatePickerResourceKeys}, ResourceId=IconPressed}" Color="#4b4242" />
 
 </ResourceDictionary>
