@@ -1,91 +1,4 @@
-﻿#region Author/About
-/************************************************************************************
-*  vhCalendar 1.5                                                                   *
-*                                                                                   *
-*  Created:     June 20, 2010                                                       *
-*  Built on:    Vista/Win7                                                          *
-*  Purpose:     Calendar Control                                                    *
-*  Revision:    1.5d                                                                *
-*  Tested On:   Win7 32bit                                                          *
-*  IDE:         C# 2008 SP1 FW 3.5                                                  *
-*  Referenced:  VTD Freeware                                                        *
-*  Author:      John Underhill (Steppenwolfe)                                       *
-*                                                                                   *
-*************************************************************************************
-
-You can not:
--Sell or redistribute this code or the binary for profit. This is freeware.
--Use this control, or porions of this code in spyware, malware, or any generally acknowledged form of malicious software.
--Remove or alter the above author accreditation, or this disclaimer.
-
-You can:
--Use this control in private and commercial applications.
--Use portions of this code in your own projects or commercial applications.
-
-I will not:
--Except any responsibility for this code whatsoever.
--Modify on demand.. you have the source code, read it, learn from it, write it.
--There is no guarantee of fitness, nor should you have any expectation of support. 
--I further renounce any and all responsibilities for this code, in every way conceivable, 
-now, and for the rest of time.
-
--Updates to v1.2-
--Fixed-
--Selection bug on multiselect (math error)
--Some adjustments made to xaml (I'll flesh it out in next rev)
--Added-
--SelectedDatesChanged event -returns collections of old and new dates
--PropertyChange event -notifications added to most properties
--DisplayModeChanged event -fires when view is changed
--IsTodayHighlighted property -highlight current date
--HeaderHeight property -adjust header height [18-30]
-
--Updates to v1.3-
--Fixed-
--'stutter' at end of scrolling animation
--Some minor discrepencies in vhCalendar.Generic.xaml
--Theme routines adjusted to work on a per control instance (what I wanted)
--Added-
--Example of applying a custom theme
--ResourceKeys for WeekColumn, Footer, and DayColumn Forecolor
--updated example code
--a lot of small tweaks to xaml
-
--Updates to v1.4-
--seperated style files for aero, luna and office
--updated graphics
--updated custom style example
-
--Updates to v1.5-
--rewrote most of the Calendar class
--reorganized code into seperate classes
--added blackout dates
--fixed some xaml issues
--added drag and drop facility
--fixed a math bug in MonthModeDateToRowColumn
--added IsAnimated property
--fixed decade title
--added header font properties
--rewrote DatePicker control
--added checkbox
--added button brush overrides
--added calendar placement
--updated example code
--fixed theme change bug
--fixed footer visibility bug
--fixed datepicker placement bug
--fixed multi select persist bug
--fixed readonly bug in datepicker
--fixed header font size/weight properties
--fixed margin in header content
-
-Cheers,
-John
-steppenwolfe_2000@yahoo.com
-*/
-#endregion
-
-#region Directives
+﻿#region Directives
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -108,7 +21,6 @@ using ZapanControls.Helpers;
 using ZapanControls.Libraries;
 using ZapanControls.Controls.Themes;
 using ZapanControls.Controls.Primitives;
-using ZapanControls.Controls.ResourceKeys;
 using ZapanControls.Controls.ControlEventArgs;
 #endregion
 
@@ -622,6 +534,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         public override void OnThemeChanged(object sender, ThemeChangedEventArgs e)
         {
+            base.OnThemeChanged(sender, e);
+
             if (e.Source is Calendar c)
             {
                 // reset display
@@ -630,66 +544,66 @@ namespace ZapanControls.Controls.CalendarPicker
             }
 
             // Control
-            SetCurrentValue(ControlBorderBrushProperty, TryFindResource(CalendarResourceKeys.ControlBorderBrushKey));
-            SetCurrentValue(ControlBackgroundProperty, TryFindResource(CalendarResourceKeys.ControlBackgroundKey));
+            this.SetThemePropertyDefault(ControlBorderBrushProperty, ResourceKeys.CalendarResourceKeys.ControlBorderBrushKey);
+            this.SetThemePropertyDefault(ControlBackgroundProperty, ResourceKeys.CalendarResourceKeys.ControlBackgroundKey);
 
             // Header
-            SetCurrentValue(HeaderNormalForegroundProperty, TryFindResource(CalendarResourceKeys.HeaderNormalForegroundKey));
-            SetCurrentValue(HeaderFocusedForegroundProperty, TryFindResource(CalendarResourceKeys.HeaderFocusedForegroundKey));
-            SetCurrentValue(HeaderPressedForegroundProperty, TryFindResource(CalendarResourceKeys.HeaderPressedForegroundKey));
-            SetCurrentValue(HeaderNormalBorderBrushProperty, TryFindResource(CalendarResourceKeys.HeaderNormalBorderBrushKey));
-            SetCurrentValue(HeaderFocusedBorderBrushProperty, TryFindResource(CalendarResourceKeys.HeaderFocusedBorderBrushKey));
-            SetCurrentValue(HeaderPressedBorderBrushProperty, TryFindResource(CalendarResourceKeys.HeaderPressedBorderBrushKey));
-            SetCurrentValue(HeaderNormalBackgroundProperty, TryFindResource(CalendarResourceKeys.HeaderNormalBackgroundKey));
-            SetCurrentValue(HeaderFocusedBackgroundProperty, TryFindResource(CalendarResourceKeys.HeaderFocusedBackgroundKey));
-            SetCurrentValue(HeaderPressedBackgroundProperty, TryFindResource(CalendarResourceKeys.HeaderPressedBackgroundKey));
+            this.SetThemePropertyDefault(HeaderNormalForegroundProperty, ResourceKeys.CalendarResourceKeys.HeaderNormalForegroundKey);
+            this.SetThemePropertyDefault(HeaderFocusedForegroundProperty, ResourceKeys.CalendarResourceKeys.HeaderFocusedForegroundKey);
+            this.SetThemePropertyDefault(HeaderPressedForegroundProperty, ResourceKeys.CalendarResourceKeys.HeaderPressedForegroundKey);
+            this.SetThemePropertyDefault(HeaderNormalBorderBrushProperty, ResourceKeys.CalendarResourceKeys.HeaderNormalBorderBrushKey);
+            this.SetThemePropertyDefault(HeaderFocusedBorderBrushProperty, ResourceKeys.CalendarResourceKeys.HeaderFocusedBorderBrushKey);
+            this.SetThemePropertyDefault(HeaderPressedBorderBrushProperty, ResourceKeys.CalendarResourceKeys.HeaderPressedBorderBrushKey);
+            this.SetThemePropertyDefault(HeaderNormalBackgroundProperty, ResourceKeys.CalendarResourceKeys.HeaderNormalBackgroundKey);
+            this.SetThemePropertyDefault(HeaderFocusedBackgroundProperty, ResourceKeys.CalendarResourceKeys.HeaderFocusedBackgroundKey);
+            this.SetThemePropertyDefault(HeaderPressedBackgroundProperty, ResourceKeys.CalendarResourceKeys.HeaderPressedBackgroundKey);
 
             // Navigation Buttons
-            SetCurrentValue(ArrowBorderBrushProperty, TryFindResource(CalendarResourceKeys.ArrowBorderBrushKey));
-            SetCurrentValue(ArrowNormalFillProperty, TryFindResource(CalendarResourceKeys.ArrowNormalFillKey));
-            SetCurrentValue(ArrowFocusedFillProperty, TryFindResource(CalendarResourceKeys.ArrowFocusedFillKey));
-            SetCurrentValue(ArrowPressedFillProperty, TryFindResource(CalendarResourceKeys.ArrowPressedFillKey));
+            this.SetThemePropertyDefault(ArrowBorderBrushProperty, ResourceKeys.CalendarResourceKeys.ArrowBorderBrushKey);
+            this.SetThemePropertyDefault(ArrowNormalFillProperty, ResourceKeys.CalendarResourceKeys.ArrowNormalFillKey);
+            this.SetThemePropertyDefault(ArrowFocusedFillProperty, ResourceKeys.CalendarResourceKeys.ArrowFocusedFillKey);
+            this.SetThemePropertyDefault(ArrowPressedFillProperty, ResourceKeys.CalendarResourceKeys.ArrowPressedFillKey);
 
             // Day Column
-            SetCurrentValue(DayNamesForegroundProperty, TryFindResource(CalendarResourceKeys.DayNamesForegroundKey));
-            SetCurrentValue(DayNamesBorderBrushProperty, TryFindResource(CalendarResourceKeys.DayNamesBorderBrushKey));
-            SetCurrentValue(DayNamesBackgroundProperty, TryFindResource(CalendarResourceKeys.DayNamesBackgroundKey));
+            this.SetThemePropertyDefault(DayNamesForegroundProperty, ResourceKeys.CalendarResourceKeys.DayNamesForegroundKey);
+            this.SetThemePropertyDefault(DayNamesBorderBrushProperty, ResourceKeys.CalendarResourceKeys.DayNamesBorderBrushKey);
+            this.SetThemePropertyDefault(DayNamesBackgroundProperty, ResourceKeys.CalendarResourceKeys.DayNamesBackgroundKey);
 
             // Week Column
-            SetCurrentValue(WeekColumnForegroundProperty, TryFindResource(CalendarResourceKeys.WeekColumnForegroundKey));
-            SetCurrentValue(WeekColumnBorderBrushProperty, TryFindResource(CalendarResourceKeys.WeekColumnBorderBrushKey));
-            SetCurrentValue(WeekColumnBackgroundProperty, TryFindResource(CalendarResourceKeys.WeekColumnBackgroundKey));
+            this.SetThemePropertyDefault(WeekColumnForegroundProperty, ResourceKeys.CalendarResourceKeys.WeekColumnForegroundKey);
+            this.SetThemePropertyDefault(WeekColumnBorderBrushProperty, ResourceKeys.CalendarResourceKeys.WeekColumnBorderBrushKey);
+            this.SetThemePropertyDefault(WeekColumnBackgroundProperty, ResourceKeys.CalendarResourceKeys.WeekColumnBackgroundKey);
 
             // Button Normal
-            SetCurrentValue(ButtonNormalForegroundProperty, TryFindResource(CalendarResourceKeys.ButtonNormalForegroundKey));
-            SetCurrentValue(ButtonNormalBorderBrushProperty, TryFindResource(CalendarResourceKeys.ButtonNormalBorderBrushKey));
-            SetCurrentValue(ButtonNormalBackgroundProperty, TryFindResource(CalendarResourceKeys.ButtonNormalBackgroundKey));
+            this.SetThemePropertyDefault(ButtonNormalForegroundProperty, ResourceKeys.CalendarResourceKeys.ButtonNormalForegroundKey);
+            this.SetThemePropertyDefault(ButtonNormalBorderBrushProperty, ResourceKeys.CalendarResourceKeys.ButtonNormalBorderBrushKey);
+            this.SetThemePropertyDefault(ButtonNormalBackgroundProperty, ResourceKeys.CalendarResourceKeys.ButtonNormalBackgroundKey);
             // Button Focused
-            SetCurrentValue(ButtonFocusedForegroundProperty, TryFindResource(CalendarResourceKeys.ButtonFocusedForegroundKey));
-            SetCurrentValue(ButtonFocusedBorderBrushProperty, TryFindResource(CalendarResourceKeys.ButtonFocusedBorderBrushKey));
-            SetCurrentValue(ButtonFocusedBackgroundProperty, TryFindResource(CalendarResourceKeys.ButtonFocusedBackgroundKey));
+            this.SetThemePropertyDefault(ButtonFocusedForegroundProperty, ResourceKeys.CalendarResourceKeys.ButtonFocusedForegroundKey);
+            this.SetThemePropertyDefault(ButtonFocusedBorderBrushProperty, ResourceKeys.CalendarResourceKeys.ButtonFocusedBorderBrushKey);
+            this.SetThemePropertyDefault(ButtonFocusedBackgroundProperty, ResourceKeys.CalendarResourceKeys.ButtonFocusedBackgroundKey);
             // Button Selected
-            SetCurrentValue(ButtonSelectedForegroundProperty, TryFindResource(CalendarResourceKeys.ButtonSelectedForegroundKey));
-            SetCurrentValue(ButtonSelectedBorderBrushProperty, TryFindResource(CalendarResourceKeys.ButtonSelectedBorderBrushKey));
-            SetCurrentValue(ButtonSelectedBackgroundProperty, TryFindResource(CalendarResourceKeys.ButtonSelectedBackgroundKey));
+            this.SetThemePropertyDefault(ButtonSelectedForegroundProperty, ResourceKeys.CalendarResourceKeys.ButtonSelectedForegroundKey);
+            this.SetThemePropertyDefault(ButtonSelectedBorderBrushProperty, ResourceKeys.CalendarResourceKeys.ButtonSelectedBorderBrushKey);
+            this.SetThemePropertyDefault(ButtonSelectedBackgroundProperty, ResourceKeys.CalendarResourceKeys.ButtonSelectedBackgroundKey);
             // Button Defaulted
-            SetCurrentValue(ButtonDefaultedForegroundProperty, TryFindResource(CalendarResourceKeys.ButtonDefaultedForegroundKey));
-            SetCurrentValue(ButtonDefaultedBorderBrushProperty, TryFindResource(CalendarResourceKeys.ButtonDefaultedBorderBrushKey));
-            SetCurrentValue(ButtonDefaultedBackgroundProperty, TryFindResource(CalendarResourceKeys.ButtonDefaultedBackgroundKey));
+            this.SetThemePropertyDefault(ButtonDefaultedForegroundProperty, ResourceKeys.CalendarResourceKeys.ButtonDefaultedForegroundKey);
+            this.SetThemePropertyDefault(ButtonDefaultedBorderBrushProperty, ResourceKeys.CalendarResourceKeys.ButtonDefaultedBorderBrushKey);
+            this.SetThemePropertyDefault(ButtonDefaultedBackgroundProperty, ResourceKeys.CalendarResourceKeys.ButtonDefaultedBackgroundKey);
             // Button Pressed
-            SetCurrentValue(ButtonPressedForegroundProperty, TryFindResource(CalendarResourceKeys.ButtonPressedForegroundKey));
-            SetCurrentValue(ButtonPressedBorderBrushProperty, TryFindResource(CalendarResourceKeys.ButtonPressedBorderBrushKey));
-            SetCurrentValue(ButtonPressedBackgroundProperty, TryFindResource(CalendarResourceKeys.ButtonPressedBackgroundKey));
+            this.SetThemePropertyDefault(ButtonPressedForegroundProperty, ResourceKeys.CalendarResourceKeys.ButtonPressedForegroundKey);
+            this.SetThemePropertyDefault(ButtonPressedBorderBrushProperty, ResourceKeys.CalendarResourceKeys.ButtonPressedBorderBrushKey);
+            this.SetThemePropertyDefault(ButtonPressedBackgroundProperty, ResourceKeys.CalendarResourceKeys.ButtonPressedBackgroundKey);
             // Button Disabled
-            SetCurrentValue(ButtonTransparentProperty, TryFindResource(CalendarResourceKeys.ButtonTransparentKey));
-            SetCurrentValue(ButtonDisabledForegroundProperty, TryFindResource(CalendarResourceKeys.ButtonDisabledForegroundKey));
-            SetCurrentValue(ButtonDisabledBorderBrushProperty, TryFindResource(CalendarResourceKeys.ButtonDisabledBorderBrushKey));
-            SetCurrentValue(ButtonDisabledBackgroundProperty, TryFindResource(CalendarResourceKeys.ButtonDisabledBackgroundKey));
+            this.SetThemePropertyDefault(ButtonTransparentProperty, ResourceKeys.CalendarResourceKeys.ButtonTransparentKey);
+            this.SetThemePropertyDefault(ButtonDisabledForegroundProperty, ResourceKeys.CalendarResourceKeys.ButtonDisabledForegroundKey);
+            this.SetThemePropertyDefault(ButtonDisabledBorderBrushProperty, ResourceKeys.CalendarResourceKeys.ButtonDisabledBorderBrushKey);
+            this.SetThemePropertyDefault(ButtonDisabledBackgroundProperty, ResourceKeys.CalendarResourceKeys.ButtonDisabledBackgroundKey);
 
             // Footer
-            SetCurrentValue(FooterForegroundProperty, TryFindResource(CalendarResourceKeys.FooterForegroundKey));
-            SetCurrentValue(FooterBorderBrushProperty, TryFindResource(CalendarResourceKeys.FooterBorderBrushKey));
-            SetCurrentValue(FooterBackgroundProperty, TryFindResource(CalendarResourceKeys.FooterBackgroundKey));
+            this.SetThemePropertyDefault(FooterForegroundProperty, ResourceKeys.CalendarResourceKeys.FooterForegroundKey);
+            this.SetThemePropertyDefault(FooterBorderBrushProperty, ResourceKeys.CalendarResourceKeys.FooterBorderBrushKey);
+            this.SetThemePropertyDefault(FooterBackgroundProperty, ResourceKeys.CalendarResourceKeys.FooterBackgroundKey);
         }
         #endregion
 
