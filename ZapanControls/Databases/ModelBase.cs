@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Data.Common;
-using System.Reflection;
+using System.Linq;
 using System.Windows.Media;
 using ZapanControls.Libraries;
 
@@ -24,31 +24,48 @@ namespace ZapanControls.Databases
         {
             if (reader != null)
             {
-                foreach (PropertyInfo prop in typeof(T).GetProperties())
+                var objectMemberAccessor = FastMember.TypeAccessor.Create(typeof(T));
+                var propertiesDict = objectMemberAccessor
+                    .GetMembers()
+                    .ToDictionary(
+                        m => m.Name.ToUpper(),
+                        m => m.Type
+                    );
+
+                for (int i = 0; i < reader.FieldCount; i++)
                 {
-                    if (prop.Name == "Error" || prop.Name == "Item" || prop.Name == "CanFreeze" || prop.Name == "IsFrozen"
-                        || prop.Name == "DependencyObjectType" || prop.Name == "IsSealed" || prop.Name == "Dispatcher")
-                        continue;
-
-                    Type t = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
-
-                    object value = t == typeof(int) && string.IsNullOrEmpty(reader[prop.Name].ToString()) ? 0 : reader[prop.Name];
-                    value = (t == typeof(DateTime) || t == typeof(DateTime?)) && string.IsNullOrEmpty(reader[prop.Name].ToString()) ? Convert.DBNull : value;
-                    value = t == typeof(Brush) && !string.IsNullOrEmpty(reader[prop.Name].ToString()) ?
-                        new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString())) : value;
-
-                    object safeValue;
-                    if (!(value is SolidColorBrush))
+                    var nameNormalized = reader.GetName(i).ToUpper();
+                    if (propertiesDict.ContainsKey(nameNormalized))
                     {
-                        safeValue = value == null || Convert.IsDBNull(value) ? null : Convert.ChangeType(value, t);
-                    }
-                    else
-                    {
-                        safeValue = value;
-                        ((SolidColorBrush)safeValue).Freeze();
+                        Type t = Nullable.GetUnderlyingType(propertiesDict[nameNormalized]) ?? propertiesDict[nameNormalized];
+
+                        object value = reader.GetValue(i);
+                        if (string.IsNullOrEmpty(value?.ToString()))
+                        {
+                            if (t == typeof(int))
+                            {
+                                value = 0;
+                            }
+                        }
+                        else if (t == typeof(Brush))
+                        {
+                            value = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
+                        }
+
+                        object safeValue;
+                        if (value is SolidColorBrush brush)
+                        {
+                            safeValue = value;
+                            ((SolidColorBrush)safeValue).Freeze();
+                        }
+                        else
+                        {
+                            safeValue = value == null || Convert.IsDBNull(value) ? null : Convert.ChangeType(value, t);
+                        }
+                        objectMemberAccessor[this, reader.GetName(i)] = safeValue;
                     }
 
-                    prop.SetValue(this, safeValue);
+
                 }
             }
         }
