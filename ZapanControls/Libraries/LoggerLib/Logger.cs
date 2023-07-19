@@ -37,7 +37,9 @@ namespace ZapanControls.Libraries.LoggerLib
                 Layout = patternLayout,
                 File = logFolder,
                 RollingStyle = rollingMode,
-                DatePattern = string.IsNullOrEmpty(fileName) ? @"yyyyMMdd'.csv'" : @"yyyyMMdd'_" + fileName + ".csv'",
+                DatePattern = string.IsNullOrEmpty(fileName) 
+                    ? @"yyyyMMdd'.csv'" 
+                    : $@"yyyyMMdd'_{fileName}.csv'",
                 MaxSizeRollBackups = maxSizeRollBackups,
                 AppendToFile = appendToFile,
                 StaticLogFileName = staticLogFileName,
@@ -53,23 +55,15 @@ namespace ZapanControls.Libraries.LoggerLib
         }
 
         public void Info(string message, Exception ex = null)
-        {
-            _logger.Info(message, ex);
-        }
+            => _logger.Info(message, ex);
 
         public void Warn(string message, Exception ex = null)
-        {
-            _logger.Warn(message, ex);
-        }
+            => _logger.Warn(message, ex);
 
         public void Error(string message, Exception ex = null)
-        {
-            _logger.Error(message, ex);
-        }
+            => _logger.Error(message, ex);
 
         public void Debug(string message, Exception ex = null)
-        {
-            _logger.Debug(message, ex);
-        }
+            => _logger.Debug(message, ex);
     }
 }

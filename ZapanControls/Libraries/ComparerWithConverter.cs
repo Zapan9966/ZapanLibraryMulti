@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace ZapanControls.Libraries
 {
-    public class ComparerWithConverter : IComparer
+    public sealed class ComparerWithConverter : IComparer
     {
         private readonly IValueConverter _converter;
         private readonly ListSortDirection _direction;
@@ -23,8 +23,8 @@ namespace ZapanControls.Libraries
             object transx = _converter.Convert(x, typeof(string), _parameter, Thread.CurrentThread.CurrentCulture);
             object transy = _converter.Convert(y, typeof(string), _parameter, Thread.CurrentThread.CurrentCulture);
 
-            return _direction == ListSortDirection.Ascending ? 
-                Comparer.Default.Compare(transx, transy) 
+            return _direction == ListSortDirection.Ascending 
+                ? Comparer.Default.Compare(transx, transy) 
                 : Comparer.Default.Compare(transx, transy) * (-1);
         }
     }

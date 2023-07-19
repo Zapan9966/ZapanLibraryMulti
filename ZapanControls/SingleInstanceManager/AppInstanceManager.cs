@@ -91,18 +91,12 @@ namespace ZapanControls.SingleInstanceManager
 
                     StringBuilder builder = new StringBuilder();
                     byte[] buffer = new byte[_bufferSize];
-                    //int bytesRead;
 
                     do
                     {
                         _pipeServer.Read(buffer, 0, buffer.Length);
                         builder.Append(Encoding.UTF8.GetString(buffer));
                         buffer = new byte[buffer.Length];
-
-                        //while ((bytesRead = _pipeServer.Read(buffer, 0, buffer.Length)) > 0)
-                        //{
-                        //    builder.Append(Encoding.UTF8.GetString(buffer, 0, bytesRead));
-                        //}
                     }
                     while (!_pipeServer.IsMessageComplete);
 

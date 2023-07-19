@@ -8,6 +8,7 @@ namespace ZapanControls.Controls.ResourceKeys
         // Control
         private static readonly ComponentResourceKey _BackgroundKey = null;
         private static readonly ComponentResourceKey _BorderBrushKey = null;
+        private static readonly ComponentResourceKey _ForegroundKey = null;
 
         // Button background 
         private static readonly ComponentResourceKey _ButtonBackgroundKey = null;
@@ -29,6 +30,7 @@ namespace ZapanControls.Controls.ResourceKeys
         #region Control
         public static ComponentResourceKey BackgroundKey => _BackgroundKey.GetRegisteredKey(typeof(ZapDatePickerResourceKeys), "Background");
         public static ComponentResourceKey BorderBrushKey => _BorderBrushKey.GetRegisteredKey(typeof(ZapDatePickerResourceKeys), "BorderBrush");
+        public static ComponentResourceKey ForegroundKey => _ForegroundKey.GetRegisteredKey(typeof(ZapDatePickerResourceKeys), "Foreground");
         #endregion
 
         #region Button

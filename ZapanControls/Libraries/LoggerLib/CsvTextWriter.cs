@@ -22,7 +22,9 @@ namespace ZapanControls.Libraries.LoggerLib
             _textWriter.Write(value);
             // double all quotes
             if (value == '"')
+            {
                 _textWriter.Write(value);
+            }
         }
 
         public void WriteQuote()

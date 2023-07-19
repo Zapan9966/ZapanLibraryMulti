@@ -31,9 +31,7 @@ namespace ZapanControls.Libraries
         }
 
         public object Invoke(Delegate method, object[] args)
-        {
-            return _dispatcher.Invoke(method, DispatcherPriority.Normal, args);
-        }
+            => _dispatcher.Invoke(method, DispatcherPriority.Normal, args);
 
         public bool InvokeRequired => !_dispatcher.CheckAccess();
 

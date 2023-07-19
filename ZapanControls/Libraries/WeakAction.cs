@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace ZapanControls.Libraries
@@ -24,10 +23,7 @@ namespace ZapanControls.Libraries
         /// <summary>
         /// Gets the name of the method that this WeakAction represents.
         /// </summary>
-        public virtual string MethodName
-        {
-            get { return _staticAction != null ? _staticAction.Method.Name : Method.Name; }
-        }
+        public virtual string MethodName => _staticAction != null ? _staticAction.Method.Name : Method.Name;
 
         /// <summary>
         /// Gets or sets a WeakReference to this WeakAction's action's target.
@@ -55,10 +51,7 @@ namespace ZapanControls.Libraries
         /// <summary>
         /// Gets a value indicating whether the WeakAction is static or not.
         /// </summary>
-        public bool IsStatic
-        {
-            get { return _staticAction != null; }
-        }
+        public bool IsStatic => _staticAction != null;
 
         /// <summary>
         /// Initializes an empty instance of the <see cref="WeakAction" /> class.
@@ -89,11 +82,6 @@ namespace ZapanControls.Libraries
         /// be kept as a hard reference, which might cause a memory leak. You should only set this
         /// parameter to true if the action is using closures. See
         /// http://galasoft.ch/s/mvvmweakaction. </param>
-        [SuppressMessage(
-            "Microsoft.Design",
-            "CA1062:Validate arguments of public methods",
-            MessageId = "1",
-            Justification = "Method should fail with an exception if action is null.")]
         public WeakAction(object target, Action action, bool keepTargetAlive = false)
         {
             if (action.Method.IsStatic)
@@ -105,7 +93,6 @@ namespace ZapanControls.Libraries
                     // Keep a reference to the target to control the WeakAction's lifetime.
                     Reference = new WeakReference(target);
                 }
-
                 return;
             }
 
@@ -139,24 +126,21 @@ namespace ZapanControls.Libraries
             get
             {
                 if (_staticAction == null && Reference == null && LiveReference == null)
+                {
                     return false;
+                }
 
                 if (_staticAction != null)
                 {
-                    if (Reference != null)
-                        return Reference.IsAlive;
-
-                    return true;
+                    return Reference == null || Reference.IsAlive;
                 }
 
                 // Non static action
                 if (LiveReference != null)
+                {
                     return true;
-
-                if (Reference != null)
-                    return Reference.IsAlive;
-
-                return false;
+                }
+                return Reference != null && Reference.IsAlive;
             }
         }
 
@@ -164,16 +148,7 @@ namespace ZapanControls.Libraries
         /// Gets the Action's owner. This object is stored as a 
         /// <see cref="WeakReference" />.
         /// </summary>
-        public object Target
-        {
-            get
-            {
-                if (Reference == null)
-                    return null;
-
-                return Reference.Target;
-            }
-        }
+        public object Target => Reference?.Target;
 
         /// <summary>
         /// The target of the weak reference.
@@ -183,12 +158,10 @@ namespace ZapanControls.Libraries
             get
             {
                 if (LiveReference != null)
+                {
                     return LiveReference;
-
-                if (ActionReference == null)
-                    return null;
-
-                return ActionReference.Target;
+                }
+                return ActionReference?.Target;
             }
         }
 

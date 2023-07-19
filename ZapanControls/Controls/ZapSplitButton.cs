@@ -16,10 +16,37 @@ using ZapanControls.Libraries;
 namespace ZapanControls.Controls
 {
     [TemplatePart(Name = "PART_DropDown", Type = typeof(ZapButtonBase))]
+    [TemplatePart(Name = "PART_Border", Type = typeof(Border))]
     [ContentProperty("Items")]
     [DefaultProperty("Items")]
     public sealed class ZapSplitButton : ZapButtonBase
     {
+        #region Constants
+        /// <summary>
+        /// Property names as string constants
+        /// </summary>
+        private const string ZapTemplatePropName = "ZapTemplate";
+        private const string ThemePropName = "Theme";
+        private const string BackgroundPropName = "Background";
+        private const string BorderBrushPropName = "BorderBrush";
+        private const string ForegroundPropName = "Foreground";
+        private const string BorderThicknessPropName = "BorderThickness";
+        private const string FocusedBackgroundPropName = "FocusedBackground";
+        private const string FocusedBorderBrushPropName = "FocusedBorderBrush";
+        private const string FocusedForegroundPropName = "FocusedForeground";
+        private const string PressedBackgroundPropName = "PressedBackground";
+        private const string PressedBorderBrushPropName = "PressedBorderBrush";
+        private const string PressedForegroundPropName = "PressedForeground";
+        private const string DisabledBackgroundPropName = "DisabledBackground";
+        private const string DisabledBorderBrushPropName = "DisabledBorderBrush";
+        private const string DisabledForegroundPropName = "DisabledForeground";
+        /// <summary>
+        /// Parts names as string constants
+        /// </summary>
+        private const string PartDropDown = "PART_DropDown";
+        private const string PartBorder = "PART_Border";
+        #endregion
+
         #region Theme Declarations
 
         #endregion
@@ -77,9 +104,13 @@ namespace ZapanControls.Controls
             bool value = (bool)e.NewValue;
 
             if (value && !s.ContextMenu.IsOpen)
+            {
                 s.ContextMenu.IsOpen = true;
+            }
             else if (!value && s.ContextMenu.IsOpen)
+            {
                 s.ContextMenu.IsOpen = false;
+            }
         }
         #endregion
 
@@ -105,7 +136,9 @@ namespace ZapanControls.Controls
         private static void OnIsContextMenuRoundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is ZapSplitButton s)
+            {
                 s.EnsureContextMenuIsValid();
+            }
         }
         #endregion
 
@@ -193,8 +226,8 @@ namespace ZapanControls.Controls
         /// </summary>
         public double HorizontalOffset
         {
-            get { return (double)GetValue(HorizontalOffsetProperty); }
-            set { SetValue(HorizontalOffsetProperty, value); }
+            get => (double)GetValue(HorizontalOffsetProperty);
+            set => SetValue(HorizontalOffsetProperty, value);
         }
 
         /// <summary>
@@ -222,8 +255,8 @@ namespace ZapanControls.Controls
         /// </summary>
         public double VerticalOffset
         {
-            get { return (double)GetValue(VerticalOffsetProperty); }
-            set { SetValue(VerticalOffsetProperty, value); }
+            get => (double)GetValue(VerticalOffsetProperty); 
+            set => SetValue(VerticalOffsetProperty, value); 
         }
 
         /// <summary>
@@ -272,10 +305,12 @@ namespace ZapanControls.Controls
 
             if (ZapTemplate == "Glass")
             {
-                if (Template.FindName("PART_DropDown", this) is ZapButton dropdown)
+                if (Template.FindName(PartDropDown, this) is ZapButton dropdown)
                 {
-                    if (VisualTreeHelpers.FindChild(dropdown, "PART_Border") is Border border)
+                    if (VisualTreeHelpers.FindChild(dropdown, PartBorder) is Border border)
+                    {
                         border.CornerRadius = new CornerRadius(0, 4, 0, 0);
+                    }
                 }
             }
             IsContextMenuOpen = true;
@@ -284,10 +319,12 @@ namespace ZapanControls.Controls
         {
             if (ZapTemplate == "Glass")
             {
-                if (Template.FindName("PART_DropDown", this) is ZapButton dropdown)
+                if (Template.FindName(PartDropDown, this) is ZapButton dropdown)
                 {
-                    if (VisualTreeHelpers.FindChild(dropdown, "PART_Border") is Border border)
+                    if (VisualTreeHelpers.FindChild(dropdown, PartBorder) is Border border)
+                    {
                         border.CornerRadius = new CornerRadius(0, 4, 4, 0);
+                    }
                 }
             }
             IsContextMenuOpen = false;
@@ -311,111 +348,111 @@ namespace ZapanControls.Controls
         {
             base.OnApplyTemplate();
 
-            if (Template.FindName("PART_DropDown", this) is ZapButton dropdown)
+            if (Template.FindName(PartDropDown, this) is ZapButton dropdown)
             {
                 #region Bindings
                 dropdown.SetBinding(ZapTemplateProperty, new Binding
                 {
                     RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent),
-                    Path = new PropertyPath("ZapTemplate"),
+                    Path = new PropertyPath(ZapTemplatePropName),
                     Mode = BindingMode.OneWay
                 });
 
                 dropdown.SetBinding(ThemeProperty, new Binding
                 {
                     RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent),
-                    Path = new PropertyPath("Theme"),
+                    Path = new PropertyPath(ThemePropName),
                     Mode = BindingMode.OneWay
                 });
 
                 dropdown.SetBinding(BackgroundProperty, new Binding
                 {
                     RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent),
-                    Path = new PropertyPath("Background"),
+                    Path = new PropertyPath(BackgroundPropName),
                     Mode = BindingMode.OneWay
                 });
 
                 dropdown.SetBinding(BorderBrushProperty, new Binding
                 {
                     RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent),
-                    Path = new PropertyPath("BorderBrush"),
+                    Path = new PropertyPath(BorderBrushPropName),
                     Mode = BindingMode.OneWay
                 });
 
                 dropdown.SetBinding(ForegroundProperty, new Binding
                 {
                     RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent),
-                    Path = new PropertyPath("Foreground"),
+                    Path = new PropertyPath(ForegroundPropName),
                     Mode = BindingMode.OneWay
                 });
 
                 dropdown.SetBinding(BorderThicknessProperty, new Binding
                 {
                     RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent),
-                    Path = new PropertyPath("BorderThickness"),
+                    Path = new PropertyPath(BorderThicknessPropName),
                     Mode = BindingMode.OneWay
                 });
 
                 dropdown.SetBinding(FocusedBackgroundProperty, new Binding
                 {
                     RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent),
-                    Path = new PropertyPath("FocusedBackground"),
+                    Path = new PropertyPath(FocusedBackgroundPropName),
                     Mode = BindingMode.OneWay
                 });
 
                 dropdown.SetBinding(FocusedBorderBrushProperty, new Binding
                 {
                     RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent),
-                    Path = new PropertyPath("FocusedBorderBrush"),
+                    Path = new PropertyPath(FocusedBorderBrushPropName),
                     Mode = BindingMode.OneWay
                 });
 
                 dropdown.SetBinding(FocusedForegroundProperty, new Binding
                 {
                     RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(ZapSplitButton), 1),
-                    Path = new PropertyPath("FocusedForeground"),
+                    Path = new PropertyPath(FocusedForegroundPropName),
                     Mode = BindingMode.OneWay
                 });
 
                 dropdown.SetBinding(PressedBackgroundProperty, new Binding
                 {
                     RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent),
-                    Path = new PropertyPath("PressedBackground"),
+                    Path = new PropertyPath(PressedBackgroundPropName),
                     Mode = BindingMode.OneWay
                 });
 
                 dropdown.SetBinding(PressedBorderBrushProperty, new Binding
                 {
                     RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent),
-                    Path = new PropertyPath("PressedBorderBrush"),
+                    Path = new PropertyPath(PressedBorderBrushPropName),
                     Mode = BindingMode.OneWay
                 });
 
                 dropdown.SetBinding(PressedForegroundProperty, new Binding
                 {
                     RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent),
-                    Path = new PropertyPath("PressedForeground"),
+                    Path = new PropertyPath(PressedForegroundPropName),
                     Mode = BindingMode.OneWay
                 });
 
                 dropdown.SetBinding(DisabledBackgroundProperty, new Binding
                 {
                     RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent),
-                    Path = new PropertyPath("DisabledBackground"),
+                    Path = new PropertyPath(DisabledBackgroundPropName),
                     Mode = BindingMode.OneWay
                 });
 
                 dropdown.SetBinding(DisabledBorderBrushProperty, new Binding
                 {
                     RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent),
-                    Path = new PropertyPath("DisabledBorderBrush"),
+                    Path = new PropertyPath(DisabledBorderBrushPropName),
                     Mode = BindingMode.OneWay
                 });
 
                 dropdown.SetBinding(DisabledForegroundProperty, new Binding
                 {
                     RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent),
-                    Path = new PropertyPath("DisabledForeground"),
+                    Path = new PropertyPath(DisabledForegroundPropName),
                     Mode = BindingMode.OneWay
                 });
                 #endregion
@@ -425,14 +462,20 @@ namespace ZapanControls.Controls
 
                 if (ZapTemplate == "Glass")
                 {
-                    if (VisualTreeHelpers.FindChild(dropdown, "PART_Border") is Border border)
+                    if (VisualTreeHelpers.FindChild(dropdown, PartBorder) is Border border)
+                    {
                         border.CornerRadius = new CornerRadius(0, 4, 4, 0);
+                    }
 
                     if (VisualTreeHelpers.FindChild(dropdown, "glow") is Border glow)
+                    {
                         glow.CornerRadius = new CornerRadius(0, 3, 0, 0);
+                    }
 
                     if (VisualTreeHelpers.FindChild(dropdown, "shine") is Border shine)
+                    {
                         shine.CornerRadius = new CornerRadius(0, 4, 0, 0);
+                    }
 
                     IsContextMenuRound = true;
                 }
@@ -452,7 +495,7 @@ namespace ZapanControls.Controls
             switch (Mode)
             {
                 case SplitButtonModes.Dropdown:
-                    if (Template.FindName("PART_DropDown", this) is ZapButton dropdown)
+                    if (Template.FindName(PartDropDown, this) is ZapButton dropdown)
                     {
                         ButtonAutomationPeer peer = new ButtonAutomationPeer(dropdown);
                         IInvokeProvider invokeProv = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
@@ -470,8 +513,8 @@ namespace ZapanControls.Controls
         #region Control Methods
         private void SetBindingsOnItems(ItemCollection itemCollection, int level)
         {
-            var relativeSource = level == 1 ?
-                new RelativeSource(RelativeSourceMode.FindAncestor, typeof(ZapContextMenu), 1)
+            var relativeSource = level == 1 
+                ? new RelativeSource(RelativeSourceMode.FindAncestor, typeof(ZapContextMenu), 1)
                 : new RelativeSource(RelativeSourceMode.FindAncestor, typeof(ZapMenuItem), 1);
 
             foreach (var item in itemCollection)
@@ -571,7 +614,9 @@ namespace ZapanControls.Controls
                     #endregion
 
                     if (menuItem.Items.Count > 0)
+                    {
                         SetBindingsOnItems(menuItem.Items, level + 1);
+                    }
                 }
             }
         }
@@ -590,7 +635,7 @@ namespace ZapanControls.Controls
                 contextMenu.SetBinding(BackgroundProperty, new Binding
                 {
                     RelativeSource = new RelativeSource(RelativeSourceMode.Self),
-                    Path = new PropertyPath("PlacementTarget.Background"),
+                    Path = new PropertyPath($"PlacementTarget.{BackgroundPropName}"),
                     Converter = new ColorBrithnessConverter(),
                     ConverterParameter = -15,
                     Mode = BindingMode.OneWay
@@ -599,14 +644,14 @@ namespace ZapanControls.Controls
                 contextMenu.SetBinding(BorderBrushProperty, new Binding
                 {
                     RelativeSource = new RelativeSource(RelativeSourceMode.Self),
-                    Path = new PropertyPath("PlacementTarget.BorderBrush"),
+                    Path = new PropertyPath($"PlacementTarget.{BorderBrushPropName}"),
                     Mode = BindingMode.OneWay
                 });
 
                 contextMenu.SetBinding(ForegroundProperty, new Binding
                 {
                     RelativeSource = new RelativeSource(RelativeSourceMode.Self),
-                    Path = new PropertyPath("PlacementTarget.Foreground"),
+                    Path = new PropertyPath($"PlacementTarget.{ForegroundPropName}"),
                     Mode = BindingMode.OneWay
                 });
                 #endregion

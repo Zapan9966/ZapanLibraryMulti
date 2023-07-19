@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -52,7 +49,11 @@ namespace ZapanControls.Controls
         /// <summary>
         /// Obtient une valeur permettant de savoir si la fenêtre est active.
         /// </summary>
-        public bool IsReady { get => _isReady; internal set => Set(ref _isReady, value); }
+        public bool IsReady 
+        { 
+            get => _isReady; 
+            internal set => Set(ref _isReady, value); 
+        }
         #endregion
 
         #region Buttons
@@ -61,12 +62,17 @@ namespace ZapanControls.Controls
         /// Identifie la propriété de dépendance <see cref="CanClosed"/>.
         /// </summary>
         public static readonly DependencyProperty CanBeClosedProperty = DependencyProperty.Register(
-            "CanBeClosed", typeof(bool), typeof(ZapWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
+            "CanBeClosed", typeof(bool), typeof(ZapWindow), 
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
         /// Obtient ou défini la valeur indiquant si le bouton Fermer est activé.
         /// </summary>
-        public bool CanBeClosed { get => (bool)GetValue(CanBeClosedProperty); set => SetValue(CanBeClosedProperty, value); }
+        public bool CanBeClosed 
+        { 
+            get => (bool)GetValue(CanBeClosedProperty); 
+            set => SetValue(CanBeClosedProperty, value); 
+        }
         #endregion
 
         #region ShowCloseButton
@@ -74,12 +80,17 @@ namespace ZapanControls.Controls
         /// Identifie la propriété de dépendance <see cref="ShowCloseButton"/>.
         /// </summary>
         public static readonly DependencyProperty ShowCloseButtonProperty = DependencyProperty.Register(
-            "ShowCloseButton", typeof(bool), typeof(ZapWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
+            "ShowCloseButton", typeof(bool), typeof(ZapWindow), 
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
         /// Obtient ou défini la valeur indiquant si le bouton Fermer est visible.
         /// </summary>
-        public bool ShowCloseButton { get => (bool)GetValue(ShowCloseButtonProperty); set => SetValue(ShowCloseButtonProperty, value); }
+        public bool ShowCloseButton 
+        { 
+            get => (bool)GetValue(ShowCloseButtonProperty); 
+            set => SetValue(ShowCloseButtonProperty, value); 
+        }
         #endregion
 
         #region ShowMaximizeButton
@@ -87,12 +98,17 @@ namespace ZapanControls.Controls
         /// Identifie la propriété de dépendance <see cref="ShowMaximizeButton"/>.
         /// </summary>
         public static readonly DependencyProperty ShowMaximizeButtonProperty = DependencyProperty.Register(
-            "ShowMaximizeButton", typeof(bool), typeof(ZapWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
+            "ShowMaximizeButton", typeof(bool), typeof(ZapWindow), 
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
         /// Obtient ou défini la valeur indiquant si le bouton Maximiser est visible.
         /// </summary>
-        public bool ShowMaximizeButton { get => (bool)GetValue(ShowMaximizeButtonProperty); set => SetValue(ShowMaximizeButtonProperty, value); }
+        public bool ShowMaximizeButton 
+        { 
+            get => (bool)GetValue(ShowMaximizeButtonProperty); 
+            set => SetValue(ShowMaximizeButtonProperty, value); 
+        }
         #endregion
 
         #region ShowMinimizeButton
@@ -100,12 +116,17 @@ namespace ZapanControls.Controls
         /// Identifie la propriété de dépendance <see cref="ShowMinimizeButton"/>.
         /// </summary>
         public static readonly DependencyProperty ShowMinimizeButtonProperty = DependencyProperty.Register(
-            "ShowMinimizeButton", typeof(bool), typeof(ZapWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
+            "ShowMinimizeButton", typeof(bool), typeof(ZapWindow), 
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
         /// Obtient ou défini la valeur indiquant si le bouton Minimiser est visible.
         /// </summary>
-        public bool ShowMinimizeButton { get => (bool)GetValue(ShowMinimizeButtonProperty); set => SetValue(ShowMinimizeButtonProperty, value); }
+        public bool ShowMinimizeButton 
+        { 
+            get => (bool)GetValue(ShowMinimizeButtonProperty);
+            set => SetValue(ShowMinimizeButtonProperty, value); 
+        }
         #endregion
         #endregion
 
@@ -123,9 +144,14 @@ namespace ZapanControls.Controls
         /// <summary>
         /// Obtient ou défini la couleur de fond de la barre de titre.
         /// </summary>
-        public Brush TitleBarBackground { get => (Brush)GetValue(TitleBarBackgroundProperty); set => SetValue(TitleBarBackgroundProperty, value); }
+        public Brush TitleBarBackground 
+        { 
+            get => (Brush)GetValue(TitleBarBackgroundProperty); 
+            set => SetValue(TitleBarBackgroundProperty, value); 
+        }
 
-        private static void OnTitleBarBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(TitleBarBackgroundProperty, e.NewValue);
+        private static void OnTitleBarBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(TitleBarBackgroundProperty, e.NewValue);
         #endregion
 
         #region TitleBarForeground
@@ -141,9 +167,14 @@ namespace ZapanControls.Controls
         /// <summary>
         /// Obtient ou défini la couleur de la police de la barre de titre.
         /// </summary>
-        public Brush TitleBarForeground { get => (Brush)GetValue(TitleBarForegroundProperty); set => SetValue(TitleBarForegroundProperty, value); }
+        public Brush TitleBarForeground 
+        { 
+            get => (Brush)GetValue(TitleBarForegroundProperty); 
+            set => SetValue(TitleBarForegroundProperty, value); 
+        }
 
-        private static void OnTitleBarForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(TitleBarForegroundProperty, e.NewValue);
+        private static void OnTitleBarForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(TitleBarForegroundProperty, e.NewValue);
         #endregion
 
         #region TitleBarHeight
@@ -159,16 +190,25 @@ namespace ZapanControls.Controls
         /// <summary>
         /// Obtient ou défini la hauteur de la barre de titre.
         /// </summary>
-        public double TitleBarHeight { get => (double)GetValue(TitleBarHeightProperty); set => SetValue(TitleBarHeightProperty, value); }
+        public double TitleBarHeight 
+        { 
+            get => (double)GetValue(TitleBarHeightProperty); 
+            set => SetValue(TitleBarHeightProperty, value); 
+        }
 
-        private static void OnTitleBarHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(TitleBarHeightProperty, e.NewValue);
+        private static void OnTitleBarHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(TitleBarHeightProperty, e.NewValue);
         #endregion
         #endregion
         #endregion
 
         #region Template Properties
         #region HasInitialized
-        public bool HasInitialized { get => _hasInitialized; private set => Set(ref _hasInitialized, value); }
+        public bool HasInitialized 
+        { 
+            get => _hasInitialized; 
+            private set => Set(ref _hasInitialized, value); 
+        }
         #endregion
 
         #region TemplateDictionaries
@@ -183,9 +223,14 @@ namespace ZapanControls.Controls
                 new PropertyChangedCallback(OnZapTemplateChanged),
                 new CoerceValueCallback(CoerceZapTemplateChange)));
 
-        public string ZapTemplate { get => (string)GetValue(ZapTemplateProperty); set => SetValue(ZapTemplateProperty, value); }
+        public string ZapTemplate 
+        { 
+            get => (string)GetValue(ZapTemplateProperty); 
+            set => SetValue(ZapTemplateProperty, value); 
+        }
 
-        private static void OnZapTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.TemplateChanged<string>(e, TemplateChangedEvent);
+        private static void OnZapTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.TemplateChanged<string>(e, TemplateChangedEvent);
 
         private static object CoerceZapTemplateChange(DependencyObject d, object o)
         {
@@ -210,9 +255,14 @@ namespace ZapanControls.Controls
                 new PropertyChangedCallback(OnThemeChanged),
                 new CoerceValueCallback(CoerceThemeChange)));
 
-        public string Theme { get => (string)GetValue(ThemeProperty); set => SetValue(ThemeProperty, value); }
+        public string Theme 
+        { 
+            get => (string)GetValue(ThemeProperty); 
+            set => SetValue(ThemeProperty, value);
+        }
 
-        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.ThemeChanged(e, ThemeChangedEvent);
+        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.ThemeChanged(e, ThemeChangedEvent);
 
         private static object CoerceThemeChange(DependencyObject d, object o)
         {
@@ -227,15 +277,18 @@ namespace ZapanControls.Controls
 
         #region Native Properties Changed
         #region Background
-        private static void OnBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(BackgroundProperty, e.NewValue);
+        private static void OnBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(BackgroundProperty, e.NewValue);
         #endregion
 
         #region BorderBrush
-        private static void OnBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(BorderBrushProperty, e.NewValue);
+        private static void OnBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(BorderBrushProperty, e.NewValue);
         #endregion
 
         #region BorderThickness
-        private static void OnBorderThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(BorderThicknessProperty, e.NewValue);
+        private static void OnBorderThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(BorderThicknessProperty, e.NewValue);
         #endregion
         #endregion
 
@@ -247,7 +300,11 @@ namespace ZapanControls.Controls
         /// <summary>
         /// Se produit lorsque la fenêtre est minimisée.
         /// </summary>
-        public event RoutedEventHandler Minimizing { add => AddHandler(MinimizingEvent, value); remove => RemoveHandler(MinimizingEvent, value); }
+        public event RoutedEventHandler Minimizing 
+        { 
+            add => AddHandler(MinimizingEvent, value); 
+            remove => RemoveHandler(MinimizingEvent, value); 
+        }
         #endregion
 
         #region Maximizing
@@ -257,7 +314,11 @@ namespace ZapanControls.Controls
         /// <summary>
         /// Se produit lorsque la fenêtre est maximisée.
         /// </summary>
-        public event RoutedEventHandler Maximizing { add => AddHandler(MaximizingEvent, value); remove => RemoveHandler(MaximizingEvent, value); }
+        public event RoutedEventHandler Maximizing 
+        { 
+            add => AddHandler(MaximizingEvent, value); 
+            remove => RemoveHandler(MaximizingEvent, value); 
+        }
         #endregion
 
         #region Restoring
@@ -267,7 +328,11 @@ namespace ZapanControls.Controls
         /// <summary>
         /// Se produit lorsque la fenêtre est restaurée.
         /// </summary>
-        public event RoutedEventHandler Restoring { add => AddHandler(RestoringEvent, value); remove => RemoveHandler(RestoringEvent, value); }
+        public event RoutedEventHandler Restoring 
+        { 
+            add => AddHandler(RestoringEvent, value); 
+            remove => RemoveHandler(RestoringEvent, value); 
+        }
         #endregion
 
         #region CloseValidation
@@ -283,7 +348,11 @@ namespace ZapanControls.Controls
         /// <summary>
         /// Se produit lors de la validation de la fermeture de la fenêtre.
         /// </summary>
-        public event CloseValidationEventHandler CloseValidation { add => AddHandler(CloseValidationEvent, value); remove => RemoveHandler(CloseValidationEvent, value); }
+        public event CloseValidationEventHandler CloseValidation 
+        {
+            add => AddHandler(CloseValidationEvent, value); 
+            remove => RemoveHandler(CloseValidationEvent, value); 
+        }
         #endregion
 
         #region TemplateChanged
@@ -301,7 +370,11 @@ namespace ZapanControls.Controls
         public static readonly RoutedEvent ThemeChangedEvent = EventManager.RegisterRoutedEvent(
             "ThemeChanged", RoutingStrategy.Bubble, typeof(ITheme.ThemeChangedEventHandler), typeof(ZapWindow));
 
-        public event ITheme.ThemeChangedEventHandler ThemeChanged { add => AddHandler(ThemeChangedEvent, value); remove => RemoveHandler(ThemeChangedEvent, value); }
+        public event ITheme.ThemeChangedEventHandler ThemeChanged 
+        { 
+            add => AddHandler(ThemeChangedEvent, value); 
+            remove => RemoveHandler(ThemeChangedEvent, value); 
+        }
 
         protected virtual void OnThemeChanged(object sender, ThemeChangedEventArgs e)
         {
@@ -351,10 +424,14 @@ namespace ZapanControls.Controls
             RaiseEvent(eventArgs);
 
             if (!eventArgs.Handled)
+            {
                 eventArgs.Handled = true;
+            }
 
             if (eventArgs.CanClose)
+            {
                 Close();
+            }
         }
 
         private void OnBtnMinimizeClick(object sender, RoutedEventArgs e)
@@ -412,37 +489,32 @@ namespace ZapanControls.Controls
         /// Méthode permettant de centrer la fenêtre sur la fenêtre parent ou dans l'écran.
         /// </summary>
         public void CenterWindow(int milliseconds = 250)
-        {
-            CenterWindow(TimeSpan.FromMilliseconds(milliseconds));
-        }
+            => CenterWindow(TimeSpan.FromMilliseconds(milliseconds));
 
         /// <summary>
         /// Méthode permettant de centrer la fenêtre sur la fenêtre parent ou dans l'écran.
         /// </summary>
         public void CenterWindow(TimeSpan timeSpan)
-        {
-            _centerDeferred.Defer(timeSpan);
-        }
+            => _centerDeferred.Defer(timeSpan);
 
         /// <summary>
         /// Méthode déférée utilisée pour centrer la fenêtre sur la fenêtre parent ou dans l'écran.
         /// </summary>
         private void CenterWindowDefered()
         {
-            if (WindowStartupLocation == WindowStartupLocation.CenterScreen || Owner?.WindowState == WindowState.Maximized)
+            if (WindowStartupLocation == WindowStartupLocation.CenterScreen 
+                || Owner?.WindowState == WindowState.Maximized)
             {
                 System.Windows.Forms.Screen currentScreen = ScreenHelpers.GetCurrentScreen(this);
 
                 Left = ((currentScreen.WorkingArea.Width - ActualWidth) / 2) + currentScreen.WorkingArea.X;
                 Top = ((currentScreen.WorkingArea.Height - ActualHeight) / 2) + currentScreen.WorkingArea.Y;
             }
-            else if (WindowStartupLocation == WindowStartupLocation.CenterOwner)
+            else if (WindowStartupLocation == WindowStartupLocation.CenterOwner
+                && Owner != null)
             {
-                if (Owner != null)
-                {
-                    Left = Owner.Left + (Owner.Width - ActualWidth) / 2;
-                    Top = Owner.Top + (Owner.Height - ActualHeight) / 2;
-                }
+                Left = Owner.Left + (Owner.Width - ActualWidth) / 2;
+                Top = Owner.Top + (Owner.Height - ActualHeight) / 2;
             }
         }
         #endregion
@@ -458,9 +530,10 @@ namespace ZapanControls.Controls
             // Permet d'éviter les bordures noires lors de la création d'une nouvelle fenêtre
             InvalidateVisual();
 
-            if (ComponentDispatcher.IsThreadModal)
-                if (Owner is ZapWindow win)
-                    win.GridDim.Visibility = Visibility.Visible;
+            if (ComponentDispatcher.IsThreadModal && Owner is ZapWindow win)
+            {
+                win.GridDim.Visibility = Visibility.Visible;
+            }
 
             base.OnContentRendered(e);
 
@@ -493,9 +566,10 @@ namespace ZapanControls.Controls
 
         protected override void OnClosed(EventArgs e)
         {
-            if (ComponentDispatcher.IsThreadModal)
-                if (Owner is ZapWindow win)
-                    win.GridDim.Visibility = Visibility.Collapsed;
+            if (ComponentDispatcher.IsThreadModal && Owner is ZapWindow win)
+            {
+                win.GridDim.Visibility = Visibility.Collapsed;
+            }
 
             base.OnClosed(e);
         }
@@ -506,7 +580,9 @@ namespace ZapanControls.Controls
             HasInitialized = true;
 
             if (GetTemplateChild("gridDim") is Grid gridDim)
+            {
                 GridDim = gridDim;
+            }
 
             if (GetTemplateChild("moveBorder") is Border moveBorder)
             {

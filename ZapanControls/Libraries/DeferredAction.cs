@@ -22,12 +22,11 @@ namespace ZapanControls.Libraries
         /// </param>
         public static DeferredAction Create(Action action)
         {
-            if (action == null)
-                throw new ArgumentNullException(nameof(action));
-
-            return new DeferredAction(action);
+            return action != null 
+                ? new DeferredAction(action) 
+                : throw new ArgumentNullException(nameof(action));
         }
-   
+
         private DeferredAction(Action action)
         {
             timer = new Timer(new TimerCallback(delegate

@@ -18,23 +18,46 @@ namespace ZapanControls.Behaviours
         private EventInfo _oldEvent;
 
         // Event
-        public string Event { get { return (string)GetValue(EventProperty); } set { SetValue(EventProperty, value); } }
-        public static readonly DependencyProperty EventProperty = DependencyProperty.Register("Event", typeof(string), typeof(EventToCommandBehavior), new PropertyMetadata(null, OnEventChanged));
+        public string Event
+        {
+            get => (string)GetValue(EventProperty);
+            set => SetValue(EventProperty, value);
+        }
+
+        public static readonly DependencyProperty EventProperty = DependencyProperty.Register(
+            "Event", typeof(string), typeof(EventToCommandBehavior), 
+            new PropertyMetadata(null, OnEventChanged));
 
         // Command
-        public ICommand Command { get { return (ICommand)GetValue(CommandProperty); } set { SetValue(CommandProperty, value); } }
-        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("Command", typeof(ICommand), typeof(EventToCommandBehavior), new PropertyMetadata(null));
+        public ICommand Command 
+        { 
+            get => (ICommand)GetValue(CommandProperty);
+            set => SetValue(CommandProperty, value);
+        }
+
+        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
+            "Command", typeof(ICommand), typeof(EventToCommandBehavior), 
+            new PropertyMetadata(null));
 
         // PassArguments (default: false)
-        public bool PassArguments { get { return (bool)GetValue(PassArgumentsProperty); } set { SetValue(PassArgumentsProperty, value); } }
-        public static readonly DependencyProperty PassArgumentsProperty = DependencyProperty.Register("PassArguments", typeof(bool), typeof(EventToCommandBehavior), new PropertyMetadata(false));
+        public bool PassArguments 
+        { 
+            get => (bool)GetValue(PassArgumentsProperty); 
+            set => SetValue(PassArgumentsProperty, value); 
+        }
+
+        public static readonly DependencyProperty PassArgumentsProperty = DependencyProperty.Register(
+            "PassArguments", typeof(bool), typeof(EventToCommandBehavior), 
+            new PropertyMetadata(false));
 
         private static void OnEventChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var beh = (EventToCommandBehavior)d;
 
             if (beh.AssociatedObject != null) // is not yet attached at initial load
+            {
                 beh.AttachHandler((string)e.NewValue);
+            }
         }
 
         protected override void OnAttached()
@@ -49,7 +72,9 @@ namespace ZapanControls.Behaviours
         {
             // detach old event
             if (_oldEvent != null)
+            {
                 _oldEvent.RemoveEventHandler(this.AssociatedObject, _handler);
+            }
 
             // attach new event
             if (!string.IsNullOrEmpty(eventName))

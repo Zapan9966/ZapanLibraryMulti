@@ -11,7 +11,9 @@ namespace ZapanControls.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value is Brush brush && int.TryParse(parameter?.ToString() ?? "0", out int correction) ? brush.ChangeBrightness(correction) : value;
+            return value is Brush brush && int.TryParse(parameter?.ToString() ?? "0", out int correction) 
+                ? brush.ChangeBrightness(correction) 
+                : value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

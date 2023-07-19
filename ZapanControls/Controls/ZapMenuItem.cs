@@ -28,16 +28,25 @@ namespace ZapanControls.Controls
         /// Identifies the <see cref="IsRoundPopup"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty IsRoundPopupProperty = DependencyProperty.Register(
-            "IsRoundPopup", typeof(bool), typeof(ZapMenuItem), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender));
+            "IsRoundPopup", typeof(bool), typeof(ZapMenuItem),
+            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
         /// Get/set the popup border color.
         /// </summary>
-        public bool IsRoundPopup { get => (bool)GetValue(IsRoundPopupProperty); set => SetValue(IsRoundPopupProperty, value); }
+        public bool IsRoundPopup
+        {
+            get => (bool)GetValue(IsRoundPopupProperty);
+            set => SetValue(IsRoundPopupProperty, value);
+        }
         #endregion
 
         #region HasInitialized
-        public bool HasInitialized { get => _hasInitialized; private set => Set(ref _hasInitialized, value); }
+        public bool HasInitialized
+        {
+            get => _hasInitialized;
+            private set => Set(ref _hasInitialized, value);
+        }
         #endregion
 
         #region Normal
@@ -48,7 +57,11 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnSubMenuForegroundChanged));
 
-        public Brush SubMenuForeground { get => (Brush)GetValue(SubMenuForegroundProperty); set => SetValue(SubMenuForegroundProperty, value); }
+        public Brush SubMenuForeground
+        {
+            get => (Brush)GetValue(SubMenuForegroundProperty);
+            set => SetValue(SubMenuForegroundProperty, value);
+        }
 
         private static void OnSubMenuForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(SubMenuForegroundProperty, e.NewValue);
         #endregion
@@ -62,9 +75,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnFocusedBackgroundChanged));
 
-        public Brush FocusedBackground { get => (Brush)GetValue(FocusedBackgroundProperty); set => SetValue(FocusedBackgroundProperty, value); }
+        public Brush FocusedBackground
+        {
+            get => (Brush)GetValue(FocusedBackgroundProperty);
+            set => SetValue(FocusedBackgroundProperty, value);
+        }
 
-        private static void OnFocusedBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(FocusedBackgroundProperty, e.NewValue);
+        private static void OnFocusedBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            => d.SetValueCommon(FocusedBackgroundProperty, e.NewValue);
         #endregion
 
         #region FocusedBorderBrush
@@ -74,9 +92,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnFocusedBorderBrushChanged));
 
-        public Brush FocusedBorderBrush { get => (Brush)GetValue(FocusedBorderBrushProperty); set => SetValue(FocusedBorderBrushProperty, value); }
+        public Brush FocusedBorderBrush
+        {
+            get => (Brush)GetValue(FocusedBorderBrushProperty);
+            set => SetValue(FocusedBorderBrushProperty, value);
+        }
 
-        private static void OnFocusedBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(FocusedBorderBrushProperty, e.NewValue);
+        private static void OnFocusedBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            => d.SetValueCommon(FocusedBorderBrushProperty, e.NewValue);
         #endregion
 
         #region FocusedForeground
@@ -86,9 +109,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnFocusedForegroundChanged));
 
-        public Brush FocusedForeground {  get => (Brush)GetValue(FocusedForegroundProperty); set => SetValue(FocusedForegroundProperty, value); }
+        public Brush FocusedForeground
+        {
+            get => (Brush)GetValue(FocusedForegroundProperty);
+            set => SetValue(FocusedForegroundProperty, value);
+        }
 
-        private static void OnFocusedForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(FocusedForegroundProperty, e.NewValue);
+        private static void OnFocusedForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            => d.SetValueCommon(FocusedForegroundProperty, e.NewValue);
         #endregion
         #endregion
 
@@ -100,9 +128,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnCheckedBackgroundChanged));
 
-        public Brush CheckedBackground { get => (Brush)GetValue(CheckedBackgroundProperty); set => SetValue(CheckedBackgroundProperty, value); }
+        public Brush CheckedBackground
+        {
+            get => (Brush)GetValue(CheckedBackgroundProperty);
+            set => SetValue(CheckedBackgroundProperty, value);
+        }
 
-        private static void OnCheckedBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(CheckedBackgroundProperty, e.NewValue);
+        private static void OnCheckedBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            => d.SetValueCommon(CheckedBackgroundProperty, e.NewValue);
         #endregion
 
         #region CheckedBorderBrush
@@ -112,9 +145,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnCheckedBorderBrushChanged));
 
-        public Brush CheckedBorderBrush { get => (Brush)GetValue(CheckedBorderBrushProperty); set => SetValue(CheckedBorderBrushProperty, value); }
+        public Brush CheckedBorderBrush
+        {
+            get => (Brush)GetValue(CheckedBorderBrushProperty);
+            set => SetValue(CheckedBorderBrushProperty, value);
+        }
 
-        private static void OnCheckedBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(CheckedBorderBrushProperty, e.NewValue);
+        private static void OnCheckedBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            => d.SetValueCommon(CheckedBorderBrushProperty, e.NewValue);
         #endregion
 
         #region CheckedForeground
@@ -124,9 +162,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnCheckedForegroundChanged));
 
-        public Brush CheckedForeground { get => (Brush)GetValue(CheckedForegroundProperty); set => SetValue(CheckedForegroundProperty, value); }
+        public Brush CheckedForeground
+        {
+            get => (Brush)GetValue(CheckedForegroundProperty);
+            set => SetValue(CheckedForegroundProperty, value);
+        }
 
-        private static void OnCheckedForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(CheckedForegroundProperty, e.NewValue);
+        private static void OnCheckedForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            => d.SetValueCommon(CheckedForegroundProperty, e.NewValue);
         #endregion
         #endregion
 
@@ -138,9 +181,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnPressedBackgroundChanged));
 
-        public Brush PressedBackground { get => (Brush)GetValue(PressedBackgroundProperty); set => SetValue(PressedBackgroundProperty, value); }
+        public Brush PressedBackground
+        {
+            get => (Brush)GetValue(PressedBackgroundProperty);
+            set => SetValue(PressedBackgroundProperty, value);
+        }
 
-        private static void OnPressedBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(PressedBackgroundProperty, e.NewValue);
+        private static void OnPressedBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            => d.SetValueCommon(PressedBackgroundProperty, e.NewValue);
         #endregion
 
         #region PressedBorderBrush
@@ -150,9 +198,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnPressedBorderBrushChanged));
 
-        public Brush PressedBorderBrush { get => (Brush)GetValue(PressedBorderBrushProperty); set => SetValue(PressedBorderBrushProperty, value); }
+        public Brush PressedBorderBrush
+        {
+            get => (Brush)GetValue(PressedBorderBrushProperty);
+            set => SetValue(PressedBorderBrushProperty, value);
+        }
 
-        private static void OnPressedBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(PressedBorderBrushProperty, e.NewValue);
+        private static void OnPressedBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            => d.SetValueCommon(PressedBorderBrushProperty, e.NewValue);
         #endregion
 
         #region PressedForeground
@@ -162,9 +215,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnPressedForegroundChanged));
 
-        public Brush PressedForeground { get => (Brush)GetValue(PressedForegroundProperty); set => SetValue(PressedForegroundProperty, value); }
+        public Brush PressedForeground
+        {
+            get => (Brush)GetValue(PressedForegroundProperty);
+            set => SetValue(PressedForegroundProperty, value);
+        }
 
-        private static void OnPressedForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(PressedForegroundProperty, e.NewValue);
+        private static void OnPressedForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            => d.SetValueCommon(PressedForegroundProperty, e.NewValue);
         #endregion
         #endregion
 
@@ -176,9 +234,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnDisabledBackgroundChanged));
 
-        public Brush DisabledBackground { get => (Brush)GetValue(DisabledBackgroundProperty); set => SetValue(DisabledBackgroundProperty, value); }
+        public Brush DisabledBackground
+        {
+            get => (Brush)GetValue(DisabledBackgroundProperty);
+            set => SetValue(DisabledBackgroundProperty, value);
+        }
 
-        private static void OnDisabledBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(DisabledBackgroundProperty, e.NewValue);
+        private static void OnDisabledBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            => d.SetValueCommon(DisabledBackgroundProperty, e.NewValue);
         #endregion
 
         #region DisabledBorderBrush
@@ -188,9 +251,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnDisabledBorderBrushChanged));
 
-        public Brush DisabledBorderBrush { get => (Brush)GetValue(DisabledBorderBrushProperty); set => SetValue(DisabledBorderBrushProperty, value); }
+        public Brush DisabledBorderBrush
+        {
+            get => (Brush)GetValue(DisabledBorderBrushProperty);
+            set => SetValue(DisabledBorderBrushProperty, value);
+        }
 
-        private static void OnDisabledBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(DisabledBorderBrushProperty, e.NewValue);
+        private static void OnDisabledBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            => d.SetValueCommon(DisabledBorderBrushProperty, e.NewValue);
         #endregion
 
         #region DisabledForeground
@@ -200,9 +268,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnDisabledForegroundChanged));
 
-        public Brush DisabledForeground { get => (Brush)GetValue(DisabledForegroundProperty); set => SetValue(DisabledForegroundProperty, value); }
+        public Brush DisabledForeground 
+        { 
+            get => (Brush)GetValue(DisabledForegroundProperty); 
+            set => SetValue(DisabledForegroundProperty, value); 
+        }
 
-        private static void OnDisabledForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(DisabledForegroundProperty, e.NewValue);
+        private static void OnDisabledForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(DisabledForegroundProperty, e.NewValue);
         #endregion
         #endregion
         #endregion
@@ -223,9 +296,14 @@ namespace ZapanControls.Controls
                 new PropertyChangedCallback(OnThemeChanged),
                 new CoerceValueCallback(CoerceThemeChange)));
 
-        public string Theme { get => (string)GetValue(ThemeProperty); set => SetValue(ThemeProperty, value); }
+        public string Theme 
+        { 
+            get => (string)GetValue(ThemeProperty); 
+            set => SetValue(ThemeProperty, value); 
+        }
 
-        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.ThemeChanged(e, ThemeChangedEvent);
+        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.ThemeChanged(e, ThemeChangedEvent);
 
         private static object CoerceThemeChange(DependencyObject d, object o)
         {
@@ -240,19 +318,23 @@ namespace ZapanControls.Controls
 
         #region Native Properties Changed
         #region Background
-        private static void OnBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(BackgroundProperty, e.NewValue);
+        private static void OnBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(BackgroundProperty, e.NewValue);
         #endregion
 
         #region BorderBrush
-        private static void OnBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(BorderBrushProperty, e.NewValue);
+        private static void OnBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(BorderBrushProperty, e.NewValue);
         #endregion
 
         #region BorderThickness
-        private static void OnBorderThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(BorderThicknessProperty, e.NewValue);
+        private static void OnBorderThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(BorderThicknessProperty, e.NewValue);
         #endregion
 
         #region Foreground
-        private static void OnForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ForegroundProperty, e.NewValue);
+        private static void OnForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(ForegroundProperty, e.NewValue);
         #endregion
         #endregion
 
@@ -261,7 +343,11 @@ namespace ZapanControls.Controls
         public static readonly RoutedEvent ThemeChangedEvent = EventManager.RegisterRoutedEvent(
             "ThemeChanged", RoutingStrategy.Bubble, typeof(ITheme.ThemeChangedEventHandler), typeof(ZapMenuItem));
 
-        public event ITheme.ThemeChangedEventHandler ThemeChanged { add => AddHandler(ThemeChangedEvent, value); remove => RemoveHandler(ThemeChangedEvent, value); }
+        public event ITheme.ThemeChangedEventHandler ThemeChanged
+        {
+            add => AddHandler(ThemeChangedEvent, value);
+            remove => RemoveHandler(ThemeChangedEvent, value);
+        }
 
         private void OnThemeChanged(object sender, ThemeChangedEventArgs e)
         {

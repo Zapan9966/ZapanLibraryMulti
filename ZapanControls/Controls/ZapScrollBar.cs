@@ -38,9 +38,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnButtonBackgroundChanged));
 
-        public Brush ButtonBackground { get => (Brush)GetValue(ButtonBackgroundProperty); set => SetValue(ButtonBackgroundProperty, value); }
+        public Brush ButtonBackground 
+        { 
+            get => (Brush)GetValue(ButtonBackgroundProperty); 
+            set => SetValue(ButtonBackgroundProperty, value); 
+        }
 
-        private static void OnButtonBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ButtonBackgroundProperty, e.NewValue);
+        private static void OnButtonBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(ButtonBackgroundProperty, e.NewValue);
         #endregion
 
         #region ButtonBorderBrush
@@ -50,9 +55,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnButtonBorderBrushChanged));
 
-        public Brush ButtonBorderBrush { get => (Brush)GetValue(ButtonBorderBrushProperty); set => SetValue(ButtonBorderBrushProperty, value); }
+        public Brush ButtonBorderBrush 
+        { 
+            get => (Brush)GetValue(ButtonBorderBrushProperty); 
+            set => SetValue(ButtonBorderBrushProperty, value); 
+        }
 
-        private static void OnButtonBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ButtonBorderBrushProperty, e.NewValue);
+        private static void OnButtonBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(ButtonBorderBrushProperty, e.NewValue);
         #endregion
 
         #region ButtonBorderThickness
@@ -62,9 +72,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnButtonBorderThicknessChanged));
 
-        public Thickness ButtonBorderThickness { get => (Thickness)GetValue(ButtonBorderThicknessProperty); set => SetValue(ButtonBorderThicknessProperty, value); }
+        public Thickness ButtonBorderThickness 
+        { 
+            get => (Thickness)GetValue(ButtonBorderThicknessProperty); 
+            set => SetValue(ButtonBorderThicknessProperty, value); 
+        }
 
-        private static void OnButtonBorderThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ButtonBorderThicknessProperty, e.NewValue);
+        private static void OnButtonBorderThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(ButtonBorderThicknessProperty, e.NewValue);
         #endregion
         #endregion
 
@@ -76,9 +91,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnThumbInnerBackgroundChanged));
 
-        public Brush ThumbInnerBackground { get => (Brush)GetValue(ThumbInnerBackgroundProperty); set => SetValue(ThumbInnerBackgroundProperty, value); }
+        public Brush ThumbInnerBackground 
+        { 
+            get => (Brush)GetValue(ThumbInnerBackgroundProperty); 
+            set => SetValue(ThumbInnerBackgroundProperty, value); 
+        }
 
-        private static void OnThumbInnerBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ThumbInnerBackgroundProperty, e.NewValue);
+        private static void OnThumbInnerBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(ThumbInnerBackgroundProperty, e.NewValue);
         #endregion
 
         #region ThumbBackground
@@ -88,9 +108,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnThumbBackgroundChanged));
 
-        public Brush ThumbBackground { get => (Brush)GetValue(ThumbBackgroundProperty); set => SetValue(ThumbBackgroundProperty, value); }
+        public Brush ThumbBackground 
+        { 
+            get => (Brush)GetValue(ThumbBackgroundProperty); 
+            set => SetValue(ThumbBackgroundProperty, value); 
+        }
 
-        private static void OnThumbBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ThumbBackgroundProperty, e.NewValue);
+        private static void OnThumbBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(ThumbBackgroundProperty, e.NewValue);
         #endregion
 
         #region ThumbBorderBrush
@@ -100,9 +125,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnThumbBorderBrushChanged));
 
-        public Brush ThumbBorderBrush { get => (Brush)GetValue(ThumbBorderBrushProperty); set => SetValue(ThumbBorderBrushProperty, value); }
+        public Brush ThumbBorderBrush 
+        { 
+            get => (Brush)GetValue(ThumbBorderBrushProperty); 
+            set => SetValue(ThumbBorderBrushProperty, value); 
+        }
 
-        private static void OnThumbBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ThumbBorderBrushProperty, e.NewValue);
+        private static void OnThumbBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(ThumbBorderBrushProperty, e.NewValue);
         #endregion
 
         #region ThumbBorderThickness
@@ -112,9 +142,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnThumbBorderThicknessChanged));
 
-        public Thickness ThumbBorderThickness { get => (Thickness)GetValue(ThumbBorderThicknessProperty); set => SetValue(ThumbBorderThicknessProperty, value); }
+        public Thickness ThumbBorderThickness 
+        { 
+            get => (Thickness)GetValue(ThumbBorderThicknessProperty); 
+            set => SetValue(ThumbBorderThicknessProperty, value); 
+        }
 
-        private static void OnThumbBorderThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ThumbBorderThicknessProperty, e.NewValue);
+        private static void OnThumbBorderThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(ThumbBorderThicknessProperty, e.NewValue);
         #endregion
         #endregion
 
@@ -126,9 +161,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnDisabledThumbInnerBackgroundChanged));
 
-        public Brush DisabledThumbInnerBackground { get => (Brush)GetValue(DisabledThumbInnerBackgroundProperty); set => SetValue(DisabledThumbInnerBackgroundProperty, value); }
+        public Brush DisabledThumbInnerBackground 
+        { 
+            get => (Brush)GetValue(DisabledThumbInnerBackgroundProperty); 
+            set => SetValue(DisabledThumbInnerBackgroundProperty, value); 
+        }
 
-        private static void OnDisabledThumbInnerBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(DisabledThumbInnerBackgroundProperty, e.NewValue);
+        private static void OnDisabledThumbInnerBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(DisabledThumbInnerBackgroundProperty, e.NewValue);
         #endregion
 
         #region DisabledButtonBackground
@@ -138,9 +178,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnDisabledButtonBackgroundChanged));
 
-        public Brush DisabledButtonBackground { get => (Brush)GetValue(DisabledButtonBackgroundProperty); set => SetValue(DisabledButtonBackgroundProperty, value); }
+        public Brush DisabledButtonBackground 
+        { 
+            get => (Brush)GetValue(DisabledButtonBackgroundProperty); 
+            set => SetValue(DisabledButtonBackgroundProperty, value); 
+        }
 
-        private static void OnDisabledButtonBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(DisabledButtonBackgroundProperty, e.NewValue);
+        private static void OnDisabledButtonBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(DisabledButtonBackgroundProperty, e.NewValue);
         #endregion
 
         #region DisabledButtonBorderBrush
@@ -150,16 +195,25 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnDisabledButtonBorderBrushChanged));
 
-        public Brush DisabledButtonBorderBrush { get => (Brush)GetValue(DisabledButtonBorderBrushProperty); set => SetValue(DisabledButtonBorderBrushProperty, value); }
+        public Brush DisabledButtonBorderBrush 
+        { 
+            get => (Brush)GetValue(DisabledButtonBorderBrushProperty); 
+            set => SetValue(DisabledButtonBorderBrushProperty, value); 
+        }
 
-        private static void OnDisabledButtonBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(DisabledButtonBorderBrushProperty, e.NewValue);
+        private static void OnDisabledButtonBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(DisabledButtonBorderBrushProperty, e.NewValue);
         #endregion
         #endregion
         #endregion
 
         #region Template Properties
         #region HasInitialized
-        public bool HasInitialized { get => _hasInitialized; private set => Set(ref _hasInitialized, value); }
+        public bool HasInitialized 
+        { 
+            get => _hasInitialized; 
+            private set => Set(ref _hasInitialized, value); 
+        }
         #endregion
 
         #region TemplateDictionaries
@@ -174,9 +228,14 @@ namespace ZapanControls.Controls
                 new PropertyChangedCallback(OnZapTemplateChanged),
                 new CoerceValueCallback(CoerceZapTemplateChange)));
 
-        public string ZapTemplate { get => (string)GetValue(ZapTemplateProperty); set => SetValue(ZapTemplateProperty, value); }
+        public string ZapTemplate 
+        { 
+            get => (string)GetValue(ZapTemplateProperty); 
+            set => SetValue(ZapTemplateProperty, value); 
+        }
 
-        private static void OnZapTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.TemplateChanged<string>(e, TemplateChangedEvent);
+        private static void OnZapTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.TemplateChanged<string>(e, TemplateChangedEvent);
 
         private static object CoerceZapTemplateChange(DependencyObject d, object o)
         {
@@ -201,8 +260,13 @@ namespace ZapanControls.Controls
                 new PropertyChangedCallback(OnThemeChanged),
                 new CoerceValueCallback(CoerceThemeChange)));
 
-        public string Theme { get => (string)GetValue(ThemeProperty); set => SetValue(ThemeProperty, value); }
-        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.ThemeChanged(e, ThemeChangedEvent);
+        public string Theme 
+        { 
+            get => (string)GetValue(ThemeProperty); 
+            set => SetValue(ThemeProperty, value); 
+        }
+        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.ThemeChanged(e, ThemeChangedEvent);
 
         private static object CoerceThemeChange(DependencyObject d, object o)
         {
@@ -217,15 +281,18 @@ namespace ZapanControls.Controls
 
         #region Native Properties Changed
         #region Background
-        private static void OnBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(BackgroundProperty, e.NewValue);
+        private static void OnBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(BackgroundProperty, e.NewValue);
         #endregion
 
         #region BorderBrush
-        private static void OnBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(BorderBrushProperty, e.NewValue);
+        private static void OnBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(BorderBrushProperty, e.NewValue);
         #endregion
 
         #region BorderThickness
-        private static void OnBorderThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(BorderThicknessProperty, e.NewValue);
+        private static void OnBorderThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(BorderThicknessProperty, e.NewValue);
         #endregion
 
         #region Orientation
@@ -237,12 +304,16 @@ namespace ZapanControls.Controls
                 if (orientation == Orientation.Horizontal)
                 {
                     if (double.IsNaN(sb.Height))
+                    {
                         sb.Height = sb.Width;
+                    }
                 }
                 else
                 {
                     if (double.IsNaN(sb.Width))
+                    {
                         sb.Width = sb.Height;
+                    }
                 }
             }
         }
@@ -307,7 +378,11 @@ namespace ZapanControls.Controls
         public static readonly RoutedEvent ThemeChangedEvent = EventManager.RegisterRoutedEvent(
             "ThemeChanged", RoutingStrategy.Bubble, typeof(ITheme.ThemeChangedEventHandler), typeof(ZapScrollBar));
 
-        public event ITheme.ThemeChangedEventHandler ThemeChanged { add => AddHandler(ThemeChangedEvent, value); remove => RemoveHandler(ThemeChangedEvent, value); }
+        public event ITheme.ThemeChangedEventHandler ThemeChanged 
+        { 
+            add => AddHandler(ThemeChangedEvent, value); 
+            remove => RemoveHandler(ThemeChangedEvent, value); 
+        }
 
         private void OnThemeChanged(object sender, ThemeChangedEventArgs e)
         {
@@ -371,7 +446,8 @@ namespace ZapanControls.Controls
 
             if (ZapTemplate == ZapScrollBarTemplates.Rounded.ToString())
             {
-                if (GetTemplateChild("InnerTrack") is Rectangle rect && VisualTreeHelpers.FindChild(this, "Rectangle") is Rectangle rectThumb)
+                if (GetTemplateChild("InnerTrack") is Rectangle rect 
+                    && VisualTreeHelpers.FindChild(this, "Rectangle") is Rectangle rectThumb)
                 {
                     rect.RadiusX = rectThumb.RadiusX;
                     rect.RadiusY = rectThumb.RadiusY;

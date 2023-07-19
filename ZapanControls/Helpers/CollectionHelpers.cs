@@ -74,7 +74,9 @@ namespace ZapanControls.Helpers
                 try
                 {
                     if (property != null)
+                    {
                         propValue = property.GetValue(propValue);
+                    }
                 }
                 catch { }
             }

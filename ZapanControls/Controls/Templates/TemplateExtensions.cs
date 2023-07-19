@@ -14,20 +14,14 @@ namespace ZapanControls.Controls.Templates
     {
         private const string ZapTemplatePropName = "ZapTemplate";
 
-        public static string TemplateRegistrationName(this TemplatePath template, Type ownerType)
-        {
-            return template.Name.TemplateRegistrationName(ownerType);
-        }
+        public static string TemplateRegistrationName(this TemplatePath template, Type ownerType) 
+            => template.Name.TemplateRegistrationName(ownerType);
 
         public static string TemplateRegistrationName(this string template, Type ownerType)
-        {
-            return $"{ownerType};{template}";
-        }
+            => $"{ownerType};{template}";
 
         public static string GetTemplateName(this string key)
-        {
-            return key?.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries)[1];
-        }
+            => key?.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries)[1];
 
         public static void LoadDefaultTemplate<TTemplate>(this FrameworkElement f, DependencyProperty p)
         {
@@ -105,8 +99,8 @@ namespace ZapanControls.Controls.Templates
 
             // new template name
             string newTemplateName = e.NewValue as string;
-            string newRegisteredTemplateName = !string.IsNullOrEmpty(newTemplateName) ?
-                newTemplateName.TemplateRegistrationName(o.GetType())
+            string newRegisteredTemplateName = !string.IsNullOrEmpty(newTemplateName) 
+                ? newTemplateName.TemplateRegistrationName(o.GetType())
                 : t.TemplateDictionaries.FirstOrDefault().Key;
 
             // add the resource
@@ -121,7 +115,9 @@ namespace ZapanControls.Controls.Templates
                 fe.Resources.MergedDictionaries.Add(newTemplateDictionary);
 
                 if (t.HasInitialized)
+                {
                     fe.OnApplyTemplate();
+                }
 
                 // Raise theme successfully changed event
                 fe.RaiseEvent(new TemplateChangedEventArgs(successEvent, o, curRegisteredTemplateName, newRegisteredTemplateName));

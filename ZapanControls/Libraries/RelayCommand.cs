@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Windows.Input;
 
 namespace ZapanControls.Libraries
@@ -59,12 +58,16 @@ namespace ZapanControls.Libraries
         public RelayCommand(Action execute, Func<bool> canExecute, bool keepTargetAlive = false)
         {
             if (execute == null)
+            {
                 throw new ArgumentNullException(nameof(execute));
+            }
 
             _execute = new WeakAction(execute, keepTargetAlive);
 
             if (canExecute != null)
+            {
                 _canExecute = new WeakFunc<bool>(canExecute, keepTargetAlive);
+            }
         }
 
         private EventHandler _requerySuggestedLocal;
@@ -93,7 +96,6 @@ namespace ZapanControls.Libraries
                     CommandManager.RequerySuggested += value;
                 }
             }
-
             remove
             {
                 if (_canExecute != null)
@@ -118,14 +120,8 @@ namespace ZapanControls.Libraries
         /// <summary>
         /// Raises the <see cref="CanExecuteChanged" /> event.
         /// </summary>
-        [SuppressMessage(
-            "Microsoft.Design",
-            "CA1030:UseEventsWhereAppropriate",
-            Justification = "This cannot be an event")]
         public static void RaiseCanExecuteChanged()
-        {
-            CommandManager.InvalidateRequerySuggested();
-        }
+            => CommandManager.InvalidateRequerySuggested();
 
         /// <summary>
         /// Defines the method that determines whether the command can execute in its current state.
@@ -133,9 +129,7 @@ namespace ZapanControls.Libraries
         /// <param name="parameter">This parameter will always be ignored.</param>
         /// <returns>true if this command can be executed; otherwise, false.</returns>
         public bool CanExecute(object parameter)
-        {
-            return _canExecute == null || (_canExecute.IsStatic || _canExecute.IsAlive) && _canExecute.Execute();
-        }
+            => _canExecute == null || (_canExecute.IsStatic || _canExecute.IsAlive) && _canExecute.Execute();
 
         /// <summary>
         /// Defines the method to be called when the command is invoked. 
@@ -144,7 +138,9 @@ namespace ZapanControls.Libraries
         public virtual void Execute(object parameter)
         {
             if (CanExecute(parameter) && _execute != null && (_execute.IsStatic || _execute.IsAlive))
+            {
                 _execute.Execute();
+            }
         }
     }
 }

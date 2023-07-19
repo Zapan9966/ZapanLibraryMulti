@@ -65,15 +65,17 @@ namespace ZapanControls.Databases
 
                     StackTrace stackTrace = new StackTrace(ex, true);
 
-                    MessageBox.Show("Erreur initialisation base de données.\r\n\r\nDétails: " + ex.Message + "\r\nFactory: " + Factory.ToString() +
-                        "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name, "Erreur initialisation base de données",
+                    MessageBox.Show($"Erreur initialisation base de données.\r\n\r\nDétails: {ex.Message}\r\nFactory: {Factory}" +
+                        $"\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}", "Erreur initialisation base de données",
                         MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                 }
                 else
                     throw;
 
                 if (_exitAppOnInitError)
+                {
                     Environment.Exit(1);
+                }
             }
             catch (Exception ex)
             {
@@ -83,8 +85,8 @@ namespace ZapanControls.Databases
 
                     StackTrace stackTrace = new StackTrace(ex, true);
 
-                    MessageBox.Show("Erreur initialisation base de données.\r\n\r\nDétails: " + ex.Message + "\r\nFactory: " + Factory.ToString() +
-                        "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name, "Erreur initialisation base de données",
+                    MessageBox.Show($"Erreur initialisation base de données.\r\n\r\nDétails: {ex.Message}\r\nFactory: {Factory}" +
+                        $"\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}", "Erreur initialisation base de données",
                         MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                 }
                 else
@@ -122,7 +124,9 @@ namespace ZapanControls.Databases
                         using (DbDataReader r = cmd.ExecuteReader())
                         {
                             while (r.Read())
+                            {
                                 items.Add(create(r));
+                            }
                         }
                         cmd.Transaction.Commit();
                     }
@@ -135,22 +139,26 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name, "Erreur ExecuteReader",
+                        MessageBox.Show($"{ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}", 
+                            "Erreur ExecuteReader",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                     }
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
                 finally
                 {
                     if (conn.State != ConnectionState.Closed)
+                    {
                         conn.Close();
+                    }
                 }
             }
             return items;
@@ -184,7 +192,9 @@ namespace ZapanControls.Databases
                             r.Read();
 
                             if (r.HasRows)
+                            {
                                 item = create != null ? create(r) : default;
+                            }
                         }
                         cmd.Transaction.Commit();
                     }
@@ -197,7 +207,8 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name, "Erreur ExecuteReaderAsyncSingleResult",
+                        MessageBox.Show($"{ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}",
+                            "Erreur ExecuteReaderAsyncSingleResult",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                     }
@@ -254,22 +265,26 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name, "Erreur ExecuteScalarAsync",
+                        MessageBox.Show($"{ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}", 
+                            "Erreur ExecuteScalarAsync",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                     }
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
                 finally
                 {
                     if (conn.State != ConnectionState.Closed)
+                    {
                         conn.Close();
+                    }
                 }
             }
             return item;
@@ -307,22 +322,26 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name, "Erreur ExecuteScalarAsync",
+                        MessageBox.Show($"{ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}", 
+                            "Erreur ExecuteScalarAsync",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                     }
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
                 finally
                 {
                     if (conn.State != ConnectionState.Closed)
+                    {
                         conn.Close();
+                    }
                 }
             }
             return result;
@@ -380,14 +399,17 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.ErrorCode + " - " + ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name, 
-                            "Erreur ExecuteReaderAsync", MessageBoxButton.OK, MessageBoxImage.Error,  MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                        MessageBox.Show($"{ex.ErrorCode} - {ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}", 
+                            "Erreur ExecuteReaderAsync", 
+                            MessageBoxButton.OK, MessageBoxImage.Error,  
+                            MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                     }
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
@@ -399,21 +421,26 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name, "Erreur ExecuteReaderAsync",
-                            MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                        MessageBox.Show($"{ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}", 
+                            "Erreur ExecuteReaderAsync",
+                            MessageBoxButton.OK, MessageBoxImage.Error, 
+                            MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                     }
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
                 finally
                 {
                     if (conn.State != ConnectionState.Closed)
+                    {
                         conn.Close();
+                    }
                 }
             }
             return items;
@@ -447,7 +474,9 @@ namespace ZapanControls.Databases
                             await r.ReadAsync();
 
                             if (r.HasRows)
+                            {
                                 item = create != null ? create(r) : default;
+                            }
                         }
                         cmd.Transaction.Commit();
                     }
@@ -469,7 +498,7 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.ErrorCode + " - " + ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name, 
+                        MessageBox.Show($"{ex.ErrorCode} - {ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}",
                             "Erreur ExecuteReaderAsyncSingleResult",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
@@ -477,8 +506,9 @@ namespace ZapanControls.Databases
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
@@ -490,7 +520,7 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name,
+                        MessageBox.Show($"{ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}",
                             "Erreur ExecuteReaderAsyncSingleResult",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
@@ -498,15 +528,18 @@ namespace ZapanControls.Databases
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
                 finally
                 {
                     if (conn.State != ConnectionState.Closed)
+                    {
                         conn.Close();
+                    }
                 }
             }
             return item;
@@ -545,7 +578,9 @@ namespace ZapanControls.Databases
                     if (ex.ErrorCode == 1205 && _retryCount < 3)
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
+                        }
 
                         _retryCount++;
                         return await ExecuteScalarAsync<T>(query, parameters);
@@ -557,7 +592,7 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.ErrorCode + " - " + ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name, 
+                        MessageBox.Show($"{ex.ErrorCode} - {ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}", 
                             "Erreur ExecuteScalarAsync",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
@@ -565,8 +600,9 @@ namespace ZapanControls.Databases
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
@@ -578,7 +614,7 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name,
+                        MessageBox.Show($"{ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}",
                             "Erreur ExecuteScalarAsync",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
@@ -586,15 +622,18 @@ namespace ZapanControls.Databases
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
                 finally
                 {
                     if (conn.State != ConnectionState.Closed)
+                    {
                         conn.Close();
+                    }
                 }
             }
             return item;
@@ -629,8 +668,9 @@ namespace ZapanControls.Databases
                     if (ex.ErrorCode == 1205 && _retryCount < 3)
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         _retryCount++;
                         return await ExecuteNonQueryAsync(query, parameters);
                     }
@@ -641,7 +681,7 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.ErrorCode + " - " + ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name,
+                        MessageBox.Show($"{ex.ErrorCode} - {ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}",
                             "Erreur ExecuteNonQueryAsync",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
@@ -649,8 +689,9 @@ namespace ZapanControls.Databases
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
@@ -662,7 +703,7 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name,
+                        MessageBox.Show($"{ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}",
                             "Erreur ExecuteNonQueryAsync",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
@@ -670,15 +711,18 @@ namespace ZapanControls.Databases
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
                 finally
                 {
                     if (conn.State != ConnectionState.Closed)
+                    {
                         conn.Close();
+                    }
                 }
             }
             return result;
@@ -715,7 +759,9 @@ namespace ZapanControls.Databases
                         using (DbDataReader r = cmd.ExecuteReader())
                         {
                             while (r.Read())
+                            {
                                 items.Add(create(r));
+                            }
                         }
                         cmd.Transaction.Commit();
                     }
@@ -728,23 +774,26 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name,
-                            "Erreur ProcedureExecuteReader - " + procedureName,
+                        MessageBox.Show($"{ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}",
+                            $"Erreur ProcedureExecuteReaderAsyncSingleResult - {procedureName}",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                     }
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
                 finally
                 {
                     if (conn.State != ConnectionState.Closed)
+                    {
                         conn.Close();
+                    }
                 }
             }
             return items;
@@ -779,7 +828,9 @@ namespace ZapanControls.Databases
                             r.Read();
 
                             if (r.HasRows)
+                            {
                                 item = create != null ? create(r) : default;
+                            }
                         }
                         cmd.Transaction.Commit();
                     }
@@ -792,23 +843,26 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name,
-                            "Erreur ProcdedureExecuteReaderSingleResult - " + procedureName,
+                        MessageBox.Show($"{ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}",
+                            $"Erreur ProcdedureExecuteReaderSingleResult - {procedureName}",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                     }
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
                 finally
                 {
                     if (conn.State != ConnectionState.Closed)
+                    {
                         conn.Close();
+                    }
                 }
             }
             return item;
@@ -852,23 +906,26 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name,
-                            "Erreur ProcedureExecuteScalar - " + procedureName,
+                        MessageBox.Show($"{ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}",
+                            $"Erreur ProcedureExecuteScalar - {procedureName}",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                     }
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
                 finally
                 {
                     if (conn.State != ConnectionState.Closed)
+                    {
                         conn.Close();
+                    }
                 }
             }
             return item;
@@ -907,23 +964,26 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name,
-                            "Erreur ProcedureExecuteNonQuery - " + procedureName,
+                        MessageBox.Show($"{ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}",
+                            $"Erreur ProcedureExecuteNonQuery - {procedureName}",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                     }
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
                 finally
                 {
                     if (conn.State != ConnectionState.Closed)
+                    {
                         conn.Close();
+                    }
                 }
             }
             return result;
@@ -960,7 +1020,9 @@ namespace ZapanControls.Databases
                         using (DbDataReader r = await cmd.ExecuteReaderAsync())
                         {
                             while (await r.ReadAsync())
+                            {
                                 items.Add(create(r));
+                            }
                         }
                         cmd.Transaction.Commit();
                     }
@@ -970,8 +1032,9 @@ namespace ZapanControls.Databases
                     if (ex.ErrorCode == 1205 && _retryCount < 3)
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         _retryCount++;
                         return await ProcedureExecuteReaderAsync(create, procedureName, parameters);
                     }
@@ -982,16 +1045,17 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.ErrorCode + " - " + ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name, 
-                            "Erreur ProcedureExecuteReaderAsync - " + procedureName,
+                        MessageBox.Show($"{ex.ErrorCode} - {ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}", 
+                            $"Erreur ProcedureExecuteReaderAsync - {procedureName}",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                     }
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
@@ -1003,23 +1067,26 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name,
-                            "Erreur ProcedureExecuteReaderAsync - " + procedureName,
+                        MessageBox.Show($"{ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}",
+                            $"Erreur ProcedureExecuteReaderAsync - {procedureName}",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                     }
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
                 finally
                 {
                     if (conn.State != ConnectionState.Closed)
+                    {
                         conn.Close();
+                    }
                 }
             }
             return items;
@@ -1054,7 +1121,9 @@ namespace ZapanControls.Databases
                             await r.ReadAsync();
 
                             if (r.HasRows)
+                            {
                                 item = create != null ? create(r) : default;
+                            }
                         }
                         cmd.Transaction.Commit();
                     }
@@ -1064,8 +1133,9 @@ namespace ZapanControls.Databases
                     if (ex.ErrorCode == 1205 && _retryCount < 3)
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         _retryCount++;
                         return await ProcedureExecuteReaderAsyncSingleResult(create, procedureName, parameters);
                     }
@@ -1076,16 +1146,17 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.ErrorCode + " - " + ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name, 
-                            "Erreur ProcedureExecuteReaderAsyncSingleResult - " + procedureName,
+                        MessageBox.Show($"{ex.ErrorCode} - {ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}", 
+                            $"Erreur ProcedureExecuteReaderAsyncSingleResult - {procedureName}",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                     }
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
@@ -1097,23 +1168,26 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name,
-                            "Erreur ProcedureExecuteReaderAsyncSingleResult" + procedureName,
+                        MessageBox.Show($"{ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}",
+                            $"Erreur ProcedureExecuteReaderAsyncSingleResult - {procedureName}",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                     }
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
                 finally
                 {
                     if (conn.State != ConnectionState.Closed)
+                    {
                         conn.Close();
+                    }
                 }
             }
             return item;
@@ -1153,8 +1227,9 @@ namespace ZapanControls.Databases
                     if (ex.ErrorCode == 1205 && _retryCount < 3)
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         _retryCount++;
                         return await ProcedureExecuteScalarAsync<T>(procedureName, parameters);
                     }
@@ -1165,16 +1240,17 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.ErrorCode + " - " + ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name,
-                            "Erreur ProcedureExecuteScalarAsync - " + procedureName,
+                        MessageBox.Show($"{ex.ErrorCode} - {ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}",
+                            $"Erreur ProcedureExecuteReaderAsyncSingleResult - {procedureName}",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                     }
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
@@ -1186,23 +1262,26 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name,
-                            "Erreur ProcedureExecuteScalarAsync - " + procedureName,
+                        MessageBox.Show($"{ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}",
+                            $"Erreur ProcedureExecuteReaderAsyncSingleResult - {procedureName}",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                     }
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
                 finally
                 {
                     if (conn.State != ConnectionState.Closed)
+                    {
                         conn.Close();
+                    }
                 }
             }
             return item;
@@ -1250,16 +1329,17 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.ErrorCode + " - " + ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name, 
-                            "Erreur ProcedureExecuteNonQueryAsync - " + procedureName,
+                        MessageBox.Show($"{ex.ErrorCode} - {ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}", 
+                            $"Erreur ProcedureExecuteReaderAsyncSingleResult - {procedureName}",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                     }
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
@@ -1271,23 +1351,26 @@ namespace ZapanControls.Databases
 
                         StackTrace stackTrace = new StackTrace(ex, true);
 
-                        MessageBox.Show(ex.Message + "\r\nFactory: " + Factory.ToString() + "\r\nMethod: " + stackTrace.GetFrame(1).GetMethod().Name,
-                            "Erreur ProcedureExecuteNonQueryAsync - " + procedureName,
+                        MessageBox.Show($"{ex.Message}\r\nFactory: {Factory}\r\nMethod: {stackTrace.GetFrame(1).GetMethod().Name}",
+                            $"Erreur ProcedureExecuteReaderAsyncSingleResult - {procedureName}",
                             MessageBoxButton.OK, MessageBoxImage.Error,
                             MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                     }
                     else
                     {
                         if (conn.State != ConnectionState.Closed)
+                        {
                             conn.Close();
-
+                        }
                         throw;
                     }
                 }
                 finally
                 {
                     if (conn.State != ConnectionState.Closed)
+                    {
                         conn.Close();
+                    }
                 }
             }
             return result;
@@ -1313,7 +1396,9 @@ namespace ZapanControls.Databases
             command.CommandTimeout = _commandTimeout;
 
             if (parameters != null)
+            {
                 AttachParameters(command, parameters);
+            }
         }
 
         /// <summary>

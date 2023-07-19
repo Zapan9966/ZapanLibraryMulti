@@ -19,15 +19,15 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using ZapanControls.Helpers;
 using ZapanControls.Libraries;
-using Ctrl = System.Windows.Controls;
 
 namespace ZapanControls.Controls
 {
-    public sealed class ZapDataGrid : DataGrid, INotifyPropertyChanged, IDisposable
+    public class ZapDataGrid : DataGrid, INotifyPropertyChanged, IDisposable
     {
         private readonly DeferredAction _deferredAction;
 
         private double _buttonColumnsActualWidth;
+        private bool _disposed;
         private bool _isFiltering;
         private BackgroundWorker _worker;
         private ZapButton _btnRemoveFilters;
@@ -49,6 +49,7 @@ namespace ZapanControls.Controls
         private static readonly SolidColorBrush _rowMouseOverBackground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#CC99FF"));
         private static readonly SolidColorBrush _rowSelectionActiveBackground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9933FF"));
         //private static readonly SolidColorBrush _rowSelectionInactiveBackground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9933FF"));
+
 
         private static readonly GradientStopCollection _columnHeaderBackground_GradientStopCollectionDefault =
             new GradientStopCollection()
@@ -115,7 +116,7 @@ namespace ZapanControls.Controls
         #region Dependency Properties
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapDataGrid.CanSelectAll"/>.
+        /// Identifie la propriété de dépendance <see cref="CanSelectAll"/>.
         /// </summary>
         private static readonly DependencyProperty CanSelectAllProperty = DependencyProperty.Register(
             "CanSelectAll", typeof(bool), typeof(ZapDataGrid), new FrameworkPropertyMetadata(true));
@@ -147,7 +148,7 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapDataGrid.ColumnHeaderBorderBrush"/>.
+        /// Identifie la propriété de dépendance <see cref="ColumnHeaderBorderBrush"/>.
         /// </summary>
         private static readonly DependencyProperty ColumnHeaderBorderBrushProperty = DependencyProperty.Register(
             "ColumnHeaderBorderBrush", typeof(Brush), typeof(ZapDataGrid), new FrameworkPropertyMetadata(Brushes.Indigo));
@@ -162,7 +163,7 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapDataGrid.ColumnHeaderForeground"/>.
+        /// Identifie la propriété de dépendance <see cref="ColumnHeaderForeground"/>.
         /// </summary>
         private static readonly DependencyProperty ColumnHeaderForegroundProperty = DependencyProperty.Register(
             "ColumnHeaderForeground", typeof(Brush), typeof(ZapDataGrid), new FrameworkPropertyMetadata(Brushes.FloralWhite));
@@ -177,7 +178,7 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapDataGrid.ColumnHeaderBackgroundMouseOver"/>.
+        /// Identifie la propriété de dépendance <see cref="ColumnHeaderBackgroundMouseOver"/>.
         /// </summary>
         private static readonly DependencyProperty ColumnHeaderBackgroundMouseOverProperty = DependencyProperty.Register(
             "ColumnHeaderBackgroundMouseOver", typeof(Brush), typeof(ZapDataGrid), new FrameworkPropertyMetadata(_headerBackgroundMouseOver_LinearGradientBrushDefault));
@@ -192,7 +193,7 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapDataGrid.ColumnHeaderBackgroundIsPressed"/>.
+        /// Identifie la propriété de dépendance <see cref="ColumnHeaderBackgroundIsPressed"/>.
         /// </summary>
         private static readonly DependencyProperty ColumnHeaderBackgroundIsPressedProperty = DependencyProperty.Register(
             "ColumnHeaderBackgroundIsPressed", typeof(Brush), typeof(ZapDataGrid), new FrameworkPropertyMetadata(_headerBackgroundIsPressed_LinearGradientBrushDefault));
@@ -213,13 +214,13 @@ namespace ZapanControls.Controls
         #region Normal
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapDataGrid.RowBorderBrush"/>.
+        /// Identifie la propriété de dépendance <see cref="RowBorderBrush"/>.
         /// </summary>
         private static readonly DependencyProperty RowBorderBrushProperty = DependencyProperty.Register(
             "RowBorderBrush", typeof(Brush), typeof(ZapDataGrid), new FrameworkPropertyMetadata(Brushes.Transparent));
 
         /// <summary>
-        /// Obtient ou défini la couleur des bordures des éléments du <see cref="Ctrl.ListView"/>. 
+        /// Obtient ou défini la couleur des bordures des éléments du <see cref="System.Windows.Controls.ListView"/>. 
         /// </summary>
         public Brush RowBorderBrush
         {
@@ -228,13 +229,13 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapDataGrid.RowForeground"/>.
+        /// Identifie la propriété de dépendance <see cref="RowForeground"/>.
         /// </summary>
         private static readonly DependencyProperty RowForegroundProperty = DependencyProperty.Register(
             "RowForeground", typeof(Brush), typeof(ZapDataGrid), new FrameworkPropertyMetadata(Brushes.White));
 
         /// <summary>
-        /// Obtient ou défini la couleur de la police des éléments du <see cref="Ctrl.ListView"/>. 
+        /// Obtient ou défini la couleur de la police des éléments du <see cref="System.Windows.Controls.ListView"/>. 
         /// </summary>
         public Brush RowForeground
         {
@@ -243,13 +244,13 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapDataGrid.RowBorderThickness"/>.
+        /// Identifie la propriété de dépendance <see cref="RowBorderThickness"/>.
         /// </summary>
         private static readonly DependencyProperty RowBorderThicknessProperty = DependencyProperty.Register(
             "RowBorderThickness", typeof(Thickness), typeof(ZapDataGrid), new FrameworkPropertyMetadata(new Thickness(0)));
 
         /// <summary>
-        /// Obtient ou défini la taille des bordures des éléments du <see cref="Ctrl.ListView"/>. 
+        /// Obtient ou défini la taille des bordures des éléments du <see cref="System.Windows.Controls.ListView"/>. 
         /// </summary>
         public Thickness RowBorderThickness
         {
@@ -262,13 +263,13 @@ namespace ZapanControls.Controls
         #region MouseOver
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapDataGrid.RowMouseOverBackground"/>.
+        /// Identifie la propriété de dépendance <see cref="RowMouseOverBackground"/>.
         /// </summary>
         private static readonly DependencyProperty RowMouseOverBackgroundProperty = DependencyProperty.Register(
             "RowMouseOverBackground", typeof(Brush), typeof(ZapDataGrid), new FrameworkPropertyMetadata(_rowMouseOverBackground));
 
         /// <summary>
-        /// Obtient ou défini la couleur de fond des éléments du <see cref="Ctrl.ListView"/> lors du survol de la souris. 
+        /// Obtient ou défini la couleur de fond des éléments du <see cref="System.Windows.Controls.ListView"/> lors du survol de la souris. 
         /// </summary>
         public Brush RowMouseOverBackground
         {
@@ -277,13 +278,13 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapDataGrid.RowMouseOverForeground"/>.
+        /// Identifie la propriété de dépendance <see cref="RowMouseOverForeground"/>.
         /// </summary>
         private static readonly DependencyProperty RowMouseOverForegroundProperty = DependencyProperty.Register(
             "RowMouseOverForeground", typeof(Brush), typeof(ZapDataGrid), new FrameworkPropertyMetadata(Brushes.BlueViolet));
 
         /// <summary>
-        /// Obtient ou défini la couleur de la police des éléments du <see cref="Ctrl.ListView"/> lors du survol de la souris. 
+        /// Obtient ou défini la couleur de la police des éléments du <see cref="System.Windows.Controls.ListView"/> lors du survol de la souris. 
         /// </summary>
         public Brush RowMouseOverForeground
         {
@@ -296,13 +297,13 @@ namespace ZapanControls.Controls
         #region Selected
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapDataGrid.RowSelectionBackground"/>.
+        /// Identifie la propriété de dépendance <see cref="RowSelectionBackground"/>.
         /// </summary>
         private static readonly DependencyProperty RowSelectionBackgroundProperty = DependencyProperty.Register(
             "RowSelectionBackground", typeof(Brush), typeof(ZapDataGrid), new FrameworkPropertyMetadata(_rowSelectionActiveBackground));
 
         /// <summary>
-        /// Obtient ou défini la couleur de fond des éléments sélectionnés lorsque le <see cref="Ctrl.ListView"/> a le focus. 
+        /// Obtient ou défini la couleur de fond des éléments sélectionnés lorsque le <see cref="System.Windows.Controls.ListView"/> a le focus. 
         /// </summary>
         public Brush RowSelectionBackground
         {
@@ -311,13 +312,13 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapDataGrid.RowSelectionForeground"/>.
+        /// Identifie la propriété de dépendance <see cref="RowSelectionForeground"/>.
         /// </summary>
         private static readonly DependencyProperty RowSelectionForegroundProperty = DependencyProperty.Register(
             "RowSelectionForeground", typeof(Brush), typeof(ZapDataGrid), new FrameworkPropertyMetadata(Brushes.White));
 
         /// <summary>
-        /// Obtient ou défini la couleur de la police des éléments sélectionnés du <see cref="Ctrl.ListView"/>. 
+        /// Obtient ou défini la couleur de la police des éléments sélectionnés du <see cref="System.Windows.Controls.ListView"/>. 
         /// </summary>
         public Brush RowSelectionForeground
         {
@@ -332,7 +333,7 @@ namespace ZapanControls.Controls
         #region Cell Properties
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapDataGrid.FocusedCellBackground"/>.
+        /// Identifie la propriété de dépendance <see cref="FocusedCellBackground"/>.
         /// </summary>
         private static readonly DependencyProperty FocusedCellBackgroundProperty = DependencyProperty.Register(
             "FocusedCellBackground", typeof(Brush), typeof(ZapDataGrid), new FrameworkPropertyMetadata(null));
@@ -347,7 +348,7 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapDataGrid.FocusedCellBorderBrush"/>.
+        /// Identifie la propriété de dépendance <see cref="FocusedCellBorderBrush"/>.
         /// </summary>
         private static readonly DependencyProperty FocusedCellBorderBrushProperty = DependencyProperty.Register(
             "FocusedCellBorderBrush", typeof(Brush), typeof(ZapDataGrid), new FrameworkPropertyMetadata(Brushes.Indigo));
@@ -362,7 +363,7 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapDataGrid.FocusedCellBorderThickness"/>.
+        /// Identifie la propriété de dépendance <see cref="FocusedCellBorderThickness"/>.
         /// </summary>
         private static readonly DependencyProperty FocusedCellBorderThicknessProperty = DependencyProperty.Register(
             "FocusedCellBorderThickness", typeof(Thickness), typeof(ZapDataGrid), new FrameworkPropertyMetadata(new Thickness(1)));
@@ -377,7 +378,7 @@ namespace ZapanControls.Controls
         }
 
         /// <summary>
-        /// Identifie la propriété de dépendance <see cref="ZapDataGrid.FocusedCellForeground"/>.
+        /// Identifie la propriété de dépendance <see cref="FocusedCellForeground"/>.
         /// </summary>
         private static readonly DependencyProperty FocusedCellForegroundProperty = DependencyProperty.Register(
             "FocusedCellForeground", typeof(Brush), typeof(ZapDataGrid), new FrameworkPropertyMetadata(Brushes.White));
@@ -543,16 +544,14 @@ namespace ZapanControls.Controls
         public ICommand ToggleButtonCommand { get; }
 
         private static void ToggleButtonClick(ZapToggleButton toggleButton)
-        {
-
-        }
+        { }
 
         /// <summary>
         /// Commande qui gère la suppression de la date d'un champ de filtrage de date
         /// </summary>
         public ICommand RemoveDateCommand { get; }
 
-        private static void RemoveDateClick(Ctrl.DatePicker datePicker)
+        private static void RemoveDateClick(System.Windows.Controls.DatePicker datePicker)
         {
             if (datePicker != null)
                 datePicker.SelectedDate = null;
@@ -567,11 +566,11 @@ namespace ZapanControls.Controls
         {
             if (VisualTreeHelpers.FindChild(this, "PART_ColumnHeadersPresenter") is DataGridColumnHeadersPresenter headerPresenter)
             {
-                Parallel.ForEach(VisualTreeHelpers.FindVisualChildren<Control>(headerPresenter), ctrl => 
+                Parallel.ForEach(VisualTreeHelpers.FindVisualChildren<Control>(headerPresenter), ctrl =>
                 {
                     if (ctrl.Name == "search")
                     {
-                        if (ctrl is Ctrl.DatePicker dp)
+                        if (ctrl is System.Windows.Controls.DatePicker dp)
                         {
                             if (dp.SelectedDate.HasValue)
                                 dp.SelectedDate = null;
@@ -607,9 +606,7 @@ namespace ZapanControls.Controls
         public ICommand ColumnHeaderClickCommand { get; }
 
         private static void OnColumnHeaderClick(DataGridColumnHeader header)
-        {
-
-        }
+        { }
 
         /// <summary>
         /// Commande qui gère le double click sur une ligne
@@ -618,7 +615,7 @@ namespace ZapanControls.Controls
 
         private void OnRowDoubleClick(DataGridRow row)
         {
-            if (this.IsReadOnly)
+            if (IsReadOnly)
                 RowMouseDoubleClick?.Invoke(row, new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left)
                 {
                     RoutedEvent = MouseDoubleClickEvent,
@@ -726,7 +723,7 @@ namespace ZapanControls.Controls
                 param => ToggleButtonClick(param),
                 param => true);
 
-            RemoveDateCommand = new RelayCommand<Ctrl.DatePicker>(
+            RemoveDateCommand = new RelayCommand<System.Windows.Controls.DatePicker>(
                 param => RemoveDateClick(param),
                 param => true);
 
@@ -746,8 +743,8 @@ namespace ZapanControls.Controls
                 param => OnRowDoubleClick(param),
                 param => true);
 
-            this.Loaded += ZapDataGrid_Loaded;
-            this.Sorting += ZapDataGrid_Sorting;
+            Loaded += ZapDataGrid_Loaded;
+            Sorting += ZapDataGrid_Sorting;
 
             _deferredAction = DeferredAction.Create(() => FilterDataGrid());
 
@@ -772,7 +769,6 @@ namespace ZapanControls.Controls
                 if (controls.Any(c => c.Name == "search"))
                     _btnRemoveFilters.Visibility = Visibility.Visible;
             }
-
         }
 
         /// <summary>
@@ -782,8 +778,12 @@ namespace ZapanControls.Controls
         {
             if (e.Column is ZapDataGridColumn column)
             {
-                IValueConverter converter = column.Binding?.Converter;
-                //object parameter = column.Binding?.ConverterParameter;
+                IValueConverter converter = null;
+                if (column.Binding != null)
+                {
+                    converter = column.Binding.Converter;
+                    _ = column.Binding.ConverterParameter;
+                }
 
                 if (converter != null)
                 {
@@ -824,8 +824,7 @@ namespace ZapanControls.Controls
 
             foreach (DataGridColumnHeader header in VisualTreeHelpers.FindVisualChildren<DataGridColumnHeader>(this))
             {
-                if (string.IsNullOrEmpty(header.Content?.ToString())) 
-                    continue;
+                if (string.IsNullOrEmpty(header?.Content?.ToString())) continue;
 
                 if (header.Column is ZapDataGridColumn column)
                 {
@@ -838,6 +837,8 @@ namespace ZapanControls.Controls
                     {
                         if (!string.IsNullOrEmpty(tb.Text))
                         {
+                            if (string.IsNullOrEmpty(tb.Text)) continue;
+
                             if (_filtersDictionary.ContainsKey(columnName))
                             {
                                 if (_filtersDictionary[columnName].Value == column.Binding.Converter)
@@ -855,6 +856,8 @@ namespace ZapanControls.Controls
                     {
                         if (!string.IsNullOrEmpty(cb.SelectedValue?.ToString()))
                         {
+                            if (string.IsNullOrEmpty(cb?.SelectedValue?.ToString())) continue;
+
                             if (_filtersDictionary.ContainsKey(columnName))
                                 _filtersDictionary.Remove(columnName);
 
@@ -864,14 +867,14 @@ namespace ZapanControls.Controls
                             _filtersDictionary.Remove(columnName);
                     }
                     // Vérification du DatePicker
-                    if (dpo is Ctrl.DatePicker dp)
+                    if (dpo is System.Windows.Controls.DatePicker dp)
                     {
                         if (dp.SelectedDate.HasValue)
                         {
                             if (_filtersDictionary.ContainsKey(columnName))
                                 _filtersDictionary.Remove(columnName);
 
-                            _filtersDictionary.Add(columnName, new KeyValuePair<object, IValueConverter>(dp.SelectedDate.Value.ToString("dd/MM/yyyy"), column.Binding.Converter));
+                            _filtersDictionary.Add(columnName, new KeyValuePair<object, IValueConverter>(dp.SelectedDate?.ToString("dd/MM/yyyy"), column.Binding.Converter));
                         }
                         else
                             _filtersDictionary.Remove(columnName);
@@ -926,7 +929,7 @@ namespace ZapanControls.Controls
                                 if (filter.Value.Value == null)
                                     itemValue = property.GetValue(item) != null ? property.GetValue(item).ToString() : string.Empty;
                                 else
-                                    itemValue = filter.Value.Value.Convert(property.GetValue(item), typeof(String), null, CultureInfo.CurrentCulture).ToString();
+                                    itemValue = filter.Value.Value.Convert(property.GetValue(item), typeof(string), null, CultureInfo.CurrentCulture).ToString();
 
                                 fieldsValidation.Add(Regex.IsMatch(itemValue, filter.Value.Key.ToString(), RegexOptions.IgnoreCase));
                             }
@@ -1233,7 +1236,7 @@ namespace ZapanControls.Controls
         /// <param name="oldValue">A reference to the backing field of the property. </param>
         /// <param name="newValue">The new value. </param>
         /// <returns>True if the property has changed. </returns>
-        private bool Set<T>(ref T oldValue, T newValue, [CallerMemberName] String propertyName = null)
+        private bool Set<T>(ref T oldValue, T newValue, [CallerMemberName] string propertyName = null)
         {
             return Set(propertyName, ref oldValue, newValue);
         }
@@ -1267,7 +1270,7 @@ namespace ZapanControls.Controls
         /// <param name="oldValue">A reference to the backing field of the property. </param>
         /// <param name="newValue">The new value. </param>
         /// <returns>True if the property has changed. </returns>
-        private bool Set<T>(String propertyName, ref T oldValue, T newValue)
+        private bool Set<T>(string propertyName, ref T oldValue, T newValue)
         {
             if (Equals(oldValue, newValue))
                 return false;
@@ -1316,10 +1319,22 @@ namespace ZapanControls.Controls
 
         public void Dispose()
         {
-            _worker?.Dispose();
-            _deferredAction?.Dispose();
-
+            Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+
+            if (disposing)
+            {
+                _worker?.Dispose();
+                _deferredAction?.Dispose();
+            }
+
+            _disposed = true;
         }
 
     }

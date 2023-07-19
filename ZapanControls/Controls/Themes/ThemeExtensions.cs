@@ -15,31 +15,22 @@ namespace ZapanControls.Controls.Themes
         private const string ThemePropName = "Theme";
 
         private static string ThemeRegistrationName(this Enum theme, Type ownerType)
-        {
-            return theme.ToString().ThemeRegistrationName(ownerType);
-        }
+            => theme.ToString().ThemeRegistrationName(ownerType);
 
         public static string ThemeRegistrationName(this ThemePath theme, Type ownerType)
-        {
-            return theme.Name.ThemeRegistrationName(ownerType);
-        }
+            => theme.Name.ThemeRegistrationName(ownerType);
 
         public static string ThemeRegistrationName(this string themeName, Type ownerType)
-        {
-            return $"{ownerType};{themeName}";
-        }
+            => $"{ownerType};{themeName}";
 
         public static string GetThemeName(this string key)
-        {
-            return key?.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries)[1];
-        }
+            => key?.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries)[1];
 
         public static void LoadDefaultTheme(this FrameworkElement f, DependencyProperty p)
         {
-            if (f is ITheme t)
+            if (f is ITheme t && t.ThemeDictionaries.Any())
             {
-                if (t.ThemeDictionaries.Any())
-                    f.SetCurrentValue(p, t.ThemeDictionaries.First().Key.GetThemeName());
+                f.SetCurrentValue(p, t.ThemeDictionaries.First().Key.GetThemeName());
             }
         }
 
@@ -83,7 +74,9 @@ namespace ZapanControls.Controls.Themes
         public static void SetThemePropertyDefault(this DependencyObject o, DependencyProperty p, ComponentResourceKey resourceKey)
         {
             if (o is FrameworkElement f)
+            {
                 o.SetThemePropertyDefault(p, f.TryFindResource(resourceKey));
+            }
         }
 
         public static void SetThemePropertyDefault(this DependencyObject o, DependencyProperty p, object value)
@@ -97,10 +90,14 @@ namespace ZapanControls.Controls.Themes
                     var newBinding = binding.Clone();
 
                     if (binding.FallbackValue == null || binding.FallbackValue == DependencyProperty.UnsetValue)
+                    {
                         newBinding.FallbackValue = value;
+                    }
 
                     if (binding.TargetNullValue == null || binding.TargetNullValue == DependencyProperty.UnsetValue)
+                    {
                         newBinding.TargetNullValue = value;
+                    }
 
                     f.SetBinding(p, newBinding);
                 }
@@ -115,23 +112,20 @@ namespace ZapanControls.Controls.Themes
         {
             if (!(BindingOperations.GetBinding(o, p) is Binding))
             {
-                if (value is Thickness t)
+                if (value is Thickness t && t == new Thickness(0))
                 {
-                    if (t == new Thickness(0))
-                        value = null;
+                    value = null;
                 }
-                else if (value is double d)
+                else if (value is double d && d == 0d)
                 {
-                    if (d == 0d)
-                        value = null;
+                    value = null;
                 }
 
                 if (value == null)
                 {
-                    if (o is ITheme theme)
+                    if (o is ITheme theme && theme.DefaultThemeProperties.ContainsKey(p))
                     {
-                        if (theme.DefaultThemeProperties.ContainsKey(p))
-                            value = theme.DefaultThemeProperties[p];
+                        value = theme.DefaultThemeProperties[p];
                     }
                     o.SetCurrentValue(p, value);
                 }

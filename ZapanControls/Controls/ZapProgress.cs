@@ -65,9 +65,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
                 new PropertyChangedCallback(OnCornerRadiusChanged)));
 
-        public CornerRadius CornerRadius { get => (CornerRadius)GetValue(CornerRadiusProperty); set => SetValue(CornerRadiusProperty, value); }
+        public CornerRadius CornerRadius 
+        {
+            get => (CornerRadius)GetValue(CornerRadiusProperty); 
+            set => SetValue(CornerRadiusProperty, value); 
+        }
 
-        private static void OnCornerRadiusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(CornerRadiusProperty, e.NewValue);
+        private static void OnCornerRadiusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(CornerRadiusProperty, e.NewValue);
         #endregion
 
         #region IsIndeterminate
@@ -76,7 +81,11 @@ namespace ZapanControls.Controls
             new FrameworkPropertyMetadata(false,
                 new PropertyChangedCallback(OnIsIndeterminateChanged)));
 
-        public bool IsIndeterminate { get => (bool)GetValue(IsIndeterminateProperty); set => SetValue(IsIndeterminateProperty, value); }
+        public bool IsIndeterminate 
+        { 
+            get => (bool)GetValue(IsIndeterminateProperty); 
+            set => SetValue(IsIndeterminateProperty, value); 
+        }
 
         private static void OnIsIndeterminateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -84,7 +93,9 @@ namespace ZapanControls.Controls
             {
                 // Invalidate automation peer
                 if (UIElementAutomationPeer.FromElement(p) is ZapProgressAutomationPeer peer)
+                {
                     peer.InvalidatePeer();
+                }
 
                 p.SetProgressBarGlowElementBrush();
                 p.SetProgressBarIndicatorLength();
@@ -110,16 +121,24 @@ namespace ZapanControls.Controls
         public static readonly DependencyProperty ShowPercentProperty = DependencyProperty.Register(
             "ShowPercent", typeof(bool), typeof(ZapProgress), new FrameworkPropertyMetadata(true));
 
-        public bool ShowPercent { get => (bool)GetValue(ShowPercentProperty); set => SetValue(ShowPercentProperty, value); }
+        public bool ShowPercent 
+        { 
+            get => (bool)GetValue(ShowPercentProperty); 
+            set => SetValue(ShowPercentProperty, value); 
+        }
         #endregion
 
         #region Text
         public static DependencyProperty TextProperty = DependencyProperty.Register(
-            "Text", typeof(string), typeof(ZapProgress), 
-            new FrameworkPropertyMetadata("Chargement en cours, patienter...", 
+            "Text", typeof(string), typeof(ZapProgress),
+            new FrameworkPropertyMetadata("Chargement en cours, patienter...",
                 FrameworkPropertyMetadataOptions.AffectsRender));
 
-        public string Text { get => (string)GetValue(TextProperty); set => SetValue(TextProperty, value); }
+        public string Text 
+        { 
+            get => (string)GetValue(TextProperty);
+            set => SetValue(TextProperty, value); 
+        }
         #endregion
         #endregion
 
@@ -131,9 +150,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 new PropertyChangedCallback(OnProgressBarInnerBackgroundChanged)));
 
-        public Brush ProgressBarInnerBackground { get => (Brush)GetValue(ProgressBarInnerBackgroundProperty); set => SetValue(ProgressBarInnerBackgroundProperty, value); }
+        public Brush ProgressBarInnerBackground 
+        { 
+            get => (Brush)GetValue(ProgressBarInnerBackgroundProperty); 
+            set => SetValue(ProgressBarInnerBackgroundProperty, value); 
+        }
 
-        private static void OnProgressBarInnerBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ProgressBarInnerBackgroundProperty, e.NewValue);
+        private static void OnProgressBarInnerBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(ProgressBarInnerBackgroundProperty, e.NewValue);
         #endregion
 
         #region ProgressBarBackground
@@ -143,14 +167,20 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 new PropertyChangedCallback(OnProgressBarBackgroundChanged)));
 
-        public Brush ProgressBarBackground { get => (Brush)GetValue(ProgressBarBackgroundProperty); set => SetValue(ProgressBarBackgroundProperty, value); }
+        public Brush ProgressBarBackground 
+        { 
+            get => (Brush)GetValue(ProgressBarBackgroundProperty); 
+            set => SetValue(ProgressBarBackgroundProperty, value); 
+        }
 
         private static void OnProgressBarBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             d.SetValueCommon(ProgressBarBackgroundProperty, e.NewValue);
 
             if (d is ZapProgress p)
+            {
                 p.SetProgressBarGlowElementBrush();
+            }
         }
         #endregion
 
@@ -161,9 +191,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 new PropertyChangedCallback(OnProgressBarBorderBrushChanged)));
 
-        public Brush ProgressBarBorderBrush { get => (Brush)GetValue(ProgressBarBorderBrushProperty); set => SetValue(ProgressBarBorderBrushProperty, value); }
+        public Brush ProgressBarBorderBrush 
+        { 
+            get => (Brush)GetValue(ProgressBarBorderBrushProperty); 
+            set => SetValue(ProgressBarBorderBrushProperty, value); 
+        }
 
-        private static void OnProgressBarBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ProgressBarBorderBrushProperty, e.NewValue);
+        private static void OnProgressBarBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(ProgressBarBorderBrushProperty, e.NewValue);
         #endregion
 
         #region ProgressBarBorderThickness
@@ -173,9 +208,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 new PropertyChangedCallback(OnProgressBarBorderThicknessChanged)));
 
-        public Thickness ProgressBarBorderThickness { get => (Thickness)GetValue(ProgressBarBorderThicknessProperty); set => SetValue(ProgressBarBorderThicknessProperty, value); }
+        public Thickness ProgressBarBorderThickness 
+        {
+            get => (Thickness)GetValue(ProgressBarBorderThicknessProperty); 
+            set => SetValue(ProgressBarBorderThicknessProperty, value); 
+        }
 
-        private static void OnProgressBarBorderThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ProgressBarBorderThicknessProperty, e.NewValue);
+        private static void OnProgressBarBorderThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(ProgressBarBorderThicknessProperty, e.NewValue);
         #endregion
         #endregion
 
@@ -187,9 +227,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 new PropertyChangedCallback(OnIndicatorTemplateChanged)));
 
-        public ZapLoadingIndicatorTemplates IndicatorTemplate { get => (ZapLoadingIndicatorTemplates)GetValue(IndicatorTemplateProperty); set => SetValue(IndicatorTemplateProperty, value); }
+        public ZapLoadingIndicatorTemplates IndicatorTemplate 
+        { 
+            get => (ZapLoadingIndicatorTemplates)GetValue(IndicatorTemplateProperty); 
+            set => SetValue(IndicatorTemplateProperty, value); 
+        }
 
-        private static void OnIndicatorTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(IndicatorTemplateProperty, e.NewValue);
+        private static void OnIndicatorTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(IndicatorTemplateProperty, e.NewValue);
         #endregion
 
         #region IndicatorAccentColor
@@ -199,9 +244,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 new PropertyChangedCallback(OnIndicatorAccentColorChanged)));
 
-        public Brush IndicatorAccentColor { get => (Brush)GetValue(IndicatorAccentColorProperty); set => SetValue(IndicatorAccentColorProperty, value); }
+        public Brush IndicatorAccentColor 
+        { 
+            get => (Brush)GetValue(IndicatorAccentColorProperty); 
+            set => SetValue(IndicatorAccentColorProperty, value); 
+        }
 
-        private static void OnIndicatorAccentColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(IndicatorAccentColorProperty, e.NewValue);
+        private static void OnIndicatorAccentColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(IndicatorAccentColorProperty, e.NewValue);
         #endregion
 
         #region IndicatorHeight
@@ -211,9 +261,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsParentMeasure,
                 new PropertyChangedCallback(OnIndicatorHeightChanged)));
 
-        public double IndicatorHeight { get => (double)GetValue(IndicatorHeightProperty); set => SetValue(IndicatorHeightProperty, value); }
+        public double IndicatorHeight 
+        { 
+            get => (double)GetValue(IndicatorHeightProperty); 
+            set => SetValue(IndicatorHeightProperty, value); 
+        }
 
-        private static void OnIndicatorHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(IndicatorHeightProperty, e.NewValue);
+        private static void OnIndicatorHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(IndicatorHeightProperty, e.NewValue);
         #endregion
 
         #region IndicatorSpeedRatio
@@ -226,9 +281,14 @@ namespace ZapanControls.Controls
         /// <summary>
         /// Get/set the speed ratio of the animation.
         /// </summary>
-        public double IndicatorSpeedRatio { get => (double)GetValue(IndicatorSpeedRatioProperty); set => SetValue(IndicatorSpeedRatioProperty, value); }
+        public double IndicatorSpeedRatio
+        { 
+            get => (double)GetValue(IndicatorSpeedRatioProperty); 
+            set => SetValue(IndicatorSpeedRatioProperty, value); 
+        }
 
-        private static void OnSpeedRatioChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(IndicatorSpeedRatioProperty, e.NewValue);
+        private static void OnSpeedRatioChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(IndicatorSpeedRatioProperty, e.NewValue);
         #endregion
 
         #region IndicatorWidth
@@ -238,16 +298,25 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsParentMeasure,
                 new PropertyChangedCallback(OnIndicatorWidthChanged)));
 
-        public double IndicatorWidth { get => (double)GetValue(IndicatorWidthProperty); set => SetValue(IndicatorWidthProperty, value); }
+        public double IndicatorWidth 
+        { 
+            get => (double)GetValue(IndicatorWidthProperty); 
+            set => SetValue(IndicatorWidthProperty, value); 
+        }
 
-        private static void OnIndicatorWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(IndicatorWidthProperty, e.NewValue);
+        private static void OnIndicatorWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(IndicatorWidthProperty, e.NewValue);
         #endregion
         #endregion
         #endregion
 
         #region Template Properties
         #region HasInitialized
-        public bool HasInitialized { get => _hasInitialized; private set => Set(ref _hasInitialized, value); }
+        public bool HasInitialized 
+        { 
+            get => _hasInitialized;
+            private set => Set(ref _hasInitialized, value); 
+        }
         #endregion
 
         #region TemplateDictionaries
@@ -262,9 +331,14 @@ namespace ZapanControls.Controls
                 new PropertyChangedCallback(OnZapTemplateChanged),
                 new CoerceValueCallback(CoerceZapTemplateChange)));
 
-        public string ZapTemplate { get => (string)GetValue(ZapTemplateProperty); set => SetValue(ZapTemplateProperty, value); }
+        public string ZapTemplate 
+        { 
+            get => (string)GetValue(ZapTemplateProperty); 
+            set => SetValue(ZapTemplateProperty, value); 
+        }
 
-        private static void OnZapTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.TemplateChanged<string>(e, TemplateChangedEvent);
+        private static void OnZapTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.TemplateChanged<string>(e, TemplateChangedEvent);
 
         private static object CoerceZapTemplateChange(DependencyObject d, object o)
         {
@@ -289,8 +363,14 @@ namespace ZapanControls.Controls
                 new PropertyChangedCallback(OnThemeChanged),
                 new CoerceValueCallback(CoerceThemeChange)));
 
-        public string Theme { get => (string)GetValue(ThemeProperty); set => SetValue(ThemeProperty, value); }
-        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.ThemeChanged(e, ThemeChangedEvent);
+        public string Theme 
+        { 
+            get => (string)GetValue(ThemeProperty); 
+            set => SetValue(ThemeProperty, value); 
+        }
+
+        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.ThemeChanged(e, ThemeChangedEvent);
 
         private static object CoerceThemeChange(DependencyObject d, object o)
         {
@@ -305,23 +385,28 @@ namespace ZapanControls.Controls
 
         #region Native Properties Changed
         #region Background
-        private static void OnBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(BackgroundProperty, e.NewValue);
+        private static void OnBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(BackgroundProperty, e.NewValue);
         #endregion
 
         #region BorderBrush
-        private static void OnBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(BorderBrushProperty, e.NewValue);
+        private static void OnBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(BorderBrushProperty, e.NewValue);
         #endregion
 
         #region BorderThickness
-        private static void OnBorderThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(BorderThicknessProperty, e.NewValue);
+        private static void OnBorderThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(BorderThicknessProperty, e.NewValue);
         #endregion
 
         #region Foreground
-        private static void OnForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(ForegroundProperty, e.NewValue);
+        private static void OnForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(ForegroundProperty, e.NewValue);
         #endregion
 
         #region Padding
-        private static void OnPaddingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(PaddingProperty, e.NewValue);
+        private static void OnPaddingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(PaddingProperty, e.NewValue);
         #endregion
         #endregion
 
@@ -330,10 +415,10 @@ namespace ZapanControls.Controls
         public static readonly RoutedEvent TemplateChangedEvent = EventManager.RegisterRoutedEvent(
             "TemplateChanged", RoutingStrategy.Bubble, typeof(ITemplate<string>.TemplateChangedEventHandler), typeof(ZapProgress));
 
-        public event ITemplate<string>.TemplateChangedEventHandler TemplateChanged 
-        { 
-            add => AddHandler(TemplateChangedEvent, value); 
-            remove => RemoveHandler(TemplateChangedEvent, value); 
+        public event ITemplate<string>.TemplateChangedEventHandler TemplateChanged
+        {
+            add => AddHandler(TemplateChangedEvent, value);
+            remove => RemoveHandler(TemplateChangedEvent, value);
         }
         #endregion
 
@@ -341,7 +426,11 @@ namespace ZapanControls.Controls
         public static readonly RoutedEvent ThemeChangedEvent = EventManager.RegisterRoutedEvent(
             "ThemeChanged", RoutingStrategy.Bubble, typeof(ITheme.ThemeChangedEventHandler), typeof(ZapProgress));
 
-        public event ITheme.ThemeChangedEventHandler ThemeChanged { add => AddHandler(ThemeChangedEvent, value); remove => RemoveHandler(ThemeChangedEvent, value); }
+        public event ITheme.ThemeChangedEventHandler ThemeChanged 
+        { 
+            add => AddHandler(ThemeChangedEvent, value); 
+            remove => RemoveHandler(ThemeChangedEvent, value); 
+        }
 
         private void OnThemeChanged(object sender, ThemeChangedEventArgs e)
         {
@@ -416,10 +505,14 @@ namespace ZapanControls.Controls
             HasInitialized = true;
 
             if (_border != null)
+            {
                 _border.SizeChanged -= OnBorderSizeChanged;
+            }
 
             if (_track != null)
+            {
                 _track.IsVisibleChanged -= OnTrackIsVisibleChanged;
+            }
 
             _border = GetTemplateChild(BorderTemplateName) as Border;
             _track = GetTemplateChild(TrackTemplateName) as Border;
@@ -428,10 +521,14 @@ namespace ZapanControls.Controls
             _glow = GetTemplateChild(GlowingRectTemplateName) as Rectangle;
 
             if (_border != null)
+            {
                 _border.SizeChanged += OnBorderSizeChanged;
+            }
 
             if (_track != null)
+            {
                 _track.IsVisibleChanged += OnTrackIsVisibleChanged;
+            }
 
             SetProgressBarGlowElementBrush();
         }
@@ -493,7 +590,9 @@ namespace ZapanControls.Controls
                 Value = value;
 
                 if (!string.IsNullOrEmpty(text))
+                {
                     Text = text;
+                }
             }));
         }
 
@@ -513,7 +612,9 @@ namespace ZapanControls.Controls
                 _progress.Width = width < 0 ? 0 : width;
 
                 if (_innerValue != null)
+                {
                     _innerValue.Margin = new Thickness(-verticalBordersWidth, 0, 0, 0);
+                }
 
                 UpdateAnimation();
             }

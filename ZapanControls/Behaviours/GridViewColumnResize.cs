@@ -36,12 +36,13 @@ namespace ZapanControls.Behaviours
             }
             else
             {
-                Console.Error.WriteLine("Error: Expected type GridViewColumn but found " + dependencyObject.GetType().Name);
+                Console.Error.WriteLine($"Error: Expected type GridViewColumn but found {dependencyObject.GetType().Name}");
             }
         }
 
         public static readonly DependencyProperty MarginProperty = DependencyProperty.RegisterAttached(
-            "Margin", typeof(double), typeof(GridViewColumnResize), new PropertyMetadata(OnSetMarginCallback));
+            "Margin", typeof(double), typeof(GridViewColumnResize), 
+            new PropertyMetadata(OnSetMarginCallback));
 
         public static double GetMargin(DependencyObject obj)
         {
@@ -62,7 +63,7 @@ namespace ZapanControls.Behaviours
             }
             else
             {
-                Console.Error.WriteLine("Error: Expected type GridViewColumn but found " + dependencyObject.GetType().Name);
+                Console.Error.WriteLine($"Error: Expected type GridViewColumn but found {dependencyObject.GetType().Name}");
             }
         }
 
@@ -76,7 +77,6 @@ namespace ZapanControls.Behaviours
                 behavior = new GridViewColumnResizeBehavior(element);
                 element.SetValue(GridViewColumnResizeBehaviorProperty, behavior);
             }
-
             return behavior;
         }
 
@@ -102,7 +102,7 @@ namespace ZapanControls.Behaviours
             }
             else
             {
-                Console.Error.WriteLine("Error: Expected type ListView but found " + dependencyObject.GetType().Name);
+                Console.Error.WriteLine($"Error: Expected type ListView but found {dependencyObject.GetType().Name}");
             }
         }
 
@@ -188,7 +188,9 @@ namespace ZapanControls.Behaviours
                 foreach (GridViewColumn t in gv.Columns)
                 {
                     if (t.GetValue(GridViewColumnResizeBehaviorProperty) is GridViewColumnResizeBehavior gridViewColumnResizeBehavior)
+                    {
                         yield return gridViewColumnResizeBehavior;
+                    }
                 }
             }
 
@@ -200,10 +202,14 @@ namespace ZapanControls.Behaviours
                     if (t.GetValue(GridViewColumnResizeBehaviorProperty) is GridViewColumnResizeBehavior gridViewColumnResizeBehavior)
                     {
                         if (gridViewColumnResizeBehavior.IsStatic)
+                        {
                             totalWidth += gridViewColumnResizeBehavior.StaticWidth;
+                        }
                     }
                     else
+                    {
                         totalWidth += t.ActualWidth;
+                    }
                 }
                 return totalWidth;
             }
@@ -237,18 +243,11 @@ namespace ZapanControls.Behaviours
 
         public bool IsStatic
         {
-            get { return StaticWidth >= 0; }
+            get => StaticWidth >= 0;
         }
 
-        public double StaticWidth
-        {
-            get { return double.TryParse(Width, out double result) ? result : -1; }
-        }
-
-        public double Percentage
-        {
-            get { return !IsStatic ? Mulitplier * 100 : 0; }
-        }
+        public double StaticWidth  => double.TryParse(Width, out double result) ? result : -1;
+        public double Percentage => !IsStatic ? Mulitplier * 100 : 0;
 
         public double Mulitplier
         {
@@ -258,7 +257,9 @@ namespace ZapanControls.Behaviours
                 if (Width.EndsWith("*"))
                 {
                     if (double.TryParse(Width.Substring(0, Width.Length - 1), out double perc))
+                    {
                         return perc;
+                    }
                 }
                 return 1;
             }
@@ -269,10 +270,11 @@ namespace ZapanControls.Behaviours
             double width = IsStatic ? StaticWidth : allowedSpace * (Percentage / totalPercentage);
 
             if (width > 0)
+            {
                 _element.Width = width;
+            }
         }
     }
 
     #endregion
-
 }

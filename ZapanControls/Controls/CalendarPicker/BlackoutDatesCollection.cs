@@ -58,11 +58,7 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <returns>bool</returns>
         public bool DateInRange(DateTime date, DateTime start, DateTime end)
         {
-            if (DateTime.Compare(date.Date, start.Date) > -1 && DateTime.Compare(date.Date, end.Date) < 1)
-            {
-                return true;
-            }
-            return false;
+            return DateTime.Compare(date.Date, start.Date) > -1 && DateTime.Compare(date.Date, end.Date) < 1;
         }
 
         /// <summary>
@@ -105,7 +101,6 @@ namespace ZapanControls.Controls.CalendarPicker
                     return true;
                 }
             }
-
             return false;
         }
 
@@ -123,7 +118,6 @@ namespace ZapanControls.Controls.CalendarPicker
                     return true;
                 }
             }
-
             return false;
         }
         #endregion
@@ -176,7 +170,6 @@ namespace ZapanControls.Controls.CalendarPicker
                 {
                     UnRegisterItem(Items[index]);
                 }
-
                 base.RemoveItem(index);
                 _cldOwner.UpdateCalendar();
             }
@@ -189,23 +182,20 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <param name="item"></param>
         protected override void SetItem(int index, DateRangeHelper item)
         {
-            if (!IsValidThread())
+            if (!IsValidThread() && IsValid(item))
             {
-                if (IsValid(item))
+                DateRangeHelper oldItem = null;
+                if (index >= 0 && index < Count)
                 {
-                    DateRangeHelper oldItem = null;
-                    if (index >= 0 && index < Count)
-                    {
-                        oldItem = Items[index];
-                    }
-
-                    base.SetItem(index, item);
-
-                    UnRegisterItem(oldItem);
-                    RegisterItem(Items[index]);
-
-                    _cldOwner.UpdateCalendar();
+                    oldItem = Items[index];
                 }
+
+                base.SetItem(index, item);
+
+                UnRegisterItem(oldItem);
+                RegisterItem(Items[index]);
+
+                _cldOwner.UpdateCalendar();
             }
         }
         #endregion
@@ -243,12 +233,9 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <param name="e"></param>
         private void Item_Changing(object sender, DateRangeChangingEventArgs e)
         {
-            if (sender is DateRangeHelper)
+            if (sender is DateRangeHelper && !IsValid(e.Start, e.End))
             {
-                if (!IsValid(e.Start, e.End))
-                {
-                    throw new ArgumentOutOfRangeException("DateTime Item out of range");
-                }
+                throw new ArgumentOutOfRangeException("DateTime Item out of range");
             }
         }
 

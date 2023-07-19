@@ -3,11 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:dm="clr-namespace:DevZapanLibraryMulti_NETCOREAPP3_1.DesignModels"
              xmlns:local="clr-namespace:DevZapanLibraryMulti"
              xmlns:z="http://schemas.zapan.com/wpf/controls/2020"
              xmlns:cp="clr-namespace:ZapanControls.Controls.CalendarPicker;assembly=ZapanControls"
              xmlns:dp="clr-namespace:ZapanControls.Controls.DatePicker;assembly=ZapanControls"             
              mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type={x:Type dm:MainWindowDesignModel}, IsDesignTimeCreatable=True}"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              Theme="Contactel"
              Title="MainWindow NETCOREAPP3_1"              
@@ -44,9 +46,85 @@
                     <z:ZapMenuItem Header="Test" />
                 </z:ZapContextMenu>
             </z:ZapTabControl.ContextMenu>
-            <z:ZapTabItem Header="Calendar/Picker" IsClosable="False" IsSelected="True">
+
+            <z:ZapTabItem Header="DatePicker" IsClosable="False">
+                <StackPanel>
+                    <dp:ZapDatePicker Grid.Column="0" 
+                                      HorizontalAlignment="Left" 
+                                      Margin="5"
+                                      Theme="Oceatech" 
+                                      IsCheckable="True" 
+                                      IsReadOnly="False"
+                                      CalendarPlacement="Left"
+                                      />
+                    <dp:ZapDatePicker Grid.Column="1" 
+                                      HorizontalAlignment="Left" 
+                                      Margin="5"
+                                      Theme="Contactel" 
+                                      ButtonStyle="Brush"
+                                      CalendarPlacement="Right"
+                                      />
+
+                    <TextBox HorizontalAlignment="Left" Text="test" />
+
+                    <z:ZapButton Content="test" HorizontalAlignment="Left" />
+                </StackPanel>
+            </z:ZapTabItem>
+            <z:ZapTabItem Header="ListView" IsClosable="False">
+                <z:ListView ItemsSource="{Binding ListViewDatas, IsAsync=True}" ItemDoubleClick="ListView_ItemDoubleClick" Margin="-3,0">
+                    <z:ListView.View>
+                        <z:GridView>
+                            <z:GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" SortDirection="Descending" SearchType="Text" />
+                            <z:GridViewColumn Header="FirstName" DisplayMemberBinding="{Binding FirstName}" SearchType="Text" />
+                            <z:GridViewColumn Header="LastName" DisplayMemberBinding="{Binding LastName}" SearchType="Text" />
+                            <z:GridViewColumn Header="DateTime" DisplayMemberBinding="{Binding DateTime, StringFormat={}{0:dd/MM/yyyy HH:mm:ss}}" SearchType="Text" />
+                            <z:GridViewColumn Header="IsActive" DisplayMemberBinding="{Binding IsActrive}" SearchType="Text" />
+                            <z:GridViewColumn Header="Text" DisplayMemberBinding="{Binding Text}" SearchType="Text" />
+                        </z:GridView>
+                    </z:ListView.View>
+                    <!--<z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" Background="Red" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />
+                    <z:ListViewItem Content="test" />-->
+                </z:ListView>
+            </z:ZapTabItem>
+            <z:ZapTabItem Header="Calendar" IsClosable="False">
                 <StackPanel Orientation="Vertical" >
-                    <z:ZapButton Content="Reload Themes" Margin="15,10,15,0" Click="ZapButton_Click" />
                     <z:ZapScrollViewer HorizontalScrollBarVisibility="Disabled">
                         <z:UniformWrapPanel Margin="10">
 
@@ -151,137 +229,6 @@
 
                     <TextBlock Text="{Binding Debut, StringFormat={}{0:dd/MM/yyyy}}" />
                 </StackPanel>-->
-            </z:ZapTabItem>
-            <z:ZapTabItem Header="ListView" IsClosable="False">
-                <Grid >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <z:ListView ItemDoubleClick="ListView_ItemDoubleClick">
-                        <z:ListView.View>
-                            <z:GridView>
-                                <z:GridViewColumn Header="Column 1" SortDirection="Descending" SearchType="Text" />
-                                <z:GridViewColumn Header="Column 1" SortDirection="Descending" SearchType="Text" />
-                                <z:GridViewColumn Header="Column 1" SortDirection="Descending" SearchType="Text" />
-                                <z:GridViewColumn Header="Column 1" SortDirection="Descending" SearchType="Text" />
-                                <z:GridViewColumn Header="Column 1" SortDirection="Descending" SearchType="Text" />
-                                <z:GridViewColumn Header="Column 1" SortDirection="Descending" SearchType="Text" />
-                                <z:GridViewColumn Header="Column 1" SortDirection="Descending" SearchType="Text" />
-                                <z:GridViewColumn Header="Column 1" SortDirection="Descending" SearchType="Text" />
-                            </z:GridView>
-                        </z:ListView.View>
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" Background="Red" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                        <z:ListViewItem Content="test" />
-                    </z:ListView>
-
-                    <ListView Grid.Column="1">
-                        <ListView.View>
-                            <GridView>
-                                <GridView.Columns>
-                                    <GridViewColumn Header="Column 1"  />
-                                    <GridViewColumn Header="Column 1"  />
-                                    <GridViewColumn Header="Column 1"  />
-                                    <GridViewColumn Header="Column 1"  />
-                                    <GridViewColumn Header="Column 1"  />
-                                    <GridViewColumn Header="Column 1"  />
-                                    <GridViewColumn Header="Column 1"  />
-                                    <GridViewColumn Header="Column 1"  />
-                                </GridView.Columns>
-                            </GridView>
-                        </ListView.View>
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" Background="Red" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                        <ListViewItem Content="test" />
-                    </ListView>
-
-                </Grid>
             </z:ZapTabItem>
             <z:ZapTabItem Header="LoadingIndicator" IsClosable="False">
                 <Grid>

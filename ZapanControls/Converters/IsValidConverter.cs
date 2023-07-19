@@ -17,10 +17,10 @@ namespace ZapanControls.Converters
 
                 foreach (PropertyInfo property in properties)
                 {
-                    if (value is IDataErrorInfo data)
+                    if (value is IDataErrorInfo data
+                        && !string.IsNullOrEmpty(data[property.Name]))
                     {
-                        if (!string.IsNullOrEmpty(data[property.Name]))
-                            return false;
+                        return false;
                     }
                 }
                 return true;

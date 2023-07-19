@@ -13,21 +13,20 @@ namespace ZapanControls.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string result;
-            if (value is DateTime)
+            if (value is DateTime dt)
             {
                 string format = "dddd dd MMMM yyyy";
-
                 if (!string.IsNullOrEmpty(parameter?.ToString()))
+                {
                     format = parameter.ToString();
-
-                result = ((DateTime)value).ToString(format);
+                }
+                result = dt.ToString(format);
             }
             else
+            {
                 result = value?.ToString();
-
-            result = culture?.TextInfo.ToTitleCase(result) ?? result;
-
-            return result;
+            }
+            return culture?.TextInfo.ToTitleCase(result) ?? result;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

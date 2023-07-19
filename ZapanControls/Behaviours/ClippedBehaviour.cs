@@ -57,7 +57,7 @@ namespace ZapanControls.Behaviours
             }
             else
             {
-                Console.Error.WriteLine("Error: Expected type FrameworkElement but found " + dependencyObject.GetType().Name);
+                Console.Error.WriteLine($"Error: Expected type FrameworkElement but found {dependencyObject.GetType().Name}");
             }
         }
     }

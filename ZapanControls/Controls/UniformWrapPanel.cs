@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace ZapanControls.Controls
 {
-    public class UniformWrapPanel : WrapPanel
+    public sealed class UniformWrapPanel : WrapPanel
     {
         #region Properties
         #region IsAutoUniform
@@ -44,7 +44,9 @@ namespace ZapanControls.Controls
                         el.Measure(availableSize);
                         Size next = el.DesiredSize;
                         if (!(double.IsInfinity(next.Width) || double.IsNaN(next.Width)))
+                        {
                             ItemWidth = Math.Max(next.Width, ItemWidth);
+                        }
                     }
                 }
                 else
@@ -56,7 +58,9 @@ namespace ZapanControls.Controls
                         el.Measure(availableSize);
                         Size next = el.DesiredSize;
                         if (!(double.IsInfinity(next.Height) || double.IsNaN(next.Height)))
+                        {
                             ItemHeight = Math.Max(next.Height, ItemHeight);
+                        }
                     }
                 }
             }

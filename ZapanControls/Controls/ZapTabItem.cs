@@ -18,12 +18,17 @@ namespace ZapanControls.Controls
         public static readonly DependencyProperty IsClosableProperty = DependencyProperty.Register(
             "IsClosable", typeof(bool), typeof(ZapTabItem),
             new FrameworkPropertyMetadata(true,
-                FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
+                FrameworkPropertyMetadataOptions.AffectsRender 
+                | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
         /// Obtient ou défini la valeur indiquant si l'onglet peut être fermé.
         /// </summary>
-        public bool IsClosable { get => (bool)GetValue(IsClosableProperty); set => SetValue(IsClosableProperty, value); }
+        public bool IsClosable 
+        { 
+            get => (bool)GetValue(IsClosableProperty); 
+            set => SetValue(IsClosableProperty, value); 
+        }
         #endregion
         #endregion
 
@@ -36,10 +41,14 @@ namespace ZapanControls.Controls
                 RaiseEvent(eventArgs);
 
                 if (!eventArgs.Handled)
+                {
                     eventArgs.Handled = true;
+                }
 
                 if (eventArgs.CanClose)
+                {
                     tc.Items.Remove(this);
+                }
             }
         }
         #endregion

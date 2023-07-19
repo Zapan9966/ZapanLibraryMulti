@@ -214,7 +214,6 @@ namespace ZapanControls.Behaviours
         {
             double mouseWheelChange = (double)e.Delta;
             ScrollViewer scroller = (ScrollViewer)sender;
-            //double newVOffset = GetVerticalOffset(scroller) - (mouseWheelChange / 3);
             double newVOffset = intendedLocation - (mouseWheelChange * 2);
 
             scroller.ScrollToVerticalOffset(intendedLocation);

@@ -103,8 +103,8 @@ namespace ZapanControls.Behaviours
                         .GetProperties(BindingFlags.Public | BindingFlags.Instance)
                         .FirstOrDefault(
                             p =>
-                            typeof(ICommand).IsAssignableFrom(p.PropertyType) &&
-                            string.Equals(p.Name, CommandName, StringComparison.Ordinal)
+                            typeof(ICommand).IsAssignableFrom(p.PropertyType) 
+                            && string.Equals(p.Name, CommandName, StringComparison.Ordinal)
                         );
 
                     if (commandPropertyInfo != null)

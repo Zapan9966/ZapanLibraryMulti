@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace ZapanControls.Libraries
@@ -26,24 +25,12 @@ namespace ZapanControls.Libraries
         /// <summary>
         /// Get a value indicating whether the WeakFunc is static or not.
         /// </summary>
-        public bool IsStatic
-        {
-            get { return _staticFunc != null; }
-        }
+        public bool IsStatic => _staticFunc != null;
 
         /// <summary>
         /// Gets the name of the method that this WeakFunc represents.
         /// </summary>
-        public virtual string MethodName
-        {
-            get
-            {
-                if (_staticFunc != null)
-                    return _staticFunc.Method.Name;
-
-                return Method.Name;
-            }
-        }
+        public virtual string MethodName => _staticFunc != null ? _staticFunc.Method.Name : Method.Name;
 
         /// <summary>
         /// Gets or sets a WeakReference to this WeakFunc's action's target.
@@ -97,11 +84,6 @@ namespace ZapanControls.Libraries
         /// be kept as a hard reference, which might cause a memory leak. You should only set this
         /// parameter to true if the action is using closures. See
         /// http://galasoft.ch/s/mvvmweakaction. </param>
-        [SuppressMessage(
-            "Microsoft.Design",
-            "CA1062:Validate arguments of public methods",
-            MessageId = "1",
-            Justification = "Method should fail with an exception if func is null.")]
         public WeakFunc(object target, Func<TResult> func, bool keepTargetAlive = false)
         {
             if (func.Method.IsStatic)
@@ -113,7 +95,6 @@ namespace ZapanControls.Libraries
                     // Keep a reference to the target to control the WeakAction's lifetime.
                     Reference = new WeakReference(target);
                 }
-
                 return;
             }
 
@@ -144,25 +125,23 @@ namespace ZapanControls.Libraries
             get
             {
                 if (_staticFunc == null && Reference == null && LiveReference == null)
+                {
                     return false;
+                }
 
                 if (_staticFunc != null)
                 {
-                    if (Reference != null)
-                        return Reference.IsAlive;
-
-                    return true;
+                    return Reference == null || Reference.IsAlive;
                 }
 
                 // Non static action
 
                 if (LiveReference != null)
+                {
                     return true;
+                }
 
-                if (Reference != null)
-                    return Reference.IsAlive;
-
-                return false;
+                return Reference != null && Reference.IsAlive;
             }
         }
 
@@ -170,16 +149,7 @@ namespace ZapanControls.Libraries
         /// Gets the Func's owner. This object is stored as a 
         /// <see cref="WeakReference" />.
         /// </summary>
-        public object Target
-        {
-            get
-            {
-                if (Reference == null)
-                    return null;
-
-                return Reference.Target;
-            }
-        }
+        public object Target => Reference?.Target;
 
         /// <summary>
         /// Gets the owner of the Func that was passed as parameter.
@@ -187,19 +157,7 @@ namespace ZapanControls.Libraries
         /// <see cref="Target" />, for example if the
         /// method is anonymous.
         /// </summary>
-        protected object FuncTarget
-        {
-            get
-            {
-                if (LiveReference != null)
-                    return LiveReference;
-
-                if (FuncReference == null)
-                    return null;
-
-                return FuncReference.Target;
-            }
-        }
+        protected object FuncTarget => LiveReference ?? (FuncReference?.Target);
 
         /// <summary>
         /// Executes the action. This only happens if the Func's owner
@@ -209,17 +167,15 @@ namespace ZapanControls.Libraries
         public TResult Execute()
         {
             if (_staticFunc != null)
+            {
                 return _staticFunc();
+            }
 
             var funcTarget = FuncTarget;
 
-            if (IsAlive)
-            {
-                if (Method != null && (LiveReference != null || FuncReference != null) && funcTarget != null)
-                    return (TResult)Method.Invoke(funcTarget, null);
-            }
-
-            return default;
+            return IsAlive && (Method != null && (LiveReference != null || FuncReference != null) && funcTarget != null)
+                ? (TResult)Method.Invoke(funcTarget, null)
+                : default;
         }
 
         /// <summary>

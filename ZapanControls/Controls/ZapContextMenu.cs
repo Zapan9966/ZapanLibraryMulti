@@ -6,7 +6,6 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using ZapanControls.Controls.ControlEventArgs;
-using ZapanControls.Controls.Primitives;
 using ZapanControls.Controls.Themes;
 using ZapanControls.Interfaces;
 using ZapanControls.Libraries;
@@ -25,12 +24,17 @@ namespace ZapanControls.Controls
         /// Identifies the <see cref="CornerRadiusProperty"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register(
-            "CornerRadius", typeof(CornerRadius), typeof(ZapContextMenu), new FrameworkPropertyMetadata(new CornerRadius(0), FrameworkPropertyMetadataOptions.AffectsRender));
+            "CornerRadius", typeof(CornerRadius), typeof(ZapContextMenu), 
+            new FrameworkPropertyMetadata(new CornerRadius(0), FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
         /// Get/set the ContextMenu corner radius.
         /// </summary>
-        public CornerRadius CornerRadius { get => (CornerRadius)GetValue(CornerRadiusProperty); set => SetValue(CornerRadiusProperty, value); }
+        public CornerRadius CornerRadius 
+        { 
+            get => (CornerRadius)GetValue(CornerRadiusProperty); 
+            set => SetValue(CornerRadiusProperty, value); 
+        }
         #endregion
         #endregion
 
@@ -84,11 +88,15 @@ namespace ZapanControls.Controls
         #endregion
 
         #region Events
-        #region ThemeChangedSuccessEvent
+        #region ThemeChanged
         public static readonly RoutedEvent ThemeChangedEvent = EventManager.RegisterRoutedEvent(
             "ThemeChanged", RoutingStrategy.Bubble, typeof(ITheme.ThemeChangedEventHandler), typeof(ZapContextMenu));
 
-        public event ITheme.ThemeChangedEventHandler ThemeChanged { add => AddHandler(ThemeChangedEvent, value); remove => RemoveHandler(ThemeChangedEvent, value); }
+        public event ITheme.ThemeChangedEventHandler ThemeChanged 
+        { 
+            add => AddHandler(ThemeChangedEvent, value); 
+            remove => RemoveHandler(ThemeChangedEvent, value); 
+        }
 
         private void OnThemeChanged(object sender, ThemeChangedEventArgs e)
         {

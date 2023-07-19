@@ -18,16 +18,7 @@ namespace ZapanControls.Libraries
         /// <summary>
         /// Gets the name of the method that this WeakAction represents.
         /// </summary>
-        public override string MethodName
-        {
-            get
-            {
-                if (_staticAction != null)
-                    return _staticAction.Method.Name;
-
-                return Method.Name;
-            }
-        }
+        public override string MethodName => _staticAction == null ? Method.Name : _staticAction.Method.Name;
 
         /// <summary>
         /// Gets a value indicating whether the Action's owner is still alive, or if it was collected
@@ -38,16 +29,14 @@ namespace ZapanControls.Libraries
             get
             {
                 if (_staticAction == null && Reference == null)
+                {
                     return false;
+                }
 
                 if (_staticAction != null)
                 {
-                    if (Reference != null)
-                        return Reference.IsAlive;
-
-                    return true;
+                    return Reference == null || Reference.IsAlive;
                 }
-
                 return Reference.IsAlive;
             }
         }
@@ -74,11 +63,6 @@ namespace ZapanControls.Libraries
         /// be kept as a hard reference, which might cause a memory leak. You should only set this
         /// parameter to true if the action is using closures. See
         /// http://galasoft.ch/s/mvvmweakaction. </param>
-        [SuppressMessage(
-            "Microsoft.Design",
-            "CA1062:Validate arguments of public methods",
-            MessageId = "1",
-            Justification = "Method should fail with an exception if action is null.")]
         public WeakAction(object target, Action<T> action, bool keepTargetAlive = false)
         {
             if (action.Method.IsStatic)
@@ -91,7 +75,6 @@ namespace ZapanControls.Libraries
                     // WeakAction's lifetime.
                     Reference = new WeakReference(target);
                 }
-
                 return;
             }
 
@@ -119,10 +102,7 @@ namespace ZapanControls.Libraries
         /// Executes the action. This only happens if the action's owner
         /// is still alive. The action's parameter is set to default(T).
         /// </summary>
-        public new void Execute()
-        {
-            Execute(default);
-        }
+        public new void Execute() => Execute(default);
 
         /// <summary>
         /// Executes the action. This only happens if the action's owner
@@ -139,10 +119,9 @@ namespace ZapanControls.Libraries
 
             var actionTarget = ActionTarget;
 
-            if (IsAlive)
+            if (IsAlive && Method != null && (LiveReference != null || ActionReference != null) && actionTarget != null)
             {
-                if (Method != null && (LiveReference != null || ActionReference != null) && actionTarget != null)
-                    Method.Invoke(actionTarget, new object[] { parameter });
+                Method.Invoke(actionTarget, new object[] { parameter });
             }
         }
 

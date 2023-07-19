@@ -44,8 +44,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         public bool IsSelected
         {
-            get { return (bool)GetValue(IsSelectedProperty); }
-            set { SetValue(IsSelectedProperty, value); }
+            get => (bool)GetValue(IsSelectedProperty);
+            set => SetValue(IsSelectedProperty, value);
         }
         #endregion
 
@@ -57,8 +57,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         public bool IsBlackOut
         {
-            get { return (bool)GetValue(IsBlackOutProperty); }
-            set { SetValue(IsBlackOutProperty, value); }
+            get => (bool)GetValue(IsBlackOutProperty);
+            set => SetValue(IsBlackOutProperty, value);
         }
         #endregion
 
@@ -70,8 +70,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         public bool IsCurrentMonth
         {
-            get { return (bool)GetValue(IsCurrentMonthProperty); }
-            set { SetValue(IsCurrentMonthProperty, value); }
+            get => (bool)GetValue(IsCurrentMonthProperty);
+            set => SetValue(IsCurrentMonthProperty, value);
         }
         #endregion
 
@@ -83,8 +83,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         public bool IsTodaysDate
         {
-            get { return (bool)GetValue(IsTodaysDateProperty); }
-            set { SetValue(IsTodaysDateProperty, value); }
+            get => (bool)GetValue(IsTodaysDateProperty);
+            set => SetValue(IsTodaysDateProperty, value);
         }
         #endregion
     }

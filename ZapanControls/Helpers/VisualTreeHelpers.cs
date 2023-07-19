@@ -18,7 +18,8 @@ namespace ZapanControls.Helpers
         {
             if (depObj != null)
             {
-                if (depObj is FrameworkElement) (depObj as FrameworkElement).ApplyTemplate();
+                if (depObj is FrameworkElement fe)
+                    fe.ApplyTemplate();
 
                 for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
                 {
@@ -40,7 +41,8 @@ namespace ZapanControls.Helpers
         {
             if (depObj != null)
             {
-                if (depObj is FrameworkElement) (depObj as FrameworkElement).ApplyTemplate();
+                if (depObj is FrameworkElement fe) 
+                    fe.ApplyTemplate();
 
                 for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
                 {
@@ -62,7 +64,8 @@ namespace ZapanControls.Helpers
         {
             if (depObj != null)
             {
-                if (depObj is FrameworkElement) (depObj as FrameworkElement).ApplyTemplate();
+                if (depObj is FrameworkElement fe)
+                    fe.ApplyTemplate();
 
                 for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
                 {
@@ -88,13 +91,12 @@ namespace ZapanControls.Helpers
             DependencyObject parentObject = VisualTreeHelper.GetParent(child);
 
             //we've reached the end of the tree
-            if (parentObject == null) return null;
-
+            if (parentObject == null)
+            {
+                return null;
+            }
             //check if the parent matches the type we're looking for
-            if (parentObject is T parent)
-                return parent;
-            else
-                return FindParent<T>(parentObject);
+            return parentObject is T parent ? parent : FindParent<T>(parentObject);
         }
 
         /// <summary>
@@ -106,13 +108,12 @@ namespace ZapanControls.Helpers
             DependencyObject parentObject = LogicalTreeHelper.GetParent(child);
 
             //we've reached the end of the tree
-            if (parentObject == null) return null;
-
+            if (parentObject == null)
+            {
+                return null;
+            }
             //check if the parent matches the type we're looking for
-            if (parentObject is T parent)
-                return parent;
-            else
-                return FindTemplatedParent<T>(parentObject);
+            return parentObject is T parent ? parent : FindTemplatedParent<T>(parentObject);
         }
 
         /// <summary>
@@ -121,20 +122,24 @@ namespace ZapanControls.Helpers
         public static DependencyObject FindChild(DependencyObject parent, string name)
         {
             // confirm parent and name are valid.
-            if (parent == null || string.IsNullOrEmpty(name)) return null;
+            if (parent == null || string.IsNullOrEmpty(name)) 
+                return null;
 
-            if (parent is FrameworkElement && (parent as FrameworkElement).Name == name) return parent;
+            if (parent is FrameworkElement && (parent as FrameworkElement).Name == name) 
+                return parent;
 
             DependencyObject result = null;
 
-            if (parent is FrameworkElement) (parent as FrameworkElement).ApplyTemplate();
+            if (parent is FrameworkElement fe)
+                fe.ApplyTemplate();
 
             int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
             for (int i = 0; i < childrenCount; i++)
             {
                 var child = VisualTreeHelper.GetChild(parent, i);
                 result = FindChild(child, name);
-                if (result != null) break;
+                if (result != null)
+                    break;
             }
 
             return result;
@@ -147,19 +152,24 @@ namespace ZapanControls.Helpers
             where T : DependencyObject
         {
             // confirm parent is valid.
-            if (parent == null) return null;
-            if (parent is T) return parent as T;
+            if (parent == null) 
+                return null;
+
+            if (parent is T) 
+                return parent as T;
 
             DependencyObject foundChild = null;
 
-            if (parent is FrameworkElement) (parent as FrameworkElement).ApplyTemplate();
+            if (parent is FrameworkElement fe)
+                fe.ApplyTemplate();
 
             int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
             for (int i = 0; i < childrenCount; i++)
             {
                 var child = VisualTreeHelper.GetChild(parent, i);
                 foundChild = FindChild<T>(child);
-                if (foundChild != null) break;
+                if (foundChild != null) 
+                    break;
             }
 
             return foundChild as T;
@@ -170,7 +180,8 @@ namespace ZapanControls.Helpers
         /// </summary>
         public static FrameworkElement GetTemplateChildByName(DependencyObject parent, string name)
         {
-            if (parent is FrameworkElement) (parent as FrameworkElement).ApplyTemplate();
+            if (parent is FrameworkElement fe)
+                fe.ApplyTemplate();
 
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
             {
@@ -271,7 +282,6 @@ namespace ZapanControls.Helpers
             {
                 parent = FindChild(parentWindow, binding.ElementName);
             }
-
             SetBindedItem(parent, elements, value);
         }
 

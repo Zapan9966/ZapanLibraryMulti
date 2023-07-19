@@ -22,12 +22,16 @@ namespace ZapanControls.Converters
                 if (int.TryParse(param, out int number))
                 {
                     if (int.TryParse(txt, out int val))
+                    {
                         return Operation(sParam, val, number);
+                    }
                 }
                 else if (DateTime.TryParse(param, out DateTime date))
                 {
                     if (DateTime.TryParse(txt, out DateTime val))
+                    {
                         return Operation(sParam, val, date);
+                    }
                 }
             }
             return false;

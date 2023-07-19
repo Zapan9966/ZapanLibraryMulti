@@ -30,6 +30,7 @@ namespace ZapanControls.Behaviours
 
             ((UIElement)parent).RaiseEvent(
                 new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta) { RoutedEvent = UIElement.MouseWheelEvent });
+
             e.Handled = true;
         }
     }

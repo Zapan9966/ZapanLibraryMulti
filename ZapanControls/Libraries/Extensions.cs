@@ -32,17 +32,21 @@ namespace ZapanControls.Libraries
         public static Style MergeStyle(this Style st, Style styleToMerge)
         {
             if (styleToMerge == null)
+            {
                 return st;
+            }
 
             Style style = new Style(st?.TargetType, st);
 
             if (styleToMerge.Setters != null)
             {
-                foreach (Setter setter in styleToMerge.Setters)
+                foreach (var setter in styleToMerge.Setters.OfType<Setter>())
                 {
-                    if (style.Setters.Any(s => ((Setter)s).Property == setter.Property))
-                        style.Setters.Remove(style.Setters.FirstOrDefault(s => ((Setter)s).Property == setter.Property));
-
+                    var setters = style.Setters.OfType<Setter>();
+                    if (setters.Any(s => s.Property == setter.Property))
+                    {
+                        style.Setters.Remove(setters.FirstOrDefault(s => s.Property == setter.Property));
+                    }
                     style.Setters.Add(setter);
                 }
             }
@@ -53,49 +57,70 @@ namespace ZapanControls.Libraries
                 {
                     if (styleToMerge.Triggers[i] is Trigger trigger)
                     {
-                        Trigger trig = (Trigger)style.Triggers.FirstOrDefault(t => ((Trigger)t).Property == trigger.Property && ((Trigger)t).Value == trigger.Value);
+                        var trig = style.Triggers
+                            .OfType<Trigger>()
+                            .FirstOrDefault(t => t.Property == trigger.Property && t.Value == trigger.Value);
 
                         if (trig != null)
                         {
                             foreach (TriggerAction ta in trigger.EnterActions)
+                            {
                                 trig.EnterActions.Add(ta);
+                            }
 
                             foreach (TriggerAction ta in trigger.ExitActions)
-                                trig.ExitActions.Add(ta);
-
-                            foreach (Setter setter in trigger.Setters)
                             {
-                                if (trig.Setters.Any(s => ((Setter)s).Property == setter.Property))
-                                    trig.Setters.Remove(trig.Setters.FirstOrDefault(s => ((Setter)s).Property == setter.Property));
+                                trig.ExitActions.Add(ta);
+                            }
 
+                            foreach (Setter setter in trigger.Setters.OfType<Setter>())
+                            {
+                                var trigSetters = trig.Setters.OfType<Setter>();
+                                if (trigSetters.Any(s => s.Property == setter.Property))
+                                {
+                                    trig.Setters.Remove(trigSetters.FirstOrDefault(s => s.Property == setter.Property));
+                                }
                                 trig.Setters.Add(setter);
                             }
                         }
                         else
+                        {
                             style.Triggers.Add(trigger);
+                        }
                     }
                     else if (styleToMerge.Triggers[i] is DataTrigger dataTrigger)
                     {
-                        DataTrigger dataTrig = (DataTrigger)style.Triggers.FirstOrDefault(t => ((DataTrigger)t).Binding == dataTrigger.Binding && ((Trigger)t).Value == dataTrigger.Value);
+                        var dataTrig = style.Triggers
+                            .OfType<DataTrigger>() 
+                            .FirstOrDefault(t => t.Binding == dataTrigger.Binding && t.Value == dataTrigger.Value);
 
                         if (dataTrig != null)
                         {
-                            foreach (TriggerAction ta in dataTrigger.EnterActions)
-                                dataTrig.EnterActions.Add(ta);
-
-                            foreach (TriggerAction ta in dataTrigger.ExitActions)
-                                dataTrig.ExitActions.Add(ta);
-
-                            foreach (Setter setter in dataTrigger.Setters)
+                            foreach (var ta in dataTrigger.EnterActions)
                             {
-                                if (dataTrig.Setters.Any(s => ((Setter)s).Property == setter.Property))
-                                    dataTrig.Setters.Remove(dataTrig.Setters.FirstOrDefault(s => ((Setter)s).Property == setter.Property));
+                                dataTrig.EnterActions.Add(ta);
+                            }
 
+                            foreach (var ta in dataTrigger.ExitActions)
+                            {
+                                dataTrig.ExitActions.Add(ta);
+                            }
+
+                            foreach (var setter in dataTrigger.Setters.OfType<Setter>())
+                            {
+                                var dataTriggerSetters = dataTrig.Setters.OfType<Setter>();
+
+                                if (dataTriggerSetters.Any(s => s.Property == setter.Property))
+                                {
+                                    dataTrig.Setters.Remove(dataTriggerSetters.FirstOrDefault(s => s.Property == setter.Property));
+                                }
                                 dataTrig.Setters.Add(setter);
                             }
                         }
                         else
+                        {
                             style.Triggers.Add(dataTrigger);
+                        }
                     }
                 }
             }
@@ -108,18 +133,14 @@ namespace ZapanControls.Libraries
         /// <param name="obj"><see cref="Object"/> à vérifier</param>
         /// <returns></returns>
         public static object CheckDbNull(this object obj)
-        {
-            return obj ?? DBNull.Value;
-        }
+            => obj ?? DBNull.Value;
 
         /// <summary>
         /// Détermine si une chaîne de caractère contient une chaine de carctère spécifique en ignorant les majuscules
         /// </summary>
         /// <param name="value">Chaîne de caractère recherchée</param>
         public static bool ContainsInvariant(this string s, string value)
-        {
-            return (s?.IndexOf(value, 0, StringComparison.CurrentCultureIgnoreCase) ?? -1) != -1;
-        }
+            => (s?.IndexOf(value, 0, StringComparison.CurrentCultureIgnoreCase) ?? -1) != -1;
 
         /// <summary>
         /// Replace une chaîne de caractère en ignorant les majuscules à l'aide d'une expression régulière
@@ -127,9 +148,7 @@ namespace ZapanControls.Libraries
         /// <param name="pattern">Elément à rechercher pour remplacement</param>
         /// <param name="replacement">Remplacement de l'élément recherché</param>
         public static string ReplaceInvariant(this string s, string pattern, string replacement)
-        {
-            return Regex.Replace(s, pattern, replacement, RegexOptions.IgnoreCase);
-        }
+            => Regex.Replace(s, pattern, replacement, RegexOptions.IgnoreCase);
 
         /// <summary>
         /// Mélange le contenu d'une liste de façon aléatoire
@@ -147,12 +166,10 @@ namespace ZapanControls.Libraries
                 {
                     byte[] box = new byte[1];
                     do provider.GetBytes(box);
-                    while (!(box[0] < n * (Byte.MaxValue / n)));
+                    while (!(box[0] < n * (byte.MaxValue / n)));
                     int k = (box[0] % n);
                     n--;
-                    T value = list[k];
-                    list[k] = list[n];
-                    list[n] = value;
+                    (list[n], list[k]) = (list[k], list[n]);
                 }
             }
         }
@@ -166,8 +183,9 @@ namespace ZapanControls.Libraries
         {
             DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(date);
             if (day >= DayOfWeek.Monday && day <= DayOfWeek.Wednesday)
+            {
                 date = date.AddDays(3);
-
+            }
             return CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(date, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
         }
 
@@ -205,10 +223,9 @@ namespace ZapanControls.Libraries
         /// <returns><see cref="Brush"/> corrigée.</returns>
         public static Brush ChangeBrightness(this Brush brush, int correction)
         {
-            if (brush != null)
-                return new SolidColorBrush((brush as SolidColorBrush).Color.ChangeBrightness(correction));
-
-            return null;
+            return brush != null 
+                ? new SolidColorBrush((brush as SolidColorBrush).Color.ChangeBrightness(correction)) 
+                : (Brush)null;
         }
 
         /// <summary>
@@ -222,10 +239,9 @@ namespace ZapanControls.Libraries
         /// <returns><see cref="SolidColorBrush"/> corrigée.</returns>
         public static SolidColorBrush ChangeBrightness(this SolidColorBrush brush, int correction)
         {
-            if (brush != null)
-                return new SolidColorBrush(brush.Color.ChangeBrightness(correction));
-
-            return null;
+            return brush != null 
+                ? new SolidColorBrush(brush.Color.ChangeBrightness(correction)) 
+                : null;
         }
 
         /// <summary>
@@ -267,9 +283,10 @@ namespace ZapanControls.Libraries
         /// </summary>
         public static T FreezeProperties<T>(this T obj)
         {
-            if (obj is Freezable freezableObj)
-                if (freezableObj.CanFreeze)
-                    freezableObj.Freeze();
+            if (obj is Freezable freezableObj && freezableObj.CanFreeze)
+            {
+                freezableObj.Freeze();
+            }
 
             foreach (PropertyInfo prop in obj.GetType().GetProperties())
             {
@@ -278,9 +295,10 @@ namespace ZapanControls.Libraries
                     if (prop.Name == "Item")
                         continue;
 
-                    if (prop.GetValue(obj) is Freezable freezable)
-                        if (freezable.CanFreeze)
-                            freezable.Freeze();
+                    if (prop.GetValue(obj) is Freezable freezable && freezable.CanFreeze)
+                    {
+                        freezable.Freeze();
+                    }
                 }
                 catch { }
             }
@@ -288,9 +306,7 @@ namespace ZapanControls.Libraries
         }
 
         public static string TitleCase(this string text)
-        {
-            return Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(text);
-        }
+            => Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(text);
 
         public static BindingBase Clone(this BindingBase bindingBase)
         {
@@ -303,14 +319,11 @@ namespace ZapanControls.Libraries
         public static T Clone<T>(this T obj)
         {
             var inst = obj.GetType().GetMethod("MemberwiseClone", BindingFlags.Instance | BindingFlags.NonPublic);
-
             return (T)inst?.Invoke(obj, null);
         }
 
         public static T Cast<T>(this object obj)
-        {
-            return (T)obj;
-        }
+            => (T)obj;
 
         public static bool DeepCompare(this object obj, object another)
         {
@@ -366,10 +379,7 @@ namespace ZapanControls.Libraries
             DateTime minValue = DateTime.Parse(System.Data.SqlTypes.SqlDateTime.MinValue.ToString());
             DateTime maxValue = DateTime.Parse(System.Data.SqlTypes.SqlDateTime.MaxValue.ToString());
 
-            if (minValue > dateTime.Value || maxValue < dateTime.Value)
-                return false;
-
-            return true;
+            return minValue <= dateTime.Value && maxValue >= dateTime.Value;
         }
 
         public static bool IsValidSqlDateTime(this DateTime dateTime)
@@ -377,17 +387,15 @@ namespace ZapanControls.Libraries
             DateTime minValue = DateTime.Parse(System.Data.SqlTypes.SqlDateTime.MinValue.ToString());
             DateTime maxValue = DateTime.Parse(System.Data.SqlTypes.SqlDateTime.MaxValue.ToString());
 
-            if (minValue > dateTime || maxValue < dateTime)
-                return false;
-
-            return true;
+            return minValue <= dateTime && maxValue >= dateTime;
         }
 
         public static string RemoveDiacritics(this string text)
         {
             if (string.IsNullOrWhiteSpace(text))
+            {
                 return text;
-
+            }
             text = text.Normalize(NormalizationForm.FormD);
             var chars = text.Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark).ToArray();
             return new string(chars).Normalize(NormalizationForm.FormC);
@@ -404,11 +412,6 @@ namespace ZapanControls.Libraries
         }
 
         public static bool In<T>(this T item, params T[] items)
-        {
-            if (items == null)
-                return false;
-
-            return items.Contains(item);
-        }
+            => items != null && items.Contains(item);
     }
 }

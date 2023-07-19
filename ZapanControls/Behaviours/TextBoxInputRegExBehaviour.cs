@@ -20,7 +20,8 @@ namespace ZapanControls.Behaviours
         #region DependencyProperties
 
         public static readonly DependencyProperty RegularExpressionProperty =
-            DependencyProperty.Register("RegularExpression", typeof(string), typeof(TextBoxInputRegExBehaviour), new FrameworkPropertyMetadata(".*"));
+            DependencyProperty.Register("RegularExpression", typeof(string), typeof(TextBoxInputRegExBehaviour), 
+                new FrameworkPropertyMetadata(".*"));
 
         public string RegularExpression
         {
@@ -29,7 +30,8 @@ namespace ZapanControls.Behaviours
         }
 
         public static readonly DependencyProperty MaxLengthProperty =
-            DependencyProperty.Register("MaxLength", typeof(int), typeof(TextBoxInputRegExBehaviour), new FrameworkPropertyMetadata(int.MinValue));
+            DependencyProperty.Register("MaxLength", typeof(int), typeof(TextBoxInputRegExBehaviour), 
+                new FrameworkPropertyMetadata(int.MinValue));
 
         public int MaxLength
         {
@@ -78,7 +80,9 @@ namespace ZapanControls.Behaviours
         {
             string text;
             if (AssociatedObject.Text.Length < AssociatedObject.CaretIndex)
+            {
                 text = AssociatedObject.Text;
+            }
             else
             {
                 //  Remaining text after removing selected text.
@@ -103,10 +107,9 @@ namespace ZapanControls.Behaviours
             // Handle the Backspace key
             if (e.Key == Key.Back)
             {
-                if (!TreatSelectedText(out text))
+                if (!TreatSelectedText(out text) && AssociatedObject.SelectionStart > 0)
                 {
-                    if (AssociatedObject.SelectionStart > 0)
-                        text = AssociatedObject.Text.Remove(AssociatedObject.SelectionStart - 1, 1);
+                    text = AssociatedObject.Text.Remove(AssociatedObject.SelectionStart - 1, 1);
                 }
             }
             // Handle the Delete key
@@ -124,7 +127,9 @@ namespace ZapanControls.Behaviours
             {
                 AssociatedObject.Text = EmptyValue;
                 if (e.Key == Key.Back)
+                {
                     AssociatedObject.SelectionStart++;
+                }
                 e.Handled = true;
             }
         }
@@ -136,10 +141,14 @@ namespace ZapanControls.Behaviours
                 string text = Convert.ToString(e.DataObject.GetData(DataFormats.Text));
 
                 if (!ValidateText(text))
+                {
                     e.CancelCommand();
+                }
             }
             else
+            {
                 e.CancelCommand();
+            }
         }
         #endregion Event handlers [PRIVATE] -----------------------------------
 

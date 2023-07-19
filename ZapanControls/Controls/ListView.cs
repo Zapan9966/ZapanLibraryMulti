@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using ZapanControls.Controls.ControlEventArgs;
-using ZapanControls.Controls.Primitives;
 using ZapanControls.Controls.Templates;
 using ZapanControls.Controls.Themes;
 using ZapanControls.Helpers;
@@ -74,7 +70,11 @@ namespace ZapanControls.Controls
         /// <summary>
         /// Obtient ou défini la valeur indiquant si les colonnes doivent être redimenssionnées automatiquement. 
         /// </summary>
-        public bool IsAutoResizeColumns { get => (bool)GetValue(IsAutoResizeColumnsProperty); set => SetValue(IsAutoResizeColumnsProperty, value); }
+        public bool IsAutoResizeColumns 
+        { 
+            get => (bool)GetValue(IsAutoResizeColumnsProperty); 
+            set => SetValue(IsAutoResizeColumnsProperty, value); 
+        }
         #endregion
 
         #region HeaderVisibility
@@ -770,14 +770,22 @@ namespace ZapanControls.Controls
         public static readonly RoutedEvent ItemDoubleClickEvent = EventManager.RegisterRoutedEvent(
             "ItemDoubleClick", RoutingStrategy.Bubble, typeof(ItemDoubleClickEventHandler), typeof(ListView));
 
-        public event ItemDoubleClickEventHandler ItemDoubleClick { add => AddHandler(ItemDoubleClickEvent, value); remove => RemoveHandler(ItemDoubleClickEvent, value); }
+        public event ItemDoubleClickEventHandler ItemDoubleClick 
+        { 
+            add => AddHandler(ItemDoubleClickEvent, value); 
+            remove => RemoveHandler(ItemDoubleClickEvent, value); 
+        }
         #endregion
 
         #region ThemeChanged
         public static readonly RoutedEvent ThemeChangedEvent = EventManager.RegisterRoutedEvent(
             "ThemeChanged", RoutingStrategy.Bubble, typeof(ITheme.ThemeChangedEventHandler), typeof(ListView));
 
-        public event ITheme.ThemeChangedEventHandler ThemeChanged { add => AddHandler(ThemeChangedEvent, value); remove => RemoveHandler(ThemeChangedEvent, value); }
+        public event ITheme.ThemeChangedEventHandler ThemeChanged 
+        { 
+            add => AddHandler(ThemeChangedEvent, value); 
+            remove => RemoveHandler(ThemeChangedEvent, value); 
+        }
 
         private void OnThemeChanged(object sender, ThemeChangedEventArgs e)
         {
@@ -920,10 +928,63 @@ namespace ZapanControls.Controls
             ThemeChanged += OnThemeChanged;
             this.RegisterInternalThemes<ListViewThemes>();
             this.LoadDefaultTheme(ThemeProperty);
+
+            Loaded += InternalListView_Loaded;
+        }
+
+        private void InternalListView_Loaded(object sender, RoutedEventArgs e)
+        {
+            AutoResizeColumns();
         }
         #endregion
 
+        /// <summary>
+        /// Méthode qui adapate la largeur des colonnes à leur contenu.
+        /// </summary>
+        public void ResizeColumns()
+        {
+            var sv = GetTemplateChild("scrollViewer") as ScrollViewer;
+            double offset = sv?.HorizontalOffset ?? 0;
+
+            if (View is GridView gridView)
+            {
+                foreach (var col in gridView.Columns)
+                {
+                    if (col is GridViewColumn zCol)
+                    {
+                        if (zCol.IsVisible)
+                        {
+                            zCol.Width = zCol.ActualWidth;
+                            zCol.Width = double.NaN;
+                        }
+                    }
+                    else
+                    {
+                        col.Width = col.ActualWidth;
+                        col.Width = double.NaN;
+                    }
+                }
+            }
+            sv?.ScrollToHorizontalOffset(offset);
+        }
+
+        /// <summary>
+        /// Méthode qui adapate automatiquement la largeur des colonnes à leur contenu.
+        /// </summary>
+        private void AutoResizeColumns()
+        {
+            if (IsAutoResizeColumns)
+            {
+                ResizeColumns();
+            }
+        }
+
         #region Overrides
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+        }
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -946,9 +1007,7 @@ namespace ZapanControls.Controls
 
                     _headerRowPresenter = viewer.Template.FindName("headerRowPresenter", viewer) as GridViewHeaderRowPresenter;
                 }
-
             }
-
         }
 
         protected override DependencyObject GetContainerForItemOverride()

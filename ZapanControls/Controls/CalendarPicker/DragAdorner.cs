@@ -57,7 +57,7 @@ namespace ZapanControls.Controls.CalendarPicker
         #region Offset
         public Point Offset
         {
-            get { return _ptOffset; }
+            get => _ptOffset;
             set
             {
                 _ptOffset = value;
@@ -96,24 +96,22 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <param name="index"></param>
         /// <returns></returns>
         protected override Visual GetVisualChild(int index)
-        {
-            return _rcChild;
-        }
+            => _rcChild;
 
         /// <summary>
         /// Override.  Always returns 1.
         /// </summary>
-        protected override int VisualChildrenCount
-        {
-            get { return 1; }
-        }
+        protected override int VisualChildrenCount 
+            => 1;
         #endregion
 
         #region Private Helpers
         private void UpdateLocation()
         {
             if (Parent is AdornerLayer adornerLayer)
+            {
                 adornerLayer.Update(AdornedElement);
+            }
         }
         #endregion
     }

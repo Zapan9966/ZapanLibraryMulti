@@ -19,9 +19,9 @@ namespace ZapanControls.Libraries
 #endif
         public static string GetPropertyName<TClass, TProperty>(Expression<Func<TClass, TProperty>> expression)
         {
-            if (expression?.Body is UnaryExpression)
-                return ((MemberExpression)(((UnaryExpression)expression.Body).Operand)).Member.Name;
-            return ((MemberExpression)expression.Body).Member.Name;
+            return expression?.Body is UnaryExpression body
+                ? ((MemberExpression)body.Operand).Member.Name
+                : ((MemberExpression)expression.Body).Member.Name;
         }
 
         /// <summary>Returns the property name of the property specified in the given lambda (e.g. GetPropertyName(i => i.MyProperty)). </summary>
@@ -33,9 +33,9 @@ namespace ZapanControls.Libraries
 #endif
         public static string GetPropertyName<TProperty>(Expression<Func<TProperty>> expression)
         {
-            if (expression?.Body is UnaryExpression)
-                return ((MemberExpression)(((UnaryExpression)expression.Body).Operand)).Member.Name;
-            return ((MemberExpression)expression.Body).Member.Name;
+            return expression?.Body is UnaryExpression body
+                ? ((MemberExpression)body.Operand).Member.Name
+                : ((MemberExpression)expression.Body).Member.Name;
         }
 
         /// <summary>Returns the property name of the property specified in the given lambda (e.g. GetPropertyName(i => i.MyProperty)). </summary>
@@ -47,9 +47,9 @@ namespace ZapanControls.Libraries
 #endif
         public static string GetPropertyName<TClass>(Expression<Func<TClass, object>> expression)
         {
-            if (expression?.Body is UnaryExpression)
-                return ((MemberExpression)(((UnaryExpression)expression.Body).Operand)).Member.Name;
-            return ((MemberExpression)expression.Body).Member.Name;
+            return expression?.Body is UnaryExpression body 
+                ? ((MemberExpression)body.Operand).Member.Name
+                : ((MemberExpression)expression.Body).Member.Name;
         }
     }
 }

@@ -5,7 +5,7 @@ namespace ZapanControls.Controls.CalendarPicker
     /// <summary>
     /// DateRangeChanging event arguments
     /// </summary>
-    internal class DateRangeChangingEventArgs : EventArgs
+    internal sealed class DateRangeChangingEventArgs : EventArgs
     {
         /// <summary>
         /// Constructor for DateRangeChanging EventArgs

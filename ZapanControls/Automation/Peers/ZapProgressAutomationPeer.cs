@@ -15,7 +15,7 @@ namespace ZapanControls.Automation.Peers
 
         protected override string GetClassNameCore()
         {
-            return "ZapProgress";
+            return nameof(ZapProgress);
         }
 
         protected override AutomationControlType GetAutomationControlTypeCore()

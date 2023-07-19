@@ -23,6 +23,13 @@ namespace ZapanControls.Controls
     [TemplatePart(Name = "Border", Type = typeof(Border))]
     public class ZapLoadingIndicator : Control, ITemplate<ZapLoadingIndicatorTemplates>
     {
+        #region Constants
+        /// <summary>
+        /// Parts names as string constants
+        /// </summary>
+        private const string PartBorder = "PART_Border";
+        #endregion
+
         #region Fields
         private Border PART_Border;
         private bool _hasInitialized;
@@ -47,9 +54,14 @@ namespace ZapanControls.Controls
                 FrameworkPropertyMetadataOptions.AffectsRender,
                 OnAccentColorChanged));
 
-        public Brush AccentColor { get => (Brush)GetValue(AccentColorProperty); set => SetValue(AccentColorProperty, value); }
+        public Brush AccentColor 
+        { 
+            get => (Brush)GetValue(AccentColorProperty); 
+            set => SetValue(AccentColorProperty, value); 
+        }
 
-        private static void OnAccentColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.SetValueCommon(AccentColorProperty, e.NewValue);
+        private static void OnAccentColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+            => d.SetValueCommon(AccentColorProperty, e.NewValue);
         #endregion
 
         #region IsActive
@@ -57,12 +69,17 @@ namespace ZapanControls.Controls
         /// Identifies the <see cref="IsActive"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register(
-            "IsActive", typeof(bool), typeof(ZapLoadingIndicator), new PropertyMetadata(true, OnIsActiveChanged));
+            "IsActive", typeof(bool), typeof(ZapLoadingIndicator), 
+            new PropertyMetadata(true, OnIsActiveChanged));
 
         /// <summary>
         /// Get/set whether the loading indicator is active.
         /// </summary>
-        public bool IsActive { get => (bool)GetValue(IsActiveProperty); set => SetValue(IsActiveProperty, value); }
+        public bool IsActive 
+        { 
+            get => (bool)GetValue(IsActiveProperty); 
+            set => SetValue(IsActiveProperty, value); 
+        }
 
         private static void OnIsActiveChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -88,7 +105,9 @@ namespace ZapanControls.Controls
                             foreach (VisualState state in group.States)
                             {
                                 if (state.Name == "Active")
+                                {
                                     state.Storyboard.SetSpeedRatio(li.PART_Border, li.SpeedRatio);
+                                }
                             }
                         }
                     }
@@ -107,7 +126,11 @@ namespace ZapanControls.Controls
         /// <summary>
         /// Get/set the speed ratio of the animation.
         /// </summary>
-        public double SpeedRatio { get => (double)GetValue(SpeedRatioProperty); set => SetValue(SpeedRatioProperty, value); }
+        public double SpeedRatio 
+        { 
+            get => (double)GetValue(SpeedRatioProperty); 
+            set => SetValue(SpeedRatioProperty, value); 
+        }
 
         private static void OnSpeedRatioChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
         { 
@@ -125,7 +148,9 @@ namespace ZapanControls.Controls
                         foreach (VisualState state in group.States)
                         {
                             if (state.Name == "Active")
+                            {
                                 state.Storyboard.SetSpeedRatio(li.PART_Border, (double)e.NewValue);
+                            }
                         }
                     }
                 }
@@ -221,7 +246,12 @@ namespace ZapanControls.Controls
                 new PropertyChangedCallback(OnThemeChanged),
                 new CoerceValueCallback(CoerceThemeChange)));
 
-        public string Theme { get => (string)GetValue(ThemeProperty); set => SetValue(ThemeProperty, value); }
+        public string Theme 
+        { 
+            get => (string)GetValue(ThemeProperty); 
+            set => SetValue(ThemeProperty, value); 
+        }
+
         private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => d.ThemeChanged(e, ThemeChangedEvent);
 
         private static object CoerceThemeChange(DependencyObject d, object o)
@@ -265,7 +295,11 @@ namespace ZapanControls.Controls
         public static readonly RoutedEvent ThemeChangedEvent = EventManager.RegisterRoutedEvent(
             "ThemeChanged", RoutingStrategy.Bubble, typeof(ITheme.ThemeChangedEventHandler), typeof(ZapLoadingIndicator));
 
-        public event ITheme.ThemeChangedEventHandler ThemeChanged { add => AddHandler(ThemeChangedEvent, value); remove => RemoveHandler(ThemeChangedEvent, value); }
+        public event ITheme.ThemeChangedEventHandler ThemeChanged 
+        { 
+            add => AddHandler(ThemeChangedEvent, value); 
+            remove => RemoveHandler(ThemeChangedEvent, value); 
+        }
 
         protected virtual void OnThemeChanged(object sender, ThemeChangedEventArgs e)
         {
@@ -319,7 +353,7 @@ namespace ZapanControls.Controls
             base.OnApplyTemplate();
             HasInitialized = true;
 
-            PART_Border = (Border)GetTemplateChild("PART_Border");
+            PART_Border = (Border)GetTemplateChild(PartBorder);
 
             if (PART_Border != null)
             {

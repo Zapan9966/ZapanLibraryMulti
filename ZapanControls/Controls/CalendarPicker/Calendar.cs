@@ -1,27 +1,26 @@
 ﻿#region Directives
 using System;
-using System.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Globalization;
-using System.Windows.Data;
-using System.Windows.Shapes;
 using System.Windows.Media.Imaging;
-using System.Windows.Input;
 using System.Windows.Threading;
-using System.Windows.Documents;
-using System.Linq;
+using ZapanControls.Controls.ControlEventArgs;
+using ZapanControls.Controls.Primitives;
+using ZapanControls.Controls.Themes;
 using ZapanControls.Helpers;
 using ZapanControls.Libraries;
-using ZapanControls.Controls.Themes;
-using ZapanControls.Controls.Primitives;
-using ZapanControls.Controls.ControlEventArgs;
 #endregion
 
 namespace ZapanControls.Controls.CalendarPicker
@@ -44,7 +43,7 @@ namespace ZapanControls.Controls.CalendarPicker
     TemplatePart(Name = "Part_FooterContainer", Type = typeof(Grid))]
     public class Calendar : ThemableControl<CalendarPickerThemes>
     {
-        #region Property Name Constants
+        #region Constants
         /// <summary>
         /// Property names as string constants
         /// </summary>
@@ -63,6 +62,29 @@ namespace ZapanControls.Controls.CalendarPicker
         private const string AllowDragPropName = "AllowDrag";
         private const string AdornDragPropName = "AdornDrag";
         private const string IsAnimatedPropName = "IsAnimated";
+        /// <summary>
+        /// Parts names as string constants
+        /// </summary>
+        private const string PartTitleButton = "Part_TitleButton";
+        private const string PartCurrentDateText = "Part_CurrentDateText";
+        private const string PartNextButton = "Part_NextButton";
+        private const string PartPreviousButton = "Part_PreviousButton";
+        private const string PartScrollGrid = "Part_ScrollGrid";
+        private const string PartFooterContainer = "Part_FooterContainer";
+        private const string PartHeaderBorder = "Part_HeaderBorder";
+        private const string PartDayGrid = "Part_DayGrid";
+        private const string PartMonthGrid = "Part_MonthGrid";
+        private const string PartWeekGrid = "Part_WeekGrid";
+        private const string PartYearGrid = "Part_YearGrid";
+        private const string PartDecadeGrid = "Part_DecadeGrid";
+        private const string PartMonthContainer = "Part_MonthContainer";
+        private const string PartAnimationContainer = "Part_AnimationContainer";
+        /// <summary>
+        /// Styles names as string constants
+        /// </summary>
+        private const string DayNameStyle = "DayNameStyle";
+        private const string WeekNumberStyle = "WeekNumberStyle";
+        private const string InsideButtonsStyle = "InsideButtonsStyle";
         #endregion
 
         #region MonthList Enum
@@ -129,7 +151,9 @@ namespace ZapanControls.Controls.CalendarPicker
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             if (Mouse.LeftButton != MouseButtonState.Pressed)
+            {
                 StopDragTimer();
+            }
         }
 
         /// <summary>
@@ -198,9 +222,9 @@ namespace ZapanControls.Controls.CalendarPicker
                 _currentPos = e.GetPosition(null);
                 Vector diff = _dragStart - _currentPos;
 
-                if (e.LeftButton == MouseButtonState.Pressed &&
-                    Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance &&
-                        Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
+                if (e.LeftButton == MouseButtonState.Pressed 
+                    && Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance 
+                    && Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
                 {
                     if (!IsDragging)
                     {
@@ -257,11 +281,10 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <param name="e"></param>
         private void MarginAnimation_Completed(object sender, EventArgs e)
         {
-            Grid grdScroll = (Grid)FindElement("Part_ScrollGrid");
-
-            if (grdScroll != null)
+            if (FindElement(PartScrollGrid) is Grid grdScroll)
+            {
                 grdScroll.Visibility = Visibility.Collapsed;
-
+            }
             IsAnimating = false;
         }
 
@@ -433,20 +456,25 @@ namespace ZapanControls.Controls.CalendarPicker
                 DateTime newDisplayDate = DisplayDate;
                 if (DisplayMode == DisplayType.Month)
                 {
-                    if (month == 12)
-                        newDisplayDate = new DateTime(year + 1, 1, 1);
-                    else
-                        newDisplayDate = new DateTime(year, month + 1, 1);
+                    newDisplayDate = month == 12 
+                        ? new DateTime(year + 1, 1, 1) 
+                        : new DateTime(year, month + 1, 1);
                 }
                 else if (DisplayMode == DisplayType.Year)
+                {
                     newDisplayDate = new DateTime(DisplayDate.Year + 1, 1, 1);
+                }
                 else if (DisplayMode == DisplayType.Decade)
+                {
                     newDisplayDate = new DateTime(year - year % 10 + 10, 1, 1);
+                }
 
                 IsMoveForward = true;
 
                 if (newDisplayDate >= DisplayDateStart && newDisplayDate <= DisplayDateEnd)
+                {
                     DisplayDate = newDisplayDate;
+                }
             }
             catch (ArgumentOutOfRangeException) { }
         }
@@ -470,20 +498,25 @@ namespace ZapanControls.Controls.CalendarPicker
 
                 if (DisplayMode == DisplayType.Month)
                 {
-                    if (month == 1)
-                        newDisplayDate = new DateTime(year - 1, 12, DateTime.DaysInMonth(year - 1, 12));
-                    else
-                        newDisplayDate = new DateTime(year, month - 1, DateTime.DaysInMonth(year, month - 1));
+                    newDisplayDate = month == 1
+                        ? new DateTime(year - 1, 12, DateTime.DaysInMonth(year - 1, 12))
+                        : new DateTime(year, month - 1, DateTime.DaysInMonth(year, month - 1));
                 }
                 else if (DisplayMode == DisplayType.Year)
+                {
                     newDisplayDate = new DateTime(year - 1, 12, DateTime.DaysInMonth(year - 1, 12));
+                }
                 else if (DisplayMode == DisplayType.Decade)
+                {
                     newDisplayDate = new DateTime(year - year % 10 - 1, 12, DateTime.DaysInMonth(year - year % 10 - 1, 12));
+                }
 
                 IsMoveForward = false;
 
                 if (newDisplayDate >= DisplayDateStart && newDisplayDate <= DisplayDateEnd)
+                {
                     DisplayDate = newDisplayDate;
+                }
             }
             catch (ArgumentOutOfRangeException) { }
         }
@@ -506,9 +539,13 @@ namespace ZapanControls.Controls.CalendarPicker
         private void TitleButton_Click(object sender, RoutedEventArgs e)
         {
             if (DisplayMode == DisplayType.Month)
+            {
                 DisplayMode = DisplayType.Year;
+            }
             else if (DisplayMode == DisplayType.Year)
+            {
                 DisplayMode = DisplayType.Decade;
+            }
         }
 
         /// <summary>
@@ -645,42 +682,38 @@ namespace ZapanControls.Controls.CalendarPicker
             // set the default display view
             UpdateCalendar();
 
-            // add bindings
-            Grid grdFooterContainer = (Grid)FindElement("Part_FooterContainer");
             // property to element bindings
-            if (grdFooterContainer != null)
+            if (FindElement(PartFooterContainer) is Grid grdFooterContainer)
             {
                 // bind the footer grid visibility to the property
                 Binding bindIsFooterVisible = new Binding
                 {
                     RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent),
-                    Path = new PropertyPath("FooterVisibility"),
+                    Path = new PropertyPath(FooterVisibilityPropName),
                     Mode = BindingMode.TwoWay
                 };
                 grdFooterContainer.SetBinding(VisibilityProperty, bindIsFooterVisible);
             }
 
-            UniformGrid grdWeek = (UniformGrid)FindElement("Part_WeekGrid");
-            if (grdWeek != null)
+            if (FindElement(PartWeekGrid) is UniformGrid grdWeek)
             {
                 // bind the week column grid visibility to the property
                 Binding bindIsWeekVisible = new Binding
                 {
                     RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent),
-                    Path = new PropertyPath("WeekColumnVisibility"),
+                    Path = new PropertyPath(WeekColumnVisibilityPropName),
                     Mode = BindingMode.TwoWay
                 };
                 grdWeek.SetBinding(VisibilityProperty, bindIsWeekVisible);
             }
 
-            Border brdHeaderBorder = (Border)FindElement("Part_HeaderBorder");
-            if (brdHeaderBorder != null)
+            if (FindElement(PartHeaderBorder) is Border brdHeaderBorder)
             {
                 // bind the footer grid visibility to the property
                 Binding bindHeaderHeight = new Binding
                 {
                     RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent),
-                    Path = new PropertyPath("HeaderHeight"),
+                    Path = new PropertyPath(HeaderHeightPropName),
                     Mode = BindingMode.TwoWay
                 };
                 brdHeaderBorder.SetBinding(HeightProperty, bindHeaderHeight);
@@ -688,7 +721,9 @@ namespace ZapanControls.Controls.CalendarPicker
 
             // store parent window
             if (!IsDesignTime)
+            {
                 FindParentWindow();
+            }
         }
 
         /// <summary>
@@ -698,19 +733,33 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <returns></returns>
         protected override Size MeasureOverride(Size availableSize)
         {
-            UniformGrid grdDay = (UniformGrid)FindElement("Part_DayGrid");
-            if (grdDay != null)
+            if (FindElement(PartDayGrid) is UniformGrid grdDay)
             {
                 for (int i = 0; i < 7; i++)
                 {
                     Label lbl = (Label)grdDay.Children[i];
+                    var tag = lbl.Tag.ToString();
 
                     if (availableSize.Width < 180)
-                        lbl.Content = lbl.Tag.ToString().Substring(0, 2);
+                    {
+#if NETCOREAPP3_1_OR_GREATER
+                        lbl.Content = tag[..2];
+#else
+                        lbl.Content = tag.Substring(0, 2);
+#endif
+                    }
                     else if (availableSize.Width < 430)
-                        lbl.Content = lbl.Tag.ToString().Substring(0, 3);
+                    {
+#if NETCOREAPP3_1_OR_GREATER
+                        lbl.Content = tag[..3];
+#else
+                        lbl.Content = tag.Substring(0, 3);
+#endif
+                    }
                     else
-                        lbl.Content = lbl.Tag.ToString();
+                    {
+                        lbl.Content = tag;
+                    }
                 }
             }
             return availableSize;
@@ -723,9 +772,7 @@ namespace ZapanControls.Controls.CalendarPicker
         /// <returns></returns>
         private double GetDayStringLength(Size availableSize)
         {
-            UniformGrid grdDay = (UniformGrid)FindElement("Part_DayGrid");
-
-            if (grdDay != null)
+            if (FindElement(PartDayGrid) is UniformGrid grdDay)
             {
                 Label lblMeasure = (Label)grdDay.Children[3];
                 Size szCompare = new Size(availableSize.Width / 7, availableSize.Height);
@@ -734,7 +781,9 @@ namespace ZapanControls.Controls.CalendarPicker
                 lblMeasure.Measure(availableSize);
 
                 if (lblMeasure.DesiredSize.Width < szCompare.Width)
+                {
                     return -1;
+                }
 
                 lblMeasure.Content = lblMeasure.Tag.ToString().Substring(0, 3);
                 lblMeasure.Measure(availableSize);
@@ -756,8 +805,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         public bool AllowDrag
         {
-            get { return (bool)GetValue(AllowDragProperty); }
-            set { SetValue(AllowDragProperty, value); }
+            get => (bool)GetValue(AllowDragProperty);
+            set => SetValue(AllowDragProperty, value);
         }
 
         private static void OnAllowDragChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -780,8 +829,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         public bool AdornDrag
         {
-            get { return (bool)GetValue(AdornDragProperty); }
-            set { SetValue(AdornDragProperty, value); }
+            get => (bool)GetValue(AdornDragProperty);
+            set => SetValue(AdornDragProperty, value);
         }
 
         private static object CoerceAdornDrag(DependencyObject d, object o)
@@ -809,7 +858,7 @@ namespace ZapanControls.Controls.CalendarPicker
         /// </summary>
         public BlackoutDatesCollection BlackoutDates
         {
-            get { return _blackoutDates; }
+            get => _blackoutDates;
         }
         #endregion BlackoutDates
 
@@ -826,8 +875,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         public DateTime DisplayDate
         {
-            get { return (DateTime)GetValue(DisplayDateProperty); }
-            set { SetValue(DisplayDateProperty, value); }
+            get => (DateTime)GetValue(DisplayDateProperty);
+            set => SetValue(DisplayDateProperty, value);
         }
 
         private static object CoerceDateToBeInRange(DependencyObject d, object o)
@@ -836,11 +885,13 @@ namespace ZapanControls.Controls.CalendarPicker
             DateTime value = (DateTime)o;
 
             if (value < vc.DisplayDateStart)
+            {
                 return vc.DisplayDateStart;
-
-            if (value > vc.DisplayDateEnd)
+            }
+            else if (value > vc.DisplayDateEnd)
+            {
                 return vc.DisplayDateEnd;
-
+            }
             return o;
         }
         #endregion
@@ -850,12 +901,13 @@ namespace ZapanControls.Controls.CalendarPicker
         /// Gets/Sets the calender display mode
         /// </summary>
         public static readonly DependencyProperty DisplayModeProperty = DependencyProperty.Register(
-            "DisplayMode", typeof(DisplayType), typeof(Calendar), new FrameworkPropertyMetadata(DisplayType.Month, new PropertyChangedCallback(OnDisplayModeChanged)));
+            "DisplayMode", typeof(DisplayType), typeof(Calendar), 
+            new FrameworkPropertyMetadata(DisplayType.Month, new PropertyChangedCallback(OnDisplayModeChanged)));
 
         public DisplayType DisplayMode
         {
-            get { return (DisplayType)GetValue(DisplayModeProperty); }
-            set { SetValue(DisplayModeProperty, value); }
+            get => (DisplayType)GetValue(DisplayModeProperty);
+            set => SetValue(DisplayModeProperty, value);
         }
 
         private static void OnDisplayModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -911,8 +963,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         public DateTime DisplayDateStart
         {
-            get { return (DateTime)GetValue(DisplayDateStartProperty); }
-            set { SetValue(DisplayDateStartProperty, value); }
+            get => (DateTime)GetValue(DisplayDateStartProperty);
+            set => SetValue(DisplayDateStartProperty, value);
         }
 
         private static void OnDisplayDateStartChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -929,9 +981,11 @@ namespace ZapanControls.Controls.CalendarPicker
 
         private static object CoerceDisplayDateStart(DependencyObject d, object o)
         {
-            //Calendar vc = d as Calendar;
-            //DateTime value = (DateTime)o;
-            return o;
+            Calendar vc = d as Calendar;
+            DateTime value = (DateTime)o;
+            return value > vc.DisplayDateEnd
+                ? vc.DisplayDateEnd
+                : o;
         }
         #endregion
 
@@ -948,8 +1002,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         public DateTime DisplayDateEnd
         {
-            get { return (DateTime)GetValue(DisplayDateEndProperty); }
-            set { SetValue(DisplayDateEndProperty, value); }
+            get => (DateTime)GetValue(DisplayDateEndProperty);
+            set => SetValue(DisplayDateEndProperty, value);
         }
 
         private static void OnDisplayDateEndChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -966,11 +1020,9 @@ namespace ZapanControls.Controls.CalendarPicker
         {
             Calendar vc = d as Calendar;
             DateTime value = (DateTime)o;
-
-            if (value < vc.DisplayDateStart)
-                return vc.DisplayDateStart;
-
-            return o;
+            return value < vc.DisplayDateStart 
+                ? vc.DisplayDateStart 
+                : o;
         }
         #endregion
 
@@ -986,28 +1038,20 @@ namespace ZapanControls.Controls.CalendarPicker
 
         public Visibility FooterVisibility
         {
-            get { return (Visibility)GetValue(FooterVisibilityProperty); }
-            set { SetValue(FooterVisibilityProperty, value); }
+            get => (Visibility)GetValue(FooterVisibilityProperty);
+            set => SetValue(FooterVisibilityProperty, value);
         }
 
         private static void OnFooterVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Calendar vc = d as Calendar;
-            Grid grdFooterContainer = (Grid)vc.FindElement("Part_FooterContainer");
-
-            if (grdFooterContainer != null)
+            if (vc.FindElement(PartFooterContainer) is Grid grdFooterContainer)
             {
-                if ((Visibility)e.NewValue == Visibility.Visible)
-                {
-                    grdFooterContainer.Visibility = Visibility.Visible;
-                    vc.UpdateCalendar();
-                }
-                else
-                {
-                    grdFooterContainer.Visibility = Visibility.Collapsed;
-                    vc.UpdateCalendar();
-                }
+                grdFooterContainer.Visibility = (Visibility)e.NewValue == Visibility.Visible 
+                    ? Visibility.Visible 
+                    : Visibility.Collapsed;
 
+                vc.UpdateCalendar();
                 vc.RaisePropertyChanged(new PropertyChangedEventArgs(FooterVisibilityPropName));
             }
         }
@@ -1026,8 +1070,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         public double HeaderFontSize
         {
-            get { return (double)GetValue(HeaderFontSizeProperty); }
-            set { SetValue(HeaderFontSizeProperty, value); }
+            get => (double)GetValue(HeaderFontSizeProperty);
+            set => SetValue(HeaderFontSizeProperty, value);
         }
 
         private static object CoerceHeaderFontSize(DependencyObject d, object o)
@@ -1036,20 +1080,20 @@ namespace ZapanControls.Controls.CalendarPicker
             double value = (double)o;
 
             if (value > 16)
+            {
                 return 16;
-
-            if (value < 7)
+            }
+            else if (value < 7)
+            {
                 return 7;
-
+            }
             return o;
         }
 
         private static void OnHeaderFontSizeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Calendar vc = d as Calendar;
-            DateButton btnTitle = (DateButton)vc.FindElement("Part_TitleButton");
-
-            if (btnTitle != null)
+            if (vc.FindElement(PartTitleButton) is DateButton btnTitle)
             {
                 btnTitle.FontSize = (double)e.NewValue;
                 vc.RaisePropertyChanged(new PropertyChangedEventArgs(HeaderFontSizePropName));
@@ -1069,16 +1113,14 @@ namespace ZapanControls.Controls.CalendarPicker
 
         public FontWeight HeaderFontWeight
         {
-            get { return (FontWeight)GetValue(HeaderFontWeightProperty); }
-            set { SetValue(HeaderFontWeightProperty, value); }
+            get => (FontWeight)GetValue(HeaderFontWeightProperty);
+            set => SetValue(HeaderFontWeightProperty, value);
         }
 
         private static void OnHeaderFontWeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Calendar vc = d as Calendar;
-            DateButton btnTitle = (DateButton)vc.FindElement("Part_TitleButton");
-
-            if (btnTitle != null)
+            if (vc.FindElement(PartTitleButton) is DateButton btnTitle)
             {
                 btnTitle.FontWeight = (FontWeight)e.NewValue;
                 vc.RaisePropertyChanged(new PropertyChangedEventArgs(HeaderFontWeightPropName));
@@ -1092,15 +1134,15 @@ namespace ZapanControls.Controls.CalendarPicker
         /// </summary>
         public static readonly DependencyProperty HeaderHeightProperty = DependencyProperty.Register(
             "HeaderHeight", typeof(double), typeof(Calendar), new FrameworkPropertyMetadata(
-                (double)20,
+                20d,
                 FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure,
                 new PropertyChangedCallback(OnHeaderHeightChanged),
                 new CoerceValueCallback(CoerceHeaderHeight)));
 
         public double HeaderHeight
         {
-            get { return (double)GetValue(HeaderHeightProperty); }
-            set { SetValue(HeaderHeightProperty, value); }
+            get => (double)GetValue(HeaderHeightProperty);
+            set => SetValue(HeaderHeightProperty, value);
         }
 
         private static object CoerceHeaderHeight(DependencyObject d, object o)
@@ -1109,20 +1151,20 @@ namespace ZapanControls.Controls.CalendarPicker
             double value = (double)o;
 
             if (value > 30)
+            {
                 return 30;
-
-            if (value < 18)
+            }
+            else if (value < 18)
+            {
                 return 18;
-
+            }
             return o;
         }
 
         private static void OnHeaderHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Calendar vc = d as Calendar;
-            Border brdHeaderBorder = (Border)vc.FindElement("Part_HeaderBorder");
-
-            if (brdHeaderBorder != null)
+            if (vc.FindElement(PartHeaderBorder) is Border brdHeaderBorder)
             {
                 brdHeaderBorder.Height = (double)e.NewValue;
                 vc.RaisePropertyChanged(new PropertyChangedEventArgs(HeaderHeightPropName));
@@ -1139,8 +1181,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         public bool IsAnimated
         {
-            get { return (bool)GetValue(IsAnimatedProperty); }
-            set { SetValue(IsAnimatedProperty, value); }
+            get => (bool)GetValue(IsAnimatedProperty);
+            set => SetValue(IsAnimatedProperty, value);
         }
 
         private static void OnIsAnimatedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -1156,7 +1198,7 @@ namespace ZapanControls.Controls.CalendarPicker
         /// </summary>
         public bool IsDesignTime
         {
-            get { return DesignerProperties.GetIsInDesignMode(this); }
+            get => DesignerProperties.GetIsInDesignMode(this);
         }
         #endregion
 
@@ -1172,8 +1214,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         public bool IsTodayHighlighted
         {
-            get { return (bool)GetValue(IsTodayHighlightedProperty); }
-            set { SetValue(IsTodayHighlightedProperty, value); }
+            get => (bool)GetValue(IsTodayHighlightedProperty);
+            set => SetValue(IsTodayHighlightedProperty, value);
         }
 
         private static void OnTodayHighlightedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -1197,8 +1239,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         public DateTime SelectedDate
         {
-            get { return (DateTime)GetValue(SelectedDateProperty); }
-            set { SetValue(SelectedDateProperty, value); }
+            get => (DateTime)GetValue(SelectedDateProperty);
+            set => SetValue(SelectedDateProperty, value);
         }
 
         static void OnSelectedDateChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
@@ -1259,8 +1301,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         public ObservableCollection<DateTime> SelectedDates
         {
-            get { return (ObservableCollection<DateTime>)GetValue(SelectedDatesProperty); }
-            set { SetValue(SelectedDatesProperty, value); }
+            get => (ObservableCollection<DateTime>)GetValue(SelectedDatesProperty);
+            set => SetValue(SelectedDatesProperty, value);
         }
 
         static void OnSelectedDatesChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
@@ -1336,8 +1378,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         public SelectionType SelectionMode
         {
-            get { return (SelectionType)GetValue(SelectionModeProperty); }
-            set { SetValue(SelectionModeProperty, value); }
+            get => (SelectionType)GetValue(SelectionModeProperty);
+            set => SetValue(SelectionModeProperty, value);
         }
 
         private static object CoerceSelectionMode(DependencyObject d, object o)
@@ -1352,12 +1394,13 @@ namespace ZapanControls.Controls.CalendarPicker
         #region IsRangeSelection
 
         public static readonly DependencyProperty IsRangeSelectionProperty = DependencyProperty.Register(
-            "IsRangeSelection", typeof(bool), typeof(Calendar), new UIPropertyMetadata(false, new PropertyChangedCallback(OnIsRangeSelectionChanged)));
+            "IsRangeSelection", typeof(bool), typeof(Calendar), 
+            new UIPropertyMetadata(false, new PropertyChangedCallback(OnIsRangeSelectionChanged)));
 
         public bool IsRangeSelection
         {
-            get { return (bool)GetValue(IsRangeSelectionProperty); }
-            set { SetValue(IsRangeSelectionProperty, value); }
+            get => (bool)GetValue(IsRangeSelectionProperty);
+            set => SetValue(IsRangeSelectionProperty, value);
         }
 
         private static void OnIsRangeSelectionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -1380,20 +1423,19 @@ namespace ZapanControls.Controls.CalendarPicker
 
         public bool ShowDaysOfAllMonths
         {
-            get { return (bool)GetValue(ShowDaysOfAllMonthsProperty); }
-            set { SetValue(ShowDaysOfAllMonthsProperty, value); }
+            get => (bool)GetValue(ShowDaysOfAllMonthsProperty);
+            set => SetValue(ShowDaysOfAllMonthsProperty, value);
         }
 
         private static void OnShowDaysOfAllMonthsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Calendar vc = d as Calendar;
-            Grid grdMonthContainer = (Grid)vc.FindElement("Part_MonthContainer");
-
-            if (grdMonthContainer != null)
+            if (vc.FindElement(PartMonthContainer) is Grid grdMonthContainer)
             {
                 if (grdMonthContainer.Visibility == Visibility.Visible)
+                {
                     vc.SetMonthMode();
-
+                }
                 vc.RaisePropertyChanged(new PropertyChangedEventArgs(ShowDaysOfAllMonthsPropName));
             }
         }
@@ -1412,27 +1454,20 @@ namespace ZapanControls.Controls.CalendarPicker
 
         public Visibility WeekColumnVisibility
         {
-            get { return (Visibility)GetValue(WeekColumnVisibilityProperty); }
-            set { SetValue(WeekColumnVisibilityProperty, value); }
+            get => (Visibility)GetValue(WeekColumnVisibilityProperty);
+            set => SetValue(WeekColumnVisibilityProperty, value);
         }
 
         private static void OnWeekColumnVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Calendar vc = d as Calendar;
-            UniformGrid grdWeek = (UniformGrid)vc.FindElement("Part_WeekGrid");
-
-            if (grdWeek != null)
+            if (vc.FindElement(PartWeekGrid) is UniformGrid grdWeek)
             {
-                if ((Visibility)e.NewValue == Visibility.Visible)
-                {
-                    grdWeek.Visibility = Visibility.Visible;
-                    vc.UpdateCalendar();
-                }
-                else
-                {
-                    grdWeek.Visibility = Visibility.Collapsed;
-                    vc.UpdateCalendar();
-                }
+                grdWeek.Visibility = (Visibility)e.NewValue == Visibility.Visible 
+                    ? Visibility.Visible 
+                    : Visibility.Collapsed;
+
+                vc.UpdateCalendar();
             }
             vc.RaisePropertyChanged(new PropertyChangedEventArgs(WeekColumnVisibilityPropName));
         }
@@ -1442,7 +1477,8 @@ namespace ZapanControls.Controls.CalendarPicker
         #region Theme Properties
         #region ControlBorderBrush
         public static readonly DependencyProperty ControlBorderBrushProperty = DependencyProperty.Register(
-            "ControlBorderBrush", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+            "ControlBorderBrush", typeof(Brush), typeof(Calendar), 
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush ControlBorderBrush
         {
@@ -1453,7 +1489,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         #region ControlBackground
         public static readonly DependencyProperty ControlBackgroundProperty = DependencyProperty.Register(
-            "ControlBackground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+            "ControlBackground", typeof(Brush), typeof(Calendar), 
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush ControlBackground
         {
@@ -1465,7 +1502,8 @@ namespace ZapanControls.Controls.CalendarPicker
         #region Header
         #region HeaderNormalForeground
         public static readonly DependencyProperty HeaderNormalForegroundProperty = DependencyProperty.Register(
-            "HeaderNormalForeground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+            "HeaderNormalForeground", typeof(Brush), typeof(Calendar), 
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush HeaderNormalForeground
         {
@@ -1476,7 +1514,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         #region HeaderFocusedForeground
         public static readonly DependencyProperty HeaderFocusedForegroundProperty = DependencyProperty.Register(
-            "HeaderFocusedForeground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+            "HeaderFocusedForeground", typeof(Brush), typeof(Calendar), 
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush HeaderFocusedForeground
         {
@@ -1487,7 +1526,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         #region HeaderPressedForeground
         public static readonly DependencyProperty HeaderPressedForegroundProperty = DependencyProperty.Register(
-            "HeaderPressedForeground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+            "HeaderPressedForeground", typeof(Brush), typeof(Calendar), 
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush HeaderPressedForeground
         {
@@ -1498,7 +1538,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         #region HeaderNormalBorderBrush
         public static readonly DependencyProperty HeaderNormalBorderBrushProperty = DependencyProperty.Register(
-            "HeaderNormalBorderBrush", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+            "HeaderNormalBorderBrush", typeof(Brush), typeof(Calendar), 
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush HeaderNormalBorderBrush
         {
@@ -1509,7 +1550,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         #region HeaderFocusedBorderBrush
         public static readonly DependencyProperty HeaderFocusedBorderBrushProperty = DependencyProperty.Register(
-            "HeaderFocusedBorderBrush", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+            "HeaderFocusedBorderBrush", typeof(Brush), typeof(Calendar), 
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush HeaderFocusedBorderBrush
         {
@@ -1520,7 +1562,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         #region HeaderPressedBorderBrush
         public static readonly DependencyProperty HeaderPressedBorderBrushProperty = DependencyProperty.Register(
-            "HeaderPressedBorderBrush", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+            "HeaderPressedBorderBrush", typeof(Brush), typeof(Calendar), 
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush HeaderPressedBorderBrush
         {
@@ -1531,7 +1574,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         #region HeaderNormalBackground
         public static readonly DependencyProperty HeaderNormalBackgroundProperty = DependencyProperty.Register(
-            "HeaderNormalBackground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+            "HeaderNormalBackground", typeof(Brush), typeof(Calendar), 
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush HeaderNormalBackground
         {
@@ -1542,7 +1586,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         #region HeaderFocusedBackground
         public static readonly DependencyProperty HeaderFocusedBackgroundProperty = DependencyProperty.Register(
-            "HeaderFocusedBackground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+            "HeaderFocusedBackground", typeof(Brush), typeof(Calendar), 
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush HeaderFocusedBackground
         {
@@ -1553,7 +1598,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         #region HeaderPressedBackground
         public static readonly DependencyProperty HeaderPressedBackgroundProperty = DependencyProperty.Register(
-            "HeaderPressedBackground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+            "HeaderPressedBackground", typeof(Brush), typeof(Calendar), 
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush HeaderPressedBackground
         {
@@ -1566,7 +1612,8 @@ namespace ZapanControls.Controls.CalendarPicker
         #region Navigation Buttons
         #region ArrowBorderBrush
         public static readonly DependencyProperty ArrowBorderBrushProperty = DependencyProperty.Register(
-            "ArrowBorderBrush", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+            "ArrowBorderBrush", typeof(Brush), typeof(Calendar), 
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush ArrowBorderBrush
         {
@@ -1577,7 +1624,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         #region ArrowNormalFill
         public static readonly DependencyProperty ArrowNormalFillProperty = DependencyProperty.Register(
-            "ArrowNormalFill", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+            "ArrowNormalFill", typeof(Brush), typeof(Calendar), 
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush ArrowNormalFill
         {
@@ -1588,7 +1636,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         #region ArrowFocusedFill
         public static readonly DependencyProperty ArrowFocusedFillProperty = DependencyProperty.Register(
-            "ArrowFocusedFill", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+            "ArrowFocusedFill", typeof(Brush), typeof(Calendar), 
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush ArrowFocusedFill
         {
@@ -1599,7 +1648,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         #region ArrowPressedFill
         public static readonly DependencyProperty ArrowPressedFillProperty = DependencyProperty.Register(
-            "ArrowPressedFill", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+            "ArrowPressedFill", typeof(Brush), typeof(Calendar), 
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush ArrowPressedFill
         {
@@ -1612,7 +1662,8 @@ namespace ZapanControls.Controls.CalendarPicker
         #region Day Column
         #region DayNamesForeground
         public static readonly DependencyProperty DayNamesForegroundProperty = DependencyProperty.Register(
-            "DayNamesForeground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+            "DayNamesForeground", typeof(Brush), typeof(Calendar), 
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush DayNamesForeground
         {
@@ -1623,7 +1674,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         #region DayNamesBorderBrush
         public static readonly DependencyProperty DayNamesBorderBrushProperty = DependencyProperty.Register(
-            "DayNamesBorderBrush", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+            "DayNamesBorderBrush", typeof(Brush), typeof(Calendar), 
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush DayNamesBorderBrush
         {
@@ -1634,7 +1686,8 @@ namespace ZapanControls.Controls.CalendarPicker
 
         #region DayNamesBackground
         public static readonly DependencyProperty DayNamesBackgroundProperty = DependencyProperty.Register(
-            "DayNamesBackground", typeof(Brush), typeof(Calendar), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+            "DayNamesBackground", typeof(Brush), typeof(Calendar), 
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush DayNamesBackground
         {
@@ -1983,14 +2036,18 @@ namespace ZapanControls.Controls.CalendarPicker
         public void ClearSelectedDates(bool persist)
         {
             if (!persist)
+            {
                 SelectedDates.Clear();
+            }
 
             for (int i = 0; i < 6; i++)
             {
                 for (int j = 0; j < 7; j++)
                 {
                     if (_btnMonthMode[i, j] != null)
+                    {
                         _btnMonthMode[i, j].IsSelected = false;
+                    }
                 }
             }
         }
@@ -2050,10 +2107,7 @@ namespace ZapanControls.Controls.CalendarPicker
         {
             try 
             {
-                if (HasInitialized)
-                    return Template.FindName(name, this);
-                else
-                    return null;
+                return HasInitialized ? Template.FindName(name, this) : null;
             }
             catch 
             {
@@ -2070,9 +2124,13 @@ namespace ZapanControls.Controls.CalendarPicker
             {
                 Window window = FindAnchestor<Window>(this);
                 if (window != null)
+                {
                     ParentWindow = window;
+                }
                 else
+                {
                     AdornDrag = false;
+                }
             }
             catch
             {
@@ -2087,8 +2145,9 @@ namespace ZapanControls.Controls.CalendarPicker
         {
             System.DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(date);
             if (day >= System.DayOfWeek.Monday && day <= System.DayOfWeek.Wednesday)
+            {
                 date = date.AddDays(3);
-
+            }
             return CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(date, CalendarWeekRule.FirstFourDayWeek, System.DayOfWeek.Monday);
         }
 
@@ -2097,9 +2156,7 @@ namespace ZapanControls.Controls.CalendarPicker
         /// </summary>
         private void InitializeDecade()
         {
-            UniformGrid grdDecade = (UniformGrid)FindElement("Part_DecadeGrid");
-
-            if (grdDecade != null)
+            if (FindElement(PartDecadeGrid) is UniformGrid grdDecade)
             {
                 for (int j = 0; j < 10; j++)
                 {
@@ -2119,11 +2176,9 @@ namespace ZapanControls.Controls.CalendarPicker
         /// </summary>
         private void InitializeMonth()
         {
-            UniformGrid grdMonth = (UniformGrid)FindElement("Part_MonthGrid");
-            UniformGrid grdDay = (UniformGrid)FindElement("Part_DayGrid");
-            UniformGrid grdWeek = (UniformGrid)FindElement("Part_WeekGrid");
-
-            if (grdMonth != null && grdDay != null && grdWeek != null)
+            if (FindElement(PartMonthGrid) is UniformGrid grdMonth 
+                && FindElement(PartDayGrid) is UniformGrid grdDay
+                && FindElement(PartWeekGrid) is UniformGrid grdWeek)
             {
                 // initialize day buttons
                 for (int i = 0; i < 6; i++)
@@ -2156,7 +2211,7 @@ namespace ZapanControls.Controls.CalendarPicker
                         FontStyle = FontStyle,
                         FontWeight = FontWeights.Medium,
                         Tag = dayOfWeeks[j],
-                        Style = (Style)FindResource("DayNameStyle")
+                        Style = (Style)FindResource(DayNameStyle)
                     };
                     grdDay.Children.Add(element);
                 }
@@ -2179,7 +2234,7 @@ namespace ZapanControls.Controls.CalendarPicker
                         FontSize = FontSize,
                         FontStyle = FontStyle,
                         FontWeight = FontWeight,
-                        Style = (Style)FindResource("WeekNumberStyle")
+                        Style = (Style)FindResource(WeekNumberStyle)
                     };
                     grdWeek.Children.Add(element);
                 }
@@ -2191,9 +2246,7 @@ namespace ZapanControls.Controls.CalendarPicker
         /// </summary>
         private void InitializeYear()
         {
-            UniformGrid grdYear = (UniformGrid)FindElement("Part_YearGrid");
-
-            if (grdYear != null)
+            if (FindElement(PartYearGrid) is UniformGrid grdYear)
             {
                 for (int i = 0; i < 4; i++)
                 {
@@ -2221,10 +2274,7 @@ namespace ZapanControls.Controls.CalendarPicker
             if (DisplayMode == DisplayType.Month)
             {
                 MonthModeDateToRowColumn(DateTime.Today, out int r, out int c);
-                if (IsTodayHighlighted)
-                    _btnMonthMode[r, c].IsTodaysDate = true;
-                else
-                    _btnMonthMode[r, c].IsTodaysDate = false;
+                _btnMonthMode[r, c].IsTodaysDate = IsTodayHighlighted;
             }
         }
 
@@ -2293,8 +2343,7 @@ namespace ZapanControls.Controls.CalendarPicker
         /// </summary>
         private void ListWeekNumbers()
         {
-            UniformGrid grdWeek = (UniformGrid)FindElement("Part_WeekGrid");
-            if (grdWeek != null)
+            if (FindElement(PartWeekGrid) is UniformGrid grdWeek)
             {
                 grdWeek.Visibility = Visibility.Visible;
                 for (int i = 0; i < 6; i++)
@@ -2340,7 +2389,7 @@ namespace ZapanControls.Controls.CalendarPicker
                 VerticalContentAlignment = VerticalAlignment.Center,
                 FlowDirection = FlowDirection.LeftToRight,
                 Padding = new Thickness(0),
-                Style = (Style)FindResource("InsideButtonsStyle"),
+                Style = (Style)FindResource(InsideButtonsStyle),
                 Background = Brushes.Transparent,
                 FontFamily = FontFamily,
                 FontSize = FontSize,
@@ -2383,10 +2432,8 @@ namespace ZapanControls.Controls.CalendarPicker
         /// </summary>
         private void RunMonthTransition()
         {
-            UniformGrid grdMonth = (UniformGrid)FindElement("Part_MonthGrid");
-            Grid scrollGrid = (Grid)FindElement("Part_ScrollGrid");
-
-            if (grdMonth != null && scrollGrid != null)
+            if (FindElement(PartMonthGrid) is UniformGrid grdMonth 
+                && FindElement(PartScrollGrid) is Grid scrollGrid)
             {
                 // not first run
                 if (grdMonth.ActualWidth > 0)
@@ -2395,11 +2442,6 @@ namespace ZapanControls.Controls.CalendarPicker
                     int width = (int)grdMonth.ActualWidth;
                     int height = (int)grdMonth.ActualHeight;
                     scrollGrid.Visibility = Visibility.Visible;
-
-                    // alternative method
-                    //RenderTargetBitmap bitmap = new RenderTargetBitmap(width, height, 96, 96, PixelFormats.Default); 
-                    //bitmap.Render(grdMonth);
-                    //scrollGrid.Background = new ImageBrush(bitmap);
 
                     // get bitmap for the current state
                     BitmapSource screen = CaptureScreen(grdMonth, 96, 96);
@@ -2454,9 +2496,7 @@ namespace ZapanControls.Controls.CalendarPicker
         private void RunYearTransition()
         {
             Calendar c = this;
-            Grid grdAnimationContainer = (Grid)FindElement("Part_AnimationContainer");
-
-            if (grdAnimationContainer != null)
+            if (FindElement(PartAnimationContainer) is Grid grdAnimationContainer)
             {
                 IsAnimating = true;
                 // width animation
@@ -2503,8 +2543,7 @@ namespace ZapanControls.Controls.CalendarPicker
         private void SetBindings()
         {
             // this.MouseMove += new MouseEventHandler(Calendar_MouseMove);
-            DateButton btnTitle = (DateButton)FindElement("Part_TitleButton");
-            if (btnTitle != null)
+            if (FindElement(PartTitleButton) is DateButton btnTitle)
             {
                 btnTitle.FontFamily = FontFamily;
                 btnTitle.FontSize = HeaderFontSize;
@@ -2513,8 +2552,7 @@ namespace ZapanControls.Controls.CalendarPicker
                 btnTitle.Click += new RoutedEventHandler(TitleButton_Click);
             }
 
-            TextBlock txtCurrentDate = (TextBlock)FindElement("Part_CurrentDateText");
-            if (txtCurrentDate != null)
+            if (FindElement(PartCurrentDateText) is TextBlock txtCurrentDate)
             {
                 txtCurrentDate.FontFamily = FontFamily;
                 txtCurrentDate.FontSize = FontSize;
@@ -2522,13 +2560,15 @@ namespace ZapanControls.Controls.CalendarPicker
                 txtCurrentDate.FontWeight = FontWeights.DemiBold;
             }
 
-            RepeatButton btnNext = (RepeatButton)FindElement("Part_NextButton");
-            if (btnNext != null)
+            if (FindElement(PartNextButton) is RepeatButton btnNext)
+            {
                 btnNext.Click += new RoutedEventHandler(NextButton_Click);
+            }
 
-            RepeatButton btnPrevious = (RepeatButton)FindElement("Part_PreviousButton");
-            if (btnPrevious != null)
+            if (FindElement(PartPreviousButton) is RepeatButton btnPrevious)
+            {
                 btnPrevious.Click += new RoutedEventHandler(PreviousButton_Click);
+            }
         }
 
         /// <summary>
@@ -2545,18 +2585,18 @@ namespace ZapanControls.Controls.CalendarPicker
         /// </summary>
         private void SetDecadeMode()
         {
-            Grid grdMonthContainer = (Grid)FindElement("Part_MonthContainer");
-            UniformGrid grdDecade = (UniformGrid)FindElement("Part_DecadeGrid");
-            UniformGrid grdYear = (UniformGrid)FindElement("Part_YearGrid");
-
-            if (grdMonthContainer != null && grdDecade != null && grdYear != null)
+            if (FindElement(PartMonthContainer) is Grid grdMonthContainer
+                && FindElement(PartDecadeGrid) is UniformGrid grdDecade
+                && FindElement(PartYearGrid) is UniformGrid grdYear)
             {
                 grdMonthContainer.Visibility = grdYear.Visibility = Visibility.Collapsed;
                 grdDecade.Visibility = Visibility.Visible;
 
                 // run the animation
                 if (IsAnimated)
+                {
                     RunYearTransition();
+                }
 
                 int decade = DisplayDate.Year - DisplayDate.Year % 10;
                 for (int i = 0; i < 10; i++)
@@ -2576,9 +2616,11 @@ namespace ZapanControls.Controls.CalendarPicker
                         _btnDecadeMode[i].IsEnabled = false;
                     }
                 }
-                DateButton btnTitle = (DateButton)FindElement("Part_TitleButton");
-                if (btnTitle != null)
-                    btnTitle.Content = decade.ToString() + "-" + (decade + 9).ToString();
+
+                if (FindElement(PartTitleButton) is DateButton btnTitle)
+                {
+                    btnTitle.Content = $"{decade}-{(decade + 9)}";
+                }
             }
         }
 
@@ -2587,18 +2629,18 @@ namespace ZapanControls.Controls.CalendarPicker
         /// </summary>
         private void SetMonthMode()
         {
-            Grid grdMonthContainer = (Grid)FindElement("Part_MonthContainer");
-            UniformGrid grdDecade = (UniformGrid)FindElement("Part_DecadeGrid");
-            UniformGrid grdYear = (UniformGrid)FindElement("Part_YearGrid");
-
-            if (grdMonthContainer != null && grdDecade != null && grdYear != null)
+            if (FindElement(PartMonthGrid) is Grid grdMonthContainer
+                && FindElement(PartDecadeGrid) is UniformGrid grdDecade
+                && FindElement(PartYearGrid) is UniformGrid grdYear)
             {
                 grdDecade.Visibility = grdYear.Visibility = Visibility.Collapsed;
                 if (grdMonthContainer.Visibility != Visibility.Visible)
                 {
                     grdMonthContainer.Visibility = Visibility.Visible;
                     if (IsAnimated)
+                    {
                         RunYearTransition();
+                    }
                 }
 
                 int year = DisplayDate.Year;
@@ -2636,13 +2678,18 @@ namespace ZapanControls.Controls.CalendarPicker
                         if (SelectionMode == SelectionType.Single)
                         {
                             if (date == SelectedDate)
+                            {
                                 _btnMonthMode[row, column].IsSelected = true;
+                            }
                         }
                         else
                         {
                             if (SelectedDates.Contains(date))
+                            {
                                 _btnMonthMode[row, column].IsSelected = true;
+                            }
                         }
+
                         if (_blackoutDates.ContainsAny(new DateRangeHelper(date)))
                         {
                             _btnMonthMode[row, column].IsBlackOut = true;
@@ -2653,25 +2700,32 @@ namespace ZapanControls.Controls.CalendarPicker
 
                 // show all days
                 if (ShowDaysOfAllMonths)
+                {
                     ListDaysOfAllMonths(month, year);
+                }
 
                 if (WeekColumnVisibility == Visibility.Visible)
+                {
                     ListWeekNumbers();
+                }
 
                 //footer
-                TextBlock txtCurrentDate = (TextBlock)FindElement("Part_CurrentDateText");
-                if (txtCurrentDate != null)
-                    txtCurrentDate.Text = "Aujourd'hui: " + DateTime.Today.ToShortDateString();
+                if (FindElement(PartCurrentDateText) is TextBlock txtCurrentDate)
+                {
+                    txtCurrentDate.Text = $"Aujourd'hui: {DateTime.Today.ToShortDateString()}";
+                }
 
                 // header title
-                DateButton btnTitle = (DateButton)FindElement("Part_TitleButton");
-                if (btnTitle != null)
-                    btnTitle.Content = ((MonthList)month).ToString() + " " + year.ToString();
+                if (FindElement(PartTitleButton) is DateButton btnTitle)
+                {
+                    btnTitle.Content = $"{(MonthList)month} {year}";
+                }
 
                 // current selected
                 if (DisplayDate.Month == DateTime.Today.Month)
+                {
                     IsTodaysDate();
-
+                }
             }
         }
 
@@ -2680,30 +2734,31 @@ namespace ZapanControls.Controls.CalendarPicker
         /// </summary>
         private void SetYearMode()
         {
-            Grid grdMonthContainer = (Grid)FindElement("Part_MonthContainer");
-            UniformGrid grdDecade = (UniformGrid)FindElement("Part_DecadeGrid");
-            UniformGrid grdYear = (UniformGrid)FindElement("Part_YearGrid");
-
-            if (grdMonthContainer != null && grdDecade != null && grdYear != null)
+            if (FindElement(PartMonthContainer) is Grid grdMonthContainer
+                && FindElement(PartDecadeGrid) is UniformGrid grdDecade
+                && FindElement(PartYearGrid) is UniformGrid grdYear)
             {
                 grdMonthContainer.Visibility = grdDecade.Visibility = Visibility.Collapsed;
                 grdYear.Visibility = Visibility.Visible;
 
                 // run the animation
                 if (IsAnimated)
+                {
                     RunYearTransition();
+                }
 
-                DateButton btnTitle = (DateButton)FindElement("Part_TitleButton");
-                if (btnTitle != null)
+                if (FindElement(PartTitleButton) is DateButton btnTitle)
+                {
                     btnTitle.Content = DisplayDate.Year.ToString();
+                }
 
                 for (int i = 0; i < 4; i++)
                 {
                     for (int j = 0; j < 3; j++)
                     {
                         int month = j + i * 3 + 1;
-                        if (new DateTime(DisplayDate.Year, month, DateTime.DaysInMonth(DisplayDate.Year, month)) >= DisplayDateStart &&
-                            new DateTime(DisplayDate.Year, month, 1) <= DisplayDateEnd)
+                        if (new DateTime(DisplayDate.Year, month, DateTime.DaysInMonth(DisplayDate.Year, month)) >= DisplayDateStart 
+                            && new DateTime(DisplayDate.Year, month, 1) <= DisplayDateEnd)
                         {
                             _btnYearMode[i, j].Content = ((MonthList)month).ToString();
                             _btnYearMode[i, j].IsEnabled = true;
@@ -2764,9 +2819,13 @@ namespace ZapanControls.Controls.CalendarPicker
             {
                 case DisplayType.Month:
                     if (IsAnimating || IsDesignTime || !IsAnimated)
+                    {
                         SetMonthMode();
+                    }
                     else
+                    {
                         RunMonthTransition();
+                    }
                     break;
                 case DisplayType.Year:
                     SetYearMode();

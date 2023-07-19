@@ -126,7 +126,6 @@ namespace ZapanControls.Controls
         }
 
         #endregion
-
     }
 
     public enum DataGridColumnType

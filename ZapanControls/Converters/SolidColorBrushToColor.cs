@@ -18,10 +18,10 @@ namespace ZapanControls.Converters
             if (solidColorBrush != null && parameter != null)
             {
                 Color color = solidColorBrush.Color;
-
                 if (int.TryParse(parameter.ToString(), out int opacity))
+                {
                     color.A = System.Convert.ToByte(opacity * 255 / 100);
-
+                }
                 return color;
             }
             return null;

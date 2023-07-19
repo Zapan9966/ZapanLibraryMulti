@@ -8,10 +8,6 @@ namespace ZapanControls.Controls
 {
     public sealed class ZapButton : ZapButtonBase
     {
-        #region Theme Declarations
-
-        #endregion
-
         #region Template Declarations
         public static TemplatePath Flat = new TemplatePath(ZapButtonTemplates.Flat, "/ZapanControls;component/Themes/ZapButton/Template.Flat.xaml");
         public static TemplatePath Glass = new TemplatePath(ZapButtonTemplates.Glass, "/ZapanControls;component/Themes/ZapButton/Template.Glass.xaml");

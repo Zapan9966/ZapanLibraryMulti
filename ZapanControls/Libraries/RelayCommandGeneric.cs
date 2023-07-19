@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Windows.Input;
 
 namespace ZapanControls.Libraries
@@ -55,12 +54,16 @@ namespace ZapanControls.Libraries
         public RelayCommand(Action<T> execute, Func<T, bool> canExecute, bool keepTargetAlive = false)
         {
             if (execute == null)
+            {
                 throw new ArgumentNullException(nameof(execute));
+            }
 
             _execute = new WeakAction<T>(execute, keepTargetAlive);
 
             if (canExecute != null)
+            {
                 _canExecute = new WeakFunc<T, bool>(canExecute, keepTargetAlive);
+            }
         }
 
         /// <summary>
@@ -71,23 +74,22 @@ namespace ZapanControls.Libraries
             add
             {
                 if (_canExecute != null)
+                {
                     CommandManager.RequerySuggested += value;
+                }
             }
-
             remove
             {
                 if (_canExecute != null)
+                {
                     CommandManager.RequerySuggested -= value;
+                }
             }
         }
 
         /// <summary>
         /// Raises the <see cref="CanExecuteChanged" /> event.
         /// </summary>
-        [SuppressMessage(
-            "Microsoft.Design",
-            "CA1030:UseEventsWhereAppropriate",
-            Justification = "This cannot be an event")]
         public void RaiseCanExecuteChanged()
         {
             CommandManager.InvalidateRequerySuggested();
@@ -107,12 +109,15 @@ namespace ZapanControls.Libraries
             if (_canExecute.IsStatic || _canExecute.IsAlive)
             {
                 if (parameter == null && typeof(T).IsValueType)
+                {
                     return _canExecute.Execute(default);
+                }
 
                 if (parameter == null || parameter is T)
-                    return (_canExecute.Execute((T)parameter));
+                {
+                    return _canExecute.Execute((T)parameter);
+                }
             }
-
             return false;
         }
 
@@ -129,7 +134,9 @@ namespace ZapanControls.Libraries
                 && parameter.GetType() != typeof(T))
             {
                 if (parameter is IConvertible)
+                {
                     val = Convert.ChangeType(parameter, typeof(T), null);
+                }
             }
 
             if (CanExecute(val) && _execute != null && (_execute.IsStatic || _execute.IsAlive))
@@ -148,7 +155,9 @@ namespace ZapanControls.Libraries
                     }
                 }
                 else
+                {
                     _execute.Execute((T)val);
+                }
             }
         }
     }

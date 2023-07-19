@@ -38,9 +38,13 @@ namespace ZapanControls.Converters
                 if (!string.IsNullOrEmpty(s))
                 {
                     if (double.TryParse(s, NumberStyles.Number, CultureInfo.InvariantCulture, out double tmp))
+                    {
                         numbers.Add(tmp);
+                    }
                     else
+                    {
                         throw new InvalidCastException(); // Handle Error - Some non-numeric, operator, or grouping character found in string
+                    }
                 }
             }
 
@@ -82,7 +86,6 @@ namespace ZapanControls.Converters
                         case "(":
                             EvaluateMathString(ref mathEquation, ref numbers, index);
                             break;
-
                         case ")":
                             return;
                     }
@@ -94,7 +97,9 @@ namespace ZapanControls.Converters
                     // If next token after operator is a parenthesis, call method recursively
                     string nextToken = GetNextToken(mathEquation);
                     if (nextToken == "(")
+                    {
                         EvaluateMathString(ref mathEquation, ref numbers, index + 1);
+                    }
 
                     // Verify that enough numbers exist in the List<double> to complete the operation
                     // and that the next token is either the number expected, or it was a ( meaning
@@ -123,7 +128,9 @@ namespace ZapanControls.Converters
                         numbers.RemoveAt(index + 1);
                     }
                     else
+                    {
                         throw new FormatException("Next token is not the expected number"); // Handle Error - Next token is not the expected number
+                    }
                 }
 
                 if (_limits.Contains(token))
@@ -131,7 +138,9 @@ namespace ZapanControls.Converters
                     // If next token after operator is a parenthesis, call method recursively
                     string nextToken = GetNextToken(mathEquation);
                     if (nextToken == "(")
+                    {
                         EvaluateMathString(ref mathEquation, ref numbers, index + 1);
+                    }
 
                     if (numbers.Count > (index + 1) &&
                         (double.Parse(nextToken, NumberStyles.Number, CultureInfo.InvariantCulture) == numbers[index + 1] || nextToken == "("))
@@ -173,9 +182,13 @@ namespace ZapanControls.Converters
             foreach (char c in mathEquation)
             {
                 if (_allOperators.Contains(c))
+                {
                     return string.IsNullOrEmpty(tmp) ? c.ToString() : tmp;
+                }
                 else
+                {
                     tmp += c;
+                }
             }
 
             return tmp;

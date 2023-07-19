@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace ZapanControls.Libraries
 {
@@ -19,39 +18,15 @@ namespace ZapanControls.Libraries
         /// <summary>
         /// Gets or sets the name of the method that this WeakFunc represents.
         /// </summary>
-        public override string MethodName
-        {
-            get
-            {
-                if (_staticFunc != null)
-                    return _staticFunc.Method.Name;
-
-                return Method.Name;
-            }
-        }
+        public override string MethodName => _staticFunc != null ? _staticFunc.Method.Name : Method.Name;
 
         /// <summary>
         /// Gets a value indicating whether the Func's owner is still alive, or if it was collected
         /// by the Garbage Collector already.
         /// </summary>
-        public override bool IsAlive
-        {
-            get
-            {
-                if (_staticFunc == null && Reference == null)
-                    return false;
-
-                if (_staticFunc != null)
-                {
-                    if (Reference != null)
-                        return Reference.IsAlive;
-
-                    return true;
-                }
-
-                return Reference.IsAlive;
-            }
-        }
+        public override bool IsAlive 
+            => (_staticFunc != null || Reference != null)
+            && (_staticFunc != null ? Reference == null || Reference.IsAlive : Reference.IsAlive);
 
         /// <summary>
         /// Initializes a new instance of the WeakFunc class.
@@ -75,11 +50,6 @@ namespace ZapanControls.Libraries
         /// be kept as a hard reference, which might cause a memory leak. You should only set this
         /// parameter to true if the action is using closures. See
         /// http://galasoft.ch/s/mvvmweakaction. </param>
-        [SuppressMessage(
-            "Microsoft.Design",
-            "CA1062:Validate arguments of public methods",
-            MessageId = "1",
-            Justification = "Method should fail with an exception if func is null.")]
         public WeakFunc(object target, Func<T, TResult> func, bool keepTargetAlive = false)
         {
             if (func.Method.IsStatic)
@@ -119,10 +89,7 @@ namespace ZapanControls.Libraries
         /// is still alive. The Func's parameter is set to default(T).
         /// </summary>
         /// <returns>The result of the Func stored as reference.</returns>
-        public new TResult Execute()
-        {
-            return Execute(default);
-        }
+        public new TResult Execute() => Execute(default);
 
         /// <summary>
         /// Executes the Func. This only happens if the Func's owner
@@ -133,17 +100,15 @@ namespace ZapanControls.Libraries
         public TResult Execute(T parameter)
         {
             if (_staticFunc != null)
+            {
                 return _staticFunc(parameter);
+            }
 
             var funcTarget = FuncTarget;
 
-            if (IsAlive)
-            {
-                if (Method != null && (LiveReference != null || FuncReference != null) && funcTarget != null)
-                    return (TResult)Method.Invoke(funcTarget, new object[] { parameter });
-            }
-
-            return default;
+            return IsAlive && Method != null && (LiveReference != null || FuncReference != null) && funcTarget != null
+                ? (TResult)Method.Invoke(funcTarget, new object[] { parameter })
+                : default;
         }
 
         /// <summary>

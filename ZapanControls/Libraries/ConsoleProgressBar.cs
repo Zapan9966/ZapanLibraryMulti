@@ -116,6 +116,5 @@ namespace ZapanControls.Libraries
 
             _disposed = true;
         }
-
     }
 }

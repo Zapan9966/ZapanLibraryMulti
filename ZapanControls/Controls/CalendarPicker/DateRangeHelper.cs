@@ -49,8 +49,7 @@ namespace ZapanControls.Controls.CalendarPicker
         /// </summary>
         public DateTime End
         {
-            get { return CoerceEnd(_dtStartDate, _dtEndDate); }
-
+            get => CoerceEnd(_dtStartDate, _dtEndDate);
             set
             {
                 DateTime newEnd = CoerceEnd(_dtStartDate, value);
@@ -68,8 +67,7 @@ namespace ZapanControls.Controls.CalendarPicker
         /// </summary>
         public DateTime Start
         {
-            get { return _dtStartDate; }
-
+            get => _dtStartDate;
             set
             {
                 if (_dtStartDate != value)
